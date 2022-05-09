@@ -112,6 +112,7 @@
         <DCCReference Include="Objeto_Cliente.pas"/>
         <DCCReference Include="Objeto_CadEstado.pas"/>
         <DCCReference Include="Objeto_CadCidade.pas"/>
+        <DCCReference Include="Objeto_CadBairro.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

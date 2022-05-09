@@ -8,7 +8,8 @@ uses
   Objeto_CadPessoaJuridica in 'Objeto_CadPessoaJuridica.pas',
   Objeto_Cliente in 'Objeto_Cliente.pas',
   Objeto_CadEstado in 'Objeto_CadEstado.pas',
-  Objeto_CadCidade in 'Objeto_CadCidade.pas';
+  Objeto_CadCidade in 'Objeto_CadCidade.pas',
+  Objeto_CadBairro in 'Objeto_CadBairro.pas';
 
 {$R *.res}
 
