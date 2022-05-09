@@ -7,7 +7,8 @@ uses
   Objeto_CadPessoaFisica in 'Objeto_CadPessoaFisica.pas',
   Objeto_CadPessoaJuridica in 'Objeto_CadPessoaJuridica.pas',
   Objeto_Cliente in 'Objeto_Cliente.pas',
-  Objeto_CadEstado in 'Objeto_CadEstado.pas';
+  Objeto_CadEstado in 'Objeto_CadEstado.pas',
+  Objeto_CadCidade in 'Objeto_CadCidade.pas';
 
 {$R *.res}
 
