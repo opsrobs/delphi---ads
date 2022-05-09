@@ -116,6 +116,7 @@
         <DCCReference Include="Objeto_CadEndereco.pas"/>
         <DCCReference Include="Objeto_CadContato.pas"/>
         <DCCReference Include="Objeto_CadFuncionario.pas"/>
+        <DCCReference Include="Objeto_CadMarcaVeiculo.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

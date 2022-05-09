@@ -12,7 +12,8 @@ uses
   Objeto_CadBairro in 'Objeto_CadBairro.pas',
   Objeto_CadEndereco in 'Objeto_CadEndereco.pas',
   Objeto_CadContato in 'Objeto_CadContato.pas',
-  Objeto_CadFuncionario in 'Objeto_CadFuncionario.pas';
+  Objeto_CadFuncionario in 'Objeto_CadFuncionario.pas',
+  Objeto_CadMarcaVeiculo in 'Objeto_CadMarcaVeiculo.pas';
 
 {$R *.res}
 
