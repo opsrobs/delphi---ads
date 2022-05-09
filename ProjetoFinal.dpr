@@ -9,7 +9,8 @@ uses
   Objeto_Cliente in 'Objeto_Cliente.pas',
   Objeto_CadEstado in 'Objeto_CadEstado.pas',
   Objeto_CadCidade in 'Objeto_CadCidade.pas',
-  Objeto_CadBairro in 'Objeto_CadBairro.pas';
+  Objeto_CadBairro in 'Objeto_CadBairro.pas',
+  Objeto_CadEndereco in 'Objeto_CadEndereco.pas';
 
 {$R *.res}
 
