@@ -2,20 +2,24 @@ program ProjetoFinal;
 
 uses
   Vcl.Forms,
-  PrFinal in '..\..\Documents\Embarcadero\Studio\Projects\PrFinal.pas' {Form1},
   Unit_Dados in 'Unit_Dados.pas' {DataModule1: TDataModule},
   Objeto_CadPessoa in 'Objeto_CadPessoa.pas',
   Objeto_CadPessoaFisica in 'Objeto_CadPessoaFisica.pas',
   Objeto_CadPessoaJuridica in 'Objeto_CadPessoaJuridica.pas',
   Objeto_Cliente in 'Objeto_Cliente.pas',
-  Objeto_CadEstado in 'Objeto_CadEstado.pas';
+  Objeto_CadEstado in 'Objeto_CadEstado.pas',
+  Objeto_CadCidade in 'Objeto_CadCidade.pas',
+  Objeto_CadBairro in 'Objeto_CadBairro.pas',
+  Objeto_CadEndereco in 'Objeto_CadEndereco.pas',
+  Objeto_CadContato in 'Objeto_CadContato.pas',
+  Objeto_CadFuncionario in 'Objeto_CadFuncionario.pas',
+  Objeto_CadMarcaVeiculo in 'Objeto_CadMarcaVeiculo.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TDataModule1, DataModule1);
   Application.Run;
 end.

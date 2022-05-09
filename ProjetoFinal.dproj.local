@@ -10,8 +10,8 @@
     <Transaction>2022/05/06 19:50:06.000.432,C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit_Dados.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2022/05/06 19:52:01.000.182,C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Objeto_CadPessoa.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>2022/05/06 19:58:48.000.086,C:\Users\giulia.conradi\Desktop\PrFinal\Objeto_CadPessoa.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Objeto_CadPessoa.pas</Transaction>
-    <Transaction>2022/05/06 19:59:04.000.934,C:\Users\giulia.conradi\Desktop\PrFinal\Unit_Dados.dfm=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit_Dados.dfm</Transaction>
     <Transaction>2022/05/06 19:59:04.000.934,C:\Users\giulia.conradi\Desktop\PrFinal\Unit_Dados.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit_Dados.pas</Transaction>
+    <Transaction>2022/05/06 19:59:04.000.934,C:\Users\giulia.conradi\Desktop\PrFinal\Unit_Dados.dfm=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit_Dados.dfm</Transaction>
     <Transaction>2022/05/06 19:59:55.000.514,=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2022/05/06 20:18:03.000.341,C:\Users\giulia.conradi\Desktop\PrFinal\Objeto_CadPessoaFisica.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2022/05/06 20:18:08.000.105,=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
@@ -39,6 +39,8 @@
     <Transaction>2022/05/09 17:07:30.144,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Unit1.pas</Transaction>
     <Transaction>2022/05/09 17:07:46.885,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Objeto_CadVeiculo.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Unit1.pas</Transaction>
     <Transaction>2022/05/09 17:08:38.883,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Objeto_CadMarcaVeiculo.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Objeto_CadVeiculo.pas</Transaction>
+    <Transaction>2022/05/09 17:36:59.374,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Unit1.pas</Transaction>
+    <Transaction>2022/05/09 17:39:45.317,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Objeto_CadVeiculo.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Unit1.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="Unit_Dados.pas"/>
@@ -54,6 +56,7 @@
     <File Path="Objeto_CadContato.pas"/>
     <File Path="Objeto_CadFuncionario.pas"/>
     <File Path="Objeto_CadMarcaVeiculo.pas"/>
+    <File Path="Objeto_CadVeiculo.pas"/>
   </ProjectSortOrder>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>
