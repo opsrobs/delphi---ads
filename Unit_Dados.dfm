@@ -1,0 +1,23 @@
+object DataModule1: TDataModule1
+  Height = 288
+  Width = 411
+  object FDFinal: TFDConnection
+    Params.Strings = (
+      'Database=pedro_delphi'
+      'User_Name=root'
+      'Password=root'
+      'DriverID=MySQL')
+    Left = 104
+    Top = 48
+  end
+  object qrFinal: TFDQuery
+    Connection = FDFinal
+    Left = 200
+    Top = 144
+  end
+  object FDTrFinal: TFDTransaction
+    Connection = FDFinal
+    Left = 264
+    Top = 56
+  end
+end

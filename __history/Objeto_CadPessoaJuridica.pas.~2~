@@ -1,0 +1,57 @@
+unit Objeto_CadPessoaJuridica;
+
+interface
+
+uses
+    Objeto_CadPessoa;
+
+type CadPessoaJuridica = class (CadPessoa)
+
+  private
+        idPessoa_juridica: integer;
+        cnpj: string [45];
+        Pessoa_idPessoa: integer;
+  public
+        procedure setidPessoa_juridica (idPessoa_juridica:integer);
+        function getidPessoa_juridica: integer;
+        procedure setcnpj (cnpj: string);
+        function getcnpj: integer;
+        procedure setPessoa_idPessoa (Pessoa_idPessoa:integer);
+        function getPessoa_idPessoa: integer;
+end;
+
+implementation
+
+{ CadPessoaJuridica }
+
+function CadPessoaJuridica.getcnpj: integer;
+begin
+     result := self.cnpj;
+end;
+
+function CadPessoaJuridica.getidPessoa_juridica: integer;
+begin
+     result := self.idPessoa_juridica;
+end;
+
+function CadPessoaJuridica.getPessoa_idPessoa: integer;
+begin
+      result := self.Pessoa_idPessoa;
+end;
+
+procedure CadPessoaJuridica.setcnpj(cnpj: string);
+begin
+     self.cnpj := cnpj;
+end;
+
+procedure CadPessoaJuridica.setidPessoa_juridica(idPessoa_juridica: integer);
+begin
+     self.idPessoa_juridica = idPessoa_juridica;
+end;
+
+procedure CadPessoaJuridica.setPessoa_idPessoa(Pessoa_idPessoa: integer);
+begin
+      self.Pessoa_idPessoa := Pessoa_idPessoa;
+end;
+
+end.

@@ -1,0 +1,46 @@
+unit Objeto_Cliente;
+
+interface
+
+uses
+    Objeto_CadPessoa;
+
+type Cliente = class (CadPessoa)
+
+private
+      idcliente : integer;
+      Pessoa_idPessoa: integer;
+public
+      procedure setidcliente (idcliente: integer);
+      function getidcliente: integer;
+      procedure setPessoa_idPessoa (Pessoa_idPessoa:integer);
+      function getPessoa_idPessoa: integer;
+
+
+end;
+
+implementation
+
+{ Cliente }
+
+function Cliente.getidcliente: integer;
+begin
+    result := self.idcliente;
+end;
+
+function Cliente.getPessoa_idPessoa: integer;
+begin
+    result := self.Pessoa_idPessoa;
+end;
+
+procedure Cliente.setidcliente(idcliente: integer);
+begin
+    self.idcliente := integer;
+end;
+
+procedure Cliente.setPessoa_idPessoa(Pessoa_idPessoa: integer);
+begin
+    self.Pessoa_idPessoa := Pessoa_idPessoa;
+end;
+
+end.

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/05/06 19:35:31.000.125,=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 19:35:50.000.384,C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\PrFinal.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 19:35:50.000.384,C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\PrFinal.dfm=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2022/05/06 19:36:42.000.661,=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 19:49:48.000.434,=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2022/05/06 19:50:06.000.432,C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit_Dados.dfm=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2022/05/06 19:50:06.000.432,C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit_Dados.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 19:52:01.000.182,C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Objeto_CadPessoa.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2022/05/06 19:58:48.000.086,C:\Users\giulia.conradi\Desktop\PrFinal\Objeto_CadPessoa.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Objeto_CadPessoa.pas</Transaction>
+    <Transaction>2022/05/06 19:59:04.000.934,C:\Users\giulia.conradi\Desktop\PrFinal\Unit_Dados.dfm=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit_Dados.dfm</Transaction>
+    <Transaction>2022/05/06 19:59:04.000.934,C:\Users\giulia.conradi\Desktop\PrFinal\Unit_Dados.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit_Dados.pas</Transaction>
+    <Transaction>2022/05/06 19:59:55.000.514,=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 20:18:03.000.341,C:\Users\giulia.conradi\Desktop\PrFinal\Objeto_CadPessoaFisica.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 20:18:08.000.105,=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 20:18:30.000.606,C:\Users\giulia.conradi\Desktop\PrFinal\Objeto_CadPessoaJuridica.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 20:23:39.000.030,=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 20:24:11.000.766,C:\Users\giulia.conradi\Desktop\PrFinal\Objeto_Cliente.pas=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/05/06 20:50:34.000.474,C:\Users\giulia.conradi\Desktop\PrFinal\ProjetoFinal.dproj=C:\Users\giulia.conradi\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2022/05/09 11:05:55.436,=C:\Users\PremierSoft\Downloads\PrFinal\Unit1.pas</Transaction>
+    <Transaction>2022/05/09 11:08:58.890,C:\Users\PremierSoft\Downloads\PrFinal\Objeto_CadEstado.pas=C:\Users\PremierSoft\Downloads\PrFinal\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>
