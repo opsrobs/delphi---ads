@@ -10,8 +10,7 @@ uses
   Objeto_CadEstado in 'Objeto_CadEstado.pas',
   Objeto_CadCidade in 'Objeto_CadCidade.pas',
   Objeto_CadBairro in 'Objeto_CadBairro.pas',
-  Objeto_CadEndereco in 'Objeto_CadEndereco.pas',
-  Objeto_CadContato in 'Objeto_CadContato.pas';
+  Objeto_CadEndereco in 'Objeto_CadEndereco.pas';
 
 {$R *.res}
 
