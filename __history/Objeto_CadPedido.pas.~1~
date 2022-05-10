@@ -1,0 +1,24 @@
+unit Objeto_CadPedido;
+
+interface
+  uses Objeto_CadCarga;
+
+  type
+    pedido = class(CadCarga)
+
+    private
+      numero_pedido:integer;
+      data_pedido:TDate;
+      valor:Float64;
+      status:Boolean;
+      entrega_idEntrega:integer;
+      carga_idCarga:integer;
+      Cliente_idCliente:integer;
+    public
+
+
+    end;
+
+implementation
+
+end.

@@ -109,7 +109,7 @@
         <DCCReference Include="Objeto_CadPessoa.pas"/>
         <DCCReference Include="Objeto_CadPessoaFisica.pas"/>
         <DCCReference Include="Objeto_CadPessoaJuridica.pas"/>
-        <DCCReference Include="Objeto_Cliente.pas"/>
+        <DCCReference Include="Objeto_CadCliente.pas"/>
         <DCCReference Include="Objeto_CadEstado.pas"/>
         <DCCReference Include="Objeto_CadCidade.pas"/>
         <DCCReference Include="Objeto_CadBairro.pas"/>
@@ -118,6 +118,9 @@
         <DCCReference Include="Objeto_CadFuncionario.pas"/>
         <DCCReference Include="Objeto_CadMarcaVeiculo.pas"/>
         <DCCReference Include="Objeto_CadVeiculo.pas"/>
+        <DCCReference Include="Objeto_Funcionario_has_Veiculos.pas"/>
+        <DCCReference Include="Objeto_CadCarga.pas"/>
+        <DCCReference Include="Objeto_CadPedido.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

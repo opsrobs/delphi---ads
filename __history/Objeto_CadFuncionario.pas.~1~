@@ -12,7 +12,7 @@ interface
     pessoa_fisica_idPessoa:integer;
 
   public
-    procedure setIdFuncionario(idFuncionario:integer);
+    procedure setIdFuncionario(idFuncionario:integere);
     function getIdFuncionario:integer;
     procedure setPis(pis:string);
     function getPis:string;
@@ -51,7 +51,7 @@ begin
 
 end;
 
-procedure CadFuncionario.setIdFuncionario(idFuncionario: integer);
+procedure CadFuncionario.setIdFuncionario(idFuncionario: integere);
 begin
 
 end;

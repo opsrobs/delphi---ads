@@ -16,8 +16,7 @@ uses
   Objeto_CadMarcaVeiculo in 'Objeto_CadMarcaVeiculo.pas',
   Objeto_CadVeiculo in 'Objeto_CadVeiculo.pas',
   Objeto_Funcionario_has_Veiculos in 'Objeto_Funcionario_has_Veiculos.pas',
-  Objeto_CadCarga in 'Objeto_CadCarga.pas',
-  Objeto_CadPedido in 'Objeto_CadPedido.pas';
+  Objeto_CadCarga in 'Objeto_CadCarga.pas';
 
 {$R *.res}
 
