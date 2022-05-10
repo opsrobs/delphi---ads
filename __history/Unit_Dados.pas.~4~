@@ -39,7 +39,7 @@ end;
 
 procedure Tdm_ProjetoFinal.DataModuleDestroy(Sender: TObject);
 begin
-  FDFinal.Connected := false;
+  FDFinal.Connected := False;
 end;
 
 end.

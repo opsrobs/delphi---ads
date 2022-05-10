@@ -1,11 +1,10 @@
 object dm_ProjetoFinal: Tdm_ProjetoFinal
   OnCreate = DataModuleCreate
-  OnDestroy = DataModuleDestroy
   Height = 288
   Width = 411
   object FDFinal: TFDConnection
     Params.Strings = (
-      'Database=pedro_delphiii'
+      'Database=pedro_delphi'
       'User_Name=root'
       'Password=root'
       'DriverID=MySQL')

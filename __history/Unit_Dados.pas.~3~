@@ -16,7 +16,6 @@ type
     qrFinal: TFDQuery;
     FDTrFinal: TFDTransaction;
     procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,11 +34,6 @@ implementation
 procedure Tdm_ProjetoFinal.DataModuleCreate(Sender: TObject);
 begin
   FDFinal.Connected := true;
-end;
-
-procedure Tdm_ProjetoFinal.DataModuleDestroy(Sender: TObject);
-begin
-  FDFinal.Connected := false;
 end;
 
 end.

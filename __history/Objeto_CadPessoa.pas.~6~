@@ -43,7 +43,7 @@ begin
         on e:exception do
           showMessage('Erro ao incluir pessoa: ' + e.ToString);
       end;
-      query.Close;
+
       query.Free;
 
 end;

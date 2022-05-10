@@ -11,12 +11,10 @@ uses
   FireDAC.Comp.DataSet;
 
 type
-  Tdm_ProjetoFinal = class(TDataModule)
+  TDataModule1 = class(TDataModule)
     FDFinal: TFDConnection;
     qrFinal: TFDQuery;
     FDTrFinal: TFDTransaction;
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -24,22 +22,12 @@ type
   end;
 
 var
-  dm_ProjetoFinal: Tdm_ProjetoFinal;
+  DataModule1: TDataModule1;
 
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
-
-procedure Tdm_ProjetoFinal.DataModuleCreate(Sender: TObject);
-begin
-  FDFinal.Connected := true;
-end;
-
-procedure Tdm_ProjetoFinal.DataModuleDestroy(Sender: TObject);
-begin
-  FDFinal.Connected := false;
-end;
 
 end.
