@@ -121,6 +121,7 @@
         <DCCReference Include="Objeto_Funcionario_has_Veiculos.pas"/>
         <DCCReference Include="Objeto_CadCarga.pas"/>
         <DCCReference Include="Objeto_CadPedido.pas"/>
+        <DCCReference Include="Objeto_CadEntrega.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -15,8 +15,8 @@ interface
     function getNome_tipo:string;
     procedure setQuantidade(quantidade:integer);
     function getQuantidade:integer;
-    procedure setPeso(peso:Float64);
-    function getPeso:Float64;
+    procedure setPeso(peso:integer);
+    function getPeso:integer;
 
   end;
 
@@ -34,7 +34,7 @@ begin
      result := self.nome_Tipo;
 end;
 
-function CadCarga.getPeso: Float64;
+function CadCarga.getPeso: integer;
 begin
      result := self.peso;
 end;
@@ -54,7 +54,7 @@ begin
     self.nome_Tipo := nome_Tipo;
 end;
 
-procedure CadCarga.setPeso(peso: Float64);
+procedure CadCarga.setPeso(peso: integer);
 begin
     self.peso	 := peso;
 end;

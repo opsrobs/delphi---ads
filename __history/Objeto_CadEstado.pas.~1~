@@ -24,32 +24,32 @@ implementation
 
 function CadEstado.getidEstado: integer;
 begin
-    result := self.idEstado;
+
 end;
 
 function CadEstado.getNome_estado: string;
 begin
-    result := Self.nome_estado;
+
 end;
 
 function CadEstado.getuf: string;
 begin
-    result := self.uf;
+
 end;
 
 procedure CadEstado.setidEstado(idEstado: integer);
 begin
-    self.idEstado	 := idEstado;
+
 end;
 
 procedure CadEstado.setNome_estado(nome_estado: string);
 begin
-    self.nome_estado := nome_estado;
+
 end;
 
 procedure CadEstado.setuf(uf: string);
 begin
-    self.uf := uf;
+
 end;
 
 end.

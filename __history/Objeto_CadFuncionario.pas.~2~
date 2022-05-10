@@ -28,43 +28,43 @@ implementation
 
 function CadFuncionario.getCnh: string;
 begin
-    result := self.cnh;
+
 end;
 
 function CadFuncionario.getIdFuncionario: integer;
 begin
-    result := self.idFuncionario ;
+
 end;
 
 function CadFuncionario.getpessoa_fisica_idPessoa: integer;
 begin
-    result := self.pessoa_fisica_idPessoa;
+
 end;
 
 function CadFuncionario.getPis: string;
 begin
-    result := self.pis ;
+
 end;
 
 procedure CadFuncionario.setCnh(cnh: string);
 begin
-    self.cnh  := cnh;
+
 end;
 
 procedure CadFuncionario.setIdFuncionario(idFuncionario: integer);
 begin
-    self.idFuncionario := idFuncionario;
+
 end;
 
 procedure CadFuncionario.setpessoa_fisica_idPessoa(
   pessoa_fisica_idPessoa: integer);
 begin
-    self.pessoa_fisica_idPessoa := pessoa_fisica_idPessoa;
+
 end;
 
 procedure CadFuncionario.setPis(pis: string);
 begin
-    self.pis :=pis;
+
 end;
 
 end.

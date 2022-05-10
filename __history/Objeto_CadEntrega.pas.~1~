@@ -1,0 +1,69 @@
+unit Objeto_CadEntrega;
+
+interface
+  uses Objeto_CadFuncionario;
+
+  type CadEntrege = class(CadFuncionario)
+    private
+      idEntrege:integer;
+      status:Boolean;
+      funcionario_idFuncionario:integer;
+      funcionario_idFuncionaio_idVeiculo:integer;
+    public
+      procedure setIdEntrega(idEntrega:integer);
+      function getIdEntrege:integer;
+      procedure setStatus(status:Boolean);
+      function getStatus:Boolean;
+      procedure setFuncionario_idFuncionario(funcionario_idFuncionario:integer);
+      function getFuncionario_idFuncionario:integer;
+      procedure setFuncionario_idFuncionaio_idVeiculo(funcionario_idFuncionaio_idVeiculo:integer);
+      function getFuncionario_idFuncionaio_idVeiculo:integer;
+  end;
+
+implementation
+
+{ CadEntrege }
+
+function CadEntrege.getFuncionario_idFuncionaio_idVeiculo: integer;
+begin
+
+end;
+
+function CadEntrege.getFuncionario_idFuncionario: integer;
+begin
+
+end;
+
+function CadEntrege.getIdEntrege: integer;
+begin
+
+end;
+
+function CadEntrege.getStatus: Boolean;
+begin
+
+end;
+
+procedure CadEntrege.setFuncionario_idFuncionaio_idVeiculo(
+  funcionario_idFuncionaio_idVeiculo: integer);
+begin
+
+end;
+
+procedure CadEntrege.setFuncionario_idFuncionario(
+  funcionario_idFuncionario: integer);
+begin
+
+end;
+
+procedure CadEntrege.setIdEntrega(idEntrega: integer);
+begin
+
+end;
+
+procedure CadEntrege.setStatus(status: Boolean);
+begin
+
+end;
+
+end.

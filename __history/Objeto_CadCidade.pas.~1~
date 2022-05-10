@@ -26,32 +26,32 @@ implementation
 
 function CadCidade.getEstado_idEstado: integer;
 begin
-    result := self.Estado_idEstado ;
+
 end;
 
 function CadCidade.getIdCidade: integer;
 begin
-    result := self.idCidade
+
 end;
 
 function CadCidade.getNome_ciade: string;
 begin
-    result := self.nome_cidade;
+
 end;
 
 procedure CadCidade.setEstado_idEstado(Estado_idEstado: integer);
 begin
-    self.Estado_idEstado := Estado_idEstado;
+
 end;
 
 procedure CadCidade.setIdCidade(idCidade: integer);
 begin
-    self.idCidade	 :=idCidade;
+
 end;
 
 procedure CadCidade.setNome_cidade(nome_cidade: string);
 begin
-    self.nome_cidade := nome_cidade;
+
 end;
 
 end.
