@@ -34,74 +34,74 @@ interface
 
 implementation
 
-{ CadPedido }
+{ pedido }
 
-function CadPedido.getCarga_idCarga: integer;
+function pedido.getCarga_idCarga: integer;
 begin
   result := self.carga_idCarga;
 end;
 
-function CadPedido.getCliente_idCliente: integer;
+function pedido.getCliente_idCliente: integer;
 begin
   result :=self.Cliente_idCliente;
 end;
 
-function CadPedido.getData_pedido: TDate;
+function pedido.getData_pedido: TDate;
 begin
   result := Self.data_pedido;
 end;
 
-function CadPedido.getEntrega_idEntrega: integer;
+function pedido.getEntrega_idEntrega: integer;
 begin
  result := self.entrega_idEntrega;
 end;
 
-function CadPedido.getNumero_pedido: integer;
+function pedido.getNumero_pedido: integer;
 begin
   result := self.numero_pedido;
 end;
 
-function CadPedido.getStatus: Boolean;
+function pedido.getStatus: Boolean;
 begin
   result := self.status;
 end;
 
-function CadPedido.getValor: Float64;
+function pedido.getValor: Float64;
 begin
   result := self.valor ;
 end;
 
-procedure CadPedido.setCarga_idCarga(carga_idCarga: integer);
+procedure pedido.setCarga_idCarga(carga_idCarga: integer);
 begin
   self.carga_idCarga := carga_idCarga;
 end;
 
-procedure CadPedido.setCliente_idCliente(cliente_idCliente: integer);
+procedure pedido.setCliente_idCliente(cliente_idCliente: integer);
 begin
   self.Cliente_idCliente := cliente_idCliente;
 end;
 
-procedure CadPedido.setData_pedido(data_pedido: TDate);
+procedure pedido.setData_pedido(data_pedido: TDate);
 begin
   self.data_pedido := data_pedido;
 end;
 
-procedure CadPedido.setEntrega_idEntrega(entrega_idEntrega: integer);
+procedure pedido.setEntrega_idEntrega(entrega_idEntrega: integer);
 begin
   self.entrega_idEntrega  := entrega_idEntrega;
 end;
 
-procedure CadPedido.setNumero_pedido(numero_pedido: integer);
+procedure pedido.setNumero_pedido(numero_pedido: integer);
 begin
   self.numero_pedido := numero_pedido;
 end;
 
-procedure CadPedido.setStatus(status: Boolean);
+procedure pedido.setStatus(status: Boolean);
 begin
   self.status := status;
 end;
 
-procedure CadPedido.setValor(valor: Float64);
+procedure pedido.setValor(valor: Float64);
 begin
   self.valor := valor;
 end;

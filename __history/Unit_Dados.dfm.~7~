@@ -22,8 +22,4 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     Left = 264
     Top = 56
   end
-  object Ibagensmainmenu: TImageList
-    Left = 296
-    Top = 160
-  end
 end

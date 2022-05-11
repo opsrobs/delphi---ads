@@ -127,18 +127,11 @@ begin
       try
         query.open;
         result := true;
-
-        if (not query.isEmpty) then
-          begin
-              {Alterar o valor do [] para a posição do atributo}
-              self.setnome(query.Fields[1].AsString);
-
-          end;
       except
         on e:exception do
         begin
           Result := false;
-          showMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
+          showMessage('Erro ao Excluir dados da pessoa: ' + e.ToString);
         end;
 
       end;

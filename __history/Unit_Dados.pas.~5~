@@ -8,14 +8,13 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.Client, Data.DB,
-  FireDAC.Comp.DataSet, System.ImageList, Vcl.ImgList, Vcl.Controls;
+  FireDAC.Comp.DataSet;
 
 type
   Tdm_ProjetoFinal = class(TDataModule)
     FDFinal: TFDConnection;
     qrFinal: TFDQuery;
     FDTrFinal: TFDTransaction;
-    Ibagensmainmenu: TImageList;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

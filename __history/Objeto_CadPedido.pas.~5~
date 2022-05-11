@@ -7,7 +7,7 @@ interface
     CadPedido = class(CadCarga)
 
     private
-      numero_pedido:integer;
+      numero_CadPedido:integer;
       data_pedido:TDate;
       valor:Float64;
       status:Boolean;
@@ -15,7 +15,7 @@ interface
       carga_idCarga:integer;
       Cliente_idCliente:integer;
     public
-      procedure setNumero_pedido(numero_pedido:integer);
+      procedure setNumero_CadPedido(numero_pedido:integer);
       function getNumero_pedido:integer;
       procedure setData_pedido(data_pedido:TDate);
       function getData_pedido:TDate;
@@ -58,7 +58,7 @@ end;
 
 function CadPedido.getNumero_pedido: integer;
 begin
-  result := self.numero_pedido;
+  result := self.numero_CadPedido;
 end;
 
 function CadPedido.getStatus: Boolean;
