@@ -37,9 +37,6 @@ begin
    if (Cliente = nil) then
       Cliente := TCliente.Create(self);
 
-      Cliente.ShowModal;
-      FreeAndNil(Cliente);
-
 end;
 
 end.

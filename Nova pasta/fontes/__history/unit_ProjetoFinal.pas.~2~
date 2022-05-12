@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
 
 type
-  TFrm_Principal = class(TForm)
+  TForm1 = class(TForm)
     MainMenu1: TMainMenu;
     Cadastros1: TMenuItem;
     Pedidos1: TMenuItem;
@@ -16,7 +16,6 @@ type
     Veiculo1: TMenuItem;
     Pendente1: TMenuItem;
     Aprovados1: TMenuItem;
-    procedure Cliente1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -24,22 +23,10 @@ type
   end;
 
 var
-  Frm_Principal: TFrm_Principal;
+  Form1: TForm1;
 
 implementation
 
 {$R *.dfm}
-
- uses Unit_Dados, Form_CadPessoa;
-
-procedure TFrm_Principal.Cliente1Click(Sender: TObject);
-begin
-   if (Cliente = nil) then
-      Cliente := TCliente.Create(self);
-
-      Cliente.ShowModal;
-      FreeAndNil(Cliente);
-
-end;
 
 end.

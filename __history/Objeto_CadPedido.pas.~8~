@@ -1,7 +1,7 @@
 unit Objeto_CadPedido;
 
 interface
-  uses Objeto_CadCarga, Objeto_CadEntrega;
+  uses Objeto_CadCarga;
 
   type
     CadPedido = class(CadCarga)

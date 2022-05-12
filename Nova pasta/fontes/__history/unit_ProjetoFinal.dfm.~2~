@@ -1,7 +1,7 @@
-object Frm_Principal: TFrm_Principal
+object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Frm_Principal'
+  Caption = 'Form1'
   ClientHeight = 441
   ClientWidth = 624
   Color = clBtnFace
@@ -22,7 +22,6 @@ object Frm_Principal: TFrm_Principal
       end
       object Cliente1: TMenuItem
         Caption = 'Cliente'
-        OnClick = Cliente1Click
       end
       object Veiculo1: TMenuItem
         Caption = 'Veiculo'

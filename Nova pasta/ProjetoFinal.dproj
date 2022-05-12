@@ -96,12 +96,14 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
         <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Unit_Dados.pas">
+        <DCCReference Include="DAO\Unit_Dados.pas">
             <Form>dm_ProjetoFinal</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
@@ -123,14 +125,14 @@
         <DCCReference Include="..\Objeto_CadPedido.pas"/>
         <DCCReference Include="..\Objeto_CadEntrega.pas"/>
         <DCCReference Include="fontes\unit_ProjetoFinal.pas">
-            <Form>Form1</Form>
+            <Form>Frm_Principal</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="fontes\Form_CadPessoa.pas">
+            <Form>Cliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\Objeto_CadOrcamento.pas"/>
-        <DCCReference Include="fontes\Form_CadPessoa.pas">
-            <Form>Form2</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -151,6 +153,10 @@
                 <Source>
                     <Source Name="MainSource">ProjetoFinal.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k280.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp280.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
                 <DeployFile LocalName="Win32\Debug\ProjetoFinal.exe" Configuration="Debug" Class="ProjectOutput"/>

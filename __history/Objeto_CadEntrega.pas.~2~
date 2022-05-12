@@ -20,7 +20,6 @@ interface
       function getFuncionario_idFuncionaio_idVeiculo:integer;
   end;
 
-
 implementation
 
 { CadEntrege }
