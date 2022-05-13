@@ -25,7 +25,6 @@ object Cliente: TCliente
       Width = 57
       Height = 22
       Caption = 'Consultar'
-      Images = dm_ProjetoFinal.Ibagensmainmenu
     end
     object edNome: TLabeledEdit
       Left = 16
@@ -55,8 +54,6 @@ object Cliente: TCliente
       Width = 113
       Height = 22
       Caption = 'Retornar'
-      ImageIndex = 0
-      Images = dm_ProjetoFinal.Ibagensmainmenu
       Flat = True
       OnClick = spButtonReturnClick
     end

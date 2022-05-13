@@ -74,6 +74,7 @@ begin
      result := self.Pessoa_idPessoa;
 end;
 
+//          *** Inserir id pessoa ***
 function CadPessoaFisica.insertDados: Boolean;
 var
     query:TFDQuery;
@@ -81,9 +82,10 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into pessoa values( 0, :nome)');
+  query.SQL.Add('insert into pessoa_fisica values( 0, :cpf, pessoa_idPessoa)');
 
-  query.ParamByName('nome').AsString := self.getnome;
+  query.ParamByName('cpf').AsString := self.getcpf;
+  query.ParamByName('pessoa_idPessoa').AsString := self.getPessoa_idPessoa;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try
@@ -102,8 +104,40 @@ begin
 
 end;
 
+
+//          *** SELECT NAS PESSOA FISICA ***
 function CadPessoaFisica.selectDados: Boolean;
+var
+    query:TFDQuery;
 begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('Select * from pessoa where pessoa_idPessoa = : pessoa_idPessoa ');
+
+  query.ParamByName('nome').AsInteger:= self.getidPessoa;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.open;
+        result := true;
+
+        if (not query.isEmpty) then
+          begin
+              {Alterar o valor do [] para a posição do atributo}
+              self.setnome(query.Fields[1].AsString);
+
+          end;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
 
 end;
 
