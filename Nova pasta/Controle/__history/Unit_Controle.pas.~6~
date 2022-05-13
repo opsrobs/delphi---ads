@@ -29,15 +29,14 @@ begin
           VCadPessoa := CadPessoa.Create;
          case(Cliente.getFuncao) of
             1: begin
-               VCadPessoa.setnome(Cliente.edNome.Text);
+               VCadPessoa.setnome(Cliente.edNome);
 
-               VCadPessoa.insertDados;
+               Cliente.ins
             end;
             2: begin
 
             end;
          end;
-         VCadPessoa.Free;
 
       end;
 
