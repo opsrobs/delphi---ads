@@ -31,6 +31,7 @@ implementation
 
 { CadPessoaFisica }
 
+            {*** DELETAR DADOS DAS PESSOA ***}
 function CadPessoaFisica.deleteDados: Boolean;
 var
     query:TFDQuery;
@@ -38,10 +39,8 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('delete from pessoa  where (idPessoa=: idPessoa');
+  query.SQL.Add('delete from pessoa_fisica  where (idpessoa_fisica=: idpessoa_fisica');
 
-  query.ParamByName('nome').AsInteger:= self.getidPessoa;
-      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try
         query.ExecSQL;  {update service}
@@ -113,7 +112,7 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('Select * from pessoa where pessoa_idPessoa = : pessoa_idPessoa ');
+  query.SQL.Add('Select * from pessoa_fisica where pessoa_idPessoa = : pessoa_idPessoa ');
 
   query.ParamByName('nome').AsInteger:= self.getidPessoa;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
