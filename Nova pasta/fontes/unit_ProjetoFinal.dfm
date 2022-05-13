@@ -11,6 +11,8 @@ object Frm_Principal: TFrm_Principal
   Font.Name = 'Segoe UI'
   Font.Style = []
   Menu = MainMenu1
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object MainMenu1: TMainMenu
     Left = 224

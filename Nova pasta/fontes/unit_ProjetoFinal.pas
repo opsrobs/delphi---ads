@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Unit_Controle;
 
 type
   TFrm_Principal = class(TForm)
@@ -17,10 +17,13 @@ type
     Pendente1: TMenuItem;
     Aprovados1: TMenuItem;
     procedure Cliente1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    Controle:TControle;
   end;
 
 var
@@ -34,12 +37,17 @@ implementation
 
 procedure TFrm_Principal.Cliente1Click(Sender: TObject);
 begin
-   if (Cliente = nil) then
-      Cliente := TCliente.Create(self);
+    Controle.getCadPessoa;
+end;
 
-      Cliente.ShowModal;
-      FreeAndNil(Cliente);
+procedure TFrm_Principal.FormCreate(Sender: TObject);
+begin
+    Controle := TControle.Create;
+end;
 
+procedure TFrm_Principal.FormDestroy(Sender: TObject);
+begin
+    Controle.Free;
 end;
 
 end.

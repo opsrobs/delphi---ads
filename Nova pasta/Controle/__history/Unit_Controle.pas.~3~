@@ -1,0 +1,26 @@
+unit Unit_Controle;
+
+interface
+
+type
+TControle = class
+  private
+
+  public
+    procedure getCadPessoa;
+end;
+
+implementation
+
+{ TControle }
+
+uses Form_CadPessoa;
+
+
+
+procedure TControle.getCadPessoa;
+begin
+
+end;
+
+end.

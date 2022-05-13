@@ -21,7 +21,8 @@ uses
   Objeto_CadEntrega in '..\Objeto_CadEntrega.pas',
   unit_ProjetoFinal in 'fontes\unit_ProjetoFinal.pas' {Frm_Principal},
   Form_CadPessoa in 'fontes\Form_CadPessoa.pas' {Cliente},
-  Objeto_CadOrcamento in '..\Objeto_CadOrcamento.pas';
+  Objeto_CadOrcamento in '..\Objeto_CadOrcamento.pas',
+  Unit_Controle in 'Controle\Unit_Controle.pas';
 
 {$R *.res}
 

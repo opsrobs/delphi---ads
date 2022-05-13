@@ -1,0 +1,30 @@
+unit Unit_Controle;
+
+interface
+    uses System.SysUtils,Winapi.Messages, Vcl.Controls;
+type
+TControle = class
+  private
+
+  public
+    procedure getCadPessoa;
+end;
+
+implementation
+
+{ TControle }
+
+uses Form_CadPessoa;
+
+procedure TControle.getCadPessoa;
+begin
+    if (Cliente = nil) then
+      Cliente := TCliente.Create(nil);
+
+    if (Cliente.ShowModal = mrOk) then
+      begin
+         FreeAndNil(Cliente);
+      end;
+end;
+
+end.
