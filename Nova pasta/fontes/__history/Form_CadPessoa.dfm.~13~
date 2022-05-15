@@ -41,28 +41,6 @@ object Cliente: TCliente
       TabOrder = 0
       Text = ''
     end
-    object edCpfCnpj: TLabeledEdit
-      Left = 16
-      Top = 72
-      Width = 241
-      Height = 23
-      EditLabel.Width = 53
-      EditLabel.Height = 15
-      EditLabel.BiDiMode = bdRightToLeftNoAlign
-      EditLabel.Caption = 'CPF/CNPJ'
-      EditLabel.ParentBiDiMode = False
-      MaxLength = 100
-      TabOrder = 1
-      Text = ''
-    end
-    object rdCNPJ: TRadioButton
-      Left = 280
-      Top = 75
-      Width = 113
-      Height = 17
-      Caption = 'CNPJ'
-      TabOrder = 2
-    end
   end
   object Panel2: TPanel
     Left = 0

@@ -55,14 +55,6 @@ object Cliente: TCliente
       TabOrder = 1
       Text = ''
     end
-    object rdCNPJ: TRadioButton
-      Left = 280
-      Top = 75
-      Width = 113
-      Height = 17
-      Caption = 'CNPJ'
-      TabOrder = 2
-    end
   end
   object Panel2: TPanel
     Left = 0

@@ -1,7 +1,7 @@
 unit Unit_Controle;
 
 interface
-    uses System.SysUtils,Winapi.Messages, Vcl.Controls;
+    uses System.SysUtils,Winapi.Messages, Vcl.Controls,Vcl.Dialogs;
 type
 TControle = class
   private
@@ -29,14 +29,17 @@ begin
           VCadPessoa := CadPessoa.Create;
          case(Cliente.getFuncao) of
             1: begin
-               VCadPessoa.setnome(Cliente.edNome);
+               VCadPessoa.setnome(Cliente.edNome.Text);
 
-               Cliente.ins
+               VCadPessoa.insertDados;
+               VCadPessoa.getLastId;
+               ShowMessage(VCadPessoa.getLastId.ToString)
             end;
             2: begin
 
             end;
          end;
+         VCadPessoa.Free;
 
       end;
 

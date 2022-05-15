@@ -23,7 +23,7 @@ var
   VCadPF:CadPessoaFisica;
   cadCliente:TCliente;
 begin
-    if (cadCliente.rdCNPJ.Checked.ToString() = '0') then
+    if (cadCliente.rdCNPJ.Checked.ToInteger = 0) then
       begin
          VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
          VCadPF.setPessoa_idPessoa(id);

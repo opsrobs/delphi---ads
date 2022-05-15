@@ -15,15 +15,21 @@ type
     spSalvar: TSpeedButton;
     spDelete: TSpeedButton;
     edNome: TLabeledEdit;
+    nmConsultar: TSpeedButton;
+    edCpfCnpj: TLabeledEdit;
+    rdCNPJ: TRadioButton;
     procedure spButtonReturnClick(Sender: TObject);
     procedure spSalvarClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
   private
     funcao:byte; //1--salvar || 2 --Excluir
     function validarValores:boolean;
+    function validarCpf(cpf:string):boolean;
+    function validarCnpj(cnpj:string):boolean;
   public
     procedure setFuncao(funcao:byte);
     function getFuncao:byte;
+    function teste:string;
   end;
 
 var
@@ -33,7 +39,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_Dados;
+uses Unit_Dados, Objeto_CadPessoa;
 
 function TCliente.getFuncao: byte;
 begin
@@ -65,8 +71,36 @@ begin
         ModalResult := mrOk;
 end;
 
-function TCliente.validarValores: boolean;
+function TCliente.teste: string;
 begin
+  ShowMessage(rdCNPJ.Checked.ToString());
+end;
+
+function TCliente.validarCnpj(cnpj:string): boolean;
+begin
+     result := true;
+    if (not cnpj.Length = 14) or (not cnpj.Length = 18) then
+      begin
+        result := false;
+      end;
+end;
+
+function TCliente.validarCpf(cpf: string):boolean;
+
+begin
+  result := true;
+    if (not cpf.Length = 11) or (not cpf.Length = 14) then
+      begin
+        result := false;
+      end;
+
+end;
+
+function TCliente.validarValores: boolean;
+var
+  showPessoa:CadPessoa;
+begin
+    ShowMessage(showPessoa.getLastId.ToString);
     result := true;
     if (edNome.Text	= '') then
       begin
@@ -74,6 +108,20 @@ begin
         ShowMessage('Entre com um nome');
         exit;
       end;
+
+    if (self.validarCpf(edCpfCnpj.Text)) and (rdCNPJ.Checked.ToString() <> '-1') then
+      begin
+        result := false;
+        ShowMessage('Verifique o CPF/CNPJ informado');
+        exit
+      end;
+  if (self.validarCnpj(edCpfCnpj.Text))and (rdCNPJ.Checked.ToString() <> '0') then
+      begin
+        result := false;
+        ShowMessage('Informe um CNPJ válido');
+        exit
+      end;
+
 
 end;
 

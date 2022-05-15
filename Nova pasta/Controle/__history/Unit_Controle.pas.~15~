@@ -23,7 +23,7 @@ var
   VCadPF:CadPessoaFisica;
   cadCliente:TCliente;
 begin
-    if (cadCliente.rdCNPJ.Checked.ToString() = '0') then
+    if (cadCliente.rdCNPJ.Checked.ToInteger = 0) then
       begin
          VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
          VCadPF.setPessoa_idPessoa(id);
@@ -48,8 +48,8 @@ begin
             1: begin
                VCadPessoa.setnome(Cliente.edNome.Text);
 
-               VCadPessoa.insertDados;
-               id := VCadPessoa.getLastId;
+               id := VCadPessoa.insertDados;
+               VCadPessoa.getLastId;
                self.getCadTipoPessoa(id);
                ShowMessage(VCadPessoa.getLastId.ToString)
             end;

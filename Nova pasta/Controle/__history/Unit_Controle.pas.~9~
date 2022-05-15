@@ -1,40 +1,23 @@
 unit Unit_Controle;
 
 interface
-    uses System.SysUtils,Winapi.Messages, Vcl.Controls,Vcl.Dialogs;
+    uses System.SysUtils,Winapi.Messages, Vcl.Controls;
 type
 TControle = class
   private
 
   public
     procedure getCadPessoa;
-    procedure getCadTipoPessoa(id:integer);
 end;
 
 implementation
 
 { TControle }
 
-uses Form_CadPessoa, Objeto_CadPessoa, Objeto_CadPessoaFisica;
-
-procedure TControle.getCadTipoPessoa(id:integer);
-var
-  VCadPessoa:CadPessoa;
-  VCadPF:CadPessoaFisica;
-  cadCliente:TCliente;
-begin
-    if (cadCliente.rdCNPJ.Checked.ToString() = '0') then
-      begin
-         VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
-         VCadPF.setPessoa_idPessoa(id);
-         VCadPF.insertDados;
-      end;
-
-end;
+uses Form_CadPessoa, Objeto_CadPessoa;
 
 procedure TControle.getCadPessoa;
     var
-    id:integer;
     VCadPessoa:CadPessoa;
 
 begin
@@ -47,11 +30,8 @@ begin
          case(Cliente.getFuncao) of
             1: begin
                VCadPessoa.setnome(Cliente.edNome.Text);
-
+              // VCadPessoa.getLastId;
                VCadPessoa.insertDados;
-               id := VCadPessoa.getLastId;
-               self.getCadTipoPessoa(id);
-               ShowMessage(VCadPessoa.getLastId.ToString)
             end;
             2: begin
 
@@ -64,6 +44,5 @@ begin
       FreeAndNil(Cliente);
 
 end;
-
 
 end.
