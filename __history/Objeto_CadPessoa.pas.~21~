@@ -22,6 +22,7 @@ type CadPessoa = class
         function updateDados:Boolean;
         function deleteDados:Boolean;
         function selectDados:Boolean;
+        function getLastId:integer;
 end;
 
 implementation
@@ -35,7 +36,7 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into pessoa values( 0, :nome');
+  query.SQL.Add('insert into pessoa values( 0, :nome)');
 
   query.ParamByName('nome').AsString := self.getnome;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
@@ -150,6 +151,41 @@ end;
 function CadPessoa.getidPessoa: integer;
 begin
     result := self.idPessoa;
+end;
+
+function CadPessoa.getLastId: integer;
+var
+    query:TFDQuery;
+    id:integer;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('SELECT LAST_INSERT_ID(); ');
+
+      {id:=query.ParamByName('0').AsInteger; }
+
+      try
+        query.open;
+
+
+        if (not query.isEmpty) then
+          begin
+              {Alterar o valor do [] para a posição do atributo}
+              id :=query.Fields[1].AsInteger;
+              result :=id;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 function CadPessoa.getnome: string;

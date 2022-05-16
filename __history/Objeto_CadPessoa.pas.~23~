@@ -122,7 +122,7 @@ begin
 
   query.SQL.Add('Select * from pessoa where idPessoa = : idPessoa ');
 
-  query.ParamByName('idPessoa').AsInteger:= self.getidPessoa;
+  query.ParamByName('nome').AsInteger:= self.getidPessoa;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try

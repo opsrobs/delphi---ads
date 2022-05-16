@@ -8,7 +8,7 @@ TControle = class
 
   public
     procedure getCadPessoa;
-    procedure getCadTipoPessoa;
+    procedure getCadTipoPessoa(id:integer);
 end;
 
 implementation
@@ -17,16 +17,16 @@ implementation
 
 uses Form_CadPessoa, Objeto_CadPessoa, Objeto_CadPessoaFisica;
 
-procedure TControle.getCadTipoPessoa;
+procedure TControle.getCadTipoPessoa(id:integer);
 var
   VCadPessoa:CadPessoa;
   VCadPF:CadPessoaFisica;
   cadCliente:TCliente;
 begin
-    if (cadCliente.rdCNPJ.Checked.ToInteger = 0) then
+    if (cadCliente.rdCNPJ.Checked.ToString() = '0') then
       begin
          VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
-         VCadPF.setPessoa_idPessoa(VCadPessoa.getLastId);
+         VCadPF.setPessoa_idPessoa(id);
          VCadPF.insertDados;
       end;
 
@@ -34,6 +34,7 @@ end;
 
 procedure TControle.getCadPessoa;
     var
+    id:integer;
     VCadPessoa:CadPessoa;
 
 begin
@@ -48,7 +49,9 @@ begin
                VCadPessoa.setnome(Cliente.edNome.Text);
 
                VCadPessoa.insertDados;
-               self.getCadTipoPessoa;
+               id := VCadPessoa.getLastId;
+                ShowMessage(IntToStr(id)+ ' +++');
+               self.getCadTipoPessoa(id);
                ShowMessage(VCadPessoa.getLastId.ToString)
             end;
             2: begin
