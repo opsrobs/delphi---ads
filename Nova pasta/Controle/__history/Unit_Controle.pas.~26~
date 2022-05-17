@@ -23,19 +23,16 @@ var
   VCadPF:CadPessoaFisica;
   cadCliente:TCliente;
 begin
-    if (cadCliente.rdCNPJ.Checked.ToString() = '0') then
-      begin
-         VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
-         VCadPF.setPessoa_idPessoa(id);
-         VCadPF.insertDados;
-      end;
+
 
 end;
 
 procedure TControle.getCadPessoa;
     var
-    id:integer;
     VCadPessoa:CadPessoa;
+    id:integer;
+    VCadPF:CadPessoaFisica;
+    cadCliente:TCliente;
 
 begin
     if (Cliente = nil) then
@@ -44,15 +41,19 @@ begin
     if (Cliente.ShowModal = mrOk) then
       begin
           VCadPessoa := CadPessoa.Create;
+          VCadPF := CadPessoaFisica.Create;
          case(Cliente.getFuncao) of
             1: begin
                VCadPessoa.setnome(Cliente.edNome.Text);
-
                VCadPessoa.insertDados;
-               id := VCadPessoa.getLastId;
-                ShowMessage(IntToStr(id)+ ' +++');
-               self.getCadTipoPessoa(id);
-               ShowMessage(VCadPessoa.getLastId.ToString)
+                ShowMessage(IntToStr(VCadPessoa.getLastId)+ ' +++');
+
+               
+                VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
+                VCadPF.setPessoa_idPessoa(VCadPessoa.getLastId);
+                VCadPF.insertDados;
+
+
             end;
             2: begin
 

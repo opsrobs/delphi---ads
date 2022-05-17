@@ -19,8 +19,6 @@ object Cliente: TCliente
     Height = 408
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 624
-    ExplicitHeight = 400
     object nmConsultar: TSpeedButton
       Left = 280
       Top = 25
@@ -73,7 +71,6 @@ object Cliente: TCliente
     Height = 41
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 624
     object spButtonReturn: TSpeedButton
       Left = 16
       Top = 13

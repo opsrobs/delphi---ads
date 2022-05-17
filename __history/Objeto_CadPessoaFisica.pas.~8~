@@ -81,10 +81,9 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into pessoa_fisica values( 0, :cpf, :pessoa_idPessoa)');
+  query.SQL.Add('insert into pessoa_fisica values( 0, :cpf, :pessoa_idPessoa)');     //talvez aqui <-----
 
   query.ParamByName('cpf').AsString := self.getcpf;
-  query.ParamByName('pessoa_idPessoa').AsInteger := self.getPessoa_idPessoa;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try

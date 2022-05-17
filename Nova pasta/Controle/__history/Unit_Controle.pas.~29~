@@ -8,7 +8,6 @@ TControle = class
 
   public
     procedure getCadPessoa;
-    procedure getCadTipoPessoa(id:integer);
 end;
 
 implementation
@@ -17,25 +16,13 @@ implementation
 
 uses Form_CadPessoa, Objeto_CadPessoa, Objeto_CadPessoaFisica;
 
-procedure TControle.getCadTipoPessoa(id:integer);
-var
-  VCadPessoa:CadPessoa;
-  VCadPF:CadPessoaFisica;
-  cadCliente:TCliente;
-begin
-    if (cadCliente.rdCNPJ.Checked.ToString() = '0') then
-      begin
-         VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
-         VCadPF.setPessoa_idPessoa(id);
-         VCadPF.insertDados;
-      end;
 
-end;
 
 procedure TControle.getCadPessoa;
     var
-    id:integer;
     VCadPessoa:CadPessoa;
+    VCadPF:CadPessoaFisica;
+    cadCliente:TCliente;
 
 begin
     if (Cliente = nil) then
@@ -44,15 +31,19 @@ begin
     if (Cliente.ShowModal = mrOk) then
       begin
           VCadPessoa := CadPessoa.Create;
+          VCadPF := CadPessoaFisica.Create;
          case(Cliente.getFuncao) of
             1: begin
                VCadPessoa.setnome(Cliente.edNome.Text);
-               ShowMessage(IntToStr(VCadPessoa.getLastId)+ ' +++');
                VCadPessoa.insertDados;
-               id := VCadPessoa.getLastId;
+                ShowMessage(IntToStr(VCadPessoa.getLastId)+ ' +++');
 
-               self.getCadTipoPessoa(id);
-               ShowMessage(VCadPessoa.getLastId.ToString)
+               
+                VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
+                VCadPF.setPessoa_idPessoa(VCadPessoa.getLastId);
+                {VCadPF.insertDados;     }
+
+
             end;
             2: begin
 
