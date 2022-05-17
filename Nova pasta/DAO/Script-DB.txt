@@ -1,4 +1,7 @@
 -- MySQL Workbench Forward Engineering
+drop table if exists pedro_delphi;
+drop table if exists pedro_delphiii;
+drop table if exists logistica_ads;
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
