@@ -35,8 +35,6 @@ begin
             1: begin
                VCadPessoa.setnome(Cliente.edNome.Text);
                VCadPessoa.insertDados;
-                ShowMessage(IntToStr(VCadPessoa.getLastId)+ ' +++');
-
                
                 VCadPF.setcpf(Cliente.edCpfCnpj.Text);
                 VCadPF.setPessoa_idPessoa(VCadPessoa.getLastId);

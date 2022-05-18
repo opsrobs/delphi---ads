@@ -51,7 +51,7 @@ procedure TControle.validarPessoa(id: integer);
 begin
 ShowMessage(inttostr(Cliente.rdCNPJ.Checked.ToInteger));
 if (Cliente.rdCNPJ.Checked.ToInteger = 1) then
-      self.getCadPj(id);
+      self.getCadPfPj(id);
 
         self.getCadPf(id);
 

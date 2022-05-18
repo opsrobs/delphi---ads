@@ -8,37 +8,48 @@ TControle = class
 
   public
     procedure getCadPessoa;
-    procedure getCadTipoPessoa(id:integer);
+    procedure getCadPfPj(id:integer);
 end;
 
 implementation
 
 { TControle }
 
-uses Form_CadPessoa, Objeto_CadPessoa, Objeto_CadPessoaFisica;
+uses Form_CadPessoa,
+     Objeto_CadPessoa,
+     Objeto_CadPessoaFisica,
+     Objeto_CadPessoaJuridica;
 
-procedure TControle.getCadTipoPessoa(id:integer);
+
+
+
+procedure TControle.getCadPfPj(id:integer);
 var
-  VCadPessoa:CadPessoa;
-  VCadPF:CadPessoaFisica;
-  cadCliente:TCliente;
+      VCadPF:CadPessoaFisica;
+      VCadPJ:CadPessoaJuridica;
 begin
-    if (cadCliente.rdCNPJ.Checked.ToString() = '0') then
+    VCadPF := CadPessoaFisica.Create;
+    VCadPJ := CadPessoaJuridica.Create;
+    if (Cliente.rdCNPJ.Checked) then
       begin
-         VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
-         VCadPF.setPessoa_idPessoa(id);
-         VCadPF.insertDados;
+        VCadPJ.setcnpj(Cliente.edCpfCnpj.Text);
+        VCadPJ.setPessoa_idPessoa(id);
+        VCadPJ.insertDados;
       end;
-      VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
-      VCadPF.setPessoa_idPessoa(id);
-      VCadPF.insertDados;
+      if (not Cliente.rdCNPJ.Checked) then
+      begin
+        VCadPF.setcpf(Cliente.edCpfCnpj.Text);
+        VCadPF.setPessoa_idPessoa(id);
+        VCadPF.insertDados;
+      end;
+
 
 end;
 
 procedure TControle.getCadPessoa;
     var
-    id:integer;
     VCadPessoa:CadPessoa;
+
 
 begin
     if (Cliente = nil) then
@@ -51,11 +62,10 @@ begin
             1: begin
                VCadPessoa.setnome(Cliente.edNome.Text);
                VCadPessoa.insertDados;
-                ShowMessage(IntToStr(VCadPessoa.getLastId)+ ' +++');
-               id := VCadPessoa.getLastId;
 
-               self.getCadTipoPessoa(id);
-               ShowMessage(VCadPessoa.getLastId.ToString)
+               self.getCadPfPj(VCadPessoa.getLastId);
+
+
             end;
             2: begin
 
@@ -68,6 +78,7 @@ begin
       FreeAndNil(Cliente);
 
 end;
+
 
 
 end.

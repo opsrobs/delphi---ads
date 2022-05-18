@@ -5,6 +5,7 @@ interface
 type
 TControle = class
   private
+    procedure getCadPfPj(id: integer);
 
   public
     procedure getCadPessoa;
@@ -36,6 +37,14 @@ begin
     VCadPF.insertDados;
 end;
 
+procedure TControle.getCadPfPj(id: integer);
+begin
+    if (Cliente.rdCNPJ.Checked.ToInteger = 1) then
+      self.getCadPfPj(id)
+      else
+        self.getCadPf(id);
+end;
+
 procedure TControle.getCadPj(id:integer);
 var
     VCadPJ:CadPessoaJuridica;
@@ -49,11 +58,6 @@ end;
 
 procedure TControle.validarPessoa(id: integer);
 begin
-ShowMessage(inttostr(Cliente.rdCNPJ.Checked.ToInteger));
-if (Cliente.rdCNPJ.Checked.ToInteger = 1) then
-      self.getCadPj(id);
-
-        self.getCadPf(id);
 
 end;
 

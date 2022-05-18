@@ -36,7 +36,7 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into pessoa_juridica values( 0, :cnpj, :pessoa_idPessoa)');
+  query.SQL.Add('insert into pessoa_fisica values( 0, :cnpj, :pessoa_idPessoa)');
 
   query.ParamByName('cnpj').AsString := self.getcnpj;
   query.ParamByName('pessoa_idPessoa').AsInteger := self.getPessoa_idPessoa;

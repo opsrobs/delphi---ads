@@ -8,21 +8,41 @@ TControle = class
 
   public
     procedure getCadPessoa;
-    procedure getCadTipoPessoa(id:integer);
+    procedure getCadPfPj(id:integer);
 end;
 
 implementation
 
 { TControle }
 
-uses Form_CadPessoa, Objeto_CadPessoa, Objeto_CadPessoaFisica;
+uses Form_CadPessoa,
+     Objeto_CadPessoa,
+     Objeto_CadPessoaFisica,
+     Objeto_CadPessoaJuridica;
 
-procedure TControle.getCadTipoPessoa(id:integer);
+
+
+
+procedure TControle.getCadPfPj(id:integer);
 var
-  VCadPessoa:CadPessoa;
-  VCadPF:CadPessoaFisica;
-  cadCliente:TCliente;
+      VCadPF:CadPessoaFisica;
+      VCadPJ:CadPessoaJuridica;
 begin
+    if (Cliente = nil) then
+    Cliente := TCliente.Create(nil);
+    VCadPF := CadPessoaFisica.Create;
+    if (Cliente.rdCNPJ.Checked) then
+      begin
+        VCadPJ.setcnpj(Cliente.edCpfCnpj.Text);
+        VCadPJ.setPessoa_idPessoa(id);
+        VCadPJ.insertDados;
+      end;
+      if (not Cliente.rdCNPJ.Checked) then
+      begin
+        VCadPF.setcpf(Cliente.edCpfCnpj.Text);
+        VCadPF.setPessoa_idPessoa(id);
+        VCadPF.insertDados;
+      end;
 
 
 end;
@@ -30,9 +50,7 @@ end;
 procedure TControle.getCadPessoa;
     var
     VCadPessoa:CadPessoa;
-    id:integer;
-    VCadPF:CadPessoaFisica;
-    cadCliente:TCliente;
+
 
 begin
     if (Cliente = nil) then
@@ -41,17 +59,12 @@ begin
     if (Cliente.ShowModal = mrOk) then
       begin
           VCadPessoa := CadPessoa.Create;
-          VCadPF := CadPessoaFisica.Create;
          case(Cliente.getFuncao) of
             1: begin
                VCadPessoa.setnome(Cliente.edNome.Text);
                VCadPessoa.insertDados;
-                ShowMessage(IntToStr(VCadPessoa.getLastId)+ ' +++');
 
-               
-                VCadPF.setcpf(cadCliente.edCpfCnpj.Text);
-                VCadPF.setPessoa_idPessoa(VCadPessoa.getLastId);
-                VCadPF.insertDados;
+               self.getCadPfPj(VCadPessoa.getLastId);
 
 
             end;
@@ -66,6 +79,7 @@ begin
       FreeAndNil(Cliente);
 
 end;
+
 
 
 end.
