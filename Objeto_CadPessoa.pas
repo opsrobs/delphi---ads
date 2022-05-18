@@ -163,8 +163,6 @@ begin
 
   query.SQL.Add('SELECT LAST_INSERT_ID(); ');
 
-      {id:=query.ParamByName('0').AsInteger; }
-
       try
         query.open;
 

@@ -51,14 +51,16 @@ procedure TControle.validarPessoa(id: integer);
 begin
 if (Cliente.rdCNPJ.Checked) then
       self.getCadPj(id)
-    else if (not Cliente.rdCNPJ.Checked) then
-      self.getCadPf(id);
+      else
+        self.getCadPf(id);
 
 end;
 
 procedure TControle.getCadPessoa;
     var
     VCadPessoa:CadPessoa;
+
+
 begin
     if (Cliente = nil) then
       Cliente := TCliente.Create(nil);

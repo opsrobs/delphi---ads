@@ -8,8 +8,10 @@ TControle = class
 
   public
     procedure getCadPessoa;
-    procedure getCadPfPj(id:integer);
-end;
+    procedure getCadPf(id:integer);
+    procedure getCadPj(id:integer);
+    procedure validarPessoa(id:integer);
+    end;
 
 implementation
 
@@ -23,28 +25,34 @@ uses Form_CadPessoa,
 
 
 
-procedure TControle.getCadPfPj(id:integer);
+procedure TControle.getCadPf(id: integer);
 var
-      VCadPF:CadPessoaFisica;
-      VCadPJ:CadPessoaJuridica;
+    VCadPF:CadPessoaFisica;
 begin
-    if (Cliente = nil) then
-    Cliente := TCliente.Create(nil);
     VCadPF := CadPessoaFisica.Create;
-    VCadPJ := CadPessoaJuridica.Create;
-    if (Cliente.rdCNPJ.Checked) then
-      begin
-        VCadPJ.setcnpj(Cliente.edCpfCnpj.Text);
-        VCadPJ.setPessoa_idPessoa(id);
-        VCadPJ.insertDados;
-      end;
-      if (not Cliente.rdCNPJ.Checked) then
-      begin
-        VCadPF.setcpf(Cliente.edCpfCnpj.Text);
-        VCadPF.setPessoa_idPessoa(id);
-        VCadPF.insertDados;
-      end;
 
+    VCadPF.setcpf(Cliente.edCpfCnpj.Text);
+    VCadPF.setPessoa_idPessoa(id);
+    VCadPF.insertDados;
+end;
+
+procedure TControle.getCadPj(id:integer);
+var
+    VCadPJ:CadPessoaJuridica;
+begin
+    VCadPJ := CadPessoaJuridica.Create;
+
+    VCadPJ.setcnpj(Cliente.edCpfCnpj.Text);
+    VCadPJ.setPessoa_idPessoa(id);
+    VCadPJ.insertDados;
+end;
+
+procedure TControle.validarPessoa(id: integer);
+begin
+if (Cliente.rdCNPJ.Checked) then
+      self.getCadPj(id);
+
+        self.getCadPf(id);
 
 end;
 
@@ -65,7 +73,7 @@ begin
                VCadPessoa.setnome(Cliente.edNome.Text);
                VCadPessoa.insertDados;
 
-               self.getCadPfPj(VCadPessoa.getLastId);
+               self.validarPessoa(VCadPessoa.getLastId);
 
 
             end;

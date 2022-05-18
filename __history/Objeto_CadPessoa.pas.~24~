@@ -122,7 +122,7 @@ begin
 
   query.SQL.Add('Select * from pessoa where idPessoa = : idPessoa ');
 
-  query.ParamByName('nome').AsInteger:= self.getidPessoa;
+  query.ParamByName('idPessoa').AsInteger:= self.getidPessoa;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try
@@ -163,17 +163,17 @@ begin
 
   query.SQL.Add('SELECT LAST_INSERT_ID(); ');
 
-      id:=query.ParamByName('1').AsInteger;
+      {id:=query.ParamByName('0').AsInteger; }
 
       try
         query.open;
-        result :=id;
+
 
         if (not query.isEmpty) then
           begin
               {Alterar o valor do [] para a posição do atributo}
-              self.setnome(query.Fields[1].AsString);
-
+              id :=query.Fields[0].AsInteger;
+              result :=id;
           end;
       except
         on e:exception do
