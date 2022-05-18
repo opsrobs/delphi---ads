@@ -1,10 +1,9 @@
 unit Objeto_CadCliente;
 
 interface
-    uses
-    FireDAC.Comp.Client, Unit_Dados, System.SysUtils, Vcl.Dialogs;
 
-type CadCliente = class
+
+type Cliente = class
 
 private
       idcliente : integer;
@@ -24,28 +23,30 @@ end;
 
 implementation
 
-{ CadCliente }
+{ Cliente }
 
-function CadCliente.getidcliente: integer;
+function Cliente.getidcliente: integer;
 begin
     result := self.idcliente;
 end;
 
-function CadCliente.getPessoa_idPessoa: integer;
+function Cliente.getPessoa_idPessoa: integer;
 begin
     result := self.Pessoa_idPessoa;
 end;
 
-function CadCliente.insertDados: Boolean;
+function Cliente.insertDados: Boolean;
 var
     query:TFDQuery;
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into cliente values( 0, :pessoa_idPessoa)');
+  query.SQL.Add('insert into pessoa_juridica values( 0, :cnpj, :pessoa_idPessoa)');
 
+  query.ParamByName('cnpj').AsString := self.getcnpj;
   query.ParamByName('pessoa_idPessoa').AsInteger := self.getPessoa_idPessoa;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try
         query.ExecSQL;  {Insert service}
@@ -63,12 +64,12 @@ begin
 
 end;
 
-procedure CadCliente.setidcliente(idcliente: integer);
+procedure Cliente.setidcliente(idcliente: integer);
 begin
     self.idcliente := idcliente;
 end;
 
-procedure CadCliente.setPessoa_idPessoa(Pessoa_idPessoa: integer);
+procedure Cliente.setPessoa_idPessoa(Pessoa_idPessoa: integer);
 begin
     self.Pessoa_idPessoa := Pessoa_idPessoa;
 end;

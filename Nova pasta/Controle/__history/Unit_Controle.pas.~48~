@@ -1,7 +1,8 @@
 unit Unit_Controle;
 
 interface
-    uses System.SysUtils,Winapi.Messages, Vcl.Controls,Vcl.Dialogs;
+    uses System.SysUtils,Winapi.Messages,
+     Objeto_CadCliente, Vcl.Controls,Vcl.Dialogs;
 type
 TControle = class
   private
@@ -21,9 +22,6 @@ uses Form_CadPessoa,
      Objeto_CadPessoa,
      Objeto_CadPessoaFisica,
      Objeto_CadPessoaJuridica;
-
-
-
 
 procedure TControle.getCadPf(id: integer);
 var
@@ -52,7 +50,7 @@ begin
 if (Cliente.rdCNPJ.Checked) then
       self.getCadPj(id)
     else if (not Cliente.rdCNPJ.Checked) then
-        self.getCadPf(id);
+      self.getCadPf(id);
 
 end;
 

@@ -1,7 +1,7 @@
 unit Unit_Controle;
 
 interface
-    uses System.SysUtils,Winapi.Messages, Vcl.Controls,Vcl.Dialogs;
+    uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs;
 type
 TControle = class
   private
@@ -20,10 +20,8 @@ implementation
 uses Form_CadPessoa,
      Objeto_CadPessoa,
      Objeto_CadPessoaFisica,
-     Objeto_CadPessoaJuridica;
-
-
-
+     Objeto_CadPessoaJuridica,
+     Objeto_CadCliente;
 
 procedure TControle.getCadPf(id: integer);
 var
@@ -51,16 +49,15 @@ procedure TControle.validarPessoa(id: integer);
 begin
 if (Cliente.rdCNPJ.Checked) then
       self.getCadPj(id)
-      else
-        self.getCadPf(id);
+    else if (not Cliente.rdCNPJ.Checked) then
+      self.getCadPf(id);
 
 end;
 
 procedure TControle.getCadPessoa;
     var
     VCadPessoa:CadPessoa;
-
-
+    VCadCliente: CadCliente;
 begin
     if (Cliente = nil) then
       Cliente := TCliente.Create(nil);
@@ -68,12 +65,15 @@ begin
     if (Cliente.ShowModal = mrOk) then
       begin
           VCadPessoa := CadPessoa.Create;
+          VCadCliente := CadCliente;
          case(Cliente.getFuncao) of
             1: begin
                VCadPessoa.setnome(Cliente.edNome.Text);
                VCadPessoa.insertDados;
 
                self.validarPessoa(VCadPessoa.getLastId);
+               VCadCliente.setPessoa_idPessoa(VCadPessoa.getLastId);
+               VCadCliente.insertDados;
 
 
             end;
