@@ -5,7 +5,6 @@ interface
 type
 TControle = class
   private
-    procedure getCadPfPj(id: integer);
 
   public
     procedure getCadPessoa;
@@ -37,11 +36,6 @@ begin
     VCadPF.insertDados;
 end;
 
-procedure TControle.getCadPfPj(id: integer);
-begin
-
-end;
-
 procedure TControle.getCadPj(id:integer);
 var
     VCadPJ:CadPessoaJuridica;
@@ -55,18 +49,16 @@ end;
 
 procedure TControle.validarPessoa(id: integer);
 begin
-if (Cliente.rdCNPJ.Checked.ToInteger = 1) then
-      self.getCadPfPj(id)
-      else
-        self.getCadPf(id);
+if (Cliente.rdCNPJ.Checked) then
+      self.getCadPj(id)
+    else if (not Cliente.rdCNPJ.Checked) then
+      self.getCadPf(id);
 
 end;
 
 procedure TControle.getCadPessoa;
     var
     VCadPessoa:CadPessoa;
-
-
 begin
     if (Cliente = nil) then
       Cliente := TCliente.Create(nil);

@@ -2,6 +2,7 @@ unit Objeto_CadCliente;
 
 interface
 
+uses
 
 type Cliente = class
 

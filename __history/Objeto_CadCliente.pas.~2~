@@ -2,8 +2,10 @@ unit Objeto_CadCliente;
 
 interface
 
+uses
+    Objeto_CadPessoa;
 
-type Cliente = class
+type Cliente = class (CadPessoa)
 
 private
       idcliente : integer;
