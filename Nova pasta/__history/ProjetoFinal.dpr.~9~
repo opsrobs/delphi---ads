@@ -22,8 +22,7 @@ uses
   unit_ProjetoFinal in 'fontes\unit_ProjetoFinal.pas' {Frm_Principal},
   Form_CadPessoa in 'fontes\Form_CadPessoa.pas' {Cliente},
   Objeto_CadOrcamento in '..\Objeto_CadOrcamento.pas',
-  Unit_Controle in 'Controle\Unit_Controle.pas',
-  Form_CadFuncionario in 'fontes\Form_CadFuncionario.pas' {Funcionario};
+  Unit_Controle in 'Controle\Unit_Controle.pas';
 
 {$R *.res}
 
@@ -32,6 +31,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(Tdm_ProjetoFinal, dm_ProjetoFinal);
   Application.CreateForm(TFrm_Principal, Frm_Principal);
-  Application.CreateForm(TFuncionario, Funcionario);
   Application.Run;
 end.

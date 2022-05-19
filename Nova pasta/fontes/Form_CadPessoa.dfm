@@ -14,22 +14,24 @@ object Cliente: TCliente
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 41
+    Top = 65
     Width = 626
-    Height = 408
+    Height = 384
     Align = alClient
     TabOrder = 0
+    ExplicitTop = 33
+    ExplicitHeight = 408
     object nmConsultar: TSpeedButton
-      Left = 280
-      Top = 25
+      Left = 296
+      Top = 41
       Width = 57
       Height = 22
       Caption = 'Consultar'
       Images = dm_ProjetoFinal.Ibagensmainmenu
     end
     object edNome: TLabeledEdit
-      Left = 16
-      Top = 24
+      Left = 32
+      Top = 40
       Width = 241
       Height = 23
       EditLabel.Width = 33
@@ -42,8 +44,8 @@ object Cliente: TCliente
       Text = ''
     end
     object edCpfCnpj: TLabeledEdit
-      Left = 16
-      Top = 72
+      Left = 32
+      Top = 88
       Width = 241
       Height = 23
       EditLabel.Width = 53
@@ -56,8 +58,8 @@ object Cliente: TCliente
       Text = ''
     end
     object rdCNPJ: TRadioButton
-      Left = 280
-      Top = 75
+      Left = 296
+      Top = 91
       Width = 113
       Height = 17
       Caption = 'CNPJ'
@@ -68,14 +70,15 @@ object Cliente: TCliente
     Left = 0
     Top = 0
     Width = 626
-    Height = 41
+    Height = 65
     Align = alTop
     TabOrder = 1
     object spButtonReturn: TSpeedButton
       Left = 16
       Top = 13
-      Width = 113
+      Width = 137
       Height = 22
+      DisabledImageIndex = 1
       Caption = 'Retornar'
       ImageIndex = 0
       Images = dm_ProjetoFinal.Ibagensmainmenu

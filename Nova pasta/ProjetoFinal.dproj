@@ -134,6 +134,10 @@
         </DCCReference>
         <DCCReference Include="..\Objeto_CadOrcamento.pas"/>
         <DCCReference Include="Controle\Unit_Controle.pas"/>
+        <DCCReference Include="fontes\Form_CadFuncionario.pas">
+            <Form>Funcionario</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

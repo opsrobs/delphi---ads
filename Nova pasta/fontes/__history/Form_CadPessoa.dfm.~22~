@@ -2,8 +2,8 @@ object Cliente: TCliente
   Left = 0
   Top = 0
   Caption = 'Cadastros...'
-  ClientHeight = 441
-  ClientWidth = 624
+  ClientHeight = 449
+  ClientWidth = 626
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,8 +15,8 @@ object Cliente: TCliente
   object Panel1: TPanel
     Left = 0
     Top = 41
-    Width = 624
-    Height = 400
+    Width = 626
+    Height = 408
     Align = alClient
     TabOrder = 0
     object nmConsultar: TSpeedButton
@@ -55,11 +55,19 @@ object Cliente: TCliente
       TabOrder = 1
       Text = ''
     end
+    object rdCNPJ: TRadioButton
+      Left = 280
+      Top = 75
+      Width = 113
+      Height = 17
+      Caption = 'CNPJ'
+      TabOrder = 2
+    end
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
-    Width = 624
+    Width = 626
     Height = 41
     Align = alTop
     TabOrder = 1
@@ -68,8 +76,9 @@ object Cliente: TCliente
       Top = 13
       Width = 113
       Height = 22
+      DisabledImageIndex = 1
       Caption = 'Retornar'
-      ImageIndex = 0
+      ImageIndex = 1
       Images = dm_ProjetoFinal.Ibagensmainmenu
       Flat = True
       OnClick = spButtonReturnClick
