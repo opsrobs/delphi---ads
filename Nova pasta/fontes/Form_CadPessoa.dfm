@@ -11,6 +11,7 @@ object Cliente: TCliente
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
+  OnActivate = FormActivate
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -19,8 +20,6 @@ object Cliente: TCliente
     Height = 384
     Align = alClient
     TabOrder = 0
-    ExplicitTop = 33
-    ExplicitHeight = 408
     object nmConsultar: TSpeedButton
       Left = 296
       Top = 41
