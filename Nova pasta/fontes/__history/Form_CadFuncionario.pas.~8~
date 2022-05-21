@@ -14,17 +14,16 @@ type
     edCpfCnpj: TLabeledEdit;
     edNome: TLabeledEdit;
     nmConsultar: TSpeedButton;
+    rdCNPJ: TRadioButton;
     spButtonReturn: TSpeedButton;
     spDelete: TSpeedButton;
     spSalvar: TSpeedButton;
     procedure spButtonReturnClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
     procedure spSalvarClick(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
   private
   funcao:byte;
   function validarValoresFuncionario:Boolean;
-  procedure limpartela;
     { Private declarations }
 
   public
@@ -44,23 +43,9 @@ implementation
 
 { TFuncionario }
 
-procedure TFuncionario.FormActivate(Sender: TObject);
-begin
-    self.limpartela;
-end;
-
 function TFuncionario.getFuncao: byte;
 begin
     result := self.funcao;
-end;
-
-procedure TFuncionario.limpartela;
-begin
-    edCpfCnpj.Clear;
-    edNome.Clear;
-    spSalvar.Tag := 0;
-    edNome.SetFocus;
-
 end;
 
 procedure TFuncionario.setFuncao(funcao: byte);

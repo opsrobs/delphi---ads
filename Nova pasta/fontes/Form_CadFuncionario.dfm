@@ -10,6 +10,7 @@ object Funcionario: TFuncionario
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnActivate = FormActivate
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -91,14 +92,6 @@ object Funcionario: TFuncionario
       MaxLength = 100
       TabOrder = 1
       Text = ''
-    end
-    object rdCNPJ: TRadioButton
-      Left = 280
-      Top = 75
-      Width = 113
-      Height = 17
-      Caption = 'CNPJ'
-      TabOrder = 2
     end
   end
 end
