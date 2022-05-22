@@ -47,6 +47,11 @@ object frm_Funcionario: Tfrm_Funcionario
       Width = 122
       Height = 22
       Caption = 'Salvar'
+      ImageIndex = 0
+      ImageName = 'search'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 5
+      HotImageName = 'SVGIconVirtualImageListComponentIcon'
       Flat = True
       OnClick = spSalvarClick
     end
@@ -57,14 +62,23 @@ object frm_Funcionario: Tfrm_Funcionario
     Width = 618
     Height = 383
     Align = alClient
+    Caption = 'search'
     TabOrder = 1
     object nmConsultar: TSpeedButton
       Left = 280
-      Top = 25
-      Width = 57
-      Height = 22
+      Top = 14
+      Width = 97
+      Height = 33
       Caption = 'Consultar'
-      Images = dm_ProjetoFinal.Ibagensmainmenu
+      ImageIndex = 6
+      ImageName = 'file'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsItalic]
+      ParentFont = False
       OnClick = nmConsultarClick
     end
     object edCpfCnpj: TLabeledEdit

@@ -10,7 +10,8 @@ uses
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.Client, Data.DB,
   FireDAC.Comp.DataSet, System.ImageList, Vcl.ImgList, Vcl.Controls, REST.Types,
   REST.Response.Adapter, REST.Client, Data.Bind.Components,
-  Data.Bind.ObjectScope;
+  Data.Bind.ObjectScope, Vcl.BaseImageCollection, Vcl.ImageCollection,
+  Vcl.VirtualImageList;
 
 type
   Tdm_ProjetoFinal = class(TDataModule)
@@ -25,6 +26,8 @@ type
     RESTResponse1: TRESTResponse;
     RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
     MemTable: TFDMemTable;
+    VirtualImageList1: TVirtualImageList;
+    ImageCollection1: TImageCollection;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

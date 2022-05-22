@@ -1,7 +1,7 @@
 unit Unit_ControleFuncionario;
 
 interface
-uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,
+uses System.SysUtils,Winapi.Messages,Objeto_CadFuncionario,Vcl.Controls,Vcl.Dialogs,
      Objeto_CadPessoa,Unit_Controle;
   type
   TControle_Funcionario = class
@@ -10,12 +10,14 @@ uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,
     procedure getConsultaPessoas;
     procedure cadastrarPessoa;
     procedure cadastrarPessoaFisica(id:integer);
+    procedure cadastrarFuncionario(id:integer);
 
     private
 
   end;
   var
   VCadPessoa:CadPessoa;
+  VCadFuncionario: CadFuncionario;
 
 implementation
 
@@ -24,8 +26,16 @@ implementation
 uses Form_CadPessoa,
      Objeto_CadPessoaFisica,
      Objeto_CadPessoaJuridica,
-     Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados,
-  Objeto_CadFuncionario;
+     Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados;
+
+procedure TControle_Funcionario.cadastrarFuncionario(id: integer);
+begin
+    VCadFuncionario := CadFuncionario.Create;
+    VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
+    VCadFuncionario.setCnh(frm_Funcionario.edCnh.Text);
+    VCadFuncionario.setpessoa_fisica_idPessoa(id);
+    VCadFuncionario.insertDados;
+end;
 
 procedure TControle_Funcionario.cadastrarPessoa;
 begin
@@ -53,7 +63,6 @@ end;
 
 procedure TControle_Funcionario.getCadFuncionario;
 var
-    VCadFuncionario: CadFuncionario;
     idTemp:integer;
 begin
   if (frm_Funcionario = nil) then
@@ -61,19 +70,13 @@ begin
 
      if (frm_Funcionario.ShowModal = mrOk) then
      begin
-        VCadFuncionario := CadFuncionario.Create;
+
         case(frm_Funcionario.getFuncao)of
           1:begin
               self.cadastrarPessoa;
               self.cadastrarPessoaFisica(VCadPessoa.getLastId);
-
               idTemp := VCadPessoa.getLastId;
-              ShowMessage(IntToStr(idTemp));
-
-              VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
-              VCadFuncionario.setCnh(frm_Funcionario.edCnh.Text);
-              VCadFuncionario.setpessoa_fisica_idPessoa(idTemp);
-              VCadFuncionario.insertDados;
+              self.cadastrarFuncionario(idTemp)
 
           end;
           2:begin
