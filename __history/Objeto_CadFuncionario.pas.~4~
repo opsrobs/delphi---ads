@@ -63,7 +63,7 @@ begin
 
   query.ParamByName('pis').AsString := self.getPis;
   query.ParamByName('cnh').AsString := self.getCnh;
-  query.ParamByName('pessoa_fisica_idpessoa_fisica').AsInteger:= self.getpessoa_fisica_idPessoa;
+  query.ParamByName('pessoa_fisica_idpessoa_fisica').AsString := self.getpessoa_fisica_idPessoa;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try

@@ -64,9 +64,10 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('update pessoa set   nome = :nome');
+  query.SQL.Add('update pessoa set   nome = :nome where (idPessoa = :idPessoa)');
 
   query.ParamByName('nome').AsString := self.getnome;
+  query.ParamByName('idPessoa').AsInteger := self.getidPessoa;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try
