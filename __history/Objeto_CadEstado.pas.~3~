@@ -5,6 +5,7 @@ uses
     FireDAC.Comp.Client, Unit_Dados, System.SysUtils, Vcl.Dialogs;
 
   type CadEstado = class
+
   private
     idEstado: integer;
     nome_estado: string[45];

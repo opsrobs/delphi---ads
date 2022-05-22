@@ -15,7 +15,6 @@ TControle = class
     procedure capturandoJson;
     procedure validarPessoa(id:integer);
     procedure nomeEstado(uf:string);
-    procedure CadEstado;
     end;
 
 implementation
@@ -67,21 +66,21 @@ begin
     else if (UpperCase(uf)= 'AL' ) then
     frm_Cliente.lbEstado.Text :='Alagoas'
     else if (UpperCase(uf)= 'AP' ) then
-    frm_Cliente.lbEstado.Text :='Amap√°'
+    frm_Cliente.lbEstado.Text :='Amap·'
     else if (UpperCase(uf)= 'AM' ) then
     frm_Cliente.lbEstado.Text :='Amazonas'
     else if (UpperCase(uf)= 'BA' ) then
     frm_Cliente.lbEstado.Text :='Bahia'
     else if (UpperCase(uf)= 'CE' ) then
-    frm_Cliente.lbEstado.Text :='Cear√°'
+    frm_Cliente.lbEstado.Text :='Cear·'
     else if (UpperCase(uf)= 'DF' ) then
     frm_Cliente.lbEstado.Text :='Distrito Federal'
     else if (UpperCase(uf)= 'ES' ) then
-    frm_Cliente.lbEstado.Text :=' Esp√≠rito Santo'
+    frm_Cliente.lbEstado.Text :=' EspÌrito Santo'
     else if (UpperCase(uf)= 'GO' ) then
-    frm_Cliente.lbEstado.Text :='Goi√°s'
+    frm_Cliente.lbEstado.Text :='Goi·s'
     else if (UpperCase(uf)= 'MA' ) then
-    frm_Cliente.lbEstado.Text :='Maranh√£o'
+    frm_Cliente.lbEstado.Text :='Maranh„o'
     else if (UpperCase(uf)= 'MT' ) then
     frm_Cliente.lbEstado.Text :='Mato Grosso'
     else if (UpperCase(uf)= 'MS' ) then
@@ -89,15 +88,15 @@ begin
     else if (UpperCase(uf)= 'MG' ) then
     frm_Cliente.lbEstado.Text :='Minas Gerais'
     else if (UpperCase(uf)= 'PA' ) then
-    frm_Cliente.lbEstado.Text :='Par√°'
+    frm_Cliente.lbEstado.Text :='Par·'
     else if (UpperCase(uf)= 'PB' ) then
-    frm_Cliente.lbEstado.Text :='Para√≠ba '
+    frm_Cliente.lbEstado.Text :='ParaÌba '
     else if (UpperCase(uf)= 'PR' ) then
-    frm_Cliente.lbEstado.Text :='Paran√°'
+    frm_Cliente.lbEstado.Text :='Paran·'
     else if (UpperCase(uf)= 'PE' ) then
     frm_Cliente.lbEstado.Text :='Pernambuco'
     else if (UpperCase(uf)= 'PI' ) then
-    frm_Cliente.lbEstado.Text :='Piau√≠'
+    frm_Cliente.lbEstado.Text :='PiauÌ'
     else if (UpperCase(uf)= 'RJ' ) then
     frm_Cliente.lbEstado.Text :='Rio de Janeiro'
     else if (UpperCase(uf)= 'RN' ) then
@@ -105,13 +104,13 @@ begin
     else if (UpperCase(uf)= 'RS' ) then
     frm_Cliente.lbEstado.Text :='Rio Grande do Sul'
     else if (UpperCase(uf)= 'RO' ) then
-    frm_Cliente.lbEstado.Text :='Rond√¥nia'
+    frm_Cliente.lbEstado.Text :='RondÙnia'
     else if (UpperCase(uf)= 'RR' ) then
     frm_Cliente.lbEstado.Text :='Roraima'
     else if (UpperCase(uf)= 'SC' ) then
     frm_Cliente.lbEstado.Text :='Santa Catarina'
     else if (UpperCase(uf)= 'SP' ) then
-    frm_Cliente.lbEstado.Text :='S√£o Paulo'
+    frm_Cliente.lbEstado.Text :='S„o Paulo'
     else if (UpperCase(uf)= 'SE' ) then
     frm_Cliente.lbEstado.Text :='Sergipe'
     else
@@ -124,11 +123,6 @@ if (frm_Cliente.rdCNPJ.Checked) then
       self.getCadPj(id)
     else if (not frm_Cliente.rdCNPJ.Checked) then
       self.getCadPf(id);
-
-end;
-
-procedure TControle.CadEstado;
-begin
 
 end;
 

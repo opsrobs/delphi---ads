@@ -1,8 +1,7 @@
 unit Unit_Controle;
 
 interface
-    uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types,StrUtils,
-  Objeto_CadEstado;
+    uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types,StrUtils;
 type
 TControle = class
   private
@@ -16,10 +15,8 @@ TControle = class
     procedure capturandoJson;
     procedure validarPessoa(id:integer);
     procedure nomeEstado(uf:string);
-    procedure CadastroEstado;
+    procedure CadEstado;
     end;
-    var
-      VCadEstado:CadEstado;
 
 implementation
 
@@ -29,7 +26,8 @@ uses Form_CadPessoa,
      Objeto_CadPessoa,
      Objeto_CadPessoaFisica,
      Objeto_CadPessoaJuridica,
-     Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados;
+     Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados,
+  Objeto_CadEstado;
 
 procedure TControle.getCadPf(id: integer);
 var
@@ -80,7 +78,7 @@ begin
     else if (UpperCase(uf)= 'DF' ) then
     frm_Cliente.lbEstado.Text :='Distrito Federal'
     else if (UpperCase(uf)= 'ES' ) then
-    frm_Cliente.lbEstado.Text :='Espírito Santo'
+    frm_Cliente.lbEstado.Text :=' Espírito Santo'
     else if (UpperCase(uf)= 'GO' ) then
     frm_Cliente.lbEstado.Text :='Goiás'
     else if (UpperCase(uf)= 'MA' ) then
@@ -130,17 +128,13 @@ if (frm_Cliente.rdCNPJ.Checked) then
 
 end;
 
-procedure TControle.CadastroEstado;
+procedure TControle.CadEstado;
 begin
-  VCadEstado:=CadEstado.Create;
-
-  VCadEstado.setNome_estado(frm_Cliente.lbEstado.Text);
-  VCadEstado.setuf(frm_Cliente.lbUnidadeFederativa.Text);
-  VCadEstado.insertDados;
 end;
 
 procedure TControle.capturandoJson;
 begin
+    //frm_Cliente.lbEstado.Text := dm_ProjetoFinal.MemTable.FieldByName('Estado').AsString;
     self.nomeEstado(dm_ProjetoFinal.MemTable.FieldByName('uf').AsString);
     frm_Cliente.lbBairro.Text := dm_ProjetoFinal.MemTable.FieldByName('bairro').AsString;
     frm_Cliente.lbCidade.Text := dm_ProjetoFinal.MemTable.FieldByName('localidade').AsString;
@@ -169,8 +163,7 @@ begin
                idTemp := VCadPessoa.getLastId;
                self.validarPessoa(idTemp);
                VCadCliente.setPessoa_idPessoa(idTemp);
-               VCadCliente.insertDados;
-               self.CadastroEstado;
+               VCadCliente.insertDados
 
             end;
             2: begin

@@ -16,11 +16,11 @@ TControle = class
     procedure capturandoJson;
     procedure validarPessoa(id:integer);
     procedure nomeEstado(uf:string);
-    procedure CadastroEstado;
+    procedure CadEstado;
     end;
-    var
-      VCadEstado:CadEstado;
 
+    var
+    VCadEstado:CadEstado;
 implementation
 
 { TControle }
@@ -130,17 +130,14 @@ if (frm_Cliente.rdCNPJ.Checked) then
 
 end;
 
-procedure TControle.CadastroEstado;
+procedure TControle.CadEstado;
 begin
   VCadEstado:=CadEstado.Create;
-
-  VCadEstado.setNome_estado(frm_Cliente.lbEstado.Text);
-  VCadEstado.setuf(frm_Cliente.lbUnidadeFederativa.Text);
-  VCadEstado.insertDados;
 end;
 
 procedure TControle.capturandoJson;
 begin
+    //frm_Cliente.lbEstado.Text := dm_ProjetoFinal.MemTable.FieldByName('Estado').AsString;
     self.nomeEstado(dm_ProjetoFinal.MemTable.FieldByName('uf').AsString);
     frm_Cliente.lbBairro.Text := dm_ProjetoFinal.MemTable.FieldByName('bairro').AsString;
     frm_Cliente.lbCidade.Text := dm_ProjetoFinal.MemTable.FieldByName('localidade').AsString;
@@ -169,8 +166,7 @@ begin
                idTemp := VCadPessoa.getLastId;
                self.validarPessoa(idTemp);
                VCadCliente.setPessoa_idPessoa(idTemp);
-               VCadCliente.insertDados;
-               self.CadastroEstado;
+               VCadCliente.insertDados
 
             end;
             2: begin

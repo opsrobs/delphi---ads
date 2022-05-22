@@ -18,8 +18,6 @@ TControle = class
     procedure nomeEstado(uf:string);
     procedure CadastroEstado;
     end;
-    var
-      VCadEstado:CadEstado;
 
 implementation
 
@@ -131,6 +129,8 @@ if (frm_Cliente.rdCNPJ.Checked) then
 end;
 
 procedure TControle.CadastroEstado;
+var
+VCadEstado:CadEstado;
 begin
   VCadEstado:=CadEstado.Create;
 
@@ -169,8 +169,7 @@ begin
                idTemp := VCadPessoa.getLastId;
                self.validarPessoa(idTemp);
                VCadCliente.setPessoa_idPessoa(idTemp);
-               VCadCliente.insertDados;
-               self.CadastroEstado;
+               VCadCliente.insertDados
 
             end;
             2: begin
