@@ -15,28 +15,29 @@ object frm_Cliente: Tfrm_Cliente
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
-    Top = 65
+    Top = 0
     Width = 626
     Height = 384
     Align = alClient
     TabOrder = 0
-    object SpeedButton1: TSpeedButton
-      Left = 200
+    ExplicitTop = 65
+    object spConsultaCep: TSpeedButton
+      Left = 311
       Top = 144
       Width = 73
       Height = 22
       Caption = 'Buscar CEP'
-      OnClick = SpeedButton1Click
+      OnClick = spConsultaCepClick
     end
     object Label1: TLabel
-      Left = 32
+      Left = 143
       Top = 120
       Width = 21
       Height = 15
       Caption = 'CEP'
     end
     object edNome: TLabeledEdit
-      Left = 32
+      Left = 143
       Top = 40
       Width = 241
       Height = 23
@@ -50,7 +51,7 @@ object frm_Cliente: Tfrm_Cliente
       Text = ''
     end
     object edCpfCnpj: TLabeledEdit
-      Left = 32
+      Left = 143
       Top = 88
       Width = 241
       Height = 23
@@ -64,7 +65,7 @@ object frm_Cliente: Tfrm_Cliente
       Text = ''
     end
     object rdCNPJ: TRadioButton
-      Left = 296
+      Left = 407
       Top = 91
       Width = 113
       Height = 17
@@ -72,32 +73,99 @@ object frm_Cliente: Tfrm_Cliente
       TabOrder = 2
     end
     object MaskCep: TMaskEdit
-      Left = 32
+      Left = 143
       Top = 141
-      Width = 145
+      Width = 144
       Height = 25
-      EditMask = '     \-    ;1;_'
+      EditMask = '00000\-000;0;_'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Segoe UI'
       Font.Style = []
-      MaxLength = 10
+      MaxLength = 9
       ParentFont = False
       TabOrder = 3
-      Text = '     -    '
+      Text = ''
+    end
+    object lbRua: TLabeledEdit
+      Left = 143
+      Top = 336
+      Width = 145
+      Height = 23
+      EditLabel.Width = 20
+      EditLabel.Height = 15
+      EditLabel.Caption = 'Rua'
+      TabOrder = 4
+      Text = ''
+    end
+    object lbNumero: TLabeledEdit
+      Left = 311
+      Top = 336
+      Width = 73
+      Height = 23
+      EditLabel.Width = 14
+      EditLabel.Height = 15
+      EditLabel.Caption = 'N'#186
+      TabOrder = 5
+      Text = ''
+    end
+    object lbCidade: TLabeledEdit
+      Left = 143
+      Top = 288
+      Width = 145
+      Height = 23
+      EditLabel.Width = 37
+      EditLabel.Height = 15
+      EditLabel.Caption = 'Cidade'
+      TabOrder = 6
+      Text = ''
+    end
+    object lbEstado: TLabeledEdit
+      Left = 143
+      Top = 192
+      Width = 145
+      Height = 23
+      EditLabel.Width = 35
+      EditLabel.Height = 15
+      EditLabel.Caption = 'Estado'
+      TabOrder = 7
+      Text = ''
+    end
+    object lbUnidadeFederativa: TLabeledEdit
+      Left = 311
+      Top = 192
+      Width = 73
+      Height = 23
+      EditLabel.Width = 14
+      EditLabel.Height = 15
+      EditLabel.Caption = 'UF'
+      TabOrder = 8
+      Text = ''
+    end
+    object lbBairro: TLabeledEdit
+      Left = 143
+      Top = 240
+      Width = 145
+      Height = 23
+      EditLabel.Width = 31
+      EditLabel.Height = 15
+      EditLabel.Caption = 'Bairro'
+      TabOrder = 9
+      Text = ''
     end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 0
+    Top = 384
     Width = 626
     Height = 65
-    Align = alTop
+    Align = alBottom
     TabOrder = 1
+    ExplicitTop = 0
     object spButtonReturn: TSpeedButton
-      Left = 16
-      Top = 13
+      Left = 80
+      Top = 21
       Width = 137
       Height = 22
       DisabledImageIndex = 1
@@ -108,8 +176,8 @@ object frm_Cliente: Tfrm_Cliente
       OnClick = spButtonReturnClick
     end
     object spSalvar: TSpeedButton
-      Left = 135
-      Top = 13
+      Left = 199
+      Top = 21
       Width = 122
       Height = 22
       Caption = 'Salvar'
@@ -117,8 +185,8 @@ object frm_Cliente: Tfrm_Cliente
       OnClick = spSalvarClick
     end
     object spDelete: TSpeedButton
-      Left = 263
-      Top = 13
+      Left = 327
+      Top = 21
       Width = 122
       Height = 22
       Caption = 'Excluir'
