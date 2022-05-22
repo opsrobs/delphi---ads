@@ -142,6 +142,7 @@
             <Form>frm_Consulta</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Controle\Unit_ControleFuncionario.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -20,14 +20,6 @@ object frm_Cliente: Tfrm_Cliente
     Height = 384
     Align = alClient
     TabOrder = 0
-    object nmConsultar: TSpeedButton
-      Left = 296
-      Top = 41
-      Width = 57
-      Height = 22
-      Caption = 'Consultar'
-      Images = dm_ProjetoFinal.Ibagensmainmenu
-    end
     object edNome: TLabeledEdit
       Left = 32
       Top = 40

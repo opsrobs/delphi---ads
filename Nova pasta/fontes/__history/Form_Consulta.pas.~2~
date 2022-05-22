@@ -1,0 +1,34 @@
+unit Form_Consulta;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Buttons, Vcl.StdCtrls,
+  Vcl.Mask;
+
+type
+  Tfrm_Consulta = class(TForm)
+    Panel1: TPanel;
+    spButtonReturn: TSpeedButton;
+    spSalvar: TSpeedButton;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    edPesquisa: TLabeledEdit;
+    lbResult: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_Consulta: Tfrm_Consulta;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit_Dados;
+
+end.

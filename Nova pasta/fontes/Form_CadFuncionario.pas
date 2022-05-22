@@ -21,6 +21,7 @@ type
     procedure spDeleteClick(Sender: TObject);
     procedure spSalvarClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure nmConsultarClick(Sender: TObject);
   private
   funcao:byte;
   function validarValoresFuncionario:Boolean;
@@ -39,6 +40,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses unit_ProjetoFinal;
 
 { TFuncionario }
 
@@ -61,6 +64,11 @@ begin
     spSalvar.Tag := 0;
     edNome.SetFocus;
 
+end;
+
+procedure Tfrm_Funcionario.nmConsultarClick(Sender: TObject);
+begin
+    Frm_Principal.ControleFuncionario.getConsultaPessoas;
 end;
 
 procedure Tfrm_Funcionario.setFuncao(funcao: byte);

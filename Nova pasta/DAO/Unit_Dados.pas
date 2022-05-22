@@ -16,6 +16,8 @@ type
     qrFinal: TFDQuery;
     FDTrFinal: TFDTransaction;
     Ibagensmainmenu: TImageList;
+    qrConsulta: TFDQuery;
+    dsConsulta: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

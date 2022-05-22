@@ -10,6 +10,7 @@ object frm_Funcionario: Tfrm_Funcionario
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnActivate = FormActivate
   TextHeight = 15
   object Panel1: TPanel
@@ -27,7 +28,7 @@ object frm_Funcionario: Tfrm_Funcionario
       Caption = 'Retornar'
       ImageIndex = 0
       Images = dm_ProjetoFinal.Ibagensmainmenu
-      HotImageIndex = 1
+      HotImageIndex = 5
       Flat = True
       OnClick = spButtonReturnClick
     end
@@ -64,6 +65,7 @@ object frm_Funcionario: Tfrm_Funcionario
       Height = 22
       Caption = 'Consultar'
       Images = dm_ProjetoFinal.Ibagensmainmenu
+      OnClick = nmConsultarClick
     end
     object edCpfCnpj: TLabeledEdit
       Left = 16

@@ -24,7 +24,8 @@ uses
   Objeto_CadOrcamento in '..\Objeto_CadOrcamento.pas',
   Unit_Controle in 'Controle\Unit_Controle.pas',
   Form_CadFuncionario in 'fontes\Form_CadFuncionario.pas' {frm_Funcionario},
-  Form_Consulta in 'fontes\Form_Consulta.pas' {frm_Consulta};
+  Form_Consulta in 'fontes\Form_Consulta.pas' {frm_Consulta},
+  Unit_ControleFuncionario in 'Controle\Unit_ControleFuncionario.pas';
 
 {$R *.res}
 
