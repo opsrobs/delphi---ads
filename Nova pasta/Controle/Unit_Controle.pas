@@ -21,7 +21,7 @@ uses Form_CadPessoa,
      Objeto_CadPessoa,
      Objeto_CadPessoaFisica,
      Objeto_CadPessoaJuridica,
-     Objeto_CadCliente;
+     Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados;
 
 procedure TControle.getCadPf(id: integer);
 var
@@ -83,6 +83,7 @@ begin
                end;
          end;
          VCadPessoa.Free;
+         VCadCliente.Free;
 
       end;
 
