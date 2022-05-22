@@ -1,31 +1,58 @@
 unit Unit_ControleFuncionario;
 
 interface
-uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs;
+uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,
+     Objeto_CadPessoa,Unit_Controle;
   type
   TControle_Funcionario = class
     public
     procedure getCadFuncionario;
     procedure getConsultaPessoas;
+    procedure cadastrarPessoa;
+    procedure cadastrarPessoaFisica(id:integer);
 
     private
+
   end;
+  var
+  VCadPessoa:CadPessoa;
 
 implementation
 
 { TControle_Funcionario }
 
 uses Form_CadPessoa,
-     Objeto_CadPessoa,
      Objeto_CadPessoaFisica,
      Objeto_CadPessoaJuridica,
      Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados,
   Objeto_CadFuncionario;
 
+procedure TControle_Funcionario.cadastrarPessoa;
+begin
+
+VCadPessoa := CadPessoa.Create;
+    VCadPessoa.setnome(frm_Funcionario.edNome.Text);
+      if (frm_Funcionario.spSalvar.Tag <> 0) then
+        begin
+          VCadPessoa.setidPessoa(frm_Funcionario.spSalvar.Tag);
+          VCadPessoa.updateDados;
+        end;
+      VCadPessoa.insertDados;
+end;
+
+procedure TControle_Funcionario.cadastrarPessoaFisica(id:integer);
+var
+      VCadPessoaFisica: CadPessoaFisica;
+begin
+    VCadPessoaFisica:= CadPessoaFisica.Create;
+  VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.Text);
+  VCadPessoaFisica.setPessoa_idPessoa(id);
+  VCadPessoaFisica.insertDados;
+
+end;
+
 procedure TControle_Funcionario.getCadFuncionario;
 var
-    VCadPessoa:CadPessoa;     //?
-    VCadCliente: CadCliente;  //?
     VCadFuncionario: CadFuncionario;
     idTemp:integer;
 begin
@@ -37,6 +64,16 @@ begin
         VCadFuncionario := CadFuncionario.Create;
         case(frm_Funcionario.getFuncao)of
           1:begin
+              self.cadastrarPessoa;
+              self.cadastrarPessoaFisica(VCadPessoa.getLastId);
+
+              idTemp := VCadPessoa.getLastId;
+              ShowMessage(IntToStr(idTemp));
+
+              VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
+              VCadFuncionario.setCnh(frm_Funcionario.edCnh.Text);
+              VCadFuncionario.setpessoa_fisica_idPessoa(idTemp);
+              VCadFuncionario.insertDados;
 
           end;
           2:begin
@@ -56,13 +93,14 @@ begin
    if frm_Consulta = nil then
       frm_Consulta := Tfrm_Consulta.Create(nil);
 
-  frm_Consulta.setSelectSQL('SELECT nome, cpf as CPF FROM pessoa p ,'+
-  ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by nome asc');
+  frm_Consulta.setSelectSQL('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'+
+  ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc');
 
   if frm_Consulta.ShowModal = mrOk then
   begin
-    frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[0].AsString;
-    frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
+    frm_Funcionario.spSalvar.Tag :=dm_ProjetoFinal.qrConsulta.Fields[0].AsInteger;
+    frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
+    frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString;
   end;
   FreeAndNil(frm_Consulta);
 

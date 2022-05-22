@@ -20,6 +20,21 @@ object frm_Cliente: Tfrm_Cliente
     Height = 384
     Align = alClient
     TabOrder = 0
+    object SpeedButton1: TSpeedButton
+      Left = 200
+      Top = 144
+      Width = 73
+      Height = 22
+      Caption = 'Buscar CEP'
+      OnClick = SpeedButton1Click
+    end
+    object Label1: TLabel
+      Left = 32
+      Top = 120
+      Width = 21
+      Height = 15
+      Caption = 'CEP'
+    end
     object edNome: TLabeledEdit
       Left = 32
       Top = 40
@@ -55,6 +70,22 @@ object frm_Cliente: Tfrm_Cliente
       Height = 17
       Caption = 'CNPJ'
       TabOrder = 2
+    end
+    object MaskCep: TMaskEdit
+      Left = 32
+      Top = 141
+      Width = 145
+      Height = 25
+      EditMask = '     \-    ;1;_'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      MaxLength = 10
+      ParentFont = False
+      TabOrder = 3
+      Text = '     -    '
     end
   end
   object Panel2: TPanel

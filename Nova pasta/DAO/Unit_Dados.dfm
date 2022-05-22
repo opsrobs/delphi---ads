@@ -1,8 +1,8 @@
 object dm_ProjetoFinal: Tdm_ProjetoFinal
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 288
-  Width = 411
+  Height = 552
+  Width = 697
   object FDFinal: TFDConnection
     Params.Strings = (
       'Database=Logistica_ads'
@@ -308,5 +308,41 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     DataSet = qrConsulta
     Left = 176
     Top = 8
+  end
+  object RESTClient1: TRESTClient
+    BaseURL = 'https://viacep.com.br/ws/01001000/json'
+    Params = <>
+    Left = 304
+    Top = 424
+  end
+  object RESTRequest1: TRESTRequest
+    AssignedValues = [rvConnectTimeout, rvReadTimeout]
+    Client = RESTClient1
+    Params = <>
+    Response = RESTResponse1
+    Left = 440
+    Top = 480
+  end
+  object RESTResponse1: TRESTResponse
+    Left = 160
+    Top = 464
+  end
+  object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
+    Dataset = MemTable
+    FieldDefs = <>
+    Response = RESTResponse1
+    Left = 552
+    Top = 392
+  end
+  object MemTable: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 408
+    Top = 368
   end
 end

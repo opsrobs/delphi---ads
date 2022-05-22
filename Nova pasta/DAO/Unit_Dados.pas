@@ -8,7 +8,9 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.Client, Data.DB,
-  FireDAC.Comp.DataSet, System.ImageList, Vcl.ImgList, Vcl.Controls;
+  FireDAC.Comp.DataSet, System.ImageList, Vcl.ImgList, Vcl.Controls, REST.Types,
+  REST.Response.Adapter, REST.Client, Data.Bind.Components,
+  Data.Bind.ObjectScope;
 
 type
   Tdm_ProjetoFinal = class(TDataModule)
@@ -18,6 +20,11 @@ type
     Ibagensmainmenu: TImageList;
     qrConsulta: TFDQuery;
     dsConsulta: TDataSource;
+    RESTClient1: TRESTClient;
+    RESTRequest1: TRESTRequest;
+    RESTResponse1: TRESTResponse;
+    RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
+    MemTable: TFDMemTable;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

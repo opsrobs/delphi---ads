@@ -143,6 +143,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Controle\Unit_ControleFuncionario.pas"/>
+        <DCCReference Include="..\Objeto_Utilitario.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -25,7 +25,8 @@ uses
   Unit_Controle in 'Controle\Unit_Controle.pas',
   Form_CadFuncionario in 'fontes\Form_CadFuncionario.pas' {frm_Funcionario},
   Form_Consulta in 'fontes\Form_Consulta.pas' {frm_Consulta},
-  Unit_ControleFuncionario in 'Controle\Unit_ControleFuncionario.pas';
+  Unit_ControleFuncionario in 'Controle\Unit_ControleFuncionario.pas',
+  Objeto_Utilitario in '..\Objeto_Utilitario.pas';
 
 {$R *.res}
 

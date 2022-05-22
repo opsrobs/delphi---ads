@@ -34,7 +34,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_Dados;
+uses Unit_Dados,Objeto_Utilitario;
 
 
 { Tfrm_Consulta }
@@ -47,6 +47,8 @@ begin
 
     Try
       dm_ProjetoFinal.qrConsulta.Open;
+      Tutilitario.ajustaTamnhoDbg(dbConsulta);
+      lbResult.Caption :='Resultados... ' + IntToStr(dm_ProjetoFinal.qrConsulta.RecordCount);
     except
       on e:exception do
       ShowMessage('Não foi possivel consultar os dados: '+e.ToString);

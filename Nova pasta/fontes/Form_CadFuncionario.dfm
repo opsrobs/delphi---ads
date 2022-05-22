@@ -95,5 +95,27 @@ object frm_Funcionario: Tfrm_Funcionario
       TabOrder = 1
       Text = ''
     end
+    object edPis: TLabeledEdit
+      Left = 16
+      Top = 120
+      Width = 241
+      Height = 23
+      EditLabel.Width = 16
+      EditLabel.Height = 15
+      EditLabel.Caption = 'PIS'
+      TabOrder = 2
+      Text = ''
+    end
+    object edCnh: TLabeledEdit
+      Left = 16
+      Top = 181
+      Width = 241
+      Height = 23
+      EditLabel.Width = 26
+      EditLabel.Height = 15
+      EditLabel.Caption = 'CNH'
+      TabOrder = 3
+      Text = ''
+    end
   end
 end
