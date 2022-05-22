@@ -47,9 +47,9 @@ end;
 
 procedure TControle.validarPessoa(id: integer);
 begin
-if (Cliente.rdCNPJ.Checked) then
+if (frm_Cliente.rdCNPJ.Checked) then
       self.getCadPj(id)
-    else if (not Cliente.rdCNPJ.Checked) then
+    else if (not frm_Cliente.rdCNPJ.Checked) then
       self.getCadPf(id);
 
 end;
@@ -60,28 +60,27 @@ procedure TControle.getCadPessoa;
     VCadCliente: CadCliente;
     idTemp:integer;
 begin
-    if (Cliente = nil) then
-      Cliente := TCliente.Create(nil);
+    if (frm_Cliente = nil) then
+      frm_Cliente := Tfrm_Cliente.Create(nil);
 
-    if (Cliente.ShowModal = mrOk) then
+    if (frm_Cliente.ShowModal = mrOk) then
       begin
           VCadPessoa := CadPessoa.Create;
           VCadCliente := CadCliente.create;
-         case(Cliente.getFuncao) of
+         case(frm_Cliente.getFuncao) of
             1: begin
-               VCadPessoa.setnome(Cliente.edNome.Text);
+               VCadPessoa.setnome(frm_Cliente.edNome.Text);
                VCadPessoa.insertDados;
-               idTemp := VCadPessoa.getLastId;
 
+               idTemp := VCadPessoa.getLastId;
                self.validarPessoa(idTemp);
                VCadCliente.setPessoa_idPessoa(idTemp);
-               VCadCliente.insertDados;
-
+               VCadCliente.insertDados
 
             end;
             2: begin
 
-            end;
+               end;
          end;
          VCadPessoa.Free;
 

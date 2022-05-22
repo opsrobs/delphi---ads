@@ -58,6 +58,7 @@ procedure TControle.getCadPessoa;
     var
     VCadPessoa:CadPessoa;
     VCadCliente: CadCliente;
+    idTemp:integer;
 begin
     if (Cliente = nil) then
       Cliente := TCliente.Create(nil);
@@ -65,21 +66,24 @@ begin
     if (Cliente.ShowModal = mrOk) then
       begin
           VCadPessoa := CadPessoa.Create;
-          VCadCliente := CadCliente;
+          VCadCliente := CadCliente.create;
          case(Cliente.getFuncao) of
             1: begin
                VCadPessoa.setnome(Cliente.edNome.Text);
-               VCadPessoa.insertDados;
+               if(Cliente.spSalvar.Tag=0)then
+               VCadPessoa.insertDados
+               else
+               VCadPessoa.updateDados;
 
-               self.validarPessoa(VCadPessoa.getLastId);
-               VCadCliente.setPessoa_idPessoa(VCadPessoa.getLastId);
-               VCadCliente.insertDados;
-
+               idTemp := VCadPessoa.getLastId;
+               self.validarPessoa(idTemp);
+               VCadCliente.setPessoa_idPessoa(idTemp);
+               VCadCliente.insertDados
 
             end;
             2: begin
 
-            end;
+               end;
          end;
          VCadPessoa.Free;
 

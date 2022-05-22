@@ -1,4 +1,4 @@
-object Cliente: TCliente
+object frm_Cliente: Tfrm_Cliente
   Left = 0
   Top = 0
   Caption = 'Cadastros...'

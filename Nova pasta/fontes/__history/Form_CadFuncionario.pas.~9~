@@ -8,7 +8,7 @@ uses
   Vcl.Mask;
 
 type
-  Tfrm_Funcionario = class(TForm)
+  TFuncionario = class(TForm)
     Panel1: TPanel;
     Panel2: TPanel;
     edCpfCnpj: TLabeledEdit;
@@ -34,7 +34,7 @@ type
   end;
 
 var
-  frm_Funcionario: Tfrm_Funcionario;
+  Funcionario: TFuncionario;
 
 implementation
 
@@ -44,17 +44,17 @@ implementation
 
 { TFuncionario }
 
-procedure Tfrm_Funcionario.FormActivate(Sender: TObject);
+procedure TFuncionario.FormActivate(Sender: TObject);
 begin
     self.limpartela;
 end;
 
-function Tfrm_Funcionario.getFuncao: byte;
+function TFuncionario.getFuncao: byte;
 begin
     result := self.funcao;
 end;
 
-procedure Tfrm_Funcionario.limpartela;
+procedure TFuncionario.limpartela;
 begin
     edCpfCnpj.Clear;
     edNome.Clear;
@@ -63,23 +63,23 @@ begin
 
 end;
 
-procedure Tfrm_Funcionario.setFuncao(funcao: byte);
+procedure TFuncionario.setFuncao(funcao: byte);
 begin
     self.funcao	 := funcao;
 end;
 
-procedure Tfrm_Funcionario.spButtonReturnClick(Sender: TObject);
+procedure TFuncionario.spButtonReturnClick(Sender: TObject);
 begin
         ModalResult := mrCancel;
 end;
 
-procedure Tfrm_Funcionario.spDeleteClick(Sender: TObject);
+procedure TFuncionario.spDeleteClick(Sender: TObject);
 begin
     self.setFuncao(2);
     ModalResult := mrOk;
 end;
 
-procedure Tfrm_Funcionario.spSalvarClick(Sender: TObject);
+procedure TFuncionario.spSalvarClick(Sender: TObject);
 begin
     if (not self.validarValoresFuncionario) then
        exit;
@@ -88,7 +88,7 @@ begin
       ModalResult := mrOK;
 end;
 
-function Tfrm_Funcionario.validarValoresFuncionario: Boolean;
+function TFuncionario.validarValoresFuncionario: Boolean;
 begin
 
 end;

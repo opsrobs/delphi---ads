@@ -1,4 +1,4 @@
-object frm_Funcionario: Tfrm_Funcionario
+object Funcionario: TFuncionario
   Left = 0
   Top = 0
   Caption = 'Cadastro de Funcionarios'

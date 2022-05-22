@@ -76,12 +76,10 @@ begin
                self.validarPessoa(idTemp);
                VCadCliente.setPessoa_idPessoa(idTemp);
                VCadCliente.insertDados;
-
-
             end;
             2: begin
 
-            end;
+               end;
          end;
          VCadPessoa.Free;
 

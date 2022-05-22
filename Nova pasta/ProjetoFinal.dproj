@@ -129,13 +129,17 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="fontes\Form_CadPessoa.pas">
-            <Form>Cliente</Form>
+            <Form>frm_Cliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\Objeto_CadOrcamento.pas"/>
         <DCCReference Include="Controle\Unit_Controle.pas"/>
         <DCCReference Include="fontes\Form_CadFuncionario.pas">
-            <Form>Funcionario</Form>
+            <Form>frm_Funcionario</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="fontes\Form_Consulta.pas">
+            <Form>frm_Consulta</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Base">
