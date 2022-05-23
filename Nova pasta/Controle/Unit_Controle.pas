@@ -2,7 +2,7 @@ unit Unit_Controle;
 
 interface
     uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types,StrUtils,
-  Objeto_CadEstado,  Objeto_CadCidade;
+  Objeto_CadEstado,Objeto_CadCidade, Objeto_CadBairro;
 type
 TControle = class
   private
@@ -18,10 +18,12 @@ TControle = class
     procedure nomeEstado(uf:string);
     procedure CadastroEstado;
     procedure CadastroCidade(idEstado:integer);
+    procedure cadastroBairro(idCidade:integer);
     end;
     var
       VCadEstado:CadEstado;
       VCadCidade:CadCidade;
+      VCadBairro:CadBairro;
 
 implementation
 
@@ -132,10 +134,19 @@ if (frm_Cliente.rdCNPJ.Checked) then
 
 end;
 
+procedure TControle.cadastroBairro(idCidade: integer);
+begin
+    VCadBairro := CadBairro.Create;
+    VCadBairro.setNome_Bairro(frm_Cliente.lbBairro.Text);
+    VCadBairro.setCidade_idCidade(idCidade);
+
+    VCadBairro.insertDados;
+end;
+
 procedure TControle.CadastroCidade(idEstado:integer);
 begin
    VCadCidade:=CadCidade.Create;
-   VCadCidade.setNome_cidade(frm_Cliente.edNome.Text);
+   VCadCidade.setNome_cidade(frm_Cliente.lbCidade.Text);
    VCadCidade.setEstado_idEstado(idEstado);
 
    VCadCidade.insertDados;
@@ -184,6 +195,9 @@ begin
                self.CadastroEstado;
                idTemp := VCadPessoa.getLastId;
                self.CadastroCidade(idTemp);
+               idTemp := VCadPessoa.getLastId;
+               ShowMessage(IntToStr(idTemp));
+               self.cadastroBairro(idTemp);
 
             end;
             2: begin

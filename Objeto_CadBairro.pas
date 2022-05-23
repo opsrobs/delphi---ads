@@ -3,9 +3,9 @@ unit Objeto_CadBairro;
 interface
 
 uses
- Objeto_CadCidade;
+    FireDAC.Comp.Client, Unit_Dados, System.SysUtils, Vcl.Dialogs;
 
-  type CadBairro = class(CadCidade)
+  type CadBairro = class
 
   private
     idBairro:integer;
@@ -18,6 +18,10 @@ uses
     function getNome_Bairro:string;
     procedure setCidade_idCidade(Cidade_idCidade:integer);
     function getCidade_idCidade:integer;
+
+     {<--- CRUD --->}
+
+        function insertDados:Boolean;
 end;
 
 implementation
@@ -37,6 +41,34 @@ end;
 function CadBairro.getNome_Bairro: string;
 begin
     result := self.nome_bairro;
+end;
+
+function CadBairro.insertDados: Boolean;
+  var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('insert into bairro values( 0, :nome_Bairro, :cidade_idCidade)');
+
+  query.ParamByName('nome_Bairro').AsString := self.getNome_Bairro;
+  query.ParamByName('cidade_idCidade').AsInteger := self.getCidade_idCidade;
+
+      try
+        query.ExecSQL;  {Insert service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao incluir Estado... : ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 procedure CadBairro.setCidade_idCidade(Cidade_idCidade: integer);
