@@ -26,9 +26,11 @@ object frm_Funcionario: Tfrm_Funcionario
       Width = 113
       Height = 22
       Caption = 'Retornar'
-      ImageIndex = 0
-      Images = dm_ProjetoFinal.Ibagensmainmenu
-      HotImageIndex = 5
+      ImageIndex = 14
+      ImageName = 'icons8-voltar'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 9
+      HotImageName = 'icons8-desfazer'
       Flat = True
       OnClick = spButtonReturnClick
     end
@@ -62,7 +64,6 @@ object frm_Funcionario: Tfrm_Funcionario
     Width = 618
     Height = 383
     Align = alClient
-    Caption = 'search'
     TabOrder = 1
     object nmConsultar: TSpeedButton
       Left = 280
@@ -70,9 +71,11 @@ object frm_Funcionario: Tfrm_Funcionario
       Width = 97
       Height = 33
       Caption = 'Consultar'
-      ImageIndex = 6
-      ImageName = 'file'
+      ImageIndex = 7
+      ImageName = '42-search-outline'
       Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 8
+      HotImageName = 'icons8-editar-propriedade'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -16

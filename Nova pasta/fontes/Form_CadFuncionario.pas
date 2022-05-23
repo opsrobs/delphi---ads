@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, Vcl.DBCtrls, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  REST.Response.Adapter, System.JSON;
+  REST.Response.Adapter, System.JSON, Vcl.ComCtrls;
 
 type
   Tfrm_Funcionario = class(TForm)

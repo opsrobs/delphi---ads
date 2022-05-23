@@ -20,13 +20,15 @@ object frm_Cliente: Tfrm_Cliente
     Height = 384
     Align = alClient
     TabOrder = 0
-    ExplicitTop = 65
     object spConsultaCep: TSpeedButton
       Left = 311
       Top = 144
       Width = 73
       Height = 22
       Caption = 'Buscar CEP'
+      ImageIndex = 7
+      ImageName = '42-search-outline'
+      Images = dm_ProjetoFinal.VirtualImageList1
       OnClick = spConsultaCepClick
     end
     object Label1: TLabel
@@ -162,7 +164,6 @@ object frm_Cliente: Tfrm_Cliente
     Height = 65
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 0
     object spButtonReturn: TSpeedButton
       Left = 80
       Top = 21
