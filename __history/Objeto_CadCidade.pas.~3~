@@ -61,7 +61,7 @@ begin
         on e:exception do
         begin
           Result := false;
-          showMessage('Erro ao incluir Cidade... : ' + e.ToString);
+          showMessage('Erro ao incluir Estado... : ' + e.ToString);
         end;
 
       end;
