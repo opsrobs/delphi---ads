@@ -47,7 +47,7 @@ var
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-  querySelect:='SELECT idCidade,count(*) FROM logistica_ads.cidade where (nome_cidade = "'+cidade+'" )';
+  querySelect:='SELECT idEstado,count(*) FROM logistica_ads.cidade where (nome_cidade = "'+cidade+'" )';
 
   query.SQL.Add(querySelect);
       try
@@ -61,7 +61,7 @@ begin
         on e:exception do
         begin
           Result := 0;
-          showMessage('Erro ao fazer consulta na cidade [<<<   Objeto_CadCidade   >>>] : '+cidade+' ' + e.ToString);
+          showMessage('Erro ao fazer consulta no estado : '+cidade+' ' + e.ToString);
         end;
 
       end;

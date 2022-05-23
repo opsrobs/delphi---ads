@@ -21,6 +21,7 @@ uses
 
         function insertDados:Boolean;
         function estadeExists(estado:string):integer;
+        function getIdEstade(estado:string):integer;
         function updateDados:Boolean;
 
   end;
@@ -29,23 +30,25 @@ implementation
 
 { CadEstado }
 
-function CadEstado.estadeExists(estado:string): integer;
+
+function CadEstado.getIdEstade(estado:string): integer;
 var
     query:TFDQuery;
+    querySelect:string;
     id:integer;
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
+  querySelect:='SELECT idEstado,count(*) FROM logistica_ads.estado where (nome_estado = "'+estado+'" )';
 
-  query.SQL.Add('SELECT count(nome_estado) FROM logistica_ads.estado where (nome_estado = Santa Catarina)');
-
+  query.SQL.Add(querySelect);
       try
         query.open;
 
 
         if (not query.isEmpty) then
           begin
-              query.ParamByName('nome_estado').AsString := self.getNome_estado;
+              //query.ParamByName('nome_estado').AsString := self.getNome_estado;
               {Alterar o valor do [] para a posição do atributo}
               id :=query.Fields[0].AsInteger;
               result :=id;
@@ -129,10 +132,11 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('update estado set  nome_estado = :nome_estado, =:uf  where (nome_estado = :nome_estado)');
+  query.SQL.Add('update estado set uf =:uf  where (nome_estado = :nome_estado)');
 
-  query.ParamByName('nome_estado').AsString := self.getNome_estado;
   query.ParamByName('uf').AsString := self.getuf;
+  query.ParamByName('nome_estado').AsString := self.getNome_estado;
+
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try

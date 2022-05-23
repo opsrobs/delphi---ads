@@ -2,7 +2,7 @@ unit Unit_Controle;
 
 interface
     uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types,StrUtils,
-  Objeto_CadEstado,Objeto_CadCidade, Objeto_CadBairro;
+  Objeto_CadEstado,Objeto_CadCidade, Objeto_CadBairro, Objeto_CadEndereco;
 type
 TControle = class
   private
@@ -17,13 +17,15 @@ TControle = class
     procedure validarPessoa(id:integer);
     procedure nomeEstado(uf:string);
     procedure CadastroEstado;
-    procedure CadastroCidade(idEstado:integer);
+    procedure CadastroCidade;
     procedure cadastroBairro(idCidade:integer);
+    procedure cadastroEndereco(idpessoa, idbairro:integer);
     end;
     var
       VCadEstado:CadEstado;
       VCadCidade:CadCidade;
       VCadBairro:CadBairro;
+      VCadEndereco:CadEndereco;
 
 implementation
 
@@ -138,18 +140,38 @@ procedure TControle.cadastroBairro(idCidade: integer);
 begin
     VCadBairro := CadBairro.Create;
     VCadBairro.setNome_Bairro(frm_Cliente.lbBairro.Text);
-    VCadBairro.setIdBairro(idCidade);
+    VCadBairro.setCidade_idCidade(idCidade);
 
     VCadBairro.insertDados;
 end;
 
-procedure TControle.CadastroCidade(idEstado:integer);
+procedure TControle.CadastroCidade();
+var
+  idestado:integer;
 begin
+   idestado:= VCadEstado.getIdEstade(frm_Cliente.lbEstado.Text);
    VCadCidade:=CadCidade.Create;
    VCadCidade.setNome_cidade(frm_Cliente.lbCidade.Text);
    VCadCidade.setEstado_idEstado(idEstado);
+   if (VCadCidade.getIdentificadrocidade(frm_Cliente.lbCidade.Text) <= 0) then
+    begin
+        VCadCidade.insertDados
+    end
+    else
+        VCadCidade.updateDados;
+end;
 
-   VCadCidade.insertDados;
+procedure TControle.cadastroEndereco(idpessoa, idbairro: integer);
+begin
+    VCadEndereco := CadEndereco.Create;
+    VCadEndereco.setCep(frm_Cliente.MaskCep.Text);
+    VCadEndereco.setRua(frm_Cliente.lbRua.Text);
+    VCadEndereco.setComplemto(frm_Cliente.lbComplemento.Text);
+    VCadEndereco.setnumero(StrToInt(frm_Cliente.lbNumero.Text));
+    VCadEndereco.setPessoa_idPessoa(idpessoa);
+    VCadEndereco.setBairro_idBairro(idbairro);
+
+    VCadEndereco.insertDados;
 end;
 
 procedure TControle.CadastroEstado;
@@ -158,7 +180,12 @@ begin
 
   VCadEstado.setNome_estado(frm_Cliente.lbEstado.Text);
   VCadEstado.setuf(frm_Cliente.lbUnidadeFederativa.Text);
-  VCadEstado.insertDados;
+  if (VCadEstado.getIdEstade(frm_Cliente.lbEstado.Text) <= 0) then
+    begin
+    VCadEstado.insertDados
+    end
+    else
+    VCadEstado.updateDados;
 end;
 
 procedure TControle.capturandoJson;
@@ -175,6 +202,7 @@ procedure TControle.getCadPessoa;
     VCadPessoa:CadPessoa;
     VCadCliente: CadCliente;
     idTemp:integer;
+    idPessoa:integer;
 begin
     if (frm_Cliente = nil) then
       frm_Cliente := Tfrm_Cliente.Create(nil);
@@ -187,17 +215,16 @@ begin
             1: begin
                VCadPessoa.setnome(frm_Cliente.edNome.Text);
                VCadPessoa.insertDados;
-
-               idTemp := VCadPessoa.getLastId;
-               self.validarPessoa(idTemp);
-               VCadCliente.setPessoa_idPessoa(idTemp);
+               idPessoa:= VCadPessoa.getLastId;                      //Capturando o ID da pessoa
+               self.validarPessoa(idPessoa);                           //Passando ID para o tipo de pessoa a ser cadastrada
+               VCadCliente.setPessoa_idPessoa(idPessoa);
                VCadCliente.insertDados;
                self.CadastroEstado;
-               idTemp := VCadPessoa.getLastId;
-               self.CadastroCidade(idTemp);
+               self.CadastroCidade();
                idTemp := VCadPessoa.getLastId;
                ShowMessage(IntToStr(idTemp));
                self.cadastroBairro(idTemp);
+               self.cadastroEndereco(idPessoa,VCadPessoa.getLastId);
 
             end;
             2: begin

@@ -17,9 +17,9 @@ TControle = class
     procedure validarPessoa(id:integer);
     procedure nomeEstado(uf:string);
     procedure CadastroEstado;
-    procedure CadastroCidade(idEstado:integer);
-    procedure cadastroBairro(idCidade:integer);
-    procedure cadastroEndereco(idpessoa, idbairro:integer);
+    procedure CadastroCidade;
+    procedure cadastroBairro;
+    procedure cadastroEndereco(idpessoa:integer);
     end;
     var
       VCadEstado:CadEstado;
@@ -136,26 +136,43 @@ if (frm_Cliente.rdCNPJ.Checked) then
 
 end;
 
-procedure TControle.cadastroBairro(idCidade: integer);
+procedure TControle.cadastroBairro;
+var
+  idCidade:integer;
 begin
+    idCidade:=VCadCidade.getIdentificadrocidade(frm_Cliente.lbCidade.Text);
     VCadBairro := CadBairro.Create;
     VCadBairro.setNome_Bairro(frm_Cliente.lbBairro.Text);
     VCadBairro.setCidade_idCidade(idCidade);
-
-    VCadBairro.insertDados;
+   if (VCadBairro.getIdentificadorBairro(frm_Cliente.lbBairro.Text) <= 0) then
+    begin
+        VCadBairro.insertDados
+    end
+    else
+        VCadBairro.updateDados;
 end;
 
-procedure TControle.CadastroCidade(idEstado:integer);
+procedure TControle.CadastroCidade();
+var
+  idestado:integer;
 begin
+   idestado:= VCadEstado.getIdEstade(frm_Cliente.lbEstado.Text);
    VCadCidade:=CadCidade.Create;
    VCadCidade.setNome_cidade(frm_Cliente.lbCidade.Text);
    VCadCidade.setEstado_idEstado(idEstado);
-
-   VCadCidade.insertDados;
+   if (VCadCidade.getIdentificadrocidade(frm_Cliente.lbCidade.Text) <= 0) then
+    begin
+        VCadCidade.insertDados
+    end
+    else
+        VCadCidade.updateDados;
 end;
 
-procedure TControle.cadastroEndereco(idpessoa, idbairro: integer);
+procedure TControle.cadastroEndereco(idpessoa:integer);
+var
+  idBairro:integer;
 begin
+    idBairro := VCadBairro.getIdentificadorBairro(frm_Cliente.lbBairro.Text);
     VCadEndereco := CadEndereco.Create;
     VCadEndereco.setCep(frm_Cliente.MaskCep.Text);
     VCadEndereco.setRua(frm_Cliente.lbRua.Text);
@@ -213,12 +230,10 @@ begin
                VCadCliente.setPessoa_idPessoa(idPessoa);
                VCadCliente.insertDados;
                self.CadastroEstado;
-               idTemp := VCadEstado.getIdEstade(frm_Cliente.lbEstado.Text);
-               self.CadastroCidade(idTemp);
-               idTemp := VCadPessoa.getLastId;
-               ShowMessage(IntToStr(idTemp));
-               self.cadastroBairro(idTemp);
-               self.cadastroEndereco(idPessoa,VCadPessoa.getLastId);
+               self.CadastroCidade();
+
+               self.cadastroBairro;
+               self.cadastroEndereco(idpessoa);
 
             end;
             2: begin

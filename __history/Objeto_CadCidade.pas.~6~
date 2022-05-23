@@ -19,8 +19,6 @@ type CadCidade = class
                                  {<<< CRUD >>>}
 
     function insertDados:boolean;
-    function updateDados:boolean;
-    function getIdentificadrocidade(cidade:string):integer;
 end;
 
 
@@ -37,37 +35,6 @@ end;
 function CadCidade.getIdCidade: integer;
 begin
     result := self.idCidade
-end;
-
-function CadCidade.getIdentificadrocidade(cidade: string): integer;
-var
-    query:TFDQuery;
-    querySelect:string;
-    id:integer;
-begin
-  query := TFDQuery.Create(nil);
-  query.Connection := dm_ProjetoFinal.FDFinal;
-  querySelect:='SELECT idCidade,count(*) FROM logistica_ads.cidade where (nome_cidade = "'+cidade+'" )';
-
-  query.SQL.Add(querySelect);
-      try
-        query.open;
-        if (not query.isEmpty) then
-          begin
-              id :=query.Fields[0].AsInteger;
-              result :=id;
-          end;
-      except
-        on e:exception do
-        begin
-          Result := 0;
-          showMessage('Erro ao fazer consulta na cidade [<<<   Objeto_CadCidade   >>>] : '+cidade+' ' + e.ToString);
-        end;
-
-      end;
-      query.Close;
-      query.Free;
-
 end;
 
 function CadCidade.getNome_ciade: string;
@@ -115,35 +82,6 @@ end;
 procedure CadCidade.setNome_cidade(nome_cidade: string);
 begin
     self.nome_cidade := nome_cidade;
-end;
-
-function CadCidade.updateDados: boolean;
-var
-    query:TFDQuery;
-begin
-  query := TFDQuery.Create(nil);
-  query.Connection := dm_ProjetoFinal.FDFinal;
-
-  query.SQL.Add('update cidade set   nome_cidade = :nome_cidade where (idCidade = :idCidade)');
-
-  query.ParamByName('nome_cidade').AsString := self.getNome_ciade;
-  query.ParamByName('idCidade').AsInteger := self.getIdCidade;
-      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
-
-      try
-        query.ExecSQL;  {update service}
-        result := true;
-      except
-        on e:exception do
-        begin
-          Result := false;
-          showMessage('Erro ao alterar dados da cidade [<<  Objeto_CadCidade  >>]: ' + e.ToString);
-        end;
-
-      end;
-      query.Close;
-      query.Free;
-
 end;
 
 end.

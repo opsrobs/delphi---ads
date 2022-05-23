@@ -173,7 +173,7 @@ begin
 
   VCadEstado.setNome_estado(frm_Cliente.lbEstado.Text);
   VCadEstado.setuf(frm_Cliente.lbUnidadeFederativa.Text);
-  if (VCadEstado.estadeExists(frm_Cliente.lbEstado.Text) = 0) then
+  if (VCadEstado.getIdEstade(frm_Cliente.lbEstado.Text) <= 0) then
     begin
     VCadEstado.insertDados
     end
@@ -208,13 +208,12 @@ begin
             1: begin
                VCadPessoa.setnome(frm_Cliente.edNome.Text);
                VCadPessoa.insertDados;
-               idPessoa:= VCadPessoa.getLastId;
-               idTemp := VCadPessoa.getLastId;
-               self.validarPessoa(idTemp);
-               VCadCliente.setPessoa_idPessoa(idTemp);
+               idPessoa:= VCadPessoa.getLastId;                      //Capturando o ID da pessoa
+               self.validarPessoa(idPessoa);                           //Passando ID para o tipo de pessoa a ser cadastrada
+               VCadCliente.setPessoa_idPessoa(idPessoa);
                VCadCliente.insertDados;
                self.CadastroEstado;
-               idTemp := VCadPessoa.getLastId;
+               idTemp := VCadEstado.getIdEstade(frm_Cliente.lbEstado.Text);
                self.CadastroCidade(idTemp);
                idTemp := VCadPessoa.getLastId;
                ShowMessage(IntToStr(idTemp));

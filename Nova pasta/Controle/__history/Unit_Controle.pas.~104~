@@ -17,7 +17,7 @@ TControle = class
     procedure validarPessoa(id:integer);
     procedure nomeEstado(uf:string);
     procedure CadastroEstado;
-    procedure CadastroCidade(idEstado:integer);
+    procedure CadastroCidade;
     procedure cadastroBairro(idCidade:integer);
     procedure cadastroEndereco(idpessoa, idbairro:integer);
     end;
@@ -145,13 +145,20 @@ begin
     VCadBairro.insertDados;
 end;
 
-procedure TControle.CadastroCidade(idEstado:integer);
+procedure TControle.CadastroCidade();
+var
+  idestado:integer;
 begin
+   idestado:= VCadEstado.getIdEstade(frm_Cliente.lbEstado.Text);
    VCadCidade:=CadCidade.Create;
    VCadCidade.setNome_cidade(frm_Cliente.lbCidade.Text);
    VCadCidade.setEstado_idEstado(idEstado);
-
-   VCadCidade.insertDados;
+   if (VCadCidade.getIdentificadrocidade(frm_Cliente.lbCidade.Text) <= 0) then
+    begin
+        VCadCidade.insertDados
+    end
+    else
+    VCadEstado.updateDados;
 end;
 
 procedure TControle.cadastroEndereco(idpessoa, idbairro: integer);
@@ -173,7 +180,7 @@ begin
 
   VCadEstado.setNome_estado(frm_Cliente.lbEstado.Text);
   VCadEstado.setuf(frm_Cliente.lbUnidadeFederativa.Text);
-  if (VCadEstado.estadeExists(frm_Cliente.lbEstado.Text) = 0) then
+  if (VCadEstado.getIdEstade(frm_Cliente.lbEstado.Text) <= 0) then
     begin
     VCadEstado.insertDados
     end
@@ -213,8 +220,7 @@ begin
                VCadCliente.setPessoa_idPessoa(idPessoa);
                VCadCliente.insertDados;
                self.CadastroEstado;
-               idTemp := VCadPessoa.getLastId;
-               self.CadastroCidade(idTemp);
+               self.CadastroCidade();
                idTemp := VCadPessoa.getLastId;
                ShowMessage(IntToStr(idTemp));
                self.cadastroBairro(idTemp);
