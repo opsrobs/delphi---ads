@@ -1,10 +1,11 @@
 unit Objeto_CadEndereco;
 
 interface
-  uses Objeto_CadBairro, Objeto_CadPessoa;
+  uses
+        FireDAC.Comp.Client, Unit_Dados, System.SysUtils, Vcl.Dialogs;
 
 
-  type CadEndereco = class(CadBairro) //Implementar CadPessoa como herança;
+  type CadEndereco = class
 
     private
       idEndereco:integer;
@@ -31,12 +32,48 @@ interface
       procedure setPessoa_idPessoa(Pessoa_idPessoa:integer);
       function getPessoa_idPessoa:integer;
 
+                          {<--- CRUD --->}
+
+        function insertDados:Boolean;
+
   end;
 
 
 implementation
 
 { CadEndereco }
+
+function CadEndereco.insertDados: Boolean;
+  var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('insert into endereco values( 0, :cep, :rua, :complemento, :numero, :bairro_idBairro, :pessoa_idPessoa)');
+
+  query.ParamByName('cep').AsString := self.getCep;
+  query.ParamByName('rua').AsString:= self.getRua;
+  query.ParamByName('complemento').AsString := self.getComplemento;
+  query.ParamByName('numero').AsInteger := self.getNumero;
+  query.ParamByName('bairro_idBairro').AsInteger := self.getBairro_idBairro;
+  query.ParamByName('pessoa_idPessoa').AsInteger  := self.getPessoa_idPessoa;
+
+      try
+        query.ExecSQL;  {Insert service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao incluir Endereco... : ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
+end;
 
 function CadEndereco.getBairro_idBairro: integer;
 begin

@@ -2,7 +2,7 @@ unit Unit_Controle;
 
 interface
     uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types,StrUtils,
-  Objeto_CadEstado,Objeto_CadCidade, Objeto_CadBairro;
+  Objeto_CadEstado,Objeto_CadCidade, Objeto_CadBairro, Objeto_CadEndereco;
 type
 TControle = class
   private
@@ -19,11 +19,13 @@ TControle = class
     procedure CadastroEstado;
     procedure CadastroCidade(idEstado:integer);
     procedure cadastroBairro(idCidade:integer);
+    procedure cadastroEndereco(idpessoa, idbairro:integer);
     end;
     var
       VCadEstado:CadEstado;
       VCadCidade:CadCidade;
       VCadBairro:CadBairro;
+      VCadEndereco:CadEndereco;
 
 implementation
 
@@ -152,6 +154,19 @@ begin
    VCadCidade.insertDados;
 end;
 
+procedure TControle.cadastroEndereco(idpessoa, idbairro: integer);
+begin
+    VCadEndereco := CadEndereco.Create;
+    VCadEndereco.setCep(frm_Cliente.MaskCep.Text);
+    VCadEndereco.setRua(frm_Cliente.lbRua.Text);
+    VCadEndereco.setComplemto(frm_Cliente.lbComplemento.Text);
+    VCadEndereco.setnumero(StrToInt(frm_Cliente.lbNumero.Text));
+    VCadEndereco.setPessoa_idPessoa(idpessoa);
+    VCadEndereco.setBairro_idBairro(idbairro);
+
+    VCadEndereco.insertDados;
+end;
+
 procedure TControle.CadastroEstado;
 begin
   VCadEstado:=CadEstado.Create;
@@ -175,6 +190,7 @@ procedure TControle.getCadPessoa;
     VCadPessoa:CadPessoa;
     VCadCliente: CadCliente;
     idTemp:integer;
+    idPessoa:integer;
 begin
     if (frm_Cliente = nil) then
       frm_Cliente := Tfrm_Cliente.Create(nil);
@@ -187,7 +203,7 @@ begin
             1: begin
                VCadPessoa.setnome(frm_Cliente.edNome.Text);
                VCadPessoa.insertDados;
-
+               idPessoa:= VCadPessoa.getLastId;
                idTemp := VCadPessoa.getLastId;
                self.validarPessoa(idTemp);
                VCadCliente.setPessoa_idPessoa(idTemp);
@@ -198,6 +214,7 @@ begin
                idTemp := VCadPessoa.getLastId;
                ShowMessage(IntToStr(idTemp));
                self.cadastroBairro(idTemp);
+               self.cadastroEndereco(idPessoa,VCadPessoa.getLastId);
 
             end;
             2: begin

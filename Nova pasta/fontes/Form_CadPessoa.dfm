@@ -22,7 +22,7 @@ object frm_Cliente: Tfrm_Cliente
     TabOrder = 0
     object spConsultaCep: TSpeedButton
       Left = 311
-      Top = 144
+      Top = 133
       Width = 73
       Height = 22
       Caption = 'Buscar CEP'
@@ -33,14 +33,14 @@ object frm_Cliente: Tfrm_Cliente
     end
     object Label1: TLabel
       Left = 143
-      Top = 120
+      Top = 109
       Width = 21
       Height = 15
       Caption = 'CEP'
     end
     object edNome: TLabeledEdit
       Left = 143
-      Top = 40
+      Top = 29
       Width = 241
       Height = 23
       EditLabel.Width = 33
@@ -54,7 +54,7 @@ object frm_Cliente: Tfrm_Cliente
     end
     object edCpfCnpj: TLabeledEdit
       Left = 143
-      Top = 88
+      Top = 77
       Width = 241
       Height = 23
       EditLabel.Width = 53
@@ -68,7 +68,7 @@ object frm_Cliente: Tfrm_Cliente
     end
     object rdCNPJ: TRadioButton
       Left = 407
-      Top = 91
+      Top = 80
       Width = 113
       Height = 17
       Caption = 'CNPJ'
@@ -76,7 +76,7 @@ object frm_Cliente: Tfrm_Cliente
     end
     object MaskCep: TMaskEdit
       Left = 143
-      Top = 141
+      Top = 130
       Width = 144
       Height = 25
       EditMask = '00000\-000;0;_'
@@ -92,7 +92,7 @@ object frm_Cliente: Tfrm_Cliente
     end
     object lbRua: TLabeledEdit
       Left = 143
-      Top = 336
+      Top = 325
       Width = 145
       Height = 23
       EditLabel.Width = 20
@@ -103,7 +103,7 @@ object frm_Cliente: Tfrm_Cliente
     end
     object lbNumero: TLabeledEdit
       Left = 311
-      Top = 336
+      Top = 325
       Width = 73
       Height = 23
       EditLabel.Width = 14
@@ -114,7 +114,7 @@ object frm_Cliente: Tfrm_Cliente
     end
     object lbCidade: TLabeledEdit
       Left = 143
-      Top = 288
+      Top = 229
       Width = 145
       Height = 23
       EditLabel.Width = 37
@@ -125,7 +125,7 @@ object frm_Cliente: Tfrm_Cliente
     end
     object lbEstado: TLabeledEdit
       Left = 143
-      Top = 192
+      Top = 181
       Width = 145
       Height = 23
       EditLabel.Width = 35
@@ -136,7 +136,7 @@ object frm_Cliente: Tfrm_Cliente
     end
     object lbUnidadeFederativa: TLabeledEdit
       Left = 311
-      Top = 192
+      Top = 181
       Width = 73
       Height = 23
       EditLabel.Width = 14
@@ -147,13 +147,24 @@ object frm_Cliente: Tfrm_Cliente
     end
     object lbBairro: TLabeledEdit
       Left = 143
-      Top = 240
+      Top = 277
       Width = 145
       Height = 23
       EditLabel.Width = 31
       EditLabel.Height = 15
       EditLabel.Caption = 'Bairro'
       TabOrder = 9
+      Text = ''
+    end
+    object lbComplemento: TLabeledEdit
+      Left = 407
+      Top = 325
+      Width = 113
+      Height = 23
+      EditLabel.Width = 77
+      EditLabel.Height = 15
+      EditLabel.Caption = 'Complemento'
+      TabOrder = 10
       Text = ''
     end
   end
