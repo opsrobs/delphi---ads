@@ -140,7 +140,7 @@ begin
         on e:exception do
         begin
           Result := false;
-          showMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
+          showMessage('Erro ao selecionar dados da pessoa ++++ : ' + e.ToString);
         end;
 
       end;

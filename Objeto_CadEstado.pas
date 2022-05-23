@@ -20,12 +20,85 @@ uses
      {<--- CRUD --->}
 
         function insertDados:Boolean;
+        function estadeExists(estado:string):integer;
+        function getIdEstade(estado:string):integer;
+        function updateDados:Boolean;
 
   end;
 
 implementation
 
 { CadEstado }
+
+function CadEstado.estadeExists(estado:string): integer;
+var
+    query:TFDQuery;
+    querySelect:string;
+    id:integer;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  querySelect:='SELECT count(*) FROM logistica_ads.estado where (nome_estado = "'+estado+'" )';
+
+  query.SQL.Add(querySelect);
+      try
+        query.open;
+
+
+        if (not query.isEmpty) then
+          begin
+              //query.ParamByName('nome_estado').AsString := self.getNome_estado;
+              {Alterar o valor do [] para a posição do atributo}
+              id :=query.Fields[0].AsInteger;
+              result :=id;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao fazer consulta no estado : '+estado+' ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
+end;
+
+function CadEstado.getIdEstade(estado:string): integer;
+var
+    query:TFDQuery;
+    querySelect:string;
+    id:integer;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  querySelect:='SELECT idEstado,count(*) FROM logistica_ads.estado where (nome_estado = "'+estado+'" )';
+
+  query.SQL.Add(querySelect);
+      try
+        query.open;
+
+
+        if (not query.isEmpty) then
+          begin
+              //query.ParamByName('nome_estado').AsString := self.getNome_estado;
+              {Alterar o valor do [] para a posição do atributo}
+              id :=query.Fields[0].AsInteger;
+              result :=id;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao fazer consulta no estado : '+estado+' ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
+end;
 
 function CadEstado.getidEstado: integer;
 begin
@@ -84,6 +157,36 @@ end;
 procedure CadEstado.setuf(uf: string);
 begin
     self.uf := uf;
+end;
+
+function CadEstado.updateDados: Boolean;
+var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('update estado set uf =:uf  where (nome_estado = :nome_estado)');
+
+  query.ParamByName('uf').AsString := self.getuf;
+  query.ParamByName('nome_estado').AsString := self.getNome_estado;
+
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {update service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao alterar dados do estado... : ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 end.
