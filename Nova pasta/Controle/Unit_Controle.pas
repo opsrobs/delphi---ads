@@ -2,7 +2,7 @@ unit Unit_Controle;
 
 interface
     uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types,StrUtils,
-  Objeto_CadEstado;
+  Objeto_CadEstado,  Objeto_CadCidade;
 type
 TControle = class
   private
@@ -17,10 +17,11 @@ TControle = class
     procedure validarPessoa(id:integer);
     procedure nomeEstado(uf:string);
     procedure CadastroEstado;
-    procedure CadastroCidade;
+    procedure CadastroCidade(idEstado:integer);
     end;
     var
       VCadEstado:CadEstado;
+      VCadCidade:CadCidade;
 
 implementation
 
@@ -131,9 +132,13 @@ if (frm_Cliente.rdCNPJ.Checked) then
 
 end;
 
-procedure TControle.CadastroCidade;
+procedure TControle.CadastroCidade(idEstado:integer);
 begin
+   VCadCidade:=CadCidade.Create;
+   VCadCidade.setNome_cidade(frm_Cliente.edNome.Text);
+   VCadCidade.setEstado_idEstado(idEstado);
 
+   VCadCidade.insertDados;
 end;
 
 procedure TControle.CadastroEstado;
@@ -178,6 +183,7 @@ begin
                VCadCliente.insertDados;
                self.CadastroEstado;
                idTemp := VCadPessoa.getLastId;
+               self.CadastroCidade(idTemp);
 
             end;
             2: begin

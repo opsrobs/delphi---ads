@@ -49,9 +49,9 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into cidade values( 0, :nome_cidade, :uf)');
+  query.SQL.Add('insert into cidade values( 0, :nome_cidade, :estado_idEstado)');
 
-  query.ParamByName('nome_estado').AsString := self.getNome_ciade;
+  query.ParamByName('nome_cidade').AsString := self.getNome_ciade;
   query.ParamByName('estado_idEstado').AsInteger := self.getEstado_idEstado;
 
       try
