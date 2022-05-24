@@ -28,6 +28,11 @@ type
     MemTable: TFDMemTable;
     VirtualImageList1: TVirtualImageList;
     ImageCollection1: TImageCollection;
+    RESTClient2: TRESTClient;
+    RESTRequest2: TRESTRequest;
+    RESTResponse2: TRESTResponse;
+    RESTResponseDataSetAdapter2: TRESTResponseDataSetAdapter;
+    MemTable_Pessoa: TFDMemTable;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

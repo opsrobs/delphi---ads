@@ -23,7 +23,7 @@ object frm_Cliente: Tfrm_Cliente
     object spConsultaCep: TSpeedButton
       Left = 311
       Top = 133
-      Width = 73
+      Width = 90
       Height = 22
       Caption = 'Buscar CEP'
       ImageIndex = 7
@@ -38,10 +38,23 @@ object frm_Cliente: Tfrm_Cliente
       Height = 15
       Caption = 'CEP'
     end
+    object SpeedButton1: TSpeedButton
+      Left = 416
+      Top = 29
+      Width = 32
+      Height = 26
+      ImageIndex = 17
+      ImageName = 'icons8-people'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 18
+      HotImageName = 'icons8-grupos-de-usu'#225'rios'
+      Flat = True
+      OnClick = SpeedButton1Click
+    end
     object edNome: TLabeledEdit
       Left = 143
       Top = 29
-      Width = 241
+      Width = 258
       Height = 23
       EditLabel.Width = 33
       EditLabel.Height = 15
@@ -55,7 +68,7 @@ object frm_Cliente: Tfrm_Cliente
     object edCpfCnpj: TLabeledEdit
       Left = 143
       Top = 77
-      Width = 241
+      Width = 258
       Height = 23
       EditLabel.Width = 53
       EditLabel.Height = 15
@@ -104,7 +117,7 @@ object frm_Cliente: Tfrm_Cliente
     object lbNumero: TLabeledEdit
       Left = 311
       Top = 325
-      Width = 73
+      Width = 90
       Height = 23
       EditLabel.Width = 14
       EditLabel.Height = 15
@@ -137,7 +150,7 @@ object frm_Cliente: Tfrm_Cliente
     object lbUnidadeFederativa: TLabeledEdit
       Left = 311
       Top = 181
-      Width = 73
+      Width = 90
       Height = 23
       EditLabel.Width = 14
       EditLabel.Height = 15
@@ -176,32 +189,42 @@ object frm_Cliente: Tfrm_Cliente
     Align = alBottom
     TabOrder = 1
     object spButtonReturn: TSpeedButton
-      Left = 80
+      Left = 112
       Top = 21
       Width = 137
       Height = 22
       DisabledImageIndex = 1
+      DisabledImageName = 'GetItLogo'
       Caption = 'Retornar'
-      ImageIndex = 0
-      Images = dm_ProjetoFinal.Ibagensmainmenu
+      ImageIndex = 14
+      ImageName = 'icons8-voltar'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 9
+      HotImageName = 'icons8-desfazer'
       Flat = True
       OnClick = spButtonReturnClick
     end
     object spSalvar: TSpeedButton
-      Left = 199
+      Left = 231
       Top = 21
       Width = 122
       Height = 22
       Caption = 'Salvar'
+      ImageIndex = 15
+      ImageName = 'icons8-ok'
+      Images = dm_ProjetoFinal.VirtualImageList1
       Flat = True
       OnClick = spSalvarClick
     end
     object spDelete: TSpeedButton
-      Left = 327
+      Left = 367
       Top = 21
       Width = 122
       Height = 22
       Caption = 'Excluir'
+      ImageIndex = 16
+      ImageName = 'icons8-res'#237'duos'
+      Images = dm_ProjetoFinal.VirtualImageList1
       Flat = True
       OnClick = spDeleteClick
     end

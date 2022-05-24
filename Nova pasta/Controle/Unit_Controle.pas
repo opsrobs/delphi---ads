@@ -6,6 +6,9 @@ interface
 type
 TControle = class
   private
+    procedure generatePerson;
+    function generateTypePerson:string;
+    function validateValue(numero:string):integer;
 
 
   public
@@ -13,6 +16,7 @@ TControle = class
     procedure getCadPf(id:integer);
     procedure getCadPj(id:integer);
     procedure loadingApiCep;
+    procedure loadingApiPessoa;
     procedure capturandoJson;
     procedure validarPessoa(id:integer);
     procedure nomeEstado(uf:string);
@@ -67,6 +71,32 @@ begin
     dm_ProjetoFinal.RESTRequest1.Params.AddUrlSegment('cep',frm_Cliente.MaskCep.Text);
     dm_ProjetoFinal.RESTRequest1.Execute;
     self.capturandoJson;
+end;
+
+procedure TControle.loadingApiPessoa;
+var
+  TOKEN:string;
+begin
+  TOKEN:= '840|pe0mPZFHzecgsxgmMfBPxDWpSOP3xBzI';
+    dm_ProjetoFinal.RESTClient2.BaseURL := 'https://api.invertexto.com/v1/faker?token='+TOKEN+'';
+    dm_ProjetoFinal.RESTRequest2.Execute;
+    self.generatePerson;
+end;
+
+procedure TControle.generatePerson;
+begin
+    frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('name').AsString;
+    frm_Cliente.edCpfCnpj.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName(self.generateTypePerson).AsString;
+    //inserrir aaqui
+end;
+
+function TControle.generateTypePerson: string;
+begin
+if (frm_Cliente.rdCNPJ.Checked) then
+      result := 'cnpj'
+    else if (not frm_Cliente.rdCNPJ.Checked) then
+            result := 'cpf'
+
 end;
 
 procedure TControle.nomeEstado(uf:string);
@@ -136,6 +166,14 @@ if (frm_Cliente.rdCNPJ.Checked) then
 
 end;
 
+function TControle.validateValue(numero:string): integer;
+begin
+    if frm_Cliente.lbNumero.Text = '' then
+      result :=0
+      else
+      StrToInt(frm_Cliente.lbNumero.Text)
+end;
+
 procedure TControle.cadastroBairro;
 var
   idCidade:integer;
@@ -177,7 +215,7 @@ begin
     VCadEndereco.setCep(frm_Cliente.MaskCep.Text);
     VCadEndereco.setRua(frm_Cliente.lbRua.Text);
     VCadEndereco.setComplemto(frm_Cliente.lbComplemento.Text);
-    VCadEndereco.setnumero(StrToInt(frm_Cliente.lbNumero.Text));
+    VCadEndereco.setnumero(self.validateValue(frm_Cliente.lbNumero.Text));
     VCadEndereco.setPessoa_idPessoa(idpessoa);
     VCadEndereco.setBairro_idBairro(idbairro);
 

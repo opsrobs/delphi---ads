@@ -48,7 +48,7 @@ var
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-  querySelect:='SELECT idBairro,count(*) FROM logistica_ads.cidade where (nome_Bairro = "'+bairro+'" )';
+  querySelect:='SELECT idBairro,count(*) FROM logistica_ads.bairro where (nome_Bairro = "'+bairro+'" )';
   query.SQL.Add(querySelect);
       try
         query.open;
@@ -61,7 +61,7 @@ begin
         on e:exception do
         begin
           Result := 0;
-          showMessage('Erro ao fazer consulta no bairro [<<<   Objeto_CadCidade   >>>] : '+bairro+' ' + e.ToString);
+          showMessage('Erro ao fazer consulta no bairro [<<<   Objeto_CadCadBairro>>>] : '+bairro+' ' + e.ToString);
         end;
 
       end;
@@ -94,7 +94,7 @@ begin
         on e:exception do
         begin
           Result := false;
-          showMessage('Erro ao incluir Estado... : ' + e.ToString);
+          showMessage('Erro ao incluir Bairro... : ' + e.ToString);
         end;
 
       end;

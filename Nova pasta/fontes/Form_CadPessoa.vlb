@@ -29,9 +29,6 @@ Coordinates=10,454,48,58
 [dm_ProjetoFinal.RESTClient1]
 Coordinates=442,10,186,80
 
-[spDelete]
-Coordinates=401,454,65,36
-
 [edCpfCnpj]
 Coordinates=546,386,75,58
 
@@ -72,5 +69,5 @@ Coordinates=813,386,55,58
 Coordinates=897,10,59,58
 
 []
-Coordinates=683,166,91,36
+Coordinates=401,454,65,36
 
