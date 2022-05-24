@@ -162,7 +162,7 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('SELECT LAST_INSERT_ID(); ');
+  query.SQL.Add('SELECT max(idpessoa) FROM logistica_ads.pessoa; ');
 
       try
         query.open;

@@ -23,11 +23,13 @@ type
     spSalvar: TSpeedButton;
     edPis: TLabeledEdit;
     edCnh: TLabeledEdit;
+    SpeedButton1: TSpeedButton;
     procedure spButtonReturnClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
     procedure spSalvarClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure nmConsultarClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
   funcao:byte;
   function validarValoresFuncionario:Boolean;
@@ -94,6 +96,11 @@ begin
     ModalResult := mrOk;
 end;
 
+
+procedure Tfrm_Funcionario.SpeedButton1Click(Sender: TObject);
+begin
+    Frm_Principal.ControleFuncionario.setDadosFuncionario;
+end;
 
 procedure Tfrm_Funcionario.spSalvarClick(Sender: TObject);
 begin

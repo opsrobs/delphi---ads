@@ -67,22 +67,36 @@ object frm_Funcionario: Tfrm_Funcionario
     TabOrder = 1
     object nmConsultar: TSpeedButton
       Left = 280
-      Top = 14
+      Top = 24
       Width = 97
-      Height = 33
+      Height = 23
       Caption = 'Consultar'
       ImageIndex = 7
       ImageName = '42-search-outline'
       Images = dm_ProjetoFinal.VirtualImageList1
       HotImageIndex = 8
       HotImageName = 'icons8-editar-propriedade'
+      Flat = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -12
       Font.Name = 'Segoe UI'
       Font.Style = [fsItalic]
       ParentFont = False
       OnClick = nmConsultarClick
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 383
+      Top = 21
+      Width = 32
+      Height = 26
+      ImageIndex = 17
+      ImageName = 'icons8-people'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 18
+      HotImageName = 'icons8-grupos-de-usu'#225'rios'
+      Flat = True
+      OnClick = SpeedButton1Click
     end
     object edCpfCnpj: TLabeledEdit
       Left = 16

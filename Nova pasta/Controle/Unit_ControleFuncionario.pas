@@ -11,13 +11,18 @@ uses System.SysUtils,Winapi.Messages,Objeto_CadFuncionario,Vcl.Controls,Vcl.Dial
     procedure cadastrarPessoa;
     procedure cadastrarPessoaFisica(id:integer);
     procedure cadastrarFuncionario(id:integer);
+    procedure setDadosFuncionario;
 
     private
+        procedure loadingApiPessoa;
+        procedure generatePerson;
 
   end;
   var
   VCadPessoa:CadPessoa;
   VCadFuncionario: CadFuncionario;
+  id_pessoaFisica:integer;
+
 
 implementation
 
@@ -28,7 +33,10 @@ uses Form_CadPessoa,
      Objeto_CadPessoaJuridica,
      Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados;
 
-procedure TControle_Funcionario.cadastrarFuncionario(id: integer);
+     var
+       VCadPessoaFisica:CadPessoaFisica;
+
+procedure TControle_Funcionario.cadastrarFuncionario(id:integer);
 begin
     VCadFuncionario := CadFuncionario.Create;
     VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
@@ -46,8 +54,10 @@ VCadPessoa := CadPessoa.Create;
         begin
           VCadPessoa.setidPessoa(frm_Funcionario.spSalvar.Tag);
           VCadPessoa.updateDados;
-        end;
-      VCadPessoa.insertDados;
+        end
+        else
+          VCadPessoa.insertDados;
+          id_pessoaFisica := VCadPessoa.getLastId;
 end;
 
 procedure TControle_Funcionario.cadastrarPessoaFisica(id:integer);
@@ -56,11 +66,22 @@ var
 begin
     VCadPessoaFisica:= CadPessoaFisica.Create;
   VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.Text);
-  VCadPessoaFisica.setPessoa_idPessoa(id);
-  VCadPessoaFisica.insertDados;
+  if (VCadPessoaFisica.verifyCadPerson(id) <= 0) then
+  begin
+    VCadPessoaFisica.setPessoa_idPessoa(id);
+    VCadPessoaFisica.insertDados;
+  end
+  else
+    VCadPessoaFisica.setPessoa_idPessoa(id);
+    VCadPessoaFisica.updateDados;
 
 end;
 
+procedure TControle_Funcionario.generatePerson;
+begin
+    frm_Funcionario.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('name').AsString;
+    frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('cpf').AsString;
+end;
 procedure TControle_Funcionario.getCadFuncionario;
 var
     idTemp:integer;
@@ -76,7 +97,8 @@ begin
               self.cadastrarPessoa;
               self.cadastrarPessoaFisica(VCadPessoa.getLastId);
               idTemp := VCadPessoa.getLastId;
-              self.cadastrarFuncionario(idTemp)
+              ShowMessage(IntToStr(VCadPessoaFisica.getLastId(idTemp))); //verificar erro no cadastro do funcionario
+              self.cadastrarFuncionario(VCadPessoaFisica.getLastId(idTemp));
 
           end;
           2:begin
@@ -107,6 +129,21 @@ begin
   end;
   FreeAndNil(frm_Consulta);
 
+end;
+
+procedure TControle_Funcionario.loadingApiPessoa;
+var
+  TOKEN:string;
+begin
+  TOKEN:= '840|pe0mPZFHzecgsxgmMfBPxDWpSOP3xBzI';
+    dm_ProjetoFinal.RESTClient2.BaseURL := 'https://api.invertexto.com/v1/faker?token='+TOKEN+'';
+    dm_ProjetoFinal.RESTRequest2.Execute;
+    self.generatePerson;
+end;
+
+procedure TControle_Funcionario.setDadosFuncionario;
+begin
+    self.loadingApiPessoa;
 end;
 
 end.

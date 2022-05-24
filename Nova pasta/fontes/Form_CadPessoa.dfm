@@ -221,9 +221,9 @@ object frm_Cliente: Tfrm_Cliente
       Top = 21
       Width = 122
       Height = 22
-      Caption = 'Excluir'
-      ImageIndex = 16
-      ImageName = 'icons8-res'#237'duos'
+      Caption = 'Limpar'
+      ImageIndex = 19
+      ImageName = 'icons8-apagar'
       Images = dm_ProjetoFinal.VirtualImageList1
       Flat = True
       OnClick = spDeleteClick

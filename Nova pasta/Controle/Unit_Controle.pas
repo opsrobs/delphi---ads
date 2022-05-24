@@ -273,6 +273,9 @@ begin
                self.cadastroBairro;
                self.cadastroEndereco(idpessoa);
 
+               ShowMessage('X');
+
+
             end;
             2: begin
 
