@@ -28,7 +28,9 @@ uses
   Form_CadFuncionario in 'fontes\Form_CadFuncionario.pas' {frm_Funcionario},
   Form_Consulta in 'fontes\Form_Consulta.pas' {frm_Consulta},
   Unit_ControleFuncionario in 'Controle\Unit_ControleFuncionario.pas',
-  Objeto_Utilitario in '..\Objeto_Utilitario.pas';
+  Objeto_Utilitario in '..\Objeto_Utilitario.pas',
+  Form_CadVeiculos in 'fontes\Form_CadVeiculos.pas' {frm_Veiculos},
+  Unit_ControleVeiculo in 'Controle\Unit_ControleVeiculo.pas';
 
 {$R *.res}
 
@@ -37,6 +39,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(Tdm_ProjetoFinal, dm_ProjetoFinal);
   Application.CreateForm(TFrm_Principal, Frm_Principal);
-  Application.CreateForm(Tfrm_Funcionario, frm_Funcionario);
   Application.Run;
 end.

@@ -1,8 +1,9 @@
 unit Objeto_CadVeiculo;
 
 interface
-  uses Objeto_CadMarcaVeiculo;
-  type CadVeiculo = class(CadMarcaVeiculo)
+  uses
+    FireDAC.Comp.Client, Unit_Dados, System.SysUtils, Vcl.Dialogs;
+  type CadVeiculo = class
 
   private
     idVeiculo:integer;
@@ -18,6 +19,10 @@ interface
     function getPlaca:string;
     procedure setMarca_Veiculo_idMarca(marca_veiculo_idMarca:integer);
     function getMarca_veiculo_idMarca:integer;
+
+                                              {<--- CRUD --->}
+
+        function insertDados:Boolean;
   end;
 
 implementation
@@ -42,6 +47,34 @@ end;
 function CadVeiculo.getPlaca: string;
 begin
     result := self.placa;
+end;
+
+function CadVeiculo.insertDados: Boolean;
+  var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('insert into marca_veiculo values( 0, :nome_marca)');
+
+  query.ParamByName('nome_marca').AsString := self.getModelo;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {Insert service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao incluir pessoa: ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 procedure CadVeiculo.setIdVeiculo(idVeiculo: integer);

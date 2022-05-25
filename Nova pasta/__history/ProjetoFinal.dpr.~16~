@@ -1,5 +1,7 @@
 program ProjetoFinal;
 
+
+
 uses
   Vcl.Forms,
   Unit_Dados in 'DAO\Unit_Dados.pas' {dm_ProjetoFinal: TDataModule},
@@ -20,9 +22,13 @@ uses
   Objeto_CadPedido in '..\Objeto_CadPedido.pas',
   Objeto_CadEntrega in '..\Objeto_CadEntrega.pas',
   unit_ProjetoFinal in 'fontes\unit_ProjetoFinal.pas' {Frm_Principal},
-  Unit_CadPessoa in 'fontes\Unit_CadPessoa.pas' {Cliente},
+  Form_CadPessoa in 'fontes\Form_CadPessoa.pas' {frm_Cliente},
   Objeto_CadOrcamento in '..\Objeto_CadOrcamento.pas',
-  Unit_Controle in 'Controle\Unit_Controle.pas';
+  Unit_Controle in 'Controle\Unit_Controle.pas',
+  Form_CadFuncionario in 'fontes\Form_CadFuncionario.pas' {frm_Funcionario},
+  Form_Consulta in 'fontes\Form_Consulta.pas' {frm_Consulta},
+  Unit_ControleFuncionario in 'Controle\Unit_ControleFuncionario.pas',
+  Objeto_Utilitario in '..\Objeto_Utilitario.pas';
 
 {$R *.res}
 
@@ -31,5 +37,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(Tdm_ProjetoFinal, dm_ProjetoFinal);
   Application.CreateForm(TFrm_Principal, Frm_Principal);
+  Application.CreateForm(Tfrm_Funcionario, frm_Funcionario);
   Application.Run;
 end.

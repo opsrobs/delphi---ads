@@ -1,5 +1,7 @@
 program ProjetoFinal;
 
+
+
 uses
   Vcl.Forms,
   Unit_Dados in 'DAO\Unit_Dados.pas' {dm_ProjetoFinal: TDataModule},
@@ -20,8 +22,14 @@ uses
   Objeto_CadPedido in '..\Objeto_CadPedido.pas',
   Objeto_CadEntrega in '..\Objeto_CadEntrega.pas',
   unit_ProjetoFinal in 'fontes\unit_ProjetoFinal.pas' {Frm_Principal},
-  Form_CadPessoa in 'fontes\Form_CadPessoa.pas' {Cliente},
-  Objeto_CadOrcamento in '..\Objeto_CadOrcamento.pas';
+  Form_CadPessoa in 'fontes\Form_CadPessoa.pas' {frm_Cliente},
+  Objeto_CadOrcamento in '..\Objeto_CadOrcamento.pas',
+  Unit_Controle in 'Controle\Unit_Controle.pas',
+  Form_CadFuncionario in 'fontes\Form_CadFuncionario.pas' {frm_Funcionario},
+  Form_Consulta in 'fontes\Form_Consulta.pas' {frm_Consulta},
+  Unit_ControleFuncionario in 'Controle\Unit_ControleFuncionario.pas',
+  Objeto_Utilitario in '..\Objeto_Utilitario.pas',
+  Form_CadVeiculos in 'fontes\Form_CadVeiculos.pas' {frm_Veiculos};
 
 {$R *.res}
 
@@ -30,5 +38,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(Tdm_ProjetoFinal, dm_ProjetoFinal);
   Application.CreateForm(TFrm_Principal, Frm_Principal);
+  Application.CreateForm(Tfrm_Funcionario, frm_Funcionario);
+  Application.CreateForm(Tfrm_Veiculos, frm_Veiculos);
   Application.Run;
 end.

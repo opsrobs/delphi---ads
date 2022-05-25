@@ -30,6 +30,7 @@ object Frm_Principal: TFrm_Principal
       end
       object Veiculo1: TMenuItem
         Caption = 'Veiculo'
+        OnClick = Veiculo1Click
       end
     end
     object Pedidos1: TMenuItem

@@ -144,6 +144,11 @@
         </DCCReference>
         <DCCReference Include="Controle\Unit_ControleFuncionario.pas"/>
         <DCCReference Include="..\Objeto_Utilitario.pas"/>
+        <DCCReference Include="fontes\Form_CadVeiculos.pas">
+            <Form>frm_Veiculos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Controle\Unit_ControleVeiculo.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

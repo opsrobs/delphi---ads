@@ -1,0 +1,29 @@
+unit Unit_ControleVeiculo;
+
+interface
+
+type
+TControle_Veiculo = class
+  private
+
+  public
+
+  procedure getCadVeiculo;
+
+end;
+
+implementation
+
+uses
+Form_CadVeiculos;
+
+{ TControle_Veiculo }
+
+procedure TControle_Veiculo.getCadVeiculo;
+begin
+    if (frm_Veiculos = nil) then
+      frm_Veiculos := frm_Veiculos.Create(nil);
+
+end;
+
+end.

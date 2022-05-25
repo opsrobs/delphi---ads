@@ -2393,4 +2393,15 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     Left = 437
     Top = 283
   end
+  object qrConsultaVeiculo: TFDQuery
+    IndexesActive = False
+    Connection = FDFinal
+    Left = 128
+    Top = 120
+  end
+  object dsVeiculos: TDataSource
+    DataSet = qrConsultaVeiculo
+    Left = 184
+    Top = 64
+  end
 end
