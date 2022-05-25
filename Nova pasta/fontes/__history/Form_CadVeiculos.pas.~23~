@@ -23,6 +23,7 @@ type
     procedure cbVeiculosClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
   private
+    scriptSql:string;
     funcao:byte;
     function validarValoresFuncionario:Boolean;
 
@@ -30,6 +31,8 @@ type
   public
   procedure setFuncao(funcao:byte);
   function getFuncao:byte;
+  function getSelectSql:string;
+  procedure setSelectSQL(scriptSql:string);
     { Public declarations }
   end;
 
@@ -49,13 +52,19 @@ begin
 end;
 
 procedure Tfrm_Veiculos.FormActivate(Sender: TObject);
+var
+script:string;
 begin
+script:='SELECT nome_marca as "Marca" FROM logistica_ads.marca_veiculo';
     dm_ProjetoFinal.qrConsulta.Close;
     dm_ProjetoFinal.qrConsulta.SQL.Clear;
-    //dm_ProjetoFinal.qrConsulta.SQL.Add(self.getSelectSql);
+    dm_ProjetoFinal.qrConsultaVeiculo.SQL.Add(script);
+    ShowMessage(script);
 
     Try
-      dm_ProjetoFinal.qrFinal..Open;
+      dm_ProjetoFinal.qrConsultaVeiculo.Open;
+      cbVeiculos.AddItem(dm_ProjetoFinal.qrConsultaVeiculo.RowsAffected.ToString,cbVeiculos);
+      dm_ProjetoFinal.qrConsultaVeiculo.RowsAffected.ToString;
       //Tutilitario.ajustaTamnhoDbg(dbConsulta);
       //lbResult.Caption :='Resultados... ' + IntToStr(dm_ProjetoFinal.qrConsulta.RecordCount);
     except
@@ -70,9 +79,19 @@ begin
    result := self.funcao;
 end;
 
+function Tfrm_Veiculos.getSelectSql: string;
+begin
+    result := self.scriptSql;
+end;
+
 procedure Tfrm_Veiculos.setFuncao(funcao: byte);
 begin
    self.funcao	 := funcao;
+end;
+
+procedure Tfrm_Veiculos.setSelectSQL(scriptSql: string);
+begin
+//s
 end;
 
 procedure Tfrm_Veiculos.spDeleteClick(Sender: TObject);

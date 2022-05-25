@@ -63,8 +63,7 @@ script:='SELECT nome_marca as "Marca" FROM logistica_ads.marca_veiculo';
 
     Try
       dm_ProjetoFinal.qrConsultaVeiculo.Open;
-      cbVeiculos.AddItem(dm_ProjetoFinal.qrConsultaVeiculo.RowsAffected.ToString,cbVeiculos);
-      dm_ProjetoFinal.qrConsultaVeiculo.RowsAffected.ToString;
+      dm_ProjetoFinal.qrConsultaVeiculo.;
       //Tutilitario.ajustaTamnhoDbg(dbConsulta);
       //lbResult.Caption :='Resultados... ' + IntToStr(dm_ProjetoFinal.qrConsulta.RecordCount);
     except
