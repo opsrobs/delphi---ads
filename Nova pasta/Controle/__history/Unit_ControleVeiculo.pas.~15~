@@ -59,8 +59,9 @@ begin
       1:begin
       self.cadastroMarca;
       id := VCadVeiculo.getLastid;
+      ShowMessage('<<< OK >>>');
 
-      self.cadastroVeiculo(id);
+      self.cadastroVeiculo(id)
       
       end;
       2:begin

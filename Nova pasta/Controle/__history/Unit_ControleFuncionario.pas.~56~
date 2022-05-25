@@ -40,8 +40,10 @@ uses Form_CadPessoa,
 
 procedure TControle_Funcionario.alterarPessoaFisica(id: integer);
 begin
+    VCadPessoaFisica:=CadPessoaFisica.Create;
+
     VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.Text);
-    VCadPessoaFisica.setPessoa_idPessoa(frm_Consulta.spSalvar.Tag);
+    VCadPessoaFisica.setPessoa_idPessoa(id);
 
     VCadPessoaFisica.updateDados;
 
@@ -53,8 +55,8 @@ begin
     VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
     VCadFuncionario.setCnh(frm_Funcionario.edCnh.Text);
     VCadFuncionario.setpessoa_fisica_idPessoa(id);
-    ShowMessage(IntToStr(id));
     VCadFuncionario.insertDados;
+    ShowMessage('Cadastro reaalizado com sucesso!!!');
 end;
 
 procedure TControle_Funcionario.cadastrarPessoa;
@@ -73,6 +75,7 @@ end;
 
 procedure TControle_Funcionario.cadastrarPessoaFisica(id:integer);
 begin
+    VCadPessoaFisica:=CadPessoaFisica.Create;
     VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.Text);
     VCadPessoaFisica.setPessoa_idPessoa(id);
 
@@ -101,15 +104,20 @@ begin
           1:begin
           tagId:=frm_Funcionario.spSalvar.Tag;
               self.cadastrarPessoa;
-
               if (tagId <> 0) then
-                 self.alterarPessoaFisica(tagId)
-              else
-                 self.cadastrarPessoaFisica(VCadPessoa.getLastId);
+              begin
+                 self.alterarPessoaFisica(tagId);
+                 self.cadastrarFuncionario(VCadPessoaFisica.verifyCadPerson(tagId))
+              end
+                else
+                  begin
+                     self.cadastrarPessoaFisica(VCadPessoa.getLastId);
+                     self.cadastrarFuncionario(VCadPessoaFisica.getLastId());
+                  end;
 
-              idTemp := VCadPessoa.getLastId;
-              ShowMessage(IntToStr(VCadPessoaFisica.getLastId(idTemp))+ '  '+ IntToStr(idTemp)); //verificar erro no cadastro do funcionario
-              self.cadastrarFuncionario(VCadPessoaFisica.getLastId(idTemp));
+                  //coments
+
+
 
           end;
           2:begin

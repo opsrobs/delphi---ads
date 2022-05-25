@@ -2375,8 +2375,8 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     FieldDefs = <>
     Response = RESTResponse2
     TypesMode = JSONOnly
-    Left = 549
-    Top = 229
+    Left = 501
+    Top = 357
   end
   object MemTable_Pessoa: TFDMemTable
     FieldDefs = <>
@@ -2390,8 +2390,8 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     UpdateOptions.FetchGeneratorsPoint = gpNone
     UpdateOptions.CheckRequired = False
     StoreDefs = True
-    Left = 437
-    Top = 283
+    Left = 501
+    Top = 427
   end
   object qrConsultaVeiculo: TFDQuery
     IndexesActive = False

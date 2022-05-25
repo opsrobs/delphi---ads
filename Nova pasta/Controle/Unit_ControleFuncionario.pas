@@ -115,8 +115,6 @@ begin
                      self.cadastrarFuncionario(VCadPessoaFisica.getLastId());
                   end;
 
-                  //coments
-
 
 
           end;

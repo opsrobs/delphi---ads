@@ -88,7 +88,7 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into veiculo values( 0, :modelo, :placa, :marca_veiculo_idmarca_veiculo)');
+  query.SQL.Add('insert into veiculo values( 0, :modelo, :placa, marca_veiculo_idmarca_veiculo)');
 
   query.ParamByName('modelo').AsString := self.getModelo;
   query.ParamByName('placa').AsString := self.getPlaca;

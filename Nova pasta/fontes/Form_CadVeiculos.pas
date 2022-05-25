@@ -56,14 +56,13 @@ var
 script:string;
 begin
 script:='SELECT nome_marca as "Marca" FROM logistica_ads.marca_veiculo';
-    dm_ProjetoFinal.qrConsulta.Close;
-    dm_ProjetoFinal.qrConsulta.SQL.Clear;
+    dm_ProjetoFinal.qrConsultaVeiculo.Close;
+    dm_ProjetoFinal.qrConsultaVeiculo.SQL.Clear;
     dm_ProjetoFinal.qrConsultaVeiculo.SQL.Add(script);
     ShowMessage(script);
 
     Try
       dm_ProjetoFinal.qrConsultaVeiculo.Open;
-      dm_ProjetoFinal.qrConsultaVeiculo.;
       //Tutilitario.ajustaTamnhoDbg(dbConsulta);
       //lbResult.Caption :='Resultados... ' + IntToStr(dm_ProjetoFinal.qrConsulta.RecordCount);
     except

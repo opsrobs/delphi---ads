@@ -47,8 +47,6 @@ begin
 end;
 
 procedure TControle_Veiculo.getCadVeiculo;
-var
-  id:integer;
 begin
     if (frm_Veiculos = nil) then
       frm_Veiculos := Tfrm_Veiculos.Create(nil);
@@ -58,9 +56,9 @@ begin
       case (frm_Veiculos.getFuncao) of
       1:begin
       self.cadastroMarca;
-      id := VCadVeiculo.getLastid;
+      ShowMessage('<<< OK >>>');
 
-      self.cadastroVeiculo(id);
+      //self.cadastroVeiculo()
       
       end;
       2:begin

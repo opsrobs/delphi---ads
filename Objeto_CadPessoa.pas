@@ -183,7 +183,6 @@ begin
       end;
       query.Close;
       query.Free;
-
 end;
 
 function CadPessoa.getnome: string;

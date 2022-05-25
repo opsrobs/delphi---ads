@@ -90,7 +90,6 @@ begin
     frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('name').AsString;
     frm_Cliente.edCpfCnpj.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName(self.generateTypePerson).AsString;
     frm_Cliente.lbContato.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('phone_number').AsString;
-    ShowMessage(IntToStr(frm_Cliente.chStatus.Checked.ToInteger));
     //inserrir aaqui
 end;
 
@@ -220,7 +219,6 @@ begin
   VCadContato.setPessoa_idPessoa(id);
 
   VCadContato.insertDados;
-  ShowMessage('<<0>>');
 
 end;
 
@@ -291,8 +289,6 @@ begin
 
                self.cadastroBairro;
                self.cadastroEndereco(idpessoa);
-
-               ShowMessage('X');
 
 
             end;

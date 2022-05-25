@@ -8,7 +8,6 @@ type
 TControle_Veiculo = class
   private
     procedure cadastroMarca;
-    procedure cadastroVeiculo(id:integer);
     procedure getConsultaVeiculo;
 
   public
@@ -36,19 +35,7 @@ begin
     VCadMarca.insertDados;
 end;
 
-procedure TControle_Veiculo.cadastroVeiculo(id:integer);
-begin
-    VCadVeiculo := CadVeiculo.Create;
-    VCadVeiculo.setModelo(frm_Veiculos.lbModelo.Text);
-    VCadVeiculo.setPlaca(frm_Veiculos.lbPlaca.Text);
-    VCadVeiculo.setMarca_Veiculo_idMarca(id);
-
-    VCadVeiculo.insertDados;
-end;
-
 procedure TControle_Veiculo.getCadVeiculo;
-var
-  id:integer;
 begin
     if (frm_Veiculos = nil) then
       frm_Veiculos := Tfrm_Veiculos.Create(nil);
@@ -58,9 +45,7 @@ begin
       case (frm_Veiculos.getFuncao) of
       1:begin
       self.cadastroMarca;
-      id := VCadVeiculo.getLastid;
-
-      self.cadastroVeiculo(id);
+      ShowMessage('<<< OK >>>');
       
       end;
       2:begin

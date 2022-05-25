@@ -23,7 +23,6 @@ interface
                                               {<--- CRUD --->}
 
         function insertDados:Boolean;
-        function getLastid:integer;
   end;
 
 implementation
@@ -33,37 +32,6 @@ implementation
 function CadVeiculo.getIdVeiculo: integer;
 begin
     result := self.idVeiculo ;
-end;
-
-function CadVeiculo.getLastid: integer;
-var
-    query:TFDQuery;
-    id:integer;
-begin
-  query := TFDQuery.Create(nil);
-  query.Connection := dm_ProjetoFinal.FDFinal;
-
-  query.SQL.Add('SELECT LAST_INSERT_ID();');
-
-      try
-        query.open;
-
-
-        if (not query.isEmpty) then
-          begin
-              id :=query.Fields[0].AsInteger;
-              result :=id;
-          end;
-      except
-        on e:exception do
-        begin
-          Result := 0;
-          showMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
-        end;
-
-      end;
-      query.Close;
-      query.Free;
 end;
 
 function CadVeiculo.getMarca_veiculo_idMarca: integer;
@@ -88,11 +56,10 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into veiculo values( 0, :modelo, :placa, :marca_veiculo_idmarca_veiculo)');
+  query.SQL.Add('insert into marca_veiculo values( 0, :nome_marca)');
 
-  query.ParamByName('modelo').AsString := self.getModelo;
-  query.ParamByName('placa').AsString := self.getPlaca;
-  query.ParamByName('marca_veiculo_idmarca_veiculo').AsInteger := self.getMarca_veiculo_idMarca;
+  query.ParamByName('nome_marca').AsString := self.getModelo;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try
         query.ExecSQL;  {Insert service}
