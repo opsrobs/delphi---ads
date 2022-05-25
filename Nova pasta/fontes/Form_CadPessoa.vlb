@@ -50,9 +50,6 @@ Coordinates=713,10,174,58
 [spSalvar]
 Coordinates=212,454,65,36
 
-[rdCNPJ]
-Coordinates=143,454,59,36
-
 [dm_ProjetoFinal.qrFinal]
 Coordinates=83,386,152,58
 
@@ -69,5 +66,5 @@ Coordinates=813,386,55,58
 Coordinates=897,10,59,58
 
 []
-Coordinates=401,454,65,36
+Coordinates=143,454,59,36
 

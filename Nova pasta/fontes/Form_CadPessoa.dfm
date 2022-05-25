@@ -2,8 +2,8 @@ object frm_Cliente: Tfrm_Cliente
   Left = 0
   Top = 0
   Caption = 'Cadastros...'
-  ClientHeight = 449
-  ClientWidth = 626
+  ClientHeight = 518
+  ClientWidth = 664
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,13 +16,13 @@ object frm_Cliente: Tfrm_Cliente
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 626
-    Height = 384
+    Width = 664
+    Height = 453
     Align = alClient
     TabOrder = 0
     object spConsultaCep: TSpeedButton
       Left = 311
-      Top = 133
+      Top = 173
       Width = 90
       Height = 22
       Caption = 'Buscar CEP'
@@ -32,8 +32,8 @@ object frm_Cliente: Tfrm_Cliente
       OnClick = spConsultaCepClick
     end
     object Label1: TLabel
-      Left = 143
-      Top = 109
+      Left = 144
+      Top = 154
       Width = 21
       Height = 15
       Caption = 'CEP'
@@ -79,17 +79,9 @@ object frm_Cliente: Tfrm_Cliente
       TabOrder = 1
       Text = ''
     end
-    object rdCNPJ: TRadioButton
-      Left = 407
-      Top = 80
-      Width = 113
-      Height = 17
-      Caption = 'CNPJ'
-      TabOrder = 2
-    end
     object MaskCep: TMaskEdit
       Left = 143
-      Top = 130
+      Top = 170
       Width = 144
       Height = 25
       EditMask = '00000\-000;0;_'
@@ -100,91 +92,120 @@ object frm_Cliente: Tfrm_Cliente
       Font.Style = []
       MaxLength = 9
       ParentFont = False
-      TabOrder = 3
+      TabOrder = 2
       Text = ''
     end
     object lbRua: TLabeledEdit
-      Left = 143
-      Top = 325
+      Left = 142
+      Top = 365
       Width = 145
       Height = 23
       EditLabel.Width = 20
       EditLabel.Height = 15
       EditLabel.Caption = 'Rua'
-      TabOrder = 4
+      TabOrder = 3
       Text = ''
     end
     object lbNumero: TLabeledEdit
-      Left = 311
-      Top = 325
+      Left = 310
+      Top = 365
       Width = 90
       Height = 23
       EditLabel.Width = 14
       EditLabel.Height = 15
       EditLabel.Caption = 'N'#186
-      TabOrder = 5
+      TabOrder = 4
       Text = ''
     end
     object lbCidade: TLabeledEdit
-      Left = 143
-      Top = 229
+      Left = 142
+      Top = 269
       Width = 145
       Height = 23
       EditLabel.Width = 37
       EditLabel.Height = 15
       EditLabel.Caption = 'Cidade'
-      TabOrder = 6
+      TabOrder = 5
       Text = ''
     end
     object lbEstado: TLabeledEdit
-      Left = 143
-      Top = 181
+      Left = 142
+      Top = 221
       Width = 145
       Height = 23
       EditLabel.Width = 35
       EditLabel.Height = 15
       EditLabel.Caption = 'Estado'
-      TabOrder = 7
+      TabOrder = 6
       Text = ''
     end
     object lbUnidadeFederativa: TLabeledEdit
-      Left = 311
-      Top = 181
+      Left = 310
+      Top = 221
       Width = 90
       Height = 23
       EditLabel.Width = 14
       EditLabel.Height = 15
       EditLabel.Caption = 'UF'
-      TabOrder = 8
+      TabOrder = 7
       Text = ''
     end
     object lbBairro: TLabeledEdit
-      Left = 143
-      Top = 277
+      Left = 142
+      Top = 317
       Width = 145
       Height = 23
       EditLabel.Width = 31
       EditLabel.Height = 15
       EditLabel.Caption = 'Bairro'
-      TabOrder = 9
+      TabOrder = 8
       Text = ''
     end
     object lbComplemento: TLabeledEdit
-      Left = 407
-      Top = 325
+      Left = 406
+      Top = 365
       Width = 113
       Height = 23
       EditLabel.Width = 77
       EditLabel.Height = 15
       EditLabel.Caption = 'Complemento'
+      TabOrder = 9
+      Text = ''
+    end
+    object lbContato: TLabeledEdit
+      Left = 143
+      Top = 125
+      Width = 145
+      Height = 23
+      EditLabel.Width = 43
+      EditLabel.Height = 15
+      EditLabel.Caption = 'Contato'
       TabOrder = 10
       Text = ''
+    end
+    object chStatus: TCheckBox
+      Left = 311
+      Top = 128
+      Width = 97
+      Height = 17
+      Caption = 'Ativo'
+      Checked = True
+      State = cbChecked
+      TabOrder = 11
+    end
+    object rdCNPJ: TCheckBox
+      Left = 416
+      Top = 80
+      Width = 104
+      Height = 17
+      Caption = 'CNPJ'
+      TabOrder = 12
     end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 384
-    Width = 626
+    Top = 453
+    Width = 664
     Height = 65
     Align = alBottom
     TabOrder = 1

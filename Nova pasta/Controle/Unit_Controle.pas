@@ -24,6 +24,7 @@ TControle = class
     procedure CadastroCidade;
     procedure cadastroBairro;
     procedure cadastroEndereco(idpessoa:integer);
+    procedure cadastroContato(id:integer);
     end;
     var
       VCadEstado:CadEstado;
@@ -39,7 +40,8 @@ uses Form_CadPessoa,
      Objeto_CadPessoa,
      Objeto_CadPessoaFisica,
      Objeto_CadPessoaJuridica,
-     Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados;
+     Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados,
+  Objeto_CadContato;
 
 procedure TControle.getCadPf(id: integer);
 var
@@ -87,6 +89,8 @@ procedure TControle.generatePerson;
 begin
     frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('name').AsString;
     frm_Cliente.edCpfCnpj.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName(self.generateTypePerson).AsString;
+    frm_Cliente.lbContato.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('phone_number').AsString;
+    ShowMessage(IntToStr(frm_Cliente.chStatus.Checked.ToInteger));
     //inserrir aaqui
 end;
 
@@ -206,6 +210,20 @@ begin
         VCadCidade.updateDados;
 end;
 
+procedure TControle.cadastroContato(id:integer);
+var
+  VCadContato:CadContato;
+begin
+  VCadContato := CadContato.Create;
+  VCadContato.setStatus_contato(frm_Cliente.chStatus.Checked);
+  VCadContato.setContato(frm_Cliente.lbContato.Text);
+  VCadContato.setPessoa_idPessoa(id);
+
+  VCadContato.insertDados;
+  ShowMessage('<<0>>');
+
+end;
+
 procedure TControle.cadastroEndereco(idpessoa:integer);
 var
   idBairro:integer;
@@ -263,7 +281,8 @@ begin
             1: begin
                VCadPessoa.setnome(frm_Cliente.edNome.Text);
                VCadPessoa.insertDados;
-               idPessoa:= VCadPessoa.getLastId;                      //Capturando o ID da pessoa
+               idPessoa:= VCadPessoa.getLastId;
+               self.cadastroContato(idPessoa);
                self.validarPessoa(idPessoa);                           //Passando ID para o tipo de pessoa a ser cadastrada
                VCadCliente.setPessoa_idPessoa(idPessoa);
                VCadCliente.insertDados;

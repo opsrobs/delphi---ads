@@ -1,9 +1,10 @@
 unit Objeto_CadContato;
 
 interface
-  uses Objeto_CadPessoa;
+uses
+    FireDAC.Comp.Client, Unit_Dados, System.SysUtils, Vcl.Dialogs;
 
-  type CadContato = class (CadPessoa)
+  type CadContato = class
 
   private
     idStatus_telefone:integer;
@@ -19,6 +20,10 @@ interface
     function getContato:string;
     procedure setPessoa_idPessoa(Pessoa_idPessoa:integer);
     function getPessoa_idPessoa:integer;
+
+                                              {<--- CRUD --->}
+
+        function insertDados:Boolean;
   end;
 
 
@@ -44,6 +49,36 @@ end;
 function CadContato.getSattus_contato: Boolean;
 begin
     result := self.status_contato;
+end;
+
+function CadContato.insertDados: Boolean;
+  var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('insert into contato values( 0, :status_contato, :contato,  :pessoa_idPessoa)');
+
+  query.ParamByName('status_contato').AsBoolean := self.getSattus_contato;
+  query.ParamByName('contato').AsString := self.getContato;
+  query.ParamByName('pessoa_idPessoa').AsInteger := self.getPessoa_idPessoa;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {Insert service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao incluir pessoa: ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 procedure CadContato.setContato(contato: string);
