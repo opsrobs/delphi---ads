@@ -18,6 +18,8 @@ interface
         function getcpf: string;
         procedure setPessoa_idPessoa (Pessoa_idPessoa:integer);
         function getPessoa_idPessoa: integer;
+        function verifyCadPerson(idpessoa:integer):integer;
+        function getLastId():integer;
 
                                                   {<--- CRUD --->}
 
@@ -25,7 +27,7 @@ interface
         function updateDados:Boolean;
         function deleteDados:Boolean;
         function selectDados:Boolean;
-        function verifyCadPerson(idpessoa:integer):integer;
+
 
 end;
 implementation
@@ -68,6 +70,39 @@ end;
 function CadPessoaFisica.getidPessoa_fisica: integer;
 begin
      result := self.idPessoa_Fisica;
+end;
+
+function CadPessoaFisica.getLastId(): integer;
+var
+    query:TFDQuery;
+    idresult:integer;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('SELECT LAST_INSERT_ID();');
+
+      try
+        query.open;
+
+
+        if (not query.isEmpty) then
+          begin
+              {Alterar o valor do [] para a posição do atributo}
+              idresult :=query.Fields[0].AsInteger;
+              result :=idresult;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao selecionar dados da Pessoa Fisica : ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 function CadPessoaFisica.getPessoa_idPessoa: integer;
@@ -131,9 +166,10 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('update pessoa set   nome = :nome');
+  query.SQL.Add('update pessoa_fisica set cpf = :cpf where (idpessoa_fisica = :idpessoa_fisica)');
 
   query.ParamByName('cpf').AsString := self.getcpf;
+  query.ParamByName('idpessoa_fisica').AsInteger := self.getidPessoa_fisica;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try
@@ -160,13 +196,12 @@ var
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
+  ShowMessage(IntToStr(id)+' <<<<<<<');
   querySelect:='SELECT * FROM logistica_ads.pessoa_fisica where idpessoa_fisica = "'+IntToStr(idpessoa)+'";';
-
+                  ShowMessage(querySelect);
   query.SQL.Add(querySelect);
       try
         query.open;
-
-
         if (not query.isEmpty) then
           begin
               id :=query.Fields[0].AsInteger;

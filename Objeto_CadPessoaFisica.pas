@@ -19,7 +19,7 @@ interface
         procedure setPessoa_idPessoa (Pessoa_idPessoa:integer);
         function getPessoa_idPessoa: integer;
         function verifyCadPerson(idpessoa:integer):integer;
-        function getLastId(id:integer):integer;
+        function getLastId():integer;
 
                                                   {<--- CRUD --->}
 
@@ -72,7 +72,7 @@ begin
      result := self.idPessoa_Fisica;
 end;
 
-function CadPessoaFisica.getLastId(id:integer): integer;
+function CadPessoaFisica.getLastId(): integer;
 var
     query:TFDQuery;
     idresult:integer;
@@ -80,7 +80,7 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('SELECT * FROM logistica_ads.pessoa_fisica where pessoa_idPessoa = "'+ IntToStr(id)+'";');
+  query.SQL.Add('SELECT LAST_INSERT_ID();');
 
       try
         query.open;
@@ -196,8 +196,7 @@ var
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-  querySelect:='SELECT * FROM logistica_ads.pessoa_fisica where idpessoa_fisica = "'+IntToStr(idpessoa)+'";';
-
+  querySelect:='SELECT * FROM logistica_ads.pessoa_fisica where pessoa_idPessoa = "'+IntToStr(idpessoa)+'";';
   query.SQL.Add(querySelect);
       try
         query.open;

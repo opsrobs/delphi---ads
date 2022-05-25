@@ -162,7 +162,7 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('SELECT max(idpessoa) FROM logistica_ads.pessoa; ');
+  query.SQL.Add('SELECT LAST_INSERT_ID();');
 
       try
         query.open;
@@ -170,7 +170,6 @@ begin
 
         if (not query.isEmpty) then
           begin
-              {Alterar o valor do [] para a posição do atributo}
               id :=query.Fields[0].AsInteger;
               result :=id;
           end;

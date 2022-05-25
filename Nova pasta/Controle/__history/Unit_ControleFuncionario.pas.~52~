@@ -9,18 +9,22 @@ uses System.SysUtils,Winapi.Messages,Objeto_CadFuncionario,Vcl.Controls,Vcl.Dial
     procedure getCadFuncionario;
     procedure getConsultaPessoas;
     procedure cadastrarPessoa;
-    procedure cadastrarPessoaFisica(id:integer);
+    procedure cadastrarPessoaFisica(id:integer);    //>>
+    procedure alterarPessoaFisica(id:integer);
     procedure cadastrarFuncionario(id:integer);
     procedure setDadosFuncionario;
 
     private
         procedure loadingApiPessoa;
         procedure generatePerson;
+        function verifyValueOfId(lastId, tag:integer):integer;
 
   end;
   var
   VCadPessoa:CadPessoa;
   VCadFuncionario: CadFuncionario;
+  id_pessoaFisica:integer;
+
 
 implementation
 
@@ -31,12 +35,27 @@ uses Form_CadPessoa,
      Objeto_CadPessoaJuridica,
      Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados;
 
+     var
+       VCadPessoaFisica:CadPessoaFisica;
+
+procedure TControle_Funcionario.alterarPessoaFisica(id: integer);
+begin
+    VCadPessoaFisica:=CadPessoaFisica.Create;
+
+    VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.Text);
+    VCadPessoaFisica.setPessoa_idPessoa(id);
+
+    VCadPessoaFisica.updateDados;
+
+end;
+
 procedure TControle_Funcionario.cadastrarFuncionario(id:integer);
 begin
     VCadFuncionario := CadFuncionario.Create;
     VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
     VCadFuncionario.setCnh(frm_Funcionario.edCnh.Text);
     VCadFuncionario.setpessoa_fisica_idPessoa(id);
+    ShowMessage(IntToStr(id));
     VCadFuncionario.insertDados;
 end;
 
@@ -55,21 +74,12 @@ VCadPessoa := CadPessoa.Create;
 end;
 
 procedure TControle_Funcionario.cadastrarPessoaFisica(id:integer);
-var
-      VCadPessoaFisica: CadPessoaFisica;
 begin
-    VCadPessoaFisica:= CadPessoaFisica.Create;
-  VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.Text);
-  VCadPessoaFisica.setPessoa_idPessoa(id);
-  if (VCadPessoaFisica.verifyCadPerson(id) <= 0) then
-  begin
-    ShowMessage(IntToStr(id));
+    VCadPessoaFisica:=CadPessoaFisica.Create;
+    VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.Text);
+    VCadPessoaFisica.setPessoa_idPessoa(id);
+
     VCadPessoaFisica.insertDados;
-  end
-  else
-    VCadPessoaFisica.updateDados;
-
-
 
 end;
 
@@ -78,9 +88,11 @@ begin
     frm_Funcionario.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('name').AsString;
     frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('cpf').AsString;
 end;
+
 procedure TControle_Funcionario.getCadFuncionario;
 var
     idTemp:integer;
+    tagId:integer;
 begin
   if (frm_Funcionario = nil) then
      frm_Funcionario := Tfrm_Funcionario.Create(nil);
@@ -90,10 +102,18 @@ begin
 
         case(frm_Funcionario.getFuncao)of
           1:begin
+          tagId:=frm_Funcionario.spSalvar.Tag;
               self.cadastrarPessoa;
-              self.cadastrarPessoaFisica(frm_Funcionario.spSalvar.Tag);
-              idTemp := VCadPessoa.getLastId;
-              self.cadastrarFuncionario(idTemp)
+              ShowMessage(IntToStr(tagId));
+              if (tagId <> 0) then
+                 self.alterarPessoaFisica(tagId)
+              else
+              begin
+                 self.cadastrarPessoaFisica(VCadPessoa.getLastId);
+                 self.cadastrarFuncionario(VCadPessoaFisica.getLastId());
+              end;
+              ShowMessage(IntToStr(tagId)); //verificar erro no cadastro do funcionario
+              self.cadastrarFuncionario(VCadPessoaFisica.verifyCadPerson(tagId));
 
           end;
           2:begin
@@ -139,6 +159,15 @@ end;
 procedure TControle_Funcionario.setDadosFuncionario;
 begin
     self.loadingApiPessoa;
+end;
+
+function TControle_Funcionario.verifyValueOfId(lastId, tag: integer): integer;
+begin
+
+  if(tag <> 0)then
+    result := tag
+  else
+    result:=lastid;
 end;
 
 end.

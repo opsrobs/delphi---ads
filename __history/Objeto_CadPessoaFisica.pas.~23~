@@ -19,7 +19,7 @@ interface
         procedure setPessoa_idPessoa (Pessoa_idPessoa:integer);
         function getPessoa_idPessoa: integer;
         function verifyCadPerson(idpessoa:integer):integer;
-        function getLastId:integer;
+        function getLastId(id:integer):integer;
 
                                                   {<--- CRUD --->}
 
@@ -72,15 +72,15 @@ begin
      result := self.idPessoa_Fisica;
 end;
 
-function CadPessoaFisica.getLastId: integer;
+function CadPessoaFisica.getLastId(id:integer): integer;
 var
     query:TFDQuery;
-    id:integer;
+    idresult:integer;
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('SELECT max(idpessoa_fisica) FROM logistica_ads.pessoa_fisica;');
+  query.SQL.Add('SELECT * FROM logistica_ads.pessoa_fisica where pessoa_idPessoa = "'+ IntToStr(id)+'";');
 
       try
         query.open;
@@ -89,14 +89,14 @@ begin
         if (not query.isEmpty) then
           begin
               {Alterar o valor do [] para a posição do atributo}
-              id :=query.Fields[0].AsInteger;
-              result :=id;
+              idresult :=query.Fields[0].AsInteger;
+              result :=idresult;
           end;
       except
         on e:exception do
         begin
           Result := 0;
-          showMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
+          showMessage('Erro ao selecionar dados da Pessoa Fisica : ' + e.ToString);
         end;
 
       end;
