@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.Mask,
-  Vcl.ExtCtrls,Unit_Dados, Vcl.Buttons;
+  Vcl.ExtCtrls,Unit_Dados, Vcl.Buttons, Vcl.ComCtrls, Objeto_CadVeiculo;
 
 type
   Tfrm_Veiculos = class(TForm)
@@ -14,10 +14,10 @@ type
     lbMarca: TLabeledEdit;
     lbModelo: TLabeledEdit;
     lbPlaca: TLabeledEdit;
-    cbVeiculos: TDBComboBox;
     spButtonReturn: TSpeedButton;
     spDelete: TSpeedButton;
     spSalvar: TSpeedButton;
+    cbVeiculos: TComboBox;
     procedure spSalvarClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
     procedure cbVeiculosClick(Sender: TObject);
@@ -38,38 +38,27 @@ type
 
 var
   frm_Veiculos: Tfrm_Veiculos;
+  OCadVeiculo:CadVeiculo;
 
 implementation
 
 {$R *.dfm}
 
+uses unit_ProjetoFinal;
+
 { Tfrm_Veiculos }
+
+
+
 
 procedure Tfrm_Veiculos.cbVeiculosClick(Sender: TObject);
 begin
-
-  ShowMessage('X');
+    Frm_Principal.ControleVeiculo.populaCombo;
 end;
 
 procedure Tfrm_Veiculos.FormActivate(Sender: TObject);
-var
-script:string;
 begin
-script:='SELECT nome_marca as "Marca" FROM logistica_ads.marca_veiculo';
-    dm_ProjetoFinal.qrConsultaVeiculo.Close;
-    dm_ProjetoFinal.qrConsultaVeiculo.SQL.Clear;
-    dm_ProjetoFinal.qrConsultaVeiculo.SQL.Add(script);
-    ShowMessage(script);
-
-    Try
-      dm_ProjetoFinal.qrConsultaVeiculo.Open;
-      //Tutilitario.ajustaTamnhoDbg(dbConsulta);
-      //lbResult.Caption :='Resultados... ' + IntToStr(dm_ProjetoFinal.qrConsulta.RecordCount);
-    except
-      on e:exception do
-      ShowMessage('Não foi possivel consultar os dados: '+e.ToString);
-
-    End;
+      Frm_Principal.ControleVeiculo.populaCombo;
 end;
 
 function Tfrm_Veiculos.getFuncao: byte;

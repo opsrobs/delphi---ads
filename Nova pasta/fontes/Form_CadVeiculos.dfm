@@ -96,13 +96,12 @@ object frm_Veiculos: Tfrm_Veiculos
       TabOrder = 2
       Text = ''
     end
-    object cbVeiculos: TDBComboBox
+    object cbVeiculos: TComboBox
       Left = 112
-      Top = 48
-      Width = 145
-      Height = 23
-      DataField = 'Marca'
-      DataSource = dm_ProjetoFinal.dsVeiculos
+      Top = 56
+      Width = 121
+      Height = 22
+      Style = csOwnerDrawFixed
       TabOrder = 3
       OnClick = cbVeiculosClick
     end

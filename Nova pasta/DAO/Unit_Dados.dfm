@@ -24,8 +24,8 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     Top = 8
   end
   object Ibagensmainmenu: TImageList
-    Left = 328
-    Top = 16
+    Left = 448
+    Top = 32
   end
   object qrConsulta: TFDQuery
     IndexesActive = False
@@ -180,8 +180,8 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
         Name = 'icons8-apagar'
       end>
     ImageCollection = ImageCollection1
-    Left = 592
-    Top = 24
+    Left = 608
+    Top = 5
   end
   object ImageCollection1: TImageCollection
     Images = <
@@ -2349,8 +2349,8 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
               49454E44AE426082}
           end>
       end>
-    Left = 592
-    Top = 96
+    Left = 608
+    Top = 37
   end
   object RESTClient2: TRESTClient
     BaseURL = 'https://api.invertexto.com/v1/faker?token'
@@ -2393,15 +2393,32 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     Left = 501
     Top = 427
   end
-  object qrConsultaVeiculo: TFDQuery
-    IndexesActive = False
-    Connection = FDFinal
-    Left = 128
-    Top = 120
-  end
   object dsVeiculos: TDataSource
-    DataSet = qrConsultaVeiculo
     Left = 184
     Top = 64
+  end
+  object dtsConsultaVeiculo: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 248
+    Top = 8
+  end
+  object qrVeiculo: TFDQuery
+    IndexesActive = False
+    Connection = FDFinal
+    Left = 127
+    Top = 131
+    object qrVeiculoidmarca_veiculo: TFDAutoIncField
+      FieldName = 'idmarca_veiculo'
+      Origin = 'idmarca_veiculo'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object qrVeiculonome_marca: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'nome_marca'
+      Origin = 'nome_marca'
+      Size = 45
+    end
   end
 end
