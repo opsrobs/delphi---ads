@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Unit_ControleFuncionario, Unit_Controle,Unit_ControleVeiculo;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Unit_ControleFuncionario, Unit_Controle,Unit_ControlePedido,Unit_ControleVeiculo;
 
 type
   TFrm_Principal = class(TForm)
@@ -32,6 +32,7 @@ type
     Controle:TControle;
     ControleFuncionario:TControle_Funcionario;
     ControleVeiculo:TControle_Veiculo;
+    ControlePedido:TControle_Pedido;
   end;
 
 var
@@ -65,7 +66,7 @@ end;
 
 procedure TFrm_Principal.Pedido1Click(Sender: TObject);
 begin
-   ShowMessage('X');
+   ControlePedido.getCadPedido;
 end;
 
 procedure TFrm_Principal.Veiculo1Click(Sender: TObject);

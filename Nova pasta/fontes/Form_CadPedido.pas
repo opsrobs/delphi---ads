@@ -4,13 +4,38 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Buttons, Vcl.ComCtrls,
+  Vcl.StdCtrls, Vcl.Mask;
 
 type
   Tfrm_Pedido = class(TForm)
+    Panel2: TPanel;
+    spButtonReturn: TSpeedButton;
+    spSalvar: TSpeedButton;
+    spDelete: TSpeedButton;
+    Panel1: TPanel;
+    spConsultaCep: TSpeedButton;
+    Label1: TLabel;
+    MaskCep: TMaskEdit;
+    lbRua: TLabeledEdit;
+    lbNumero: TLabeledEdit;
+    lbCidade: TLabeledEdit;
+    lbEstado: TLabeledEdit;
+    lbUnidadeFederativa: TLabeledEdit;
+    lbBairro: TLabeledEdit;
+    lbComplemento: TLabeledEdit;
+    DateTimePicker1: TDateTimePicker;
+    Label2: TLabel;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    procedure spSalvarClick(Sender: TObject);
+    procedure spButtonReturnClick(Sender: TObject);
+    procedure spDeleteClick(Sender: TObject);
   private
     funcao:byte; //1--salvar || 2 --Excluir
-    { Private declarations }
+    function validarValores:boolean;
+    procedure limpartela;
+
   public
     procedure setFuncao(funcao:byte);
     function getFuncao:byte;
@@ -31,9 +56,38 @@ begin
     result := self.funcao;
 end;
 
+procedure Tfrm_Pedido.limpartela;
+begin
+    ShowMessage('(  Y  )')
+end;
+
 procedure Tfrm_Pedido.setFuncao(funcao: byte);
 begin
     self.funcao	 := funcao;
+end;
+
+procedure Tfrm_Pedido.spButtonReturnClick(Sender: TObject);
+begin
+    ModalResult := mrCancel;
+end;
+
+procedure Tfrm_Pedido.spDeleteClick(Sender: TObject);
+begin
+    self.limpartela;
+end;
+
+procedure Tfrm_Pedido.spSalvarClick(Sender: TObject);
+begin
+        if (not self.validarValores) then
+          exit;
+
+        self.setFuncao(1);
+        ModalResult := mrOk;
+end;
+
+function Tfrm_Pedido.validarValores: boolean;
+begin
+
 end;
 
 end.

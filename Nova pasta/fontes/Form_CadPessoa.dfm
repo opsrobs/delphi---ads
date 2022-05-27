@@ -2,8 +2,8 @@ object frm_Cliente: Tfrm_Cliente
   Left = 0
   Top = 0
   Caption = 'Cadastros...'
-  ClientHeight = 518
-  ClientWidth = 664
+  ClientHeight = 535
+  ClientWidth = 670
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,10 +16,12 @@ object frm_Cliente: Tfrm_Cliente
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 664
-    Height = 453
+    Width = 670
+    Height = 470
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 664
+    ExplicitHeight = 453
     object spConsultaCep: TSpeedButton
       Left = 311
       Top = 173
@@ -204,11 +206,13 @@ object frm_Cliente: Tfrm_Cliente
   end
   object Panel2: TPanel
     Left = 0
-    Top = 453
-    Width = 664
+    Top = 470
+    Width = 670
     Height = 65
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 453
+    ExplicitWidth = 664
     object spButtonReturn: TSpeedButton
       Left = 112
       Top = 21
