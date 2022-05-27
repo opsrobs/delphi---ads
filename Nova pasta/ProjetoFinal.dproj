@@ -149,6 +149,11 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Controle\Unit_ControleVeiculo.pas"/>
+        <DCCReference Include="Controle\Unit_ControlePedido.pas"/>
+        <DCCReference Include="fontes\Form_CadPedido.pas">
+            <Form>frm_Pedido</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

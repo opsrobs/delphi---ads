@@ -26,6 +26,7 @@ type
     scriptSql:string;
     funcao:byte;
     function validarValoresFuncionario:Boolean;
+    procedure limparTela;
 
 
   public
@@ -71,6 +72,14 @@ begin
     result := self.scriptSql;
 end;
 
+procedure Tfrm_Veiculos.limparTela;
+begin
+  lbModelo.Clear;
+  lbMarca.Clear;
+  lbPlaca.Clear;
+  lbModelo.SetFocus;
+end;
+
 procedure Tfrm_Veiculos.setFuncao(funcao: byte);
 begin
    self.funcao	 := funcao;
@@ -98,7 +107,30 @@ end;
 
 function Tfrm_Veiculos.validarValoresFuncionario: Boolean;
 begin
+    result := true;
+    if (lbMarca.Text	= '') then
+      begin
+        result := false;
+        ShowMessage('Informe a Marca do veiculo!!!');
+        lbMarca.SetFocus;
+        exit;
+      end;
 
+      if (lbModelo.Text	= '') then
+      begin
+        result := false;
+        ShowMessage('Informe o modelo do veiculo!!!');
+        lbModelo.SetFocus;
+        exit;
+      end;
+
+      if (lbPlaca.Text	= '') then
+      begin
+        result := false;
+        ShowMessage('Informe a placa do veiculo!!!');
+        lbPlaca.SetFocus;
+        exit;
+      end;
 end;
 
 end.

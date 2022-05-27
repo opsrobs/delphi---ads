@@ -16,11 +16,15 @@ type
     Veiculo1: TMenuItem;
     Pendente1: TMenuItem;
     Aprovados1: TMenuItem;
+    Pedido1: TMenuItem;
+    Consultas1: TMenuItem;
+    Consultas2: TMenuItem;
     procedure Cliente1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Funcionario1Click(Sender: TObject);
     procedure Veiculo1Click(Sender: TObject);
+    procedure Pedido1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -57,6 +61,11 @@ end;
 procedure TFrm_Principal.Funcionario1Click(Sender: TObject);
 begin
     ControleFuncionario.getCadFuncionario;
+end;
+
+procedure TFrm_Principal.Pedido1Click(Sender: TObject);
+begin
+   ShowMessage('X');
 end;
 
 procedure TFrm_Principal.Veiculo1Click(Sender: TObject);

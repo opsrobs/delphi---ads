@@ -1,0 +1,59 @@
+unit Unit_ControlePedido;
+
+interface
+    uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types,StrUtils;
+
+type
+ TControle_Pedido = class
+   private
+
+   public
+   procedure getCadPedido;
+ end;
+
+implementation
+
+{ TControle_Pedido }
+
+uses Form_CadPedido;
+
+procedure TControle_Pedido.getCadPedido;
+var
+  id:integer;
+begin
+    if (frm_Pedido = nil) then
+      frm_Pedido := Tfrm_Pedido.Create(nil);
+
+    if (frm_Pedido.ShowModal = mrOk) then
+      begin
+
+         case(frm_Pedido.getFuncao) of
+            1: begin
+               VCadPessoa.setnome(frm_Cliente.edNome.Text);
+               VCadPessoa.insertDados;
+               idPessoa:= VCadPessoa.getLastId;
+               self.cadastroContato(idPessoa);
+               self.validarPessoa(idPessoa);                           //Passando ID para o tipo de pessoa a ser cadastrada
+               VCadCliente.setPessoa_idPessoa(idPessoa);
+               VCadCliente.insertDados;
+               self.CadastroEstado;
+               self.CadastroCidade();
+
+               self.cadastroBairro;
+               self.cadastroEndereco(idpessoa);
+
+
+            end;
+            2: begin
+
+               end;
+         end;
+         VCadPessoa.Free;
+         VCadCliente.Free;
+
+      end;
+
+      FreeAndNil(frm_Cliente);
+end;
+
+end.

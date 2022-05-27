@@ -8,18 +8,15 @@ uses
 type
 TControle_Veiculo = class
   private
-    script:string;
     procedure cadastroMarca;
-    procedure cadastroVeiculo(id:integer);
-    procedure getConsultaVeiculo;           //ctrl + shift + a
+    procedure cadastroVeiculo(id:integer);         //ctrl + shift + a
     procedure updateMarca;
+    procedure updateVeiculo;
+    function setScript:string;
 
-
-
-  public
-  procedure populaCombo;
-  procedure getCadVeiculo;
-  function setScript:string;
+    public
+    procedure populaCombo;
+    procedure getCadVeiculo;
 
 end;
 var
@@ -29,7 +26,7 @@ var
 implementation
 
 uses
-Form_CadVeiculos, Unit_Dados;
+Form_CadVeiculos, Unit_Dados, Objeto_CadPessoa;
 
 { TControle_Veiculo }
 
@@ -45,7 +42,7 @@ procedure TControle_Veiculo.cadastroVeiculo(id:integer);
 begin
     VCadVeiculo := CadVeiculo.Create;
     VCadVeiculo.setModelo(frm_Veiculos.lbModelo.Text);
-    VCadVeiculo.setPlaca(frm_Veiculos.lbPlaca.Text);
+    VCadVeiculo.setPlaca(AnsiUpperCase(frm_Veiculos.lbPlaca.Text));
     VCadVeiculo.setMarca_Veiculo_idMarca(id);
 
     VCadVeiculo.insertDados;
@@ -64,19 +61,15 @@ begin
       1:begin
 
       Self.updateMarca;
-      id := VCadVeiculo.getLastid;
-      
+      self.cadastroVeiculo(VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text));
+
+
       end;
       2:begin
-      
+
       end;
       end;
 
-
-end;
-
-procedure TControle_Veiculo.getConsultaVeiculo;
-begin
 
 end;
 
@@ -84,7 +77,6 @@ function TControle_Veiculo.setScript: string;
 begin
     result := 'SELECT * FROM logistica_ads.marca_veiculo order by nome_marca asc';
 end;
-
 
 procedure TControle_Veiculo.populaCombo;
 begin
@@ -123,12 +115,38 @@ begin
   end
     else
     begin
-    ShowMessage('xx');
       VCadMarca.setNome_marca(marca);
       VCadMarca.setIdMarca_veiculo(id);
       VCadMarca.updadteDados;
     end;
 
+
+end;
+
+procedure TControle_Veiculo.updateVeiculo;
+var
+id,id_marca:integer;
+veiculo:string;
+begin
+    VCadVeiculo := CadVeiculo.Create;
+    veiculo := frm_Veiculos.lbModelo.Text;
+    id := VCadVeiculo.IdentificadorVeiculo(veiculo);
+    id_marca := VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text);
+    if id <=0 then
+      begin
+        id_marca := VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text);
+        ShowMessage('insert');
+        self.cadastroVeiculo(id);
+      end
+        else
+        begin
+        VCadVeiculo.setModelo(frm_Veiculos.lbModelo.Text);
+        VCadVeiculo.setPlaca(frm_Veiculos.lbPlaca.Text);
+        id_marca := VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text);
+        VCadVeiculo.setMarca_Veiculo_idMarca(id);
+        ShowMessage('update')
+        //VCadVeiculo.updadteDados;
+        end;
 end;
 
 end.

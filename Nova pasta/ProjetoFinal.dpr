@@ -30,7 +30,9 @@ uses
   Unit_ControleFuncionario in 'Controle\Unit_ControleFuncionario.pas',
   Objeto_Utilitario in '..\Objeto_Utilitario.pas',
   Form_CadVeiculos in 'fontes\Form_CadVeiculos.pas' {frm_Veiculos},
-  Unit_ControleVeiculo in 'Controle\Unit_ControleVeiculo.pas';
+  Unit_ControleVeiculo in 'Controle\Unit_ControleVeiculo.pas',
+  Unit_ControlePedido in 'Controle\Unit_ControlePedido.pas',
+  Form_CadPedido in 'fontes\Form_CadPedido.pas' {frm_Pedido};
 
 {$R *.res}
 
@@ -39,5 +41,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(Tdm_ProjetoFinal, dm_ProjetoFinal);
   Application.CreateForm(TFrm_Principal, Frm_Principal);
+  Application.CreateForm(Tfrm_Pedido, frm_Pedido);
   Application.Run;
 end.

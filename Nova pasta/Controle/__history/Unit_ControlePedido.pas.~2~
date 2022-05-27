@@ -1,0 +1,27 @@
+unit Unit_ControlePedido;
+
+interface
+
+type
+ TControle_Pedido = class
+   private
+
+   public
+   procedure getCadPedido;
+ end;
+
+implementation
+
+{ TControle_Pedido }
+
+uses Form_CadPedido;
+
+procedure TControle_Pedido.getCadPedido;
+var
+  id:integer;
+begin
+
+
+end;
+
+end.

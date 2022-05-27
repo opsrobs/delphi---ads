@@ -23,6 +23,8 @@ interface
                                               {<--- CRUD --->}
 
         function insertDados:Boolean;
+        function updadteDados:Boolean;
+        function IdentificadorVeiculo(modelo:string):integer;
         function getLastid:integer;
   end;
 
@@ -81,6 +83,37 @@ begin
     result := self.placa;
 end;
 
+function CadVeiculo.IdentificadorVeiculo(modelo: string): integer;
+var
+    query:TFDQuery;
+    querySelect:string;
+    id:integer;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  querySelect:='SELECT * FROM logistica_ads.veiculo where modelo = "'+modelo+'";';
+
+  query.SQL.Add(querySelect);
+      try
+        query.open;
+        if (not query.isEmpty) then
+          begin
+              id :=query.Fields[0].AsInteger;
+              result :=id;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao fazer consulta na marca: '+modelo+' ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
+end;
+
 function CadVeiculo.insertDados: Boolean;
   var
     query:TFDQuery;
@@ -128,6 +161,38 @@ end;
 procedure CadVeiculo.setPlaca(placa: string);
 begin
     self.placa := placa;
+end;
+
+function CadVeiculo.updadteDados: Boolean;
+var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('update veiculo set modelo =:modelo, placa =:placa, marca_veiculo_idmarca_veiculo = :marca_veiculo_idmarca_veiculo where (idveiculos = :idveiculos)');
+
+  query.ParamByName('modelo').AsString := self.getModelo;
+  query.ParamByName('placa').AsString := self.getPlaca;
+  query.ParamByName('marca_veiculo_idmarca_veiculo').AsInteger := self.getMarca_veiculo_idMarca;
+  query.ParamByName('idmarca_veiculo').AsInteger := self.getIdVeiculo;
+
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {update service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao alterar dados desta marca... : '+ self.getModelo + '  ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 end.
