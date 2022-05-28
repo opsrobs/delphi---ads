@@ -36,7 +36,7 @@ type
     edPeso: TLabeledEdit;
     cbCliente: TComboBox;
     Button1: TButton;
-    ButtonedEdit1: TButtonedEdit;
+    spDestinatario: TSpeedButton;
     procedure spSalvarClick(Sender: TObject);
     procedure spButtonReturnClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);

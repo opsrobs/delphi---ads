@@ -104,6 +104,20 @@ object frm_Pedido: Tfrm_Pedido
       Height = 15
       Caption = 'TIPO DO PEDIDO'
     end
+    object spDestinatario: TSpeedButton
+      Left = 150
+      Top = 63
+      Width = 137
+      Height = 22
+      Caption = 'DESTINATARIO'
+      ImageIndex = 21
+      ImageName = 'add-user'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      Layout = blGlyphRight
+      ParentShowHint = False
+      ShowHint = False
+      Spacing = 20
+    end
     object MaskCep: TMaskEdit
       Left = 153
       Top = 287
@@ -299,14 +313,6 @@ object frm_Pedido: Tfrm_Pedido
       Height = 17
       Caption = 'Button1'
       TabOrder = 17
-    end
-    object ButtonedEdit1: TButtonedEdit
-      Left = 424
-      Top = 64
-      Width = 121
-      Height = 23
-      TabOrder = 18
-      Text = 'ButtonedEdit1'
     end
   end
 end
