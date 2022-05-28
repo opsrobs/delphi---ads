@@ -237,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `Logistica_ads`.`pedido` (
   `cliente_idcliente` INT NOT NULL,
   `valor_total` FLOAT NOT NULL,
   `valor_frete` FLOAT NOT NULL,
-  `data_entrega` DATE NOT NULL,
+  `data_entrega` DATE,
   `endereco_idEndereco` INT NOT NULL,
   `peso_pedido` FLOAT NOT NULL,
   PRIMARY KEY (`numero_pedido`),

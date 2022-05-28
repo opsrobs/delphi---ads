@@ -10,7 +10,7 @@ interface
       numero_pedido:integer;
       data_pedido:TDate;
       valor:Float64;
-      status:Boolean;
+      status:string;
       Cliente_idCliente:integer;
       endereco_idEndereco:integer;
       valor_total:Float64;
@@ -23,8 +23,8 @@ interface
       function getData_pedido:TDate;
       procedure setValor(valor:Float64);
       function getValor:Float64;
-      procedure setStatus(status:Boolean);
-      function getStatus:Boolean;
+      procedure setStatus(status:string);
+      function getStatus:string;
       procedure setCliente_idCliente(cliente_idCliente:integer);
       function getCliente_idCliente:integer;
       procedure setendereco_idEndereco(endereco_idEndereco:integer);
@@ -75,7 +75,7 @@ begin
     result := self.peso_pedido;
 end;
 
-function CadPedido.getStatus: Boolean;
+function CadPedido.getStatus: string;
 begin
   result := self.status;
 end;
@@ -102,11 +102,16 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into pedido values( 0, :data_pedido, :valor, :status, :entrega_identrega,  )');
+  query.SQL.Add('insert into pedido values( 0, :data_pedido, :valor, :status, :cliente_idcliente, :valor_total, :valor_frete, :endereco_idEndereco, :peso_pedido )');
 
-  //query.ParamByName('nome').AsString := self.getnome;
-      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
-
+  query.ParamByName('data_pedido').AsDate := self.getData_pedido;
+  query.ParamByName('valor').AsFloat := self.getValor;
+  query.ParamByName('status').AsString := self.getStatus;
+  query.ParamByName('cliente_idcliente').AsInteger := self.getCliente_idCliente;
+  query.ParamByName('valor_total').AsFloat := self.getValor_total;
+  query.ParamByName('valor_frete').AsFloat := self.getValor_Frete;
+  query.ParamByName('endereco_idEndereco').AsInteger := self.getendereco_idEndereco;
+  query.ParamByName('peso_pedido').AsFloat := self.getpeso_pedido;
       try
         query.ExecSQL;  {Insert service}
         result := true;
@@ -114,7 +119,7 @@ begin
         on e:exception do
         begin
           Result := false;
-          showMessage('Erro ao incluir pessoa: ' + e.ToString);
+          showMessage('Erro ao incluir pedido: ' + e.ToString);
         end;
 
       end;
@@ -151,7 +156,7 @@ begin
     self.peso_pedido := peso_pedido;
 end;
 
-procedure CadPedido.setStatus(status: Boolean);
+procedure CadPedido.setStatus(status: string);
 begin
   self.status := status;
 end;

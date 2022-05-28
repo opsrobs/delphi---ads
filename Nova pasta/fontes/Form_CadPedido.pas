@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Buttons, Vcl.ComCtrls,
-  Vcl.StdCtrls, Vcl.Mask, Unit_ControlePedido;
+  Vcl.StdCtrls, Vcl.Mask, Unit_Dados,Unit_ControlePedido;
 
 type
   Tfrm_Pedido = class(TForm)
@@ -24,9 +24,9 @@ type
     lbUnidadeFederativa: TLabeledEdit;
     lbBairro: TLabeledEdit;
     lbComplemento: TLabeledEdit;
-    DateTimePicker1: TDateTimePicker;
+    dtDataPedido: TDateTimePicker;
     Label2: TLabel;
-    LabeledEdit1: TLabeledEdit;
+    edValorPedido: TLabeledEdit;
     edValorFrete: TLabeledEdit;
     edValorTotal: TLabeledEdit;
     cbTipoPedido: TComboBox;
@@ -34,10 +34,16 @@ type
     edTipoPedido: TEdit;
     CheckBox1: TCheckBox;
     edPeso: TLabeledEdit;
+    cbCliente: TComboBox;
+    Button1: TButton;
+    ButtonedEdit1: TButtonedEdit;
     procedure spSalvarClick(Sender: TObject);
     procedure spButtonReturnClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
     procedure cbTipoPedidoClick(Sender: TObject);
+    procedure cbClienteClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure spConsultaCepClick(Sender: TObject);
   private
     funcao:byte; //1--salvar || 2 --Excluir
     function validarValores:boolean;
@@ -56,13 +62,28 @@ implementation
 
 {$R *.dfm}
 
+uses Objeto_CadCliente, Unit_Utils;
+
 { Tfrm_Pedido }
+
+procedure Tfrm_Pedido.cbClienteClick(Sender: TObject);
+var
+VCadCliente:CadCliente;
+begin
+VCadCliente := CadCliente.Create;
+
+end;
 
 procedure Tfrm_Pedido.cbTipoPedidoClick(Sender: TObject);
 begin
     ControlePedido := TControle_Pedido.Create;
     edTipoPedido.text:= cbTipoPedido.Text;
     ControlePedido.gerarPeso;
+end;
+
+procedure Tfrm_Pedido.FormActivate(Sender: TObject);
+begin
+    ControlePedido.populaCombo;
 end;
 
 function Tfrm_Pedido.getFuncao: byte;
@@ -72,7 +93,7 @@ end;
 
 procedure Tfrm_Pedido.limpartela;
 begin
-    ShowMessage(' << GIULIA >> ');
+    ShowMessage(' <<  >> ');
 end;
 
 procedure Tfrm_Pedido.setFuncao(funcao: byte);
@@ -83,6 +104,14 @@ end;
 procedure Tfrm_Pedido.spButtonReturnClick(Sender: TObject);
 begin
     ModalResult := mrCancel;
+end;
+
+procedure Tfrm_Pedido.spConsultaCepClick(Sender: TObject);
+var
+  utilitaria:Utils;
+begin
+utilitaria := Utils.Create;
+utilitaria.loadingApiCep;
 end;
 
 procedure Tfrm_Pedido.spDeleteClick(Sender: TObject);

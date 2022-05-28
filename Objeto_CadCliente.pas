@@ -18,6 +18,7 @@ public
                                                                 {<--- CRUD --->}
 
         function insertDados:Boolean;
+        function identificadorCliente(nome:string):integer;
 
 
 end;
@@ -34,6 +35,41 @@ end;
 function CadCliente.getPessoa_idPessoa: integer;
 begin
     result := self.Pessoa_idPessoa;
+end;
+
+function CadCliente.identificadorCliente(nome:string): integer;
+var
+    query:TFDQuery;
+    querySelect:string;
+    id:integer;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  querySelect:='SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa and nome =  "'+nome+'" ;';
+
+  query.SQL.Add(querySelect);
+      try
+        query.open;
+
+
+        if (not query.isEmpty) then
+          begin
+              //query.ParamByName('nome_estado').AsString := self.getNome_estado;
+              {Alterar o valor do [] para a posição do atributo}
+              id :=query.Fields[0].AsInteger;
+              result :=id;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao fazer consulta no cliente : '+nome+' ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 function CadCliente.insertDados: Boolean;
