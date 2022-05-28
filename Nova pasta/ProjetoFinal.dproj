@@ -154,6 +154,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\Objeto_CargaPedido.pas"/>
+        <DCCReference Include="..\Unit_Utils.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

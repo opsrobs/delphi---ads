@@ -32,7 +32,8 @@ uses
   Unit_ControleVeiculo in 'Controle\Unit_ControleVeiculo.pas',
   Unit_ControlePedido in 'Controle\Unit_ControlePedido.pas',
   Form_CadPedido in 'fontes\Form_CadPedido.pas' {frm_Pedido},
-  Objeto_CargaPedido in '..\Objeto_CargaPedido.pas';
+  Objeto_CargaPedido in '..\Objeto_CargaPedido.pas',
+  Unit_Utils in '..\Unit_Utils.pas';
 
 {$R *.res}
 

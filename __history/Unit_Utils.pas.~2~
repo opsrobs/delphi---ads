@@ -1,0 +1,49 @@
+unit Unit_Utils;
+
+interface
+uses
+  REST.Types,StrUtils;
+type
+  Utils = class
+    private
+    procedure generatePerson;
+    function generateTypePerson:string;
+
+    public
+    procedure loadingApiPessoa;
+  end;
+
+implementation
+
+{ Utils }
+
+uses Unit_Dados, Form_CadPessoa;
+
+procedure Utils.generatePerson;
+begin
+    frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('name').AsString;
+    frm_Cliente.edCpfCnpj.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName(self.generateTypePerson).AsString;
+    frm_Cliente.lbContato.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('phone_number').AsString;
+    //inserrir aaqui
+end;
+
+function Utils.generateTypePerson: string;
+begin
+if (frm_Cliente.rdCNPJ.Checked) then
+      result := 'cnpj'
+    else if (not frm_Cliente.rdCNPJ.Checked) then
+            result := 'cpf'
+
+end;
+
+procedure Utils.loadingApiPessoa;
+var
+  TOKEN:string;
+begin
+  TOKEN:= '840|pe0mPZFHzecgsxgmMfBPxDWpSOP3xBzI';
+    dm_ProjetoFinal.RESTClient2.BaseURL := 'https://api.invertexto.com/v1/faker?token='+TOKEN+'';
+    dm_ProjetoFinal.RESTRequest2.Execute;
+    self.generatePerson;
+end;
+
+end.

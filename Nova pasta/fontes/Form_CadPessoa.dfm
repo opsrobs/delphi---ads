@@ -20,8 +20,6 @@ object frm_Cliente: Tfrm_Cliente
     Height = 470
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 664
-    ExplicitHeight = 453
     object spConsultaCep: TSpeedButton
       Left = 311
       Top = 173
@@ -211,8 +209,6 @@ object frm_Cliente: Tfrm_Cliente
     Height = 65
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 453
-    ExplicitWidth = 664
     object spButtonReturn: TSpeedButton
       Left = 112
       Top = 21

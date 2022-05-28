@@ -6,8 +6,6 @@ interface
 type
 TControle = class
   private
-    procedure generatePerson;
-    function generateTypePerson:string;
     function validateValue(numero:string):integer;
 
 
@@ -15,11 +13,8 @@ TControle = class
     procedure getCadPessoa;
     procedure getCadPf(id:integer);
     procedure getCadPj(id:integer);
-    procedure loadingApiCep;
-    procedure loadingApiPessoa;
-    procedure capturandoJson;
+
     procedure validarPessoa(id:integer);
-    procedure nomeEstado(uf:string);
     procedure CadastroEstado;
     procedure CadastroCidade;
     procedure cadastroBairro;
@@ -65,100 +60,6 @@ begin
     VCadPJ.insertDados;
 end;
 
-procedure TControle.loadingApiCep;
-begin
-    dm_ProjetoFinal.RESTClient1.BaseURL := 'https://viacep.com.br/ws/';
-    dm_ProjetoFinal.RESTRequest1.Method := rmGET;
-    dm_ProjetoFinal.RESTRequest1.Resource := '{cep}/json';
-    dm_ProjetoFinal.RESTRequest1.Params.AddUrlSegment('cep',frm_Cliente.MaskCep.Text);
-    dm_ProjetoFinal.RESTRequest1.Execute;
-    self.capturandoJson;
-end;
-
-procedure TControle.loadingApiPessoa;
-var
-  TOKEN:string;
-begin
-  TOKEN:= '840|pe0mPZFHzecgsxgmMfBPxDWpSOP3xBzI';
-    dm_ProjetoFinal.RESTClient2.BaseURL := 'https://api.invertexto.com/v1/faker?token='+TOKEN+'';
-    dm_ProjetoFinal.RESTRequest2.Execute;
-    self.generatePerson;
-end;
-
-procedure TControle.generatePerson;
-begin
-    frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('name').AsString;
-    frm_Cliente.edCpfCnpj.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName(self.generateTypePerson).AsString;
-    frm_Cliente.lbContato.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('phone_number').AsString;
-    //inserrir aaqui
-end;
-
-function TControle.generateTypePerson: string;
-begin
-if (frm_Cliente.rdCNPJ.Checked) then
-      result := 'cnpj'
-    else if (not frm_Cliente.rdCNPJ.Checked) then
-            result := 'cpf'
-
-end;
-
-procedure TControle.nomeEstado(uf:string);
-begin
-    if (UpperCase(uf)= 'AC' ) then
-    frm_Cliente.lbEstado.Text :='Acre'
-    else if (UpperCase(uf)= 'AL' ) then
-    frm_Cliente.lbEstado.Text :='Alagoas'
-    else if (UpperCase(uf)= 'AP' ) then
-    frm_Cliente.lbEstado.Text :='Amapá'
-    else if (UpperCase(uf)= 'AM' ) then
-    frm_Cliente.lbEstado.Text :='Amazonas'
-    else if (UpperCase(uf)= 'BA' ) then
-    frm_Cliente.lbEstado.Text :='Bahia'
-    else if (UpperCase(uf)= 'CE' ) then
-    frm_Cliente.lbEstado.Text :='Ceará'
-    else if (UpperCase(uf)= 'DF' ) then
-    frm_Cliente.lbEstado.Text :='Distrito Federal'
-    else if (UpperCase(uf)= 'ES' ) then
-    frm_Cliente.lbEstado.Text :='Espírito Santo'
-    else if (UpperCase(uf)= 'GO' ) then
-    frm_Cliente.lbEstado.Text :='Goiás'
-    else if (UpperCase(uf)= 'MA' ) then
-    frm_Cliente.lbEstado.Text :='Maranhão'
-    else if (UpperCase(uf)= 'MT' ) then
-    frm_Cliente.lbEstado.Text :='Mato Grosso'
-    else if (UpperCase(uf)= 'MS' ) then
-    frm_Cliente.lbEstado.Text :='Mato Grosso do Sul'
-    else if (UpperCase(uf)= 'MG' ) then
-    frm_Cliente.lbEstado.Text :='Minas Gerais'
-    else if (UpperCase(uf)= 'PA' ) then
-    frm_Cliente.lbEstado.Text :='Pará'
-    else if (UpperCase(uf)= 'PB' ) then
-    frm_Cliente.lbEstado.Text :='Paraíba '
-    else if (UpperCase(uf)= 'PR' ) then
-    frm_Cliente.lbEstado.Text :='Paraná'
-    else if (UpperCase(uf)= 'PE' ) then
-    frm_Cliente.lbEstado.Text :='Pernambuco'
-    else if (UpperCase(uf)= 'PI' ) then
-    frm_Cliente.lbEstado.Text :='Piauí'
-    else if (UpperCase(uf)= 'RJ' ) then
-    frm_Cliente.lbEstado.Text :='Rio de Janeiro'
-    else if (UpperCase(uf)= 'RN' ) then
-    frm_Cliente.lbEstado.Text :='Rio Grande do Norte'
-    else if (UpperCase(uf)= 'RS' ) then
-    frm_Cliente.lbEstado.Text :='Rio Grande do Sul'
-    else if (UpperCase(uf)= 'RO' ) then
-    frm_Cliente.lbEstado.Text :='Rondônia'
-    else if (UpperCase(uf)= 'RR' ) then
-    frm_Cliente.lbEstado.Text :='Roraima'
-    else if (UpperCase(uf)= 'SC' ) then
-    frm_Cliente.lbEstado.Text :='Santa Catarina'
-    else if (UpperCase(uf)= 'SP' ) then
-    frm_Cliente.lbEstado.Text :='São Paulo'
-    else if (UpperCase(uf)= 'SE' ) then
-    frm_Cliente.lbEstado.Text :='Sergipe'
-    else
-    frm_Cliente.lbEstado.Text :='Tocantins'
-end;
 
 procedure TControle.validarPessoa(id: integer);
 begin
@@ -252,14 +153,6 @@ begin
     VCadEstado.updateDados;
 end;
 
-procedure TControle.capturandoJson;
-begin
-    self.nomeEstado(dm_ProjetoFinal.MemTable.FieldByName('uf').AsString);
-    frm_Cliente.lbBairro.Text := dm_ProjetoFinal.MemTable.FieldByName('bairro').AsString;
-    frm_Cliente.lbCidade.Text := dm_ProjetoFinal.MemTable.FieldByName('localidade').AsString;
-    frm_Cliente.lbRua.Text := dm_ProjetoFinal.MemTable.FieldByName('logradouro').AsString;
-    frm_Cliente.lbUnidadeFederativa.Text := dm_ProjetoFinal.MemTable.FieldByName('uf').AsString;
-end;
 
 procedure TControle.getCadPessoa;
     var

@@ -12,11 +12,8 @@ uses System.SysUtils,Winapi.Messages,Objeto_CadFuncionario,Vcl.Controls,Vcl.Dial
     procedure cadastrarPessoaFisica(id:integer);    //>>
     procedure alterarPessoaFisica(id:integer);
     procedure cadastrarFuncionario(id:integer);
-    procedure setDadosFuncionario;
 
     private
-        procedure loadingApiPessoa;
-        procedure generatePerson;
         function verifyValueOfId(lastId, tag:integer):integer;
 
   end;
@@ -83,12 +80,6 @@ begin
 
 end;
 
-procedure TControle_Funcionario.generatePerson;
-begin
-    frm_Funcionario.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('name').AsString;
-    frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName('cpf').AsString;
-end;
-
 procedure TControle_Funcionario.getCadFuncionario;
 var
     idTemp:integer;
@@ -146,21 +137,6 @@ begin
   end;
   FreeAndNil(frm_Consulta);
 
-end;
-
-procedure TControle_Funcionario.loadingApiPessoa;
-var
-  TOKEN:string;
-begin
-  TOKEN:= '840|pe0mPZFHzecgsxgmMfBPxDWpSOP3xBzI';
-    dm_ProjetoFinal.RESTClient2.BaseURL := 'https://api.invertexto.com/v1/faker?token='+TOKEN+'';
-    dm_ProjetoFinal.RESTRequest2.Execute;
-    self.generatePerson;
-end;
-
-procedure TControle_Funcionario.setDadosFuncionario;
-begin
-    self.loadingApiPessoa;
 end;
 
 function TControle_Funcionario.verifyValueOfId(lastId, tag: integer): integer;

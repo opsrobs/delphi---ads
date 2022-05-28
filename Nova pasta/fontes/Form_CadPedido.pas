@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Buttons, Vcl.ComCtrls,
-  Vcl.StdCtrls, Vcl.Mask;
+  Vcl.StdCtrls, Vcl.Mask, Unit_ControlePedido;
 
 type
   Tfrm_Pedido = class(TForm)
@@ -27,13 +27,17 @@ type
     DateTimePicker1: TDateTimePicker;
     Label2: TLabel;
     LabeledEdit1: TLabeledEdit;
-    LabeledEdit2: TLabeledEdit;
-    LabeledEdit3: TLabeledEdit;
     edValorFrete: TLabeledEdit;
     edValorTotal: TLabeledEdit;
+    cbTipoPedido: TComboBox;
+    Label3: TLabel;
+    edTipoPedido: TEdit;
+    CheckBox1: TCheckBox;
+    edPeso: TLabeledEdit;
     procedure spSalvarClick(Sender: TObject);
     procedure spButtonReturnClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
+    procedure cbTipoPedidoClick(Sender: TObject);
   private
     funcao:byte; //1--salvar || 2 --Excluir
     function validarValores:boolean;
@@ -47,12 +51,19 @@ type
 
 var
   frm_Pedido: Tfrm_Pedido;
-
+  ControlePedido:TControle_Pedido;
 implementation
 
 {$R *.dfm}
 
 { Tfrm_Pedido }
+
+procedure Tfrm_Pedido.cbTipoPedidoClick(Sender: TObject);
+begin
+    ControlePedido := TControle_Pedido.Create;
+    edTipoPedido.text:= cbTipoPedido.Text;
+    ControlePedido.gerarPeso;
+end;
 
 function Tfrm_Pedido.getFuncao: byte;
 begin

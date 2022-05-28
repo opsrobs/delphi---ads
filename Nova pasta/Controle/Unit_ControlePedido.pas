@@ -8,11 +8,14 @@ type
    private
     procedure cadastroPedido;
 
+
    public
    procedure getCadPedido;
+   procedure gerarPeso;
 
  end;
  var
+  pesor:single;
   VCadPedido:CadPedido;
 
 implementation
@@ -25,7 +28,15 @@ procedure TControle_Pedido.cadastroPedido;
 begin
   VCadPedido := CadPedido.Create;
 
+end;
 
+procedure TControle_Pedido.gerarPeso;
+var
+value:Float32;
+begin
+    pesor := Random(100);
+    value := pesor * 0.1;
+    frm_Pedido.edPeso.Text := pesor.ToString;
 end;
 
 procedure TControle_Pedido.getCadPedido;
