@@ -20,7 +20,6 @@ uses
   Objeto_Funcionario_has_Veiculos in '..\Objeto_Funcionario_has_Veiculos.pas',
   Objeto_CadCarga in '..\Objeto_CadCarga.pas',
   Objeto_CadPedido in '..\Objeto_CadPedido.pas',
-  Objeto_CadEntrega in '..\Objeto_CadEntrega.pas',
   unit_ProjetoFinal in 'fontes\unit_ProjetoFinal.pas' {Frm_Principal},
   Form_CadPessoa in 'fontes\Form_CadPessoa.pas' {frm_Cliente},
   Objeto_CadOrcamento in '..\Objeto_CadOrcamento.pas',
@@ -32,7 +31,8 @@ uses
   Form_CadVeiculos in 'fontes\Form_CadVeiculos.pas' {frm_Veiculos},
   Unit_ControleVeiculo in 'Controle\Unit_ControleVeiculo.pas',
   Unit_ControlePedido in 'Controle\Unit_ControlePedido.pas',
-  Form_CadPedido in 'fontes\Form_CadPedido.pas' {frm_Pedido};
+  Form_CadPedido in 'fontes\Form_CadPedido.pas' {frm_Pedido},
+  Objeto_CargaPedido in '..\Objeto_CargaPedido.pas';
 
 {$R *.res}
 

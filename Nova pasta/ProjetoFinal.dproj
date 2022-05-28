@@ -123,7 +123,6 @@
         <DCCReference Include="..\Objeto_Funcionario_has_Veiculos.pas"/>
         <DCCReference Include="..\Objeto_CadCarga.pas"/>
         <DCCReference Include="..\Objeto_CadPedido.pas"/>
-        <DCCReference Include="..\Objeto_CadEntrega.pas"/>
         <DCCReference Include="fontes\unit_ProjetoFinal.pas">
             <Form>Frm_Principal</Form>
             <FormType>dfm</FormType>
@@ -154,6 +153,7 @@
             <Form>frm_Pedido</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\Objeto_CargaPedido.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

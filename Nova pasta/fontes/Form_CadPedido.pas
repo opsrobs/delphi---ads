@@ -61,7 +61,7 @@ end;
 
 procedure Tfrm_Pedido.limpartela;
 begin
-    ShowMessage('(  Y  )' + ' << GIULIA >> ')
+    ShowMessage(' << GIULIA >> ');
 end;
 
 procedure Tfrm_Pedido.setFuncao(funcao: byte);

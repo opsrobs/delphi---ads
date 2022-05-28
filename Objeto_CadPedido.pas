@@ -11,9 +11,11 @@ interface
       data_pedido:TDate;
       valor:Float64;
       status:Boolean;
-      entrega_idEntrega:integer;
-      carga_idCarga:integer;
       Cliente_idCliente:integer;
+      endereco_idEndereco:integer;
+      valor_total:Float64;
+      valor_frete:Float64;
+      peso_pedido:Float64;
     public
       procedure setNumero_pedido(numero_pedido:integer);
       function getNumero_pedido:integer;
@@ -23,12 +25,16 @@ interface
       function getValor:Float64;
       procedure setStatus(status:Boolean);
       function getStatus:Boolean;
-      procedure setEntrega_idEntrega(entrega_idEntrega:integer);
-      function getEntrega_idEntrega:integer;
-      procedure setCarga_idCarga(carga_idCarga:integer);
-      function getCarga_idCarga:integer;
       procedure setCliente_idCliente(cliente_idCliente:integer);
       function getCliente_idCliente:integer;
+      procedure setendereco_idEndereco(endereco_idEndereco:integer);
+      function getendereco_idEndereco:integer;
+      procedure setValor_total(valor_total:Float64);
+      function getValor_total:Float64;
+      procedure setValor_frete(valor_frete:Float64);
+      function getValor_Frete:Float64;
+      procedure setpeso_pedido(peso_pedido:Float64);
+      function getpeso_pedido:Float64;
 
                                                 {<--- CRUD --->}
 
@@ -40,14 +46,12 @@ implementation
 
 { CadPedido }
 
-function CadPedido.getCarga_idCarga: integer;
-begin
-  result := self.carga_idCarga;
-end;
+
+
 
 function CadPedido.getCliente_idCliente: integer;
 begin
-  result :=self.Cliente_idCliente;
+  result := self.Cliente_idCliente;
 end;
 
 function CadPedido.getData_pedido: TDate;
@@ -55,14 +59,20 @@ begin
   result := Self.data_pedido;
 end;
 
-function CadPedido.getEntrega_idEntrega: integer;
+
+function CadPedido.getendereco_idEndereco: integer;
 begin
- result := self.entrega_idEntrega;
+    result := self.getendereco_idEndereco;
 end;
 
 function CadPedido.getNumero_pedido: integer;
 begin
   result := self.numero_pedido;
+end;
+
+function CadPedido.getpeso_pedido: Float64;
+begin
+    result := self.peso_pedido;
 end;
 
 function CadPedido.getStatus: Boolean;
@@ -73,6 +83,16 @@ end;
 function CadPedido.getValor: Float64;
 begin
   result := self.valor ;
+end;
+
+function CadPedido.getValor_Frete: Float64;
+begin
+    result := self.valor_frete;
+end;
+
+function CadPedido.getValor_total: Float64;
+begin
+    result := self.valor_total;
 end;
 
 function CadPedido.insertDados: Boolean;
@@ -103,10 +123,7 @@ begin
 
 end;
 
-procedure CadPedido.setCarga_idCarga(carga_idCarga: integer);
-begin
-  self.carga_idCarga := carga_idCarga;
-end;
+
 
 procedure CadPedido.setCliente_idCliente(cliente_idCliente: integer);
 begin
@@ -118,14 +135,20 @@ begin
   self.data_pedido := data_pedido;
 end;
 
-procedure CadPedido.setEntrega_idEntrega(entrega_idEntrega: integer);
+
+procedure CadPedido.setendereco_idEndereco(endereco_idEndereco: integer);
 begin
-  self.entrega_idEntrega  := entrega_idEntrega;
+    self.endereco_idEndereco := endereco_idEndereco;
 end;
 
 procedure CadPedido.setNumero_pedido(numero_pedido: integer);
 begin
   self.numero_pedido := numero_pedido;
+end;
+
+procedure CadPedido.setpeso_pedido(peso_pedido: Float64);
+begin
+    self.peso_pedido := peso_pedido;
 end;
 
 procedure CadPedido.setStatus(status: Boolean);
@@ -136,6 +159,16 @@ end;
 procedure CadPedido.setValor(valor: Float64);
 begin
   self.valor := valor;
+end;
+
+procedure CadPedido.setValor_frete(valor_frete: Float64);
+begin
+    self.valor_frete := valor_frete;
+end;
+
+procedure CadPedido.setValor_total(valor_total: Float64);
+begin
+    self.valor_total := valor_total;
 end;
 
 end.
