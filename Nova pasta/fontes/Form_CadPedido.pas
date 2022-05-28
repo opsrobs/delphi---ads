@@ -13,7 +13,7 @@ type
     spButtonReturn: TSpeedButton;
     spSalvar: TSpeedButton;
     spDelete: TSpeedButton;
-    Panel1: TPanel;
+    edQuantidade: TPanel;
     spConsultaCep: TSpeedButton;
     Label1: TLabel;
     MaskCep: TMaskEdit;
@@ -28,6 +28,9 @@ type
     Label2: TLabel;
     LabeledEdit1: TLabeledEdit;
     LabeledEdit2: TLabeledEdit;
+    LabeledEdit3: TLabeledEdit;
+    edValorFrete: TLabeledEdit;
+    edValorTotal: TLabeledEdit;
     procedure spSalvarClick(Sender: TObject);
     procedure spButtonReturnClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
@@ -58,7 +61,7 @@ end;
 
 procedure Tfrm_Pedido.limpartela;
 begin
-    ShowMessage('(  Y  )')
+    ShowMessage('(  Y  )' + ' << GIULIA >> ')
 end;
 
 procedure Tfrm_Pedido.setFuncao(funcao: byte);

@@ -2,7 +2,7 @@ object frm_Pedido: Tfrm_Pedido
   Left = 0
   Top = 0
   Caption = 'frm_Pedido'
-  ClientHeight = 540
+  ClientHeight = 677
   ClientWidth = 693
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -10,16 +10,16 @@ object frm_Pedido: Tfrm_Pedido
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   TextHeight = 15
   object Panel2: TPanel
     Left = 0
-    Top = 491
+    Top = 628
     Width = 693
     Height = 49
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 392
-    ExplicitWidth = 624
+    ExplicitTop = 491
     object spButtonReturn: TSpeedButton
       Left = 104
       Top = 14
@@ -61,20 +61,18 @@ object frm_Pedido: Tfrm_Pedido
       OnClick = spDeleteClick
     end
   end
-  object Panel1: TPanel
+  object edQuantidade: TPanel
     Left = 0
     Top = 0
     Width = 693
-    Height = 491
+    Height = 628
     Align = alClient
     TabOrder = 1
-    ExplicitLeft = 392
-    ExplicitTop = 360
-    ExplicitWidth = 185
-    ExplicitHeight = 41
+    ExplicitLeft = -32
+    ExplicitTop = -6
     object spConsultaCep: TSpeedButton
-      Left = 313
-      Top = 181
+      Left = 279
+      Top = 242
       Width = 89
       Height = 22
       Caption = 'Buscar CEP'
@@ -83,22 +81,22 @@ object frm_Pedido: Tfrm_Pedido
       Images = dm_ProjetoFinal.VirtualImageList1
     end
     object Label1: TLabel
-      Left = 145
-      Top = 162
+      Left = 97
+      Top = 218
       Width = 21
       Height = 15
       Caption = 'CEP'
     end
     object Label2: TLabel
-      Left = 144
-      Top = 19
+      Left = 96
+      Top = 43
       Width = 92
       Height = 15
       Caption = 'DATA DO PEDIDO'
     end
     object MaskCep: TMaskEdit
-      Left = 145
-      Top = 178
+      Left = 96
+      Top = 239
       Width = 144
       Height = 25
       EditMask = '00000\-000;0;_'
@@ -113,8 +111,8 @@ object frm_Pedido: Tfrm_Pedido
       Text = ''
     end
     object lbRua: TLabeledEdit
-      Left = 144
-      Top = 373
+      Left = 96
+      Top = 421
       Width = 145
       Height = 23
       EditLabel.Width = 20
@@ -124,9 +122,9 @@ object frm_Pedido: Tfrm_Pedido
       Text = ''
     end
     object lbNumero: TLabeledEdit
-      Left = 312
-      Top = 373
-      Width = 90
+      Left = 279
+      Top = 421
+      Width = 89
       Height = 23
       EditLabel.Width = 14
       EditLabel.Height = 15
@@ -135,8 +133,8 @@ object frm_Pedido: Tfrm_Pedido
       Text = ''
     end
     object lbCidade: TLabeledEdit
-      Left = 144
-      Top = 277
+      Left = 95
+      Top = 365
       Width = 145
       Height = 23
       EditLabel.Width = 37
@@ -146,8 +144,8 @@ object frm_Pedido: Tfrm_Pedido
       Text = ''
     end
     object lbEstado: TLabeledEdit
-      Left = 144
-      Top = 229
+      Left = 95
+      Top = 303
       Width = 145
       Height = 23
       EditLabel.Width = 35
@@ -157,9 +155,9 @@ object frm_Pedido: Tfrm_Pedido
       Text = ''
     end
     object lbUnidadeFederativa: TLabeledEdit
-      Left = 312
-      Top = 229
-      Width = 90
+      Left = 279
+      Top = 303
+      Width = 89
       Height = 23
       EditLabel.Width = 14
       EditLabel.Height = 15
@@ -168,8 +166,8 @@ object frm_Pedido: Tfrm_Pedido
       Text = ''
     end
     object lbBairro: TLabeledEdit
-      Left = 144
-      Top = 325
+      Left = 279
+      Top = 365
       Width = 145
       Height = 23
       EditLabel.Width = 31
@@ -179,9 +177,9 @@ object frm_Pedido: Tfrm_Pedido
       Text = ''
     end
     object lbComplemento: TLabeledEdit
-      Left = 408
-      Top = 373
-      Width = 113
+      Left = 456
+      Top = 421
+      Width = 145
       Height = 23
       EditLabel.Width = 77
       EditLabel.Height = 15
@@ -190,18 +188,18 @@ object frm_Pedido: Tfrm_Pedido
       Text = ''
     end
     object DateTimePicker1: TDateTimePicker
-      Left = 144
-      Top = 40
-      Width = 186
+      Left = 96
+      Top = 64
+      Width = 145
       Height = 23
       Date = 44708.000000000000000000
       Time = 0.721111909719184000
       TabOrder = 8
     end
     object LabeledEdit1: TLabeledEdit
-      Left = 144
-      Top = 88
-      Width = 121
+      Left = 279
+      Top = 176
+      Width = 145
       Height = 23
       EditLabel.Width = 100
       EditLabel.Height = 15
@@ -210,14 +208,47 @@ object frm_Pedido: Tfrm_Pedido
       Text = ''
     end
     object LabeledEdit2: TLabeledEdit
-      Left = 145
-      Top = 133
-      Width = 121
+      Left = 95
+      Top = 120
+      Width = 144
       Height = 23
       EditLabel.Width = 69
       EditLabel.Height = 15
       EditLabel.Caption = 'TIPO PEDIDO'
       TabOrder = 10
+      Text = ''
+    end
+    object LabeledEdit3: TLabeledEdit
+      Left = 94
+      Top = 176
+      Width = 145
+      Height = 23
+      EditLabel.Width = 73
+      EditLabel.Height = 15
+      EditLabel.Caption = 'QUANTIDADE'
+      TabOrder = 11
+      Text = ''
+    end
+    object edValorFrete: TLabeledEdit
+      Left = 96
+      Top = 493
+      Width = 145
+      Height = 23
+      EditLabel.Width = 70
+      EditLabel.Height = 15
+      EditLabel.Caption = 'VALOR FRETE'
+      TabOrder = 12
+      Text = ''
+    end
+    object edValorTotal: TLabeledEdit
+      Left = 279
+      Top = 493
+      Width = 145
+      Height = 23
+      EditLabel.Width = 71
+      EditLabel.Height = 15
+      EditLabel.Caption = 'VALOR TOTAL'
+      TabOrder = 13
       Text = ''
     end
   end

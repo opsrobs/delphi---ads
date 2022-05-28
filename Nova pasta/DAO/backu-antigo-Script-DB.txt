@@ -1,0 +1,318 @@
+-- MySQL Workbench Forward Engineering
+drop database if exists pedro_delphi;
+drop database if exists pedro_delphiii;
+drop database if exists logistica_ads;
+
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema Logistica_ads
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema Logistica_ads
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `Logistica_ads` DEFAULT CHARACTER SET utf8 ;
+USE `Logistica_ads` ;
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`estado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`estado` (
+  `idEstado` INT NOT NULL AUTO_INCREMENT,
+  `nome_estado` VARCHAR(45) NOT NULL,
+  `uf` VARCHAR(2) NULL DEFAULT NULL,
+  PRIMARY KEY (`idEstado`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`cidade`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`cidade` (
+  `idCidade` INT NOT NULL AUTO_INCREMENT,
+  `nome_cidade` VARCHAR(45) NOT NULL,
+  `estado_idEstado` INT NOT NULL,
+  PRIMARY KEY (`idCidade`),
+  INDEX `fk_cidade_estado1_idx` (`estado_idEstado` ASC) VISIBLE,
+  CONSTRAINT `fk_cidade_estado1`
+    FOREIGN KEY (`estado_idEstado`)
+    REFERENCES `Logistica_ads`.`estado` (`idEstado`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`bairro`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`bairro` (
+  `idBairro` INT NOT NULL AUTO_INCREMENT,
+  `nome_Bairro` VARCHAR(45) NOT NULL,
+  `cidade_idCidade` INT NOT NULL,
+  PRIMARY KEY (`idBairro`),
+  INDEX `fk_bairro_cidade1_idx` (`cidade_idCidade` ASC) VISIBLE,
+  CONSTRAINT `fk_bairro_cidade1`
+    FOREIGN KEY (`cidade_idCidade`)
+    REFERENCES `Logistica_ads`.`cidade` (`idCidade`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`carga`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`carga` (
+  `IdCarga` INT NOT NULL AUTO_INCREMENT,
+  `nome_tipo` VARCHAR(100) NOT NULL,
+  `quantidade` INT NOT NULL,
+  `peso` FLOAT NOT NULL,
+  PRIMARY KEY (`IdCarga`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`pessoa`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`pessoa` (
+  `idPessoa` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idPessoa`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`cliente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`cliente` (
+  `idcliente` INT NOT NULL AUTO_INCREMENT,
+  `pessoa_idPessoa` INT NOT NULL,
+  PRIMARY KEY (`idcliente`),
+  INDEX `fk_cliente_pessoa1_idx` (`pessoa_idPessoa` ASC) VISIBLE,
+  CONSTRAINT `fk_cliente_pessoa1`
+    FOREIGN KEY (`pessoa_idPessoa`)
+    REFERENCES `Logistica_ads`.`pessoa` (`idPessoa`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`contato`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`contato` (
+  `idstatus_telefone` INT NOT NULL AUTO_INCREMENT,
+  `status_contato` TINYINT NOT NULL,
+  `contato` VARCHAR(45) NOT NULL,
+  `pessoa_idPessoa` INT NOT NULL,
+  PRIMARY KEY (`idstatus_telefone`),
+  INDEX `fk_contato_pessoa1_idx` (`pessoa_idPessoa` ASC) VISIBLE,
+  CONSTRAINT `fk_contato_pessoa1`
+    FOREIGN KEY (`pessoa_idPessoa`)
+    REFERENCES `Logistica_ads`.`pessoa` (`idPessoa`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`endereco`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`endereco` (
+  `idEndereco` INT NOT NULL AUTO_INCREMENT,
+  `cep` VARCHAR(20) NOT NULL,
+  `rua` VARCHAR(50) NOT NULL,
+  `complemento` VARCHAR(20) NULL DEFAULT NULL,
+  `numero` INT NOT NULL,
+  `bairro_idBairro` INT NOT NULL,
+  `pessoa_idPessoa` INT NOT NULL,
+  PRIMARY KEY (`idEndereco`),
+  INDEX `fk_endereco_bairro1_idx` (`bairro_idBairro` ASC) VISIBLE,
+  INDEX `fk_endereco_pessoa1_idx` (`pessoa_idPessoa` ASC) VISIBLE,
+  CONSTRAINT `fk_endereco_bairro1`
+    FOREIGN KEY (`bairro_idBairro`)
+    REFERENCES `Logistica_ads`.`bairro` (`idBairro`),
+  CONSTRAINT `fk_endereco_pessoa1`
+    FOREIGN KEY (`pessoa_idPessoa`)
+    REFERENCES `Logistica_ads`.`pessoa` (`idPessoa`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`entrega`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`entrega` (
+  `identrega` INT NOT NULL AUTO_INCREMENT,
+  `status` TINYINT NOT NULL,
+  PRIMARY KEY (`identrega`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`pessoa_fisica`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`pessoa_fisica` (
+  `idpessoa_fisica` INT NOT NULL AUTO_INCREMENT,
+  `cpf` VARCHAR(45) NOT NULL,
+  `pessoa_idPessoa` INT NOT NULL,
+  PRIMARY KEY (`idpessoa_fisica`),
+  INDEX `fk_pessoa_fisica_pessoa1_idx` (`pessoa_idPessoa` ASC) VISIBLE,
+  CONSTRAINT `fk_pessoa_fisica_pessoa1`
+    FOREIGN KEY (`pessoa_idPessoa`)
+    REFERENCES `Logistica_ads`.`pessoa` (`idPessoa`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`funcionario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`funcionario` (
+  `idfuncionario` INT NOT NULL AUTO_INCREMENT,
+  `pis` VARCHAR(45) NOT NULL,
+  `cnh` VARCHAR(45) NOT NULL,
+  `pessoa_fisica_idpessoa_fisica` INT NOT NULL,
+  PRIMARY KEY (`idfuncionario`),
+  INDEX `fk_funcionario_pessoa_fisica1_idx` (`pessoa_fisica_idpessoa_fisica` ASC) VISIBLE,
+  CONSTRAINT `fk_funcionario_pessoa_fisica1`
+    FOREIGN KEY (`pessoa_fisica_idpessoa_fisica`)
+    REFERENCES `Logistica_ads`.`pessoa_fisica` (`idpessoa_fisica`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`marca_veiculo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`marca_veiculo` (
+  `idmarca_veiculo` INT NOT NULL AUTO_INCREMENT,
+  `nome_marca` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`idmarca_veiculo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`veiculo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`veiculo` (
+  `idveiculos` INT NOT NULL AUTO_INCREMENT,
+  `modelo` VARCHAR(40) NOT NULL,
+  `placa` VARCHAR(10) NOT NULL,
+  `marca_veiculo_idmarca_veiculo` INT NOT NULL,
+  PRIMARY KEY (`idveiculos`),
+  INDEX `fk_veiculo_marca_veiculo1_idx` (`marca_veiculo_idmarca_veiculo` ASC) VISIBLE,
+  CONSTRAINT `fk_veiculo_marca_veiculo1`
+    FOREIGN KEY (`marca_veiculo_idmarca_veiculo`)
+    REFERENCES `Logistica_ads`.`marca_veiculo` (`idmarca_veiculo`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`funcionario_has_veiculo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`funcionario_has_veiculo` (
+  `funcionario_idfuncionario` INT NOT NULL,
+  `veiculo_idveiculos` INT NOT NULL,
+  PRIMARY KEY (`funcionario_idfuncionario`, `veiculo_idveiculos`),
+  INDEX `fk_funcionario_has_veiculo_veiculo1_idx` (`veiculo_idveiculos` ASC) VISIBLE,
+  INDEX `fk_funcionario_has_veiculo_funcionario1_idx` (`funcionario_idfuncionario` ASC) VISIBLE,
+  CONSTRAINT `fk_funcionario_has_veiculo_funcionario1`
+    FOREIGN KEY (`funcionario_idfuncionario`)
+    REFERENCES `Logistica_ads`.`funcionario` (`idfuncionario`),
+  CONSTRAINT `fk_funcionario_has_veiculo_veiculo1`
+    FOREIGN KEY (`veiculo_idveiculos`)
+    REFERENCES `Logistica_ads`.`veiculo` (`idveiculos`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`pedido`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`pedido` (
+  `numero_pedido` INT NOT NULL AUTO_INCREMENT,
+  `data_pedido` DATE NOT NULL,
+  `valor` FLOAT NOT NULL,
+  `status` TINYINT NOT NULL,
+  `entrega_identrega` INT NOT NULL,
+  `cliente_idcliente` INT NOT NULL,
+  `carga_IdCarga` INT NOT NULL,
+  PRIMARY KEY (`numero_pedido`),
+  INDEX `fk_pedido_entrega1_idx` (`entrega_identrega` ASC) VISIBLE,
+  INDEX `fk_pedido_cliente1_idx` (`cliente_idcliente` ASC) VISIBLE,
+  INDEX `fk_pedido_carga1_idx` (`carga_IdCarga` ASC) VISIBLE,
+  CONSTRAINT `fk_pedido_carga1`
+    FOREIGN KEY (`carga_IdCarga`)
+    REFERENCES `Logistica_ads`.`carga` (`IdCarga`),
+  CONSTRAINT `fk_pedido_cliente1`
+    FOREIGN KEY (`cliente_idcliente`)
+    REFERENCES `Logistica_ads`.`cliente` (`idcliente`),
+  CONSTRAINT `fk_pedido_entrega1`
+    FOREIGN KEY (`entrega_identrega`)
+    REFERENCES `Logistica_ads`.`entrega` (`identrega`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`orcamento`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`orcamento` (
+  `idorcamento` INT NOT NULL AUTO_INCREMENT,
+  `valor_pedido` FLOAT NOT NULL,
+  `valor_frete` FLOAT NOT NULL,
+  `pedido_numero_pedido` INT NOT NULL,
+  PRIMARY KEY (`idorcamento`),
+  INDEX `fk_orcamento_pedido2_idx` (`pedido_numero_pedido` ASC) VISIBLE,
+  CONSTRAINT `fk_orcamento_pedido2`
+    FOREIGN KEY (`pedido_numero_pedido`)
+    REFERENCES `Logistica_ads`.`pedido` (`numero_pedido`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`pessoa_juridica`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`pessoa_juridica` (
+  `idpessoa_juridica` INT NOT NULL AUTO_INCREMENT,
+  `cnpj` VARCHAR(45) NOT NULL,
+  `pessoa_idPessoa` INT NOT NULL,
+  PRIMARY KEY (`idpessoa_juridica`),
+  INDEX `fk_pessoa_juridica_pessoa1_idx` (`pessoa_idPessoa` ASC) VISIBLE,
+  CONSTRAINT `fk_pessoa_juridica_pessoa1`
+    FOREIGN KEY (`pessoa_idPessoa`)
+    REFERENCES `Logistica_ads`.`pessoa` (`idPessoa`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `Logistica_ads`.`orcamento`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`orcamento` (
+  `idorcamento` INT NOT NULL AUTO_INCREMENT,
+  `valor_pedido` FLOAT NOT NULL,
+  `valor_frete` FLOAT NOT NULL,
+  `pedido_numero_pedido` INT NOT NULL,
+  PRIMARY KEY (`idorcamento`),
+  INDEX `fk_orcamento_pedido2_idx` (`pedido_numero_pedido` ASC) VISIBLE,
+  CONSTRAINT `fk_orcamento_pedido2`
+    FOREIGN KEY (`pedido_numero_pedido`)
+    REFERENCES `Logistica_ads`.`pedido` (`numero_pedido`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

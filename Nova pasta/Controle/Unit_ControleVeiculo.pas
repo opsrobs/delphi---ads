@@ -59,7 +59,6 @@ begin
       VCadVeiculo :=CadVeiculo.Create;
       case (frm_Veiculos.getFuncao) of
       1:begin
-
       Self.updateMarca;
       self.cadastroVeiculo(VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text));
 

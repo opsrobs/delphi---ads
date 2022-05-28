@@ -1,10 +1,10 @@
 unit Objeto_CadPedido;
 
 interface
-  uses Objeto_CadCarga, Objeto_CadEntrega;
+  uses FireDAC.Comp.Client, Unit_Dados, System.SysUtils, Vcl.Dialogs;
 
   type
-    CadPedido = class(CadCarga)
+    CadPedido = class
 
     private
       numero_pedido:integer;
@@ -29,6 +29,10 @@ interface
       function getCarga_idCarga:integer;
       procedure setCliente_idCliente(cliente_idCliente:integer);
       function getCliente_idCliente:integer;
+
+                                                {<--- CRUD --->}
+
+        function insertDados:Boolean;
 
     end;
 
@@ -69,6 +73,34 @@ end;
 function CadPedido.getValor: Float64;
 begin
   result := self.valor ;
+end;
+
+function CadPedido.insertDados: Boolean;
+  var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('insert into pedido values( 0, :data_pedido, :valor, :status, :entrega_identrega,  )');
+
+  //query.ParamByName('nome').AsString := self.getnome;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {Insert service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao incluir pessoa: ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 procedure CadPedido.setCarga_idCarga(carga_idCarga: integer);

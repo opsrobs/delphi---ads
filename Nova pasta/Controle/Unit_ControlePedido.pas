@@ -1,21 +1,32 @@
 unit Unit_ControlePedido;
 
 interface
-    uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types,StrUtils;
+    uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types, Objeto_CadPedido, StrUtils;
 
 type
  TControle_Pedido = class
    private
+    procedure cadastroPedido;
 
    public
    procedure getCadPedido;
+
  end;
+ var
+  VCadPedido:CadPedido;
 
 implementation
 
 { TControle_Pedido }
 
 uses Form_CadPedido;
+
+procedure TControle_Pedido.cadastroPedido;
+begin
+  VCadPedido := CadPedido.Create;
+
+
+end;
 
 procedure TControle_Pedido.getCadPedido;
 var
@@ -29,8 +40,6 @@ begin
 
          case(frm_Pedido.getFuncao) of
             1: begin
-
-
 
             end;
             2: begin
