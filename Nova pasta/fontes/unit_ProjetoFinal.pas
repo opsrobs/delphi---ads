@@ -26,6 +26,7 @@ type
     procedure Funcionario1Click(Sender: TObject);
     procedure Veiculo1Click(Sender: TObject);
     procedure Pedido1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,6 +35,8 @@ type
     ControleFuncionario:TControle_Funcionario;
     ControleVeiculo:TControle_Veiculo;
     ControlePedido:TControle_Pedido;
+
+    procedure clearMemory;
   end;
 
 var
@@ -43,11 +46,36 @@ implementation
 
 {$R *.dfm}
 
- uses Unit_Dados, Form_CadPessoa, Objeto_CadFuncionario;
+ uses Unit_Dados, Form_CadPessoa, Objeto_CadFuncionario, Form_CadPedido,
+  Form_CadFuncionario, Form_CadVeiculos, Form_Consulta;
+
+procedure TFrm_Principal.clearMemory;
+var
+clear : THandle;
+begin
+    try
+     clear := OpenProcess(PROCESS_ALL_ACCESS, false, GetCurrentProcessId);
+     SetProcessWorkingSetSize(clear, $ffffffff, $ffffffff);
+     CloseHandle(clear);
+    Except
+
+    end;
+
+end;
 
 procedure TFrm_Principal.Cliente1Click(Sender: TObject);
 begin
     Controle.getCadPessoa;
+end;
+
+procedure TFrm_Principal.FormActivate(Sender: TObject);
+begin
+    self.clearMemory;
+    FreeAndNil(frm_Pedido);
+    FreeAndNil(frm_Consulta);
+    FreeAndNil(frm_Funcionario);
+    FreeAndNil(frm_Cliente);
+    FreeAndNil(frm_Veiculos);
 end;
 
 procedure TFrm_Principal.FormCreate(Sender: TObject);

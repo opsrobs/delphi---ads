@@ -115,6 +115,13 @@ begin
           end;
         end;
         VCadFuncionario.Free;
+        VCadPessoa.Free;
+        VCadFuncionario.Free;
+        VCadPessoaFisica.Free;
+        VCadEstado.Free;
+        VCadCidade.Free;
+        VCadBairro.Free;
+        VCadEndereco.Free;
      end;
      FreeAndNil(frm_Funcionario)
 
@@ -133,7 +140,6 @@ begin
         if frm_Consulta.ShowModal = mrOk then
         begin
           frm_Pedido.edDestinatario.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
-          ShowMessage('consulta')
         end;
     end
     else
@@ -149,6 +155,11 @@ begin
               FreeAndNil(frm_Consulta);
             end
     end;
+
+    dm_ProjetoFinal.qrConsulta.Close;
+    dm_ProjetoFinal.qrConsulta.SQL.Clear;
+
+
 
 
 

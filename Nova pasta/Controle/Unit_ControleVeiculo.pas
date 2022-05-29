@@ -53,19 +53,24 @@ var
   id:integer;
 begin
     if (frm_Veiculos = nil) then
+    begin
       frm_Veiculos := Tfrm_Veiculos.Create(nil);
 
       if (frm_Veiculos.ShowModal = mrok) then
       VCadVeiculo :=CadVeiculo.Create;
-      case (frm_Veiculos.getFuncao) of
-      1:begin
-          Self.updateMarca;
-          self.cadastroVeiculo(VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text));
-        end;
-      2:begin
+        case (frm_Veiculos.getFuncao) of
+        1:begin
+            Self.updateMarca;
+            self.cadastroVeiculo(VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text));
+          end;
+        2:begin
 
+        end;
       end;
-      end;
+      VCadVeiculo.Free;
+      VCadMarca.Free;
+    end;
+    FreeAndNil(frm_Veiculos)
 
 
 end;

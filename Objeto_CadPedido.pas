@@ -15,7 +15,9 @@ interface
       endereco_idEndereco:integer;
       valor_total:Float64;
       valor_frete:Float64;
+      data_entrega:TDate;
       peso_pedido:Float64;
+      recebedor_idRecebedor:integer;
     public
       procedure setNumero_pedido(numero_pedido:integer);
       function getNumero_pedido:integer;
@@ -35,6 +37,10 @@ interface
       function getValor_Frete:Float64;
       procedure setpeso_pedido(peso_pedido:Float64);
       function getpeso_pedido:Float64;
+      procedure setrecebedor_idRecebedor(recebedor_idRecebedor:integer);
+      function getrecebedor_idRecebedor:integer;
+      procedure setData_entrega(data_entrega:TDate);
+      function getData_entrega:TDate;
 
                                                 {<--- CRUD --->}
 
@@ -46,12 +52,14 @@ implementation
 
 { CadPedido }
 
-
-
-
 function CadPedido.getCliente_idCliente: integer;
 begin
   result := self.Cliente_idCliente;
+end;
+
+function CadPedido.getData_entrega: TDate;
+begin
+ result := self.data_entrega;
 end;
 
 function CadPedido.getData_pedido: TDate;
@@ -62,7 +70,7 @@ end;
 
 function CadPedido.getendereco_idEndereco: integer;
 begin
-    result := self.getendereco_idEndereco;
+    result := self.endereco_idEndereco;
 end;
 
 function CadPedido.getNumero_pedido: integer;
@@ -73,6 +81,11 @@ end;
 function CadPedido.getpeso_pedido: Float64;
 begin
     result := self.peso_pedido;
+end;
+
+function CadPedido.getrecebedor_idRecebedor: integer;
+begin
+    result := self.recebedor_idRecebedor;
 end;
 
 function CadPedido.getStatus: string;
@@ -101,8 +114,8 @@ function CadPedido.insertDados: Boolean;
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-
-  query.SQL.Add('insert into pedido values( 0, :data_pedido, :valor, :status, :cliente_idcliente, :valor_total, :valor_frete, :endereco_idEndereco, :peso_pedido )');
+  query.SQL.Add('insert into pedido values( 0, :data_pedido, :valor, :status, :cliente_idcliente, :valor_total, :valor_frete,'+
+  ' :data_entrega, :endereco_idEndereco, :peso_pedido, :recebedor_idrecebedor )');
 
   query.ParamByName('data_pedido').AsDate := self.getData_pedido;
   query.ParamByName('valor').AsFloat := self.getValor;
@@ -110,8 +123,10 @@ begin
   query.ParamByName('cliente_idcliente').AsInteger := self.getCliente_idCliente;
   query.ParamByName('valor_total').AsFloat := self.getValor_total;
   query.ParamByName('valor_frete').AsFloat := self.getValor_Frete;
+  query.ParamByName('data_entrega').AsDate := self.getData_entrega;
   query.ParamByName('endereco_idEndereco').AsInteger := self.getendereco_idEndereco;
   query.ParamByName('peso_pedido').AsFloat := self.getpeso_pedido;
+  query.ParamByName('recebedor_idrecebedor').AsInteger := self.getrecebedor_idRecebedor;
       try
         query.ExecSQL;  {Insert service}
         result := true;
@@ -128,11 +143,14 @@ begin
 
 end;
 
-
-
 procedure CadPedido.setCliente_idCliente(cliente_idCliente: integer);
 begin
   self.Cliente_idCliente := cliente_idCliente;
+end;
+
+procedure CadPedido.setData_entrega(data_entrega: TDate);
+begin
+    self.data_entrega := data_entrega;
 end;
 
 procedure CadPedido.setData_pedido(data_pedido: TDate);
@@ -154,6 +172,11 @@ end;
 procedure CadPedido.setpeso_pedido(peso_pedido: Float64);
 begin
     self.peso_pedido := peso_pedido;
+end;
+
+procedure CadPedido.setrecebedor_idRecebedor(recebedor_idRecebedor: integer);
+begin
+    self.recebedor_idRecebedor := recebedor_idRecebedor;
 end;
 
 procedure CadPedido.setStatus(status: string);

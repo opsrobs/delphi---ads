@@ -43,8 +43,6 @@ uses Unit_Dados,Objeto_Utilitario, Form_CadPedido, Form_CadFuncionario,
 { Tfrm_Consulta }
 
 procedure Tfrm_Consulta.FormActivate(Sender: TObject);
-var
-   frm_Pedido:Tfrm_Pedido;
 begin
 if frm_Pedido <> nil then
 begin

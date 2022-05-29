@@ -12,6 +12,7 @@ object Frm_Principal: TFrm_Principal
   Font.Style = []
   Menu = MainMenu1
   Position = poScreenCenter
+  OnActivate = FormActivate
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   TextHeight = 15

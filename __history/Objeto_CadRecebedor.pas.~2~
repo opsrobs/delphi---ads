@@ -1,0 +1,40 @@
+unit Objeto_CadRecebedor;
+
+interface
+  type CadRecebedor = class
+    private
+    idRecebedor:integer;
+    pessoaIdPessoa:integer;
+
+    public
+    procedure setidRecebedor(idRecebedor: integer);
+      function getidRecebedor: integer;
+      procedure setPessoa_idPessoa (Pessoa_idPessoa:integer);
+      function getPessoa_idPessoa: integer;
+  end;
+
+implementation
+
+{ CadRecebedor }
+
+function CadRecebedor.getidRecebedor: integer;
+begin
+   result := self.idRecebedor;
+end;
+
+function CadRecebedor.getPessoa_idPessoa: integer;
+begin
+    result := self.pessoaIdPessoa;
+end;
+
+procedure CadRecebedor.setidRecebedor(idRecebedor: integer);
+begin
+    self.idRecebedor := idRecebedor;
+end;
+
+procedure CadRecebedor.setPessoa_idPessoa(Pessoa_idPessoa: integer);
+begin
+    self.pessoaIdPessoa := pessoaIdPessoa;
+end;
+
+end.

@@ -54,8 +54,6 @@ begin
 
         if (not query.isEmpty) then
           begin
-              //query.ParamByName('nome_estado').AsString := self.getNome_estado;
-              {Alterar o valor do [] para a posição do atributo}
               id :=query.Fields[0].AsInteger;
               result :=id;
           end;

@@ -11,12 +11,15 @@ type
     function generateTypePerson:string;
     procedure capturandoJson;
     procedure nomeEstado(uf:string);
-    procedure nomeEstadoPedido(uf: string);
 
     public
     procedure loadingApiPessoa;
     procedure loadingApiCep;
     function idPessoaCliente(nome:string):integer;
+    function identificadorEndereco(nome:string):integer;
+    function identificadorRecebedor(nome:string):integer;
+    function identiicadorPessoa(nome:string):integer;
+    function getLastId:integer;
   end;
 
 implementation
@@ -35,14 +38,6 @@ begin
       frm_Cliente.lbRua.Text := dm_ProjetoFinal.MemTable.FieldByName('logradouro').AsString;
       frm_Cliente.lbUnidadeFederativa.Text := dm_ProjetoFinal.MemTable.FieldByName('uf').AsString;
     end
-      else
-      begin
-        self.nomeEstadoPedido(dm_ProjetoFinal.MemTable.FieldByName('uf').AsString);
-      frm_Pedido.lbBairro.Text := dm_ProjetoFinal.MemTable.FieldByName('bairro').AsString;
-      frm_Pedido.lbCidade.Text := dm_ProjetoFinal.MemTable.FieldByName('localidade').AsString;
-      frm_Pedido.lbRua.Text := dm_ProjetoFinal.MemTable.FieldByName('logradouro').AsString;
-      frm_Pedido.lbUnidadeFederativa.Text := dm_ProjetoFinal.MemTable.FieldByName('uf').AsString;
-      end;
 
 end;
 
@@ -69,7 +64,36 @@ if (frm_Cliente.rdCNPJ.Checked) then
 
 end;
 
-function Utils.idPessoaCliente(nome:string): integer;
+function Utils.getLastId: integer;
+var
+    query:TFDQuery;
+    id:integer;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('SELECT LAST_INSERT_ID();');
+
+      try
+        query.open;
+          if (not query.isEmpty) then
+          begin
+              id :=query.Fields[0].AsInteger;
+              result :=id;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+end;
+
+function Utils.identificadorEndereco(nome: string): integer;
 var
     query:TFDQuery;
     querySelect:string;
@@ -77,7 +101,7 @@ var
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-  querySelect:='SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa and nome =  "'+nome+'" ;';
+  querySelect:='SELECT e.idEndereco,p.idPessoa, p.nome FROM logistica_ads.pessoa p, logistica_ads.endereco e where (p.nome = "'+ nome +'" and p.idPessoa = e.pessoa_idPessoa);';
 
   query.SQL.Add(querySelect);
       try
@@ -95,7 +119,7 @@ begin
         on e:exception do
         begin
           Result := 0;
-          showMessage('Erro ao fazer consulta no cliente : '+nome+' ' + e.ToString);
+          showMessage('Erro ao fazer consulta no endereço de : '+nome+' ' + e.ToString);
         end;
 
       end;
@@ -104,15 +128,111 @@ begin
 
 end;
 
+function Utils.identificadorRecebedor(nome: string): integer;
+var
+    query:TFDQuery;
+    querySelect:string;
+    id:integer;
+begin
+  id:=0;
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  querySelect:='SELECT r.idrecebedor, p.nome FROM logistica_ads.pessoa p, logistica_ads.recebedor r where p.idPessoa = r.pessoa_idPessoa  and p.nome = "'+nome+'" ;';
+
+  query.SQL.Add(querySelect);
+      try
+        query.open;
+        if (not query.isEmpty) then
+          begin
+              id :=query.Fields[0].AsInteger;
+              result :=id;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao fazer consulta no cliente : '+nome+' ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+    result :=id;
+end;
+function Utils.identiicadorPessoa(nome: string): integer;
+var
+    query:TFDQuery;
+    querySelect:string;
+    id:integer;
+begin
+  id :=0;
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  querySelect:='SELECT * FROM logistica_ads.pessoa where nome =  "'+nome+'" ;';
+
+  query.SQL.Add(querySelect);
+      try
+        query.open;
+
+
+        if (not query.isEmpty) then
+          begin
+              id :=query.Fields[0].AsInteger;
+                            ShowMessage(IntToStr(id));
+              result :=id;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao fazer consulta na pessoa... : '+nome+' ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+   result :=id;
+end;
+
+function Utils.idPessoaCliente(nome:string): integer;
+var
+    query:TFDQuery;
+    querySelect:string;
+    id:integer;
+begin
+id:=0;
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  querySelect:='SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa and nome =  "'+nome+'" ;';
+
+  query.SQL.Add(querySelect);
+      try
+        query.open;
+        if (not query.isEmpty) then
+          begin
+              id :=query.Fields[0].AsInteger;
+              result :=id;
+          end;
+      except
+        on e:exception do
+        begin
+          Result := 0;
+          showMessage('Erro ao fazer consulta no cliente : '+nome+' ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+      result := id;
+
+end;
+
 procedure Utils.loadingApiCep;
 begin
     dm_ProjetoFinal.RESTClient1.BaseURL := 'https://viacep.com.br/ws/';
     dm_ProjetoFinal.RESTRequest1.Method := rmGET;
     dm_ProjetoFinal.RESTRequest1.Resource := '{cep}/json';
-    if frm_Cliente<>nil then
-      dm_ProjetoFinal.RESTRequest1.Params.AddUrlSegment('cep',frm_Cliente.MaskCep.Text)
-    else
-      dm_ProjetoFinal.RESTRequest1.Params.AddUrlSegment('cep',frm_Pedido.MaskCep.Text);
+      dm_ProjetoFinal.RESTRequest1.Params.AddUrlSegment('cep',frm_Cliente.MaskCep.Text);
     dm_ProjetoFinal.RESTRequest1.Execute;
     self.capturandoJson;
 end;
@@ -188,64 +308,6 @@ begin
     frm_Cliente.lbEstado.Text :='Sergipe'
     else
     frm_Cliente.lbEstado.Text :='Tocantins'
-end;
-
-procedure Utils.nomeEstadoPedido(uf: string);
-begin
-    if (UpperCase(uf)= 'AC' ) then
-    frm_pedido.lbEstado.Text :='Acre'
-    else if (UpperCase(uf)= 'AL' ) then
-    frm_Pedido.lbEstado.Text :='Alagoas'
-    else if (UpperCase(uf)= 'AP' ) then
-    frm_Pedido.lbEstado.Text :='Amapá'
-    else if (UpperCase(uf)= 'AM' ) then
-    frm_Pedido.lbEstado.Text :='Amazonas'
-    else if (UpperCase(uf)= 'BA' ) then
-    frm_Pedido.lbEstado.Text :='Bahia'
-    else if (UpperCase(uf)= 'CE' ) then
-    frm_Pedido.lbEstado.Text :='Ceará'
-    else if (UpperCase(uf)= 'DF' ) then
-    frm_Pedido.lbEstado.Text :='Distrito Federal'
-    else if (UpperCase(uf)= 'ES' ) then
-    frm_Pedido.lbEstado.Text :='Espírito Santo'
-    else if (UpperCase(uf)= 'GO' ) then
-    frm_Pedido.lbEstado.Text :='Goiás'
-    else if (UpperCase(uf)= 'MA' ) then
-    frm_Pedido.lbEstado.Text :='Maranhão'
-    else if (UpperCase(uf)= 'MT' ) then
-    frm_Pedido.lbEstado.Text :='Mato Grosso'
-    else if (UpperCase(uf)= 'MS' ) then
-    frm_Pedido.lbEstado.Text :='Mato Grosso do Sul'
-    else if (UpperCase(uf)= 'MG' ) then
-    frm_Pedido.lbEstado.Text :='Minas Gerais'
-    else if (UpperCase(uf)= 'PA' ) then
-    frm_Pedido.lbEstado.Text :='Pará'
-    else if (UpperCase(uf)= 'PB' ) then
-    frm_Pedido.lbEstado.Text :='Paraíba '
-    else if (UpperCase(uf)= 'PR' ) then
-    frm_Pedido.lbEstado.Text :='Paraná'
-    else if (UpperCase(uf)= 'PE' ) then
-    frm_Pedido.lbEstado.Text :='Pernambuco'
-    else if (UpperCase(uf)= 'PI' ) then
-    frm_Pedido.lbEstado.Text :='Piauí'
-    else if (UpperCase(uf)= 'RJ' ) then
-    frm_Pedido.lbEstado.Text :='Rio de Janeiro'
-    else if (UpperCase(uf)= 'RN' ) then
-    frm_Pedido.lbEstado.Text :='Rio Grande do Norte'
-    else if (UpperCase(uf)= 'RS' ) then
-    frm_Pedido.lbEstado.Text :='Rio Grande do Sul'
-    else if (UpperCase(uf)= 'RO' ) then
-    frm_Pedido.lbEstado.Text :='Rondônia'
-    else if (UpperCase(uf)= 'RR' ) then
-    frm_Pedido.lbEstado.Text :='Roraima'
-    else if (UpperCase(uf)= 'SC' ) then
-    frm_Pedido.lbEstado.Text :='Santa Catarina'
-    else if (UpperCase(uf)= 'SP' ) then
-    frm_Pedido.lbEstado.Text :='São Paulo'
-    else if (UpperCase(uf)= 'SE' ) then
-    frm_Pedido.lbEstado.Text :='Sergipe'
-    else
-    frm_Pedido.lbEstado.Text :='Tocantins'
 end;
 
 end.

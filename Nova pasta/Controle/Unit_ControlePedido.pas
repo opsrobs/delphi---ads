@@ -10,6 +10,7 @@ type
     procedure cadastroPedido;
     function verifyStatus:string;
     function setScript:string;
+    function returnIdDestinatario:integer;
 
      public
      procedure getCadPedido;
@@ -28,7 +29,7 @@ implementation
 
 { TControle_Pedido }
 
-uses Form_CadPedido, Unit_Dados;
+uses Form_CadPedido, Unit_Dados, Objeto_CadRecebedor;
 
 procedure TControle_Pedido.cadastroPedido;
 var
@@ -62,6 +63,7 @@ var
   idCliente:integer;
   id:integer;
 begin
+  VCadPedido :=CadPedido.Create;
     if (frm_Pedido = nil) then
       frm_Pedido := Tfrm_Pedido.Create(nil);
 
@@ -69,24 +71,35 @@ begin
       begin
       idendereco := utilitaria.identificadorEndereco(frm_Pedido.edDestinatario.Text);
       idCliente := VCadCliente.identificadorCliente(frm_Pedido.cbCliente.Text);
-      id := utilitaria.identificadorRecebedor(frm_Pedido.edDestinatario.Text);
+      id := self.returnIdDestinatario;
          case(frm_Pedido.getFuncao) of
             1: begin
-                ShowMessage(IntToStr(id))
+                VCadPedido.setData_pedido(frm_Pedido.dtDataPedido.Date);
+                VCadPedido.setValor(StrToFloat(frm_Pedido.edValorPedido.Text));
+                VCadPedido.setStatus(self.verifyStatus);
+                VCadPedido.setCliente_idCliente(idCliente);
+                VCadPedido.setValor_total(StrToFloat(frm_Pedido.edValorTotal.Text));
+                VCadPedido.setValor_frete(StrToFloat(frm_Pedido.edValorFrete.Text));
+                ShowMessage(IntToStr(idendereco));
+                VCadPedido.setendereco_idEndereco(idendereco);
+                VCadPedido.setpeso_pedido(StrToFloat(frm_Pedido.edPeso.Text));
+                VCadPedido.setrecebedor_idRecebedor(id);
+                VCadPedido.insertDados;
+                ShowMessage(IntToStr(id));
             end;
             2: begin
 
                end;
          end;
+         VCadEndereco.Free;
+         VCadCliente.Free;
 
       end;
-
       FreeAndNil(frm_Pedido);
 end;
 
 procedure TControle_Pedido.populaCombo;
 begin
-    //frm_Veiculos.cbVeiculos.Style:=
     dm_ProjetoFinal.qrConsulta.Close;
     dm_ProjetoFinal.qrConsulta.SQL.Clear;
     dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScript);
@@ -95,16 +108,34 @@ begin
       dm_ProjetoFinal.qrConsulta.First;
       while not dm_ProjetoFinal.qrConsulta.Eof  do
     begin
-      //frm_Veiculos.cbVeiculos.Items.Add(dm_ProjetoFinal.qrVeiculonome_marca.Value);
       frm_Pedido.cbCliente.Items.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
       dm_ProjetoFinal.qrConsulta.Next;
     end;
     finally
 
     end;
-    //frm_Veiculos.lbMarca.Text := frm_Veiculos.cbVeiculos.Text;
 
 end;
+
+function TControle_Pedido.returnIdDestinatario: integer;
+var
+VCadRecebedor:CadRecebedor;
+id:integer;
+begin
+utilitaria := Utils.Create;
+    VCadRecebedor := CadRecebedor.Create;
+    id :=utilitaria.identificadorRecebedor(frm_Pedido.edDestinatario.Text);
+    if (utilitaria.identificadorRecebedor(frm_Pedido.edDestinatario.Text) <=0) then
+    begin
+        VCadRecebedor.setPessoa_idPessoa(utilitaria.identiicadorPessoa(frm_Pedido.edDestinatario.Text));
+        VCadRecebedor.insertDados;
+
+      result :=utilitaria.getLastId;
+    end
+    else
+    result :=id;
+          VCadRecebedor.Destroy;
+    end;
 
 function TControle_Pedido.setScript: string;
 begin

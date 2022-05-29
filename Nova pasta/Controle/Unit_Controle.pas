@@ -75,7 +75,7 @@ begin
     if frm_Cliente.lbNumero.Text = '' then
       result :=0
       else
-      StrToInt(frm_Cliente.lbNumero.Text)
+      result := StrToInt(frm_Cliente.lbNumero.Text)
 end;
 
 procedure TControle.cadastroBairro;
@@ -159,7 +159,6 @@ procedure TControle.getCadPessoa;
     VCadRecebedor:CadRecebedor;
     VCadPessoa:CadPessoa;
     VCadCliente: CadCliente;
-    idTemp:integer;
     idPessoa:integer;
 begin
     if (frm_Cliente = nil) then
