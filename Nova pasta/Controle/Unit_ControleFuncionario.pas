@@ -2,7 +2,7 @@ unit Unit_ControleFuncionario;
 
 interface
 uses System.SysUtils,Winapi.Messages,Objeto_CadFuncionario,Vcl.Controls,Vcl.Dialogs,
-     Objeto_CadPessoa,Unit_Controle;
+     Objeto_CadPessoa,Unit_Controle,Form_CadPedido;
   type
   TControle_Funcionario = class
     public
@@ -21,6 +21,7 @@ uses System.SysUtils,Winapi.Messages,Objeto_CadFuncionario,Vcl.Controls,Vcl.Dial
   VCadPessoa:CadPessoa;
   VCadFuncionario: CadFuncionario;
   id_pessoaFisica:integer;
+
 
 
 implementation
@@ -125,17 +126,32 @@ procedure TControle_Funcionario.getConsultaPessoas;
 begin
    if frm_Consulta = nil then
       frm_Consulta := Tfrm_Consulta.Create(nil);
+  if frm_Pedido <> nil then
+    begin
+    frm_Consulta.setSelectSQL('SELECT p.idPessoa as "Nº Registro", p.nome as "Nome", e.cep as "CEP", e.rua as "Rua" ' +
+    ' FROM logistica_ads.pessoa p, logistica_ads.endereco e where p.idPessoa = e.pessoa_idPessoa;');
+        if frm_Consulta.ShowModal = mrOk then
+        begin
+          frm_Pedido.edDestinatario.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
+          ShowMessage('consulta')
+        end;
+    end
+    else
+    begin
+        frm_Consulta.setSelectSQL('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'+
+        ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc');
+        if frm_Consulta.ShowModal = mrOk then
+         if frm_Consulta.ShowModal = mrOk then
+            begin
+              frm_Funcionario.spSalvar.Tag :=dm_ProjetoFinal.qrConsulta.Fields[0].AsInteger;
+              frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
+              frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString;
+              FreeAndNil(frm_Consulta);
+            end
+    end;
 
-  frm_Consulta.setSelectSQL('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'+
-  ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc');
 
-  if frm_Consulta.ShowModal = mrOk then
-  begin
-    frm_Funcionario.spSalvar.Tag :=dm_ProjetoFinal.qrConsulta.Fields[0].AsInteger;
-    frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
-    frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString;
-  end;
-  FreeAndNil(frm_Consulta);
+
 
 end;
 

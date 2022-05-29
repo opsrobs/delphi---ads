@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Buttons, Vcl.ComCtrls,
-  Vcl.StdCtrls, Vcl.Mask, Unit_Dados,Unit_ControlePedido;
+  Vcl.StdCtrls, Vcl.Mask, Unit_Dados,Unit_Controle,Unit_ControlePedido;
 
 type
   Tfrm_Pedido = class(TForm)
@@ -14,16 +14,6 @@ type
     spSalvar: TSpeedButton;
     spDelete: TSpeedButton;
     edQuantidade: TPanel;
-    spConsultaCep: TSpeedButton;
-    Label1: TLabel;
-    MaskCep: TMaskEdit;
-    lbRua: TLabeledEdit;
-    lbNumero: TLabeledEdit;
-    lbCidade: TLabeledEdit;
-    lbEstado: TLabeledEdit;
-    lbUnidadeFederativa: TLabeledEdit;
-    lbBairro: TLabeledEdit;
-    lbComplemento: TLabeledEdit;
     dtDataPedido: TDateTimePicker;
     Label2: TLabel;
     edValorPedido: TLabeledEdit;
@@ -37,6 +27,8 @@ type
     cbCliente: TComboBox;
     Button1: TButton;
     spDestinatario: TSpeedButton;
+    edDestinatario: TLabeledEdit;
+    nmConsultar: TSpeedButton;
     procedure spSalvarClick(Sender: TObject);
     procedure spButtonReturnClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
@@ -44,6 +36,7 @@ type
     procedure cbClienteClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure spConsultaCepClick(Sender: TObject);
+    procedure nmConsultarClick(Sender: TObject);
   private
     funcao:byte; //1--salvar || 2 --Excluir
     function validarValores:boolean;
@@ -57,12 +50,14 @@ type
 
 var
   frm_Pedido: Tfrm_Pedido;
+  Controle:TControle;
   ControlePedido:TControle_Pedido;
 implementation
 
 {$R *.dfm}
 
-uses Objeto_CadCliente, Unit_Utils;
+uses Objeto_CadCliente, Unit_Utils, Form_CadPessoa,unit_ProjetoFinal,
+  Form_Consulta;
 
 { Tfrm_Pedido }
 
@@ -94,6 +89,12 @@ end;
 procedure Tfrm_Pedido.limpartela;
 begin
     ShowMessage(' <<  >> ');
+end;
+
+procedure Tfrm_Pedido.nmConsultarClick(Sender: TObject);
+begin
+self.nmConsultar.Tag := 1;
+    Frm_Principal.ControleFuncionario.getConsultaPessoas;
 end;
 
 procedure Tfrm_Pedido.setFuncao(funcao: byte);

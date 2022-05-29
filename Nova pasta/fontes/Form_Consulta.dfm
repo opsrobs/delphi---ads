@@ -41,6 +41,24 @@ object frm_Consulta: Tfrm_Consulta
       Flat = True
       OnClick = spSalvarClick
     end
+    object spDestinatario: TSpeedButton
+      Left = 479
+      Top = 13
+      Width = 123
+      Height = 22
+      Caption = 'DESTINATARIO'
+      ImageIndex = 21
+      ImageName = 'add-user'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 22
+      HotImageName = 'add'
+      Layout = blGlyphRight
+      ParentShowHint = False
+      ShowHint = False
+      Spacing = 20
+      Visible = False
+      OnClick = spDestinatarioClick
+    end
   end
   object Panel2: TPanel
     Left = 0

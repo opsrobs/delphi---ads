@@ -36,7 +36,7 @@ uses Form_CadPessoa,
      Objeto_CadPessoaFisica,
      Objeto_CadPessoaJuridica,
      Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados,
-  Objeto_CadContato;
+  Objeto_CadContato, Objeto_CadRecebedor;
 
 procedure TControle.getCadPf(id: integer);
 var
@@ -156,6 +156,7 @@ end;
 
 procedure TControle.getCadPessoa;
     var
+    VCadRecebedor:CadRecebedor;
     VCadPessoa:CadPessoa;
     VCadCliente: CadCliente;
     idTemp:integer;
@@ -168,20 +169,31 @@ begin
       begin
           VCadPessoa := CadPessoa.Create;
           VCadCliente := CadCliente.create;
+          VCadRecebedor :=CadRecebedor.Create;
          case(frm_Cliente.getFuncao) of
             1: begin
                VCadPessoa.setnome(frm_Cliente.edNome.Text);
                VCadPessoa.insertDados;
                idPessoa:= VCadPessoa.getLastId;
                self.cadastroContato(idPessoa);
-               self.validarPessoa(idPessoa);                           //Passando ID para o tipo de pessoa a ser cadastrada
-               VCadCliente.setPessoa_idPessoa(idPessoa);
-               VCadCliente.insertDados;
+               self.validarPessoa(idPessoa);                          //Passando ID para o tipo de pessoa a ser cadastrada
+
+               if(frm_Cliente.chDestinatario.Checked)then
+               begin
+                VCadRecebedor.setPessoa_idPessoa(idPessoa);
+                VCadRecebedor.insertDados
+               end
+               else
+               begin
+                VCadCliente.setPessoa_idPessoa(idPessoa);
+                VCadCliente.insertDados;
+               end;
                self.CadastroEstado;
                self.CadastroCidade();
 
                self.cadastroBairro;
                self.cadastroEndereco(idpessoa);
+               ShowMessage('Cadastro reaalizado com sucesso!!!');
 
 
             end;

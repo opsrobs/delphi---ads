@@ -1,3 +1,6 @@
+drop database if exists pedro_delphi;
+drop database if exists pedro_delphiii;
+drop database if exists logistica_ads;
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -227,6 +230,22 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
+-- Table `Logistica_ads`.`recebedor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Logistica_ads`.`recebedor` (
+  `idrecebedor` INT NOT NULL AUTO_INCREMENT,
+  `pessoa_idPessoa` INT NOT NULL,
+  PRIMARY KEY (`idrecebedor`),
+  INDEX `fk_recebedor_pessoa1_idx` (`pessoa_idPessoa` ASC) VISIBLE,
+  CONSTRAINT `fk_recebedor_pessoa1`
+    FOREIGN KEY (`pessoa_idPessoa`)
+    REFERENCES `Logistica_ads`.`pessoa` (`idPessoa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `Logistica_ads`.`pedido`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Logistica_ads`.`pedido` (
@@ -237,18 +256,25 @@ CREATE TABLE IF NOT EXISTS `Logistica_ads`.`pedido` (
   `cliente_idcliente` INT NOT NULL,
   `valor_total` FLOAT NOT NULL,
   `valor_frete` FLOAT NOT NULL,
-  `data_entrega` DATE,
+  `data_entrega` DATE NULL,
   `endereco_idEndereco` INT NOT NULL,
   `peso_pedido` FLOAT NOT NULL,
+  `recebedor_idrecebedor` INT NOT NULL,
   PRIMARY KEY (`numero_pedido`),
   INDEX `fk_pedido_cliente1_idx` (`cliente_idcliente` ASC) VISIBLE,
   INDEX `fk_pedido_endereco1_idx` (`endereco_idEndereco` ASC) VISIBLE,
+  INDEX `fk_pedido_recebedor1_idx` (`recebedor_idrecebedor` ASC) VISIBLE,
   CONSTRAINT `fk_pedido_cliente1`
     FOREIGN KEY (`cliente_idcliente`)
     REFERENCES `Logistica_ads`.`cliente` (`idcliente`),
   CONSTRAINT `fk_pedido_endereco1`
     FOREIGN KEY (`endereco_idEndereco`)
     REFERENCES `Logistica_ads`.`endereco` (`idEndereco`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pedido_recebedor1`
+    FOREIGN KEY (`recebedor_idrecebedor`)
+    REFERENCES `Logistica_ads`.`recebedor` (`idrecebedor`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB

@@ -33,7 +33,8 @@ uses
   Unit_ControlePedido in 'Controle\Unit_ControlePedido.pas',
   Form_CadPedido in 'fontes\Form_CadPedido.pas' {frm_Pedido},
   Objeto_CargaPedido in '..\Objeto_CargaPedido.pas',
-  Unit_Utils in '..\Unit_Utils.pas';
+  Unit_Utils in '..\Unit_Utils.pas',
+  Objeto_CadRecebedor in '..\Objeto_CadRecebedor.pas';
 
 {$R *.res}
 

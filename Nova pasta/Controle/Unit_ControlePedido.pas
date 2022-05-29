@@ -2,7 +2,7 @@ unit Unit_ControlePedido;
 
 interface
     uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types, Objeto_CadPedido,Objeto_CadEstado,
-     StrUtils,Objeto_CadCidade, Objeto_CadBairro, Objeto_CadEndereco;
+     StrUtils,Objeto_CadCidade, Objeto_CadBairro,Unit_Utils, Objeto_CadCliente, Objeto_CadEndereco;
 
 type
  TControle_Pedido = class
@@ -10,106 +10,25 @@ type
     procedure cadastroPedido;
     function verifyStatus:string;
     function setScript:string;
-    procedure CadastroEstado;
-    procedure CadastroCidade;
-    procedure cadastroBairro;
-    procedure cadastroEndereco;
-    function validateValue(numero: string): integer;
 
-
-   public
-   procedure getCadPedido;
-   procedure gerarPeso;
-   procedure populaCombo;
+     public
+     procedure getCadPedido;
+     procedure gerarPeso;
+     procedure populaCombo;
 
  end;
  var
   pesor:single;
   VCadPedido:CadPedido;
-  VCadEstado:CadEstado;
-  VCadCidade:CadCidade;
-  VCadBairro:CadBairro;
+  VCadCliente:CadCliente;
+  utilitaria:Utils;
   VCadEndereco:CadEndereco;
 
 implementation
 
 { TControle_Pedido }
 
-uses Form_CadPedido, Unit_Dados, Objeto_CadCliente, Unit_Utils;
-
-procedure TControle_Pedido.cadastroBairro;
-var
-  idCidade:integer;
-begin
-    idCidade:=VCadCidade.getIdentificadrocidade(frm_Pedido.lbCidade.Text);
-    VCadBairro := CadBairro.Create;
-    VCadBairro.setNome_Bairro(frm_Pedido.lbBairro.Text);
-    VCadBairro.setCidade_idCidade(idCidade);
-   if (VCadBairro.getIdentificadorBairro(frm_Pedido.lbBairro.Text) <= 0) then
-    begin
-        VCadBairro.insertDados
-    end
-    else
-        VCadBairro.updateDados;
-end;
-
-procedure TControle_Pedido.CadastroCidade;
-var
-  idestado:integer;
-begin
-   idestado:= VCadEstado.getIdEstade(frm_Pedido.lbEstado.Text);
-   VCadCidade:=CadCidade.Create;
-   VCadCidade.setNome_cidade(frm_Pedido.lbCidade.Text);
-   VCadCidade.setEstado_idEstado(idEstado);
-   if (VCadCidade.getIdentificadrocidade(frm_Pedido.lbCidade.Text) <= 0) then
-    begin
-        VCadCidade.insertDados
-    end
-    else
-        VCadCidade.updateDados;
-end;
-
-procedure TControle_Pedido.cadastroEndereco;
-var
-  utilitaria:Utils;
-  idpessoa:integer;
-  idBairro:integer;
-begin
-    utilitaria := Utils.Create;
-    idpessoa:= utilitaria.idPessoaCliente(frm_Pedido.cbCliente.Text);
-    idBairro := VCadBairro.getIdentificadorBairro(frm_Pedido.lbBairro.Text);
-    VCadEndereco := CadEndereco.Create;
-    VCadEndereco.setCep(frm_Pedido.MaskCep.Text);
-    VCadEndereco.setRua(frm_Pedido.lbRua.Text);
-    VCadEndereco.setComplemto(frm_Pedido.lbComplemento.Text);
-    VCadEndereco.setnumero(self.validateValue(frm_Pedido.lbNumero.Text));
-    VCadEndereco.setPessoa_idPessoa(idpessoa);
-    VCadEndereco.setBairro_idBairro(idbairro);
-
-    VCadEndereco.insertDados;
-end;
-
-function TControle_Pedido.validateValue(numero:string): integer;
-begin
-    if frm_Pedido.lbNumero.Text = '' then
-      result :=0
-      else
-      StrToInt(frm_Pedido.lbNumero.Text)
-end;
-
-procedure TControle_Pedido.CadastroEstado;
-begin
-  VCadEstado:=CadEstado.Create;
-
-  VCadEstado.setNome_estado(frm_Pedido.lbEstado.Text);
-  VCadEstado.setuf(frm_Pedido.lbUnidadeFederativa.Text);
-  if (VCadEstado.getIdEstade(frm_Pedido.lbEstado.Text) <= 0) then
-    begin
-    VCadEstado.insertDados
-    end
-    else
-    VCadEstado.updateDados;
-end;
+uses Form_CadPedido, Unit_Dados;
 
 procedure TControle_Pedido.cadastroPedido;
 var
@@ -139,6 +58,8 @@ end;
 
 procedure TControle_Pedido.getCadPedido;
 var
+  idendereco:integer;
+  idCliente:integer;
   id:integer;
 begin
     if (frm_Pedido = nil) then
@@ -146,14 +67,12 @@ begin
 
     if (frm_Pedido.ShowModal = mrOk) then
       begin
-
+      idendereco := utilitaria.identificadorEndereco(frm_Pedido.edDestinatario.Text);
+      idCliente := VCadCliente.identificadorCliente(frm_Pedido.cbCliente.Text);
+      id := utilitaria.identificadorRecebedor(frm_Pedido.edDestinatario.Text);
          case(frm_Pedido.getFuncao) of
             1: begin
-               self.CadastroEstado;
-               self.CadastroCidade();
-
-               self.cadastroBairro;
-               self.cadastroEndereco();
+                ShowMessage(IntToStr(id))
             end;
             2: begin
 

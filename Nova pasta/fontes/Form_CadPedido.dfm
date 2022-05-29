@@ -2,8 +2,8 @@ object frm_Pedido: Tfrm_Pedido
   Left = 0
   Top = 0
   Caption = 'frm_Pedido'
-  ClientHeight = 628
-  ClientWidth = 682
+  ClientHeight = 493
+  ClientWidth = 636
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,13 +15,11 @@ object frm_Pedido: Tfrm_Pedido
   TextHeight = 15
   object Panel2: TPanel
     Left = 0
-    Top = 579
-    Width = 682
+    Top = 444
+    Width = 636
     Height = 49
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 548
-    ExplicitWidth = 687
     object spButtonReturn: TSpeedButton
       Left = 104
       Top = 14
@@ -66,201 +64,109 @@ object frm_Pedido: Tfrm_Pedido
   object edQuantidade: TPanel
     Left = 0
     Top = 0
-    Width = 682
-    Height = 579
+    Width = 636
+    Height = 444
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 687
-    ExplicitHeight = 548
-    object spConsultaCep: TSpeedButton
-      Left = 336
-      Top = 290
-      Width = 89
-      Height = 22
-      Caption = 'Buscar CEP'
-      ImageIndex = 7
-      ImageName = '42-search-outline'
-      Images = dm_ProjetoFinal.VirtualImageList1
-      OnClick = spConsultaCepClick
-    end
-    object Label1: TLabel
-      Left = 154
-      Top = 266
-      Width = 21
-      Height = 15
-      Caption = 'CEP'
-    end
     object Label2: TLabel
       Left = 152
-      Top = 91
+      Top = 139
       Width = 92
       Height = 15
       Caption = 'DATA DO PEDIDO'
     end
     object Label3: TLabel
       Left = 153
-      Top = 147
+      Top = 195
       Width = 89
       Height = 15
       Caption = 'TIPO DO PEDIDO'
     end
     object spDestinatario: TSpeedButton
-      Left = 150
-      Top = 63
-      Width = 137
+      Left = 389
+      Top = 160
+      Width = 123
       Height = 22
       Caption = 'DESTINATARIO'
       ImageIndex = 21
       ImageName = 'add-user'
       Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 22
+      HotImageName = 'add'
       Layout = blGlyphRight
       ParentShowHint = False
       ShowHint = False
       Spacing = 20
     end
-    object MaskCep: TMaskEdit
-      Left = 153
-      Top = 287
-      Width = 144
-      Height = 25
-      AutoSelect = False
-      EditMask = '00000\-000;0;_'
+    object nmConsultar: TSpeedButton
+      Left = 399
+      Top = 110
+      Width = 97
+      Height = 23
+      Caption = 'Consultar'
+      ImageIndex = 7
+      ImageName = '42-search-outline'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 8
+      HotImageName = 'icons8-editar-propriedade'
+      Flat = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -12
       Font.Name = 'Segoe UI'
-      Font.Style = []
-      MaxLength = 9
+      Font.Style = [fsItalic]
       ParentFont = False
-      TabOrder = 0
-      Text = ''
-    end
-    object lbRua: TLabeledEdit
-      Left = 153
-      Top = 469
-      Width = 145
-      Height = 23
-      EditLabel.Width = 20
-      EditLabel.Height = 15
-      EditLabel.Caption = 'Rua'
-      TabOrder = 1
-      Text = ''
-    end
-    object lbNumero: TLabeledEdit
-      Left = 336
-      Top = 469
-      Width = 57
-      Height = 23
-      EditLabel.Width = 14
-      EditLabel.Height = 15
-      EditLabel.Caption = 'N'#186
-      TabOrder = 2
-      Text = ''
-    end
-    object lbCidade: TLabeledEdit
-      Left = 152
-      Top = 413
-      Width = 145
-      Height = 23
-      EditLabel.Width = 37
-      EditLabel.Height = 15
-      EditLabel.Caption = 'Cidade'
-      TabOrder = 3
-      Text = ''
-    end
-    object lbEstado: TLabeledEdit
-      Left = 152
-      Top = 351
-      Width = 145
-      Height = 23
-      EditLabel.Width = 35
-      EditLabel.Height = 15
-      EditLabel.Caption = 'Estado'
-      TabOrder = 4
-      Text = ''
-    end
-    object lbUnidadeFederativa: TLabeledEdit
-      Left = 336
-      Top = 351
-      Width = 89
-      Height = 23
-      EditLabel.Width = 14
-      EditLabel.Height = 15
-      EditLabel.Caption = 'UF'
-      TabOrder = 5
-      Text = ''
-    end
-    object lbBairro: TLabeledEdit
-      Left = 336
-      Top = 413
-      Width = 161
-      Height = 23
-      EditLabel.Width = 31
-      EditLabel.Height = 15
-      EditLabel.Caption = 'Bairro'
-      TabOrder = 6
-      Text = ''
-    end
-    object lbComplemento: TLabeledEdit
-      Left = 415
-      Top = 469
-      Width = 82
-      Height = 23
-      EditLabel.Width = 77
-      EditLabel.Height = 15
-      EditLabel.Caption = 'Complemento'
-      TabOrder = 7
-      Text = ''
+      OnClick = nmConsultarClick
     end
     object dtDataPedido: TDateTimePicker
-      Left = 152
-      Top = 112
+      Left = 150
+      Top = 160
       Width = 145
       Height = 23
-      Date = 44708.000000000000000000
+      Date = 44710.000000000000000000
       Time = 0.721111909719184000
-      TabOrder = 8
+      TabOrder = 0
     end
     object edValorPedido: TLabeledEdit
       Left = 150
-      Top = 224
+      Top = 272
       Width = 145
       Height = 23
       EditLabel.Width = 100
       EditLabel.Height = 15
       EditLabel.Caption = 'VALOR DO PEDIDO'
-      TabOrder = 9
+      TabOrder = 1
       Text = ''
     end
     object edValorFrete: TLabeledEdit
-      Left = 153
-      Top = 541
+      Left = 150
+      Top = 332
       Width = 145
       Height = 23
       EditLabel.Width = 70
       EditLabel.Height = 15
       EditLabel.Caption = 'VALOR FRETE'
-      TabOrder = 10
+      TabOrder = 2
       Text = ''
     end
     object edValorTotal: TLabeledEdit
       Left = 336
-      Top = 541
+      Top = 332
       Width = 161
       Height = 23
       EditLabel.Width = 71
       EditLabel.Height = 15
       EditLabel.Caption = 'VALOR TOTAL'
-      TabOrder = 11
+      TabOrder = 3
       Text = ''
     end
     object cbTipoPedido: TComboBox
-      Left = 153
-      Top = 168
+      Left = 150
+      Top = 216
       Width = 145
       Height = 22
       Style = csOwnerDrawFixed
-      TabOrder = 12
+      TabOrder = 4
       OnClick = cbTipoPedidoClick
       Items.Strings = (
         'EXEMPLO 1'
@@ -270,49 +176,60 @@ object frm_Pedido: Tfrm_Pedido
     end
     object edTipoPedido: TEdit
       Left = 335
-      Top = 168
+      Top = 216
       Width = 162
       Height = 23
       Enabled = False
-      TabOrder = 13
+      TabOrder = 5
     end
     object CheckBox1: TCheckBox
       Left = 415
-      Top = 227
+      Top = 275
       Width = 97
       Height = 17
       Caption = 'EM AN'#193'LISE'
       Checked = True
       State = cbChecked
-      TabOrder = 14
+      TabOrder = 6
     end
     object edPeso: TLabeledEdit
       Left = 336
-      Top = 224
+      Top = 272
       Width = 65
       Height = 23
       EditLabel.Width = 28
       EditLabel.Height = 15
       EditLabel.Caption = 'PESO'
-      TabOrder = 15
+      TabOrder = 7
       Text = ''
     end
     object cbCliente: TComboBox
       Left = 153
-      Top = 29
+      Top = 61
       Width = 240
       Height = 23
-      TabOrder = 16
+      TabOrder = 8
       Text = 'CLIENTE'
       OnClick = cbClienteClick
     end
     object Button1: TButton
       Left = 304
-      Top = 32
+      Top = 64
       Width = 1
       Height = 17
       Caption = 'Button1'
-      TabOrder = 17
+      TabOrder = 9
+    end
+    object edDestinatario: TLabeledEdit
+      Left = 153
+      Top = 110
+      Width = 240
+      Height = 23
+      EditLabel.Width = 77
+      EditLabel.Height = 15
+      EditLabel.Caption = 'DESTINATARIO'
+      TabOrder = 10
+      Text = ''
     end
   end
 end
