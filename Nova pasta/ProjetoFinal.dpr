@@ -34,7 +34,8 @@ uses
   Form_CadPedido in 'fontes\Form_CadPedido.pas' {frm_Pedido},
   Objeto_CargaPedido in '..\Objeto_CargaPedido.pas',
   Unit_Utils in '..\Unit_Utils.pas',
-  Objeto_CadRecebedor in '..\Objeto_CadRecebedor.pas';
+  Objeto_CadRecebedor in '..\Objeto_CadRecebedor.pas',
+  Form_CadEntrega in 'fontes\Form_CadEntrega.pas' {frm_carga};
 
 {$R *.res}
 
@@ -44,5 +45,6 @@ begin
   Application.CreateForm(Tdm_ProjetoFinal, dm_ProjetoFinal);
   Application.CreateForm(TFrm_Principal, Frm_Principal);
   Application.CreateForm(Tfrm_Pedido, frm_Pedido);
+  Application.CreateForm(Tfrm_carga, frm_carga);
   Application.Run;
 end.

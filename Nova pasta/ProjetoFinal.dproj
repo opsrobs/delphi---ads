@@ -156,6 +156,10 @@
         <DCCReference Include="..\Objeto_CargaPedido.pas"/>
         <DCCReference Include="..\Unit_Utils.pas"/>
         <DCCReference Include="..\Objeto_CadRecebedor.pas"/>
+        <DCCReference Include="fontes\Form_CadEntrega.pas">
+            <Form>frm_carga</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

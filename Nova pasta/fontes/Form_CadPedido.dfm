@@ -148,6 +148,7 @@ object frm_Pedido: Tfrm_Pedido
       EditLabel.Caption = 'VALOR FRETE'
       TabOrder = 2
       Text = ''
+      OnExit = edValorFreteExit
     end
     object edValorTotal: TLabeledEdit
       Left = 336

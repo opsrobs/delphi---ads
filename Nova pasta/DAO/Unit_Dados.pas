@@ -38,6 +38,7 @@ type
     qrVeiculo: TFDQuery;
     qrVeiculoidmarca_veiculo: TFDAutoIncField;
     qrVeiculonome_marca: TStringField;
+    qrRecebedor: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

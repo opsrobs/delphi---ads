@@ -30,7 +30,7 @@ implementation
 { CadPessoa }
 
 function CadPessoa.insertDados: Boolean;
-  var
+var
     query:TFDQuery;
 begin
   query := TFDQuery.Create(nil);
@@ -200,5 +200,6 @@ procedure CadPessoa.setnome(nome: string);
 begin
       self.nome := nome;
 end;
+
 
 end.

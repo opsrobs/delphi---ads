@@ -10,6 +10,7 @@ object frm_Veiculos: Tfrm_Veiculos
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
   OnActivate = FormActivate
   TextHeight = 15
   object Panel1: TPanel
@@ -103,6 +104,7 @@ object frm_Veiculos: Tfrm_Veiculos
       Height = 22
       Style = csOwnerDrawFixed
       TabOrder = 3
+      OnChange = cbVeiculosChange
       OnClick = cbVeiculosClick
     end
   end

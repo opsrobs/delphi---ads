@@ -37,6 +37,8 @@ type
     procedure FormActivate(Sender: TObject);
     procedure spConsultaCepClick(Sender: TObject);
     procedure nmConsultarClick(Sender: TObject);
+    procedure edValorTotalChange(Sender: TObject);
+    procedure edValorFreteExit(Sender: TObject);
   private
     funcao:byte; //1--salvar || 2 --Excluir
     function validarValores:boolean;
@@ -74,6 +76,22 @@ begin
     ControlePedido := TControle_Pedido.Create;
     edTipoPedido.text:= cbTipoPedido.Text;
     ControlePedido.gerarPeso;
+end;
+
+procedure Tfrm_Pedido.edValorFreteExit(Sender: TObject);
+var
+  totalPedio:Float64;
+begin
+    totalPedio := StrToFloat(edValorPedido.Text) + StrToFloat(edValorFrete.Text);
+    edValorTotal.Text := FloatToStr(totalPedio);
+end;
+
+procedure Tfrm_Pedido.edValorTotalChange(Sender: TObject);
+var
+  totalPedio:Float64;
+begin
+    totalPedio := StrToFloat(edValorPedido.Text) + StrToFloat(edValorFrete.Text);
+    edValorTotal.Text := FloatToStr(totalPedio);
 end;
 
 procedure Tfrm_Pedido.FormActivate(Sender: TObject);

@@ -20,6 +20,7 @@ type
     Pedido1: TMenuItem;
     Consultas1: TMenuItem;
     Consultas2: TMenuItem;
+    Carga1: TMenuItem;
     procedure Cliente1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -27,6 +28,7 @@ type
     procedure Veiculo1Click(Sender: TObject);
     procedure Pedido1Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure Carga1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -47,7 +49,13 @@ implementation
 {$R *.dfm}
 
  uses Unit_Dados, Form_CadPessoa, Objeto_CadFuncionario, Form_CadPedido,
-  Form_CadFuncionario, Form_CadVeiculos, Form_Consulta;
+  Form_CadFuncionario, Form_CadVeiculos, Form_Consulta, Form_CadEntrega;
+
+
+procedure TFrm_Principal.Carga1Click(Sender: TObject);
+begin
+   ControlePedido.getCadEntrega;
+end;
 
 procedure TFrm_Principal.clearMemory;
 var
@@ -76,6 +84,7 @@ begin
     FreeAndNil(frm_Funcionario);
     FreeAndNil(frm_Cliente);
     FreeAndNil(frm_Veiculos);
+    FreeAndNil(frm_carga);
 end;
 
 procedure TFrm_Principal.FormCreate(Sender: TObject);

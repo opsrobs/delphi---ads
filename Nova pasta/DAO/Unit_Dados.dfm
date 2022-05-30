@@ -24,8 +24,8 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     Top = 8
   end
   object Ibagensmainmenu: TImageList
-    Left = 448
-    Top = 32
+    Left = 608
+    Top = 104
   end
   object qrConsulta: TFDQuery
     IndexesActive = False
@@ -3530,5 +3530,11 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
       Origin = 'nome_marca'
       Size = 45
     end
+  end
+  object qrRecebedor: TFDQuery
+    IndexesActive = False
+    Connection = FDFinal
+    Left = 191
+    Top = 131
   end
 end

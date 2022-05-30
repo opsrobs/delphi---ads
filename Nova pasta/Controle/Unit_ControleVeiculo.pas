@@ -82,7 +82,6 @@ end;
 
 procedure TControle_Veiculo.populaCombo;
 begin
-    //frm_Veiculos.cbVeiculos.Style:=
     dm_ProjetoFinal.qrVeiculo.Close;
     dm_ProjetoFinal.qrVeiculo.SQL.Clear;
     dm_ProjetoFinal.qrVeiculo.SQL.Add(self.setScript);
@@ -91,14 +90,12 @@ begin
       dm_ProjetoFinal.qrVeiculo.First;
       while not dm_ProjetoFinal.qrVeiculo.Eof  do
     begin
-      //frm_Veiculos.cbVeiculos.Items.Add(dm_ProjetoFinal.qrVeiculonome_marca.Value);
       frm_Veiculos.cbVeiculos.Items.Add(dm_ProjetoFinal.qrVeiculo.FieldByName('nome_marca').AsString);
       dm_ProjetoFinal.qrVeiculo.Next;
     end;
     finally
 
     end;
-    frm_Veiculos.lbMarca.Text := frm_Veiculos.cbVeiculos.Text;
 
 end;
 

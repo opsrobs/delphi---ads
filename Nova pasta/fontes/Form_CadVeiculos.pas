@@ -22,6 +22,7 @@ type
     procedure spDeleteClick(Sender: TObject);
     procedure cbVeiculosClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure cbVeiculosChange(Sender: TObject);
   private
     scriptSql:string;
     funcao:byte;
@@ -52,9 +53,14 @@ uses unit_ProjetoFinal;
 
 
 
+procedure Tfrm_Veiculos.cbVeiculosChange(Sender: TObject);
+begin
+    frm_Veiculos.lbMarca.Text := frm_Veiculos.cbVeiculos.Text;
+end;
+
 procedure Tfrm_Veiculos.cbVeiculosClick(Sender: TObject);
 begin
-    Frm_Principal.ControleVeiculo.populaCombo;
+    //Frm_Principal.ControleVeiculo.populaCombo;
 end;
 
 procedure Tfrm_Veiculos.FormActivate(Sender: TObject);

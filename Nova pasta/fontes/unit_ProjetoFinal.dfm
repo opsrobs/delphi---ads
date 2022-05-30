@@ -37,6 +37,10 @@ object Frm_Principal: TFrm_Principal
         Caption = 'Pedido'
         OnClick = Pedido1Click
       end
+      object Carga1: TMenuItem
+        Caption = 'Carga'
+        OnClick = Carga1Click
+      end
     end
     object Pedidos1: TMenuItem
       Caption = 'Pedidos'

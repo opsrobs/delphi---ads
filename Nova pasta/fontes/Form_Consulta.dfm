@@ -100,6 +100,7 @@ object frm_Consulta: Tfrm_Consulta
       Height = 350
       Align = alClient
       DataSource = dm_ProjetoFinal.dsConsulta
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
