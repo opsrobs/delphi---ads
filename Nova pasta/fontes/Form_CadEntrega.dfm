@@ -10,6 +10,8 @@ object frm_carga: Tfrm_carga
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  FormStyle = fsMDIForm
+  Position = poScreenCenter
   OnActivate = FormActivate
   DesignSize = (
     715
@@ -149,10 +151,6 @@ object frm_carga: Tfrm_carga
     Align = alClient
     Caption = 'Panel3'
     TabOrder = 3
-    ExplicitLeft = 304
-    ExplicitTop = 312
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     DesignSize = (
       715
       422)
@@ -204,6 +202,7 @@ object frm_carga: Tfrm_carga
       RowSelect = True
       TabOrder = 0
       ViewStyle = vsReport
+      OnClick = listDadosClick
       OnSelectItem = listDadosSelectItem
     end
   end

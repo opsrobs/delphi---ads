@@ -12,6 +12,7 @@ type
     function verifyStatus:string;
     function setScript:string;
     function returnIdDestinatario:integer;
+    function scriptRecebedor:string;
 
      public
      procedure getCadPedido;
@@ -19,6 +20,7 @@ type
      procedure populaCombo;
      procedure getCadEntrega;
      procedure buscarPedidos;
+     procedure setPesoEntrega;
 
 
  end;
@@ -40,23 +42,33 @@ var
   dados:TListItem;
 begin
   dm_ProjetoFinal.qrConsulta.Close;
+  dm_ProjetoFinal.qrRecebedor.Close;
   dm_ProjetoFinal.qrConsulta.SQL.Clear;
+  dm_ProjetoFinal.qrRecebedor.SQL.Clear;
   dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScript);
+  dm_ProjetoFinal.qrRecebedor.SQL.Add(self.scriptRecebedor);
 
   dm_ProjetoFinal.qrConsulta.Open;
   dm_ProjetoFinal.qrConsulta.First;
+
+  dm_ProjetoFinal.qrRecebedor.Open;
+  dm_ProjetoFinal.qrRecebedor.First;
 
   while not dm_ProjetoFinal.qrConsulta.Eof do
   begin
     dados := frm_carga.listDados.Items.Add;
 
     dados.Caption := dm_ProjetoFinal.qrConsulta.FieldByName('numero_pedido').AsString;
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('data_pedido').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('status').AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrRecebedor.FieldByName('Nome').AsString);
    // ShowMessage(dm_ProjetoFinal.qrConsulta.FieldByName('data_pedido').AsString) ;
 
     dm_ProjetoFinal.qrConsulta.Next;
+    dm_ProjetoFinal.qrRecebedor.Next;
   end;
+ // ShowMessage(dados.SubItems.GetText)
 
 end;
 
@@ -191,11 +203,24 @@ utilitaria := Utils.Create;
           VCadRecebedor.Destroy;
     end;
 
+function TControle_Pedido.scriptRecebedor: string;
+begin
+    result := 'SELECT pe.nome FROM logistica_ads.pedido pd, logistica_ads.recebedor re, logistica_ads.pessoa pe where pd.recebedor_idrecebedor = re.idrecebedor and re.pessoa_idPessoa = pe.idPessoa and status = "EM ANÁLISE" order by idrecebedor asc;';
+end;
+
+procedure TControle_Pedido.setPesoEntrega;
+var
+  dados :TListItem;
+begin
+    frm_carga.edPeso.Text := frm_carga.listDados.Items[2].SubItems;
+end;
+
 function TControle_Pedido.setScript: string;
 begin
     if frm_carga <> nil then
     begin
-      result := 'SELECT numero_pedido,data_pedido,status FROM logistica_ads.pedido;'
+      result := 'SELECT pd.numero_pedido, p.nome, pd.data_pedido, pd.status, r.idrecebedor FROM logistica_ads.pessoa p, logistica_ads.cliente c, logistica_ads.recebedor r,'
+      +' logistica_ads.pedido pd where pd.cliente_idcliente = c.idcliente and c.pessoa_idPessoa = p.idPessoa and pd.recebedor_idrecebedor = r.idrecebedor and r.pessoa_idPessoa'
     end
     else
     result := 'SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa;';

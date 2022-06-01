@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs,Unit_ControlePedido, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
   Vcl.ComCtrls, Vcl.Buttons;
 
 type
@@ -13,11 +13,16 @@ type
     spButtonReturn: TSpeedButton;
     spSalvar: TSpeedButton;
     spDelete: TSpeedButton;
-    edPeso: TLabeledEdit;
-    cbCliente: TComboBox;
+    Panel1: TPanel;
     nmConsultar: TSpeedButton;
+    cbCliente: TComboBox;
+    edPeso: TLabeledEdit;
+    Panel3: TPanel;
     listDados: TListView;
     procedure FormActivate(Sender: TObject);
+    procedure listDadosSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
+    procedure listDadosClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -33,11 +38,12 @@ type
 var
   B: TButton;
   frm_carga: Tfrm_carga;
-  ControlePedido:TControle_Pedido;
 
 implementation
 
 {$R *.dfm}
+
+uses Unit_ControlePedido, unit_ProjetoFinal;
 
 
 
@@ -45,13 +51,27 @@ implementation
 
 
 procedure Tfrm_carga.FormActivate(Sender: TObject);
+var
+  ControlePedido:TControle_Pedido;
 begin
-   Con
+    ControlePedido.buscarPedidos;
 end;
 
 function Tfrm_carga.getFuncao: byte;
 begin
     result := self.funcao;
+end;
+
+procedure Tfrm_carga.listDadosClick(Sender: TObject);
+begin
+Frm_Principal.ControlePedido.setPesoEntrega;
+end;
+
+
+procedure Tfrm_carga.listDadosSelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
+begin
+    //ShowMessage(listDados.Items[1].Caption);
 end;
 
 procedure Tfrm_carga.setFuncao(funcao: byte);

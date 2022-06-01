@@ -13,13 +13,17 @@ type
     spButtonReturn: TSpeedButton;
     spSalvar: TSpeedButton;
     spDelete: TSpeedButton;
-    edPeso: TLabeledEdit;
-    cbCliente: TComboBox;
+    Panel1: TPanel;
     nmConsultar: TSpeedButton;
+    cbCliente: TComboBox;
+    edPeso: TLabeledEdit;
+    Panel3: TPanel;
     listDados: TListView;
     procedure FormActivate(Sender: TObject);
     procedure listDadosSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure listDadosKeyPress(Sender: TObject; var Key: Char);
+    procedure listDadosClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -40,7 +44,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_ControlePedido;
+uses Unit_ControlePedido, unit_ProjetoFinal;
 
 
 
@@ -59,10 +63,16 @@ begin
     result := self.funcao;
 end;
 
+procedure Tfrm_carga.listDadosClick(Sender: TObject);
+begin
+Frm_Principal.ControlePedido.setPesoEntrega;
+end;
+
+
 procedure Tfrm_carga.listDadosSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 begin
-    ShowMessage(listDados.Selected.Caption);
+    //ShowMessage(listDados.Selected.Caption);
 end;
 
 procedure Tfrm_carga.setFuncao(funcao: byte);

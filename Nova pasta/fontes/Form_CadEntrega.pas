@@ -22,6 +22,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure listDadosSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure listDadosClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -42,7 +43,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_ControlePedido;
+uses Unit_ControlePedido, unit_ProjetoFinal;
 
 
 
@@ -61,10 +62,16 @@ begin
     result := self.funcao;
 end;
 
+procedure Tfrm_carga.listDadosClick(Sender: TObject);
+begin
+Frm_Principal.ControlePedido.setPesoEntrega;
+end;
+
+
 procedure Tfrm_carga.listDadosSelectItem(Sender: TObject; Item: TListItem;
   Selected: Boolean);
 begin
-    //ShowMessage(listDados.Selected.Caption);
+    ShowMessage(listDados.RowSelect.ToString);
 end;
 
 procedure Tfrm_carga.setFuncao(funcao: byte);

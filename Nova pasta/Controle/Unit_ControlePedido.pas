@@ -20,6 +20,7 @@ type
      procedure populaCombo;
      procedure getCadEntrega;
      procedure buscarPedidos;
+     procedure setPesoEntrega;
 
 
  end;
@@ -205,6 +206,19 @@ utilitaria := Utils.Create;
 function TControle_Pedido.scriptRecebedor: string;
 begin
     result := 'SELECT pe.nome FROM logistica_ads.pedido pd, logistica_ads.recebedor re, logistica_ads.pessoa pe where pd.recebedor_idrecebedor = re.idrecebedor and re.pessoa_idPessoa = pe.idPessoa and status = "EM ANÁLISE" order by idrecebedor asc;';
+end;
+
+procedure TControle_Pedido.setPesoEntrega;
+var
+  dados :TListItem;
+begin
+  if frm_carga.listDados.ColumnClick then
+  begin
+      frm_carga.edPeso.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString;
+    frm_carga.listDados.ColumnClick := false;
+    ShowMessage('x')
+  end;
+
 end;
 
 function TControle_Pedido.setScript: string;
