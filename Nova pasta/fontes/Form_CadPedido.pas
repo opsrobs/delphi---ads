@@ -19,9 +19,6 @@ type
     edValorPedido: TLabeledEdit;
     edValorFrete: TLabeledEdit;
     edValorTotal: TLabeledEdit;
-    cbTipoPedido: TComboBox;
-    Label3: TLabel;
-    edTipoPedido: TEdit;
     CheckBox1: TCheckBox;
     edPeso: TLabeledEdit;
     cbCliente: TComboBox;
@@ -74,7 +71,6 @@ end;
 procedure Tfrm_Pedido.cbTipoPedidoClick(Sender: TObject);
 begin
     ControlePedido := TControle_Pedido.Create;
-    edTipoPedido.text:= cbTipoPedido.Text;
     ControlePedido.gerarPeso;
 end;
 

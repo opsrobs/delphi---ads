@@ -321,3 +321,54 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `logistica_ads`.`getdadospedido` AS
+    SELECT 
+        `pd`.`numero_pedido` AS `numero_pedido`,
+        `p`.`nome` AS `nome`,
+        `pd`.`data_pedido` AS `data_pedido`,
+        `pd`.`status` AS `status`,
+        `r`.`idrecebedor` AS `idrecebedor`
+    FROM
+        (((`logistica_ads`.`pessoa` `p`
+        JOIN `logistica_ads`.`cliente` `c`)
+        JOIN `logistica_ads`.`recebedor` `r`)
+        JOIN `logistica_ads`.`pedido` `pd`)
+    WHERE
+        ((`pd`.`cliente_idcliente` = `c`.`idcliente`)
+            AND (`c`.`pessoa_idPessoa` = `p`.`idPessoa`)
+            AND (`pd`.`recebedor_idrecebedor` = `r`.`idrecebedor`)
+            AND (0 <> `r`.`pessoa_idPessoa`))
+    ORDER BY `r`.`idrecebedor`
+
+			{=================================================================}
+
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `logistica_ads`.`dados_pedido` AS
+    SELECT DISTINCT
+        `logistica_ads`.`vp`.`numero_pedido` AS `numero_pedido`,
+        `logistica_ads`.`vp`.`nome` AS `nome`,
+        `logistica_ads`.`vp`.`data_pedido` AS `data_pedido`,
+        `logistica_ads`.`vp`.`status` AS `status`,
+        `logistica_ads`.`vp`.`idrecebedor` AS `idrecebedor`,
+        `p`.`nome` AS `nome_recebedor`,
+        `pd`.`valor_total` AS `valor_total`,
+        `pd`.`peso_pedido` AS `peso_pedido`
+    FROM
+        (((`logistica_ads`.`getdadospedido` `vp`
+        JOIN `logistica_ads`.`pessoa` `p`)
+        JOIN `logistica_ads`.`pedido` `pd`)
+        JOIN `logistica_ads`.`recebedor` `r`)
+    WHERE
+        ((`logistica_ads`.`vp`.`idrecebedor` = `r`.`idrecebedor`)
+            AND (`p`.`idPessoa` = `r`.`pessoa_idPessoa`)
+            AND (`pd`.`recebedor_idrecebedor` = `r`.`idrecebedor`))

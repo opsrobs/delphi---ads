@@ -5,14 +5,11 @@ interface
 
   private
     idCarga:integer;
-    nome_Tipo:string[100];
     quantidade:integer;
     peso:Float64;
   public
     procedure setIdCarga(idCarga:integer);
     function getIdCarga:integer;
-    procedure setNome_tipo(nome_Tipo:string);
-    function getNome_tipo:string;
     procedure setQuantidade(quantidade:integer);
     function getQuantidade:integer;
     procedure setPeso(peso:Float64);
@@ -29,10 +26,6 @@ begin
   result := self.idCarga ;
 end;
 
-function CadCarga.getNome_tipo: string;
-begin
-     result := self.nome_Tipo;
-end;
 
 function CadCarga.getPeso: Float64;
 begin
@@ -49,10 +42,6 @@ begin
     self.idCarga := idCarga;
 end;
 
-procedure CadCarga.setNome_tipo(nome_Tipo: string);
-begin
-    self.nome_Tipo := nome_Tipo;
-end;
 
 procedure CadCarga.setPeso(peso: Float64);
 begin

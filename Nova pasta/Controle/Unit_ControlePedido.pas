@@ -3,7 +3,7 @@ unit Unit_ControlePedido;
 interface
     uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types, Objeto_CadPedido,Objeto_CadEstado,
      StrUtils,Objeto_CadCidade, Objeto_CadBairro,Unit_Utils, Objeto_CadCliente, Objeto_CadEndereco,Form_CadEntrega,Vcl.StdCtrls,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls,CommCtrl, Winapi.Windows;
 
 type
  TControle_Pedido = class
@@ -12,7 +12,6 @@ type
     function verifyStatus:string;
     function setScript:string;
     function returnIdDestinatario:integer;
-    function scriptRecebedor:string;
 
      public
      procedure getCadPedido;
@@ -21,6 +20,7 @@ type
      procedure getCadEntrega;
      procedure buscarPedidos;
      procedure setPesoEntrega;
+     procedure verifyValue;
 
 
  end;
@@ -30,6 +30,7 @@ type
   VCadCliente:CadCliente;
   utilitaria:Utils;
   VCadEndereco:CadEndereco;
+
 
 implementation
 
@@ -42,18 +43,11 @@ var
   dados:TListItem;
 begin
   dm_ProjetoFinal.qrConsulta.Close;
-  dm_ProjetoFinal.qrRecebedor.Close;
   dm_ProjetoFinal.qrConsulta.SQL.Clear;
-  dm_ProjetoFinal.qrRecebedor.SQL.Clear;
   dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScript);
-  dm_ProjetoFinal.qrRecebedor.SQL.Add(self.scriptRecebedor);
 
   dm_ProjetoFinal.qrConsulta.Open;
   dm_ProjetoFinal.qrConsulta.First;
-
-  dm_ProjetoFinal.qrRecebedor.Open;
-  dm_ProjetoFinal.qrRecebedor.First;
-
   while not dm_ProjetoFinal.qrConsulta.Eof do
   begin
     dados := frm_carga.listDados.Items.Add;
@@ -62,11 +56,14 @@ begin
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('data_pedido').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('status').AsString);
-    dados.SubItems.Add(dm_ProjetoFinal.qrRecebedor.FieldByName('Nome').AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome_recebedor').AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('valor_total').AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('peso_pedido').AsString);
+    //frm_carga.ckListDados.Items.Add(dm_ProjetoFinal.qrConsulta.FieldByName('numero_pedido').AsString);
+    //frm_carga.ckListDados.Items.add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
    // ShowMessage(dm_ProjetoFinal.qrConsulta.FieldByName('data_pedido').AsString) ;
 
     dm_ProjetoFinal.qrConsulta.Next;
-    dm_ProjetoFinal.qrRecebedor.Next;
   end;
  // ShowMessage(dados.SubItems.GetText)
 
@@ -203,11 +200,6 @@ utilitaria := Utils.Create;
           VCadRecebedor.Destroy;
     end;
 
-function TControle_Pedido.scriptRecebedor: string;
-begin
-    result := 'SELECT pe.nome FROM logistica_ads.pedido pd, logistica_ads.recebedor re, logistica_ads.pessoa pe where pd.recebedor_idrecebedor = re.idrecebedor and re.pessoa_idPessoa = pe.idPessoa and status = "EM ANÁLISE" order by idrecebedor asc;';
-end;
-
 procedure TControle_Pedido.setPesoEntrega;
 var
   dados :TListItem;
@@ -221,12 +213,12 @@ begin
 
 end;
 
+
 function TControle_Pedido.setScript: string;
 begin
     if frm_carga <> nil then
     begin
-      result := 'SELECT pd.numero_pedido, p.nome, pd.data_pedido, pd.status, r.idrecebedor FROM logistica_ads.pessoa p, logistica_ads.cliente c, logistica_ads.recebedor r,'
-      +' logistica_ads.pedido pd where pd.cliente_idcliente = c.idcliente and c.pessoa_idPessoa = p.idPessoa and pd.recebedor_idrecebedor = r.idrecebedor and r.pessoa_idPessoa'
+      result := 'SELECT * FROM logistica_ads.dados_pedido;'
     end
     else
     result := 'SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa;';
@@ -238,6 +230,29 @@ begin
     result := 'EM ANÁLISE'
     else
       result:= 'APROVADO'
+end;
+
+
+
+procedure TControle_Pedido.verifyValue;
+var
+i:integer;
+value:Float64;
+begin
+i :=0;
+value:=0;
+    for I := 0 to frm_carga.listDados.Items.Count -1 do
+    begin
+      if frm_carga.listDados.Items.Item[i].Checked then
+      begin
+        ShowMessage(frm_carga.listDados.Items.Item[i].SubItems[4]);
+        value := value + StrToFloat(frm_carga.listDados.Items.Item[i].SubItems[4]);
+        frm_carga.edPeso.Text := FloatToStr(value);
+      end;
+    end;
+
+
+
 end;
 
 end.

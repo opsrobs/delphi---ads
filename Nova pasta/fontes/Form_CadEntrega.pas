@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
-  Vcl.ComCtrls, Vcl.Buttons;
+  Vcl.ComCtrls, Vcl.Buttons,CommCtrl, Vcl.CheckLst;
 
 type
   Tfrm_carga = class(TForm)
@@ -19,9 +19,9 @@ type
     edPeso: TLabeledEdit;
     Panel3: TPanel;
     listDados: TListView;
+    SpeedButton1: TSpeedButton;
     procedure FormActivate(Sender: TObject);
-    procedure listDadosSelectItem(Sender: TObject; Item: TListItem;
-      Selected: Boolean);
+    procedure SpeedButton1Click(Sender: TObject);
     procedure listDadosClick(Sender: TObject);
 
   private
@@ -57,26 +57,29 @@ begin
     ControlePedido.buscarPedidos;
 end;
 
+
+
 function Tfrm_carga.getFuncao: byte;
 begin
     result := self.funcao;
 end;
 
+
 procedure Tfrm_carga.listDadosClick(Sender: TObject);
 begin
-Frm_Principal.ControlePedido.setPesoEntrega;
-end;
-
-
-procedure Tfrm_carga.listDadosSelectItem(Sender: TObject; Item: TListItem;
-  Selected: Boolean);
-begin
-    ShowMessage(listDados.RowSelect.ToString);
+    Frm_Principal.ControlePedido.verifyValue;
 end;
 
 procedure Tfrm_carga.setFuncao(funcao: byte);
 begin
     self.funcao	 := funcao;
+end;
+
+
+
+procedure Tfrm_carga.SpeedButton1Click(Sender: TObject);
+begin
+  Frm_Principal.ControlePedido.verifyValue;
 end;
 
 end.

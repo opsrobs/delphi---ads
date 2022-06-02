@@ -175,8 +175,7 @@ begin
                VCadPessoa.insertDados;
                idPessoa:= VCadPessoa.getLastId;
                self.cadastroContato(idPessoa);
-               self.validarPessoa(idPessoa);                          //Passando ID para o tipo de pessoa a ser cadastrada
-
+               self.validarPessoa(idPessoa);
                if(frm_Cliente.chDestinatario.Checked)then
                begin
                 VCadRecebedor.setPessoa_idPessoa(idPessoa);

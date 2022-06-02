@@ -3531,10 +3531,4 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
       Size = 45
     end
   end
-  object qrRecebedor: TFDQuery
-    IndexesActive = False
-    Connection = FDFinal
-    Left = 191
-    Top = 131
-  end
 end
