@@ -12,10 +12,11 @@ uses System.SysUtils,Winapi.Messages,Objeto_CadFuncionario,Vcl.Controls,Vcl.Dial
     procedure cadastrarPessoaFisica(id:integer);    //>>
     procedure alterarPessoaFisica(id:integer);
     procedure cadastrarFuncionario(id:integer);
+    procedure populaComboCbPessoa;
 
     private
         function verifyValueOfId(lastId, tag:integer):integer;
-
+        function setScriptCbMotorista: String;
   end;
   var
   VCadPessoa:CadPessoa;
@@ -31,7 +32,8 @@ implementation
 uses Form_CadPessoa,
      Objeto_CadPessoaFisica,
      Objeto_CadPessoaJuridica,
-     Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados;
+     Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados,
+  Form_CadEntrega;
 
      var
        VCadPessoaFisica:CadPessoaFisica;
@@ -164,6 +166,32 @@ begin
 
 
 
+end;
+
+procedure TControle_Funcionario.populaComboCbPessoa;
+begin
+    dm_ProjetoFinal.qrConsulta.Close;
+    dm_ProjetoFinal.qrConsulta.SQL.Clear;
+    dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScriptCbMotorista);
+       ShowMessage(self.setScriptCbMotorista);
+    try
+      dm_ProjetoFinal.qrConsulta.Open;
+      dm_ProjetoFinal.qrConsulta.First;
+
+      while not dm_ProjetoFinal.qrConsulta.Eof  do
+    begin
+      frm_carga.cbMotoristaEntrega.Items.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
+      dm_ProjetoFinal.qrConsulta.Next;
+    end;
+    finally
+
+    end;
+    dm_ProjetoFinal.qrConsulta.Close;
+end;
+
+function TControle_Funcionario.setScriptCbMotorista: String;
+begin
+     result := 'SELECT * FROM logistica_ads.funcionario f, pessoa p, pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa and f.pessoa_fisica_idpessoa_fisica = pf.pessoa_idPessoa order by p.nome';
 end;
 
 function TControle_Funcionario.verifyValueOfId(lastId, tag: integer): integer;

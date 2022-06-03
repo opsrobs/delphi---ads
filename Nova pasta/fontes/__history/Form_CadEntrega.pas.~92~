@@ -19,9 +19,12 @@ type
     edPeso: TLabeledEdit;
     Panel3: TPanel;
     listDados: TListView;
+    SpeedButton1: TSpeedButton;
+    cbMotoristaEntrega: TComboBox;
+    cbVeiculoEntrega: TComboBox;
     procedure FormActivate(Sender: TObject);
-    procedure listDadosChange(Sender: TObject; Item: TListItem;
-      Change: TItemChange);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure listDadosClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -42,7 +45,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_ControlePedido, unit_ProjetoFinal;
+uses Unit_ControlePedido, unit_ProjetoFinal, Unit_ControleVeiculo;
 
 
 
@@ -54,6 +57,7 @@ var
   ControlePedido:TControle_Pedido;
 begin
     ControlePedido.buscarPedidos;
+    Frm_Principal.ControleVeiculo.populaComboCbVeiculo;
 end;
 
 
@@ -63,10 +67,10 @@ begin
     result := self.funcao;
 end;
 
-procedure Tfrm_carga.listDadosChange(Sender: TObject; Item: TListItem;
-  Change: TItemChange);
+
+procedure Tfrm_carga.listDadosClick(Sender: TObject);
 begin
-Frm_Principal.ControlePedido.verifyValue;
+    Frm_Principal.ControlePedido.verifyValue;
 end;
 
 procedure Tfrm_carga.setFuncao(funcao: byte);
@@ -75,5 +79,10 @@ begin
 end;
 
 
+
+procedure Tfrm_carga.SpeedButton1Click(Sender: TObject);
+begin
+  Frm_Principal.ControlePedido.verifyValue;
+end;
 
 end.

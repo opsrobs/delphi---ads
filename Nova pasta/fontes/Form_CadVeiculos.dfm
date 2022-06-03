@@ -105,7 +105,6 @@ object frm_Veiculos: Tfrm_Veiculos
       Style = csOwnerDrawFixed
       TabOrder = 3
       OnChange = cbVeiculosChange
-      OnClick = cbVeiculosClick
     end
   end
 end

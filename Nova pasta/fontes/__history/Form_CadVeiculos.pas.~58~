@@ -20,12 +20,14 @@ type
     cbVeiculos: TComboBox;
     procedure spSalvarClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
-    procedure cbVeiculosChange(Sender: TObject);
     procedure cbVeiculosClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure cbVeiculosChange(Sender: TObject);
   private
     scriptSql:string;
     funcao:byte;
     function validarValoresFuncionario:Boolean;
+    procedure limparTela;
 
 
   public
@@ -48,17 +50,22 @@ uses unit_ProjetoFinal;
 
 { Tfrm_Veiculos }
 
+
+
+
 procedure Tfrm_Veiculos.cbVeiculosChange(Sender: TObject);
 begin
-  Frm_Principal.ControleVeiculo.populaCombo;
-        ShowMessage('X');
-        FreeAndNil(frm_Veiculos);
+    frm_Veiculos.lbMarca.Text := frm_Veiculos.cbVeiculos.Text;
 end;
-
 
 procedure Tfrm_Veiculos.cbVeiculosClick(Sender: TObject);
 begin
-    Frm_Principal.ControleVeiculo.populaCombo;
+    //Frm_Principal.ControleVeiculo.populaCombo;
+end;
+
+procedure Tfrm_Veiculos.FormActivate(Sender: TObject);
+begin
+      Frm_Principal.ControleVeiculo.populaCombo;
 end;
 
 function Tfrm_Veiculos.getFuncao: byte;
@@ -69,6 +76,14 @@ end;
 function Tfrm_Veiculos.getSelectSql: string;
 begin
     result := self.scriptSql;
+end;
+
+procedure Tfrm_Veiculos.limparTela;
+begin
+  lbModelo.Clear;
+  lbMarca.Clear;
+  lbPlaca.Clear;
+  lbModelo.SetFocus;
 end;
 
 procedure Tfrm_Veiculos.setFuncao(funcao: byte);
@@ -98,7 +113,30 @@ end;
 
 function Tfrm_Veiculos.validarValoresFuncionario: Boolean;
 begin
+    result := true;
+    if (lbMarca.Text	= '') then
+      begin
+        result := false;
+        ShowMessage('Informe a Marca do veiculo!!!');
+        lbMarca.SetFocus;
+        exit;
+      end;
 
+      if (lbModelo.Text	= '') then
+      begin
+        result := false;
+        ShowMessage('Informe o modelo do veiculo!!!');
+        lbModelo.SetFocus;
+        exit;
+      end;
+
+      if (lbPlaca.Text	= '') then
+      begin
+        result := false;
+        ShowMessage('Informe a placa do veiculo!!!');
+        lbPlaca.SetFocus;
+        exit;
+      end;
 end;
 
 end.

@@ -11,7 +11,7 @@ uses
   FireDAC.Comp.DataSet, System.ImageList, Vcl.ImgList, Vcl.Controls, REST.Types,
   REST.Response.Adapter, REST.Client, Data.Bind.Components,
   Data.Bind.ObjectScope, Vcl.BaseImageCollection, Vcl.ImageCollection,
-  Vcl.VirtualImageList;
+  Vcl.VirtualImageList, Datasnap.DBClient;
 
 type
   Tdm_ProjetoFinal = class(TDataModule)
@@ -33,8 +33,11 @@ type
     RESTResponse2: TRESTResponse;
     RESTResponseDataSetAdapter2: TRESTResponseDataSetAdapter;
     MemTable_Pessoa: TFDMemTable;
-    qrConsultaVeiculo: TFDQuery;
     dsVeiculos: TDataSource;
+    dtsConsultaVeiculo: TClientDataSet;
+    qrVeiculo: TFDQuery;
+    qrVeiculoidmarca_veiculo: TFDAutoIncField;
+    qrVeiculonome_marca: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

@@ -13,10 +13,13 @@ TControle_Veiculo = class
     procedure updateMarca;
     procedure updateVeiculo;
     function setScript:string;
+    function setScriptCbVeiculo: string;
+
 
     public
     procedure populaCombo;
     procedure getCadVeiculo;
+    procedure populaComboCbVeiculo;
 
 end;
 var
@@ -26,7 +29,7 @@ var
 implementation
 
 uses
-Form_CadVeiculos, Unit_Dados, Objeto_CadPessoa;
+Form_CadVeiculos, Unit_Dados, Objeto_CadPessoa, Form_CadEntrega;
 
 { TControle_Veiculo }
 
@@ -80,6 +83,11 @@ begin
     result := 'SELECT * FROM logistica_ads.marca_veiculo order by nome_marca asc';
 end;
 
+function TControle_Veiculo.setScriptCbVeiculo: string;
+begin
+    result := 'SELECT * FROM logistica_ads.veiculo order by modelo asc;';
+end;
+
 procedure TControle_Veiculo.populaCombo;
 begin
     dm_ProjetoFinal.qrVeiculo.Close;
@@ -91,6 +99,27 @@ begin
       while not dm_ProjetoFinal.qrVeiculo.Eof  do
     begin
       frm_Veiculos.cbVeiculos.Items.Add(dm_ProjetoFinal.qrVeiculo.FieldByName('nome_marca').AsString);
+      dm_ProjetoFinal.qrVeiculo.Next;
+    end;
+    finally
+
+    end;
+    dm_ProjetoFinal.qrVeiculo.Close;
+
+end;
+
+procedure TControle_Veiculo.populaComboCbVeiculo;
+begin
+    dm_ProjetoFinal.qrVeiculo.Close;
+    dm_ProjetoFinal.qrVeiculo.SQL.Clear;
+    dm_ProjetoFinal.qrVeiculo.SQL.Add(self.setScriptCbVeiculo);
+       ShowMessage(self.setScriptCbVeiculo);
+    try
+      dm_ProjetoFinal.qrVeiculo.Open;
+      dm_ProjetoFinal.qrVeiculo.First;
+      while not dm_ProjetoFinal.qrVeiculo.Eof  do
+    begin
+      frm_carga.cbVeiculoEntrega.Items.Add(dm_ProjetoFinal.qrVeiculo.FieldByName('modelo').AsString);
       dm_ProjetoFinal.qrVeiculo.Next;
     end;
     finally

@@ -20,7 +20,6 @@ type
     cbVeiculos: TComboBox;
     procedure spSalvarClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
-    procedure cbVeiculosClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure cbVeiculosChange(Sender: TObject);
   private
@@ -56,11 +55,6 @@ uses unit_ProjetoFinal;
 procedure Tfrm_Veiculos.cbVeiculosChange(Sender: TObject);
 begin
     frm_Veiculos.lbMarca.Text := frm_Veiculos.cbVeiculos.Text;
-end;
-
-procedure Tfrm_Veiculos.cbVeiculosClick(Sender: TObject);
-begin
-    //Frm_Principal.ControleVeiculo.populaCombo;
 end;
 
 procedure Tfrm_Veiculos.FormActivate(Sender: TObject);

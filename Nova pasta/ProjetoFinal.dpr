@@ -35,13 +35,16 @@ uses
   Objeto_CargaPedido in '..\Objeto_CargaPedido.pas',
   Unit_Utils in '..\Unit_Utils.pas',
   Objeto_CadRecebedor in '..\Objeto_CadRecebedor.pas',
-  Form_CadEntrega in 'fontes\Form_CadEntrega.pas' {frm_carga};
+  Form_CadEntrega in 'fontes\Form_CadEntrega.pas' {frm_carga},
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  TStyleManager.TrySetStyle('Glossy');
   Application.CreateForm(Tdm_ProjetoFinal, dm_ProjetoFinal);
   Application.CreateForm(TFrm_Principal, Frm_Principal);
   Application.CreateForm(Tfrm_Pedido, frm_Pedido);

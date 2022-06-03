@@ -3504,7 +3504,7 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     Top = 427
   end
   object dsVeiculos: TDataSource
-    Left = 184
+    Left = 200
     Top = 64
   end
   object dtsConsultaVeiculo: TClientDataSet
@@ -3518,17 +3518,5 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     Connection = FDFinal
     Left = 127
     Top = 131
-    object qrVeiculoidmarca_veiculo: TFDAutoIncField
-      FieldName = 'idmarca_veiculo'
-      Origin = 'idmarca_veiculo'
-      ProviderFlags = [pfInWhere, pfInKey]
-      ReadOnly = True
-    end
-    object qrVeiculonome_marca: TStringField
-      AutoGenerateValue = arDefault
-      FieldName = 'nome_marca'
-      Origin = 'nome_marca'
-      Size = 45
-    end
   end
 end

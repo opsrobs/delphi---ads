@@ -13,10 +13,13 @@ TControle_Veiculo = class
     procedure updateMarca;
     procedure updateVeiculo;
     function setScript:string;
+    function setScriptCbVeiculo: string;
+
 
     public
     procedure populaCombo;
     procedure getCadVeiculo;
+    procedure populaComboCbVeiculo;
 
 end;
 var
@@ -26,7 +29,7 @@ var
 implementation
 
 uses
-Form_CadVeiculos, Unit_Dados, Objeto_CadPessoa;
+Form_CadVeiculos, Unit_Dados, Objeto_CadPessoa, Form_CadEntrega;
 
 { TControle_Veiculo }
 
@@ -42,7 +45,7 @@ procedure TControle_Veiculo.cadastroVeiculo(id:integer);
 begin
     VCadVeiculo := CadVeiculo.Create;
     VCadVeiculo.setModelo(frm_Veiculos.lbModelo.Text);
-    VCadVeiculo.setPlaca(frm_Veiculos.lbPlaca.Text);
+    VCadVeiculo.setPlaca(AnsiUpperCase(frm_Veiculos.lbPlaca.Text));
     VCadVeiculo.setMarca_Veiculo_idMarca(id);
 
     VCadVeiculo.insertDados;
@@ -53,20 +56,24 @@ var
   id:integer;
 begin
     if (frm_Veiculos = nil) then
+    begin
       frm_Veiculos := Tfrm_Veiculos.Create(nil);
 
       if (frm_Veiculos.ShowModal = mrok) then
       VCadVeiculo :=CadVeiculo.Create;
-      case (frm_Veiculos.getFuncao) of
-      1:begin
+        case (frm_Veiculos.getFuncao) of
+        1:begin
+            Self.updateMarca;
+            self.cadastroVeiculo(VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text));
+          end;
+        2:begin
 
-      Self.updateMarca;
-      
+        end;
       end;
-      2:begin
-      
-      end;
-      end;
+      VCadVeiculo.Free;
+      VCadMarca.Free;
+    end;
+    FreeAndNil(frm_Veiculos)
 
 
 end;
@@ -76,10 +83,13 @@ begin
     result := 'SELECT * FROM logistica_ads.marca_veiculo order by nome_marca asc';
 end;
 
+function TControle_Veiculo.setScriptCbVeiculo: string;
+begin
+
+end;
 
 procedure TControle_Veiculo.populaCombo;
 begin
-    //frm_Veiculos.cbVeiculos.Style:=
     dm_ProjetoFinal.qrVeiculo.Close;
     dm_ProjetoFinal.qrVeiculo.SQL.Clear;
     dm_ProjetoFinal.qrVeiculo.SQL.Add(self.setScript);
@@ -88,14 +98,34 @@ begin
       dm_ProjetoFinal.qrVeiculo.First;
       while not dm_ProjetoFinal.qrVeiculo.Eof  do
     begin
-      //frm_Veiculos.cbVeiculos.Items.Add(dm_ProjetoFinal.qrVeiculonome_marca.Value);
       frm_Veiculos.cbVeiculos.Items.Add(dm_ProjetoFinal.qrVeiculo.FieldByName('nome_marca').AsString);
       dm_ProjetoFinal.qrVeiculo.Next;
     end;
     finally
 
     end;
-    frm_Veiculos.lbMarca.Text := frm_Veiculos.cbVeiculos.Text;
+    dm_ProjetoFinal.qrVeiculo.Close;
+
+end;
+
+procedure TControle_Veiculo.populaComboCbVeiculo;
+begin
+    dm_ProjetoFinal.qrVeiculo.Close;
+    dm_ProjetoFinal.qrVeiculo.SQL.Clear;
+    dm_ProjetoFinal.qrVeiculo.SQL.Add(self.setScriptCbVeiculo);
+    try
+      dm_ProjetoFinal.qrVeiculo.Open;
+      dm_ProjetoFinal.qrVeiculo.First;
+      while not dm_ProjetoFinal.qrVeiculo.Eof  do
+    begin
+    frm_cadEntrega.
+      frm_cadEntrega.Items.Add(dm_ProjetoFinal.qrVeiculo.FieldByName('modelo').AsString);
+      dm_ProjetoFinal.qrVeiculo.Next;
+    end;
+    finally
+
+    end;
+    dm_ProjetoFinal.qrVeiculo.Close;
 
 end;
 
@@ -118,7 +148,7 @@ begin
       VCadMarca.setIdMarca_veiculo(id);
       VCadMarca.updadteDados;
     end;
-    self.updateMarca;
+
 
 end;
 
@@ -134,8 +164,8 @@ begin
     if id <=0 then
       begin
         id_marca := VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text);
-        ShowMessage('insert')
-        //self.cadastroVeiculo(id);
+        ShowMessage('insert');
+        self.cadastroVeiculo(id);
       end
         else
         begin

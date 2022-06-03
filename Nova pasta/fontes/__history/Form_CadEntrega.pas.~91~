@@ -20,8 +20,11 @@ type
     Panel3: TPanel;
     listDados: TListView;
     SpeedButton1: TSpeedButton;
+    cbMotoristaEntrega: TComboBox;
+    cbVeiculoEntrega: TComboBox;
     procedure FormActivate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure listDadosClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -61,6 +64,12 @@ end;
 function Tfrm_carga.getFuncao: byte;
 begin
     result := self.funcao;
+end;
+
+
+procedure Tfrm_carga.listDadosClick(Sender: TObject);
+begin
+    Frm_Principal.ControlePedido.verifyValue;
 end;
 
 procedure Tfrm_carga.setFuncao(funcao: byte);

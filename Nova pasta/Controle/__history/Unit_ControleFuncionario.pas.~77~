@@ -115,6 +115,13 @@ begin
           end;
         end;
         VCadFuncionario.Free;
+        VCadPessoa.Free;
+        VCadFuncionario.Free;
+        VCadPessoaFisica.Free;
+        VCadEstado.Free;
+        VCadCidade.Free;
+        VCadBairro.Free;
+        VCadEndereco.Free;
      end;
      FreeAndNil(frm_Funcionario)
 
@@ -126,24 +133,36 @@ procedure TControle_Funcionario.getConsultaPessoas;
 begin
    if frm_Consulta = nil then
       frm_Consulta := Tfrm_Consulta.Create(nil);
-
-  frm_Consulta.setSelectSQL('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'+
-  ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc');
-
-  if frm_Consulta.ShowModal = mrOk then
-  begin
-    if frm_Pedido.Panel2 <> nil then
+  if frm_Pedido <> nil then
     begin
-      ShowMessage('consulta');
+    frm_Consulta.setSelectSQL('SELECT p.idPessoa as "Nº Registro", p.nome as "Nome", e.cep as "CEP", e.rua as "Rua" ' +
+    ' FROM logistica_ads.pessoa p, logistica_ads.endereco e where p.idPessoa = e.pessoa_idPessoa;');
+        if frm_Consulta.ShowModal = mrOk then
+        begin
+          frm_Pedido.edDestinatario.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
+        end;
     end
     else
-    ShowMessage('<<>>');
-      frm_Funcionario.spSalvar.Tag :=dm_ProjetoFinal.qrConsulta.Fields[0].AsInteger;
-      frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
-      frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString
+    begin
+        frm_Consulta.setSelectSQL('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'+
+        ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc');
+        if frm_Consulta.ShowModal = mrOk then
+         if frm_Consulta.ShowModal = mrOk then
+            begin
+              frm_Funcionario.spSalvar.Tag :=dm_ProjetoFinal.qrConsulta.Fields[0].AsInteger;
+              frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
+              frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString;
+              FreeAndNil(frm_Consulta);
+            end
+    end;
 
-  end;
-  FreeAndNil(frm_Consulta);
+    dm_ProjetoFinal.qrConsulta.Close;
+    dm_ProjetoFinal.qrConsulta.SQL.Clear;
+
+
+
+
+
 
 end;
 

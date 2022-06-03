@@ -24,7 +24,6 @@ object frm_carga: Tfrm_carga
     Height = 65
     Align = alBottom
     TabOrder = 0
-    ExplicitWidth = 715
     DesignSize = (
       800
       65)
@@ -103,7 +102,6 @@ object frm_carga: Tfrm_carga
     Height = 66
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 715
     object nmConsultar: TSpeedButton
       Left = 272
       Top = 22
@@ -151,7 +149,6 @@ object frm_carga: Tfrm_carga
     EditLabel.Caption = 'PESO'
     TabOrder = 2
     Text = ''
-    ExplicitLeft = 594
   end
   object Panel3: TPanel
     Left = 0
@@ -160,15 +157,14 @@ object frm_carga: Tfrm_carga
     Height = 422
     Align = alClient
     TabOrder = 3
-    ExplicitWidth = 715
     DesignSize = (
       800
       422)
     object listDados: TListView
       Left = 0
-      Top = 0
+      Top = 48
       Width = 800
-      Height = 425
+      Height = 377
       Anchors = [akLeft, akTop, akRight, akBottom]
       Checkboxes = True
       Columns = <
@@ -222,6 +218,22 @@ object frm_carga: Tfrm_carga
       TabOrder = 0
       ViewStyle = vsReport
       OnClick = listDadosClick
+    end
+    object cbMotoristaEntrega: TComboBox
+      Left = 120
+      Top = 13
+      Width = 193
+      Height = 23
+      TabOrder = 1
+      Text = 'Selecione o motorista'
+    end
+    object cbVeiculoEntrega: TComboBox
+      Left = 482
+      Top = 14
+      Width = 193
+      Height = 23
+      TabOrder = 2
+      Text = 'Selecione o veiculo'
     end
   end
 end

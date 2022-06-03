@@ -20,6 +20,8 @@ type
     Panel3: TPanel;
     listDados: TListView;
     SpeedButton1: TSpeedButton;
+    cbMotoristaEntrega: TComboBox;
+    cbVeiculoEntrega: TComboBox;
     procedure FormActivate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure listDadosClick(Sender: TObject);
@@ -43,7 +45,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit_ControlePedido, unit_ProjetoFinal;
+uses Unit_ControlePedido, unit_ProjetoFinal, Unit_ControleVeiculo;
 
 
 
@@ -55,6 +57,8 @@ var
   ControlePedido:TControle_Pedido;
 begin
     ControlePedido.buscarPedidos;
+    Frm_Principal.ControleVeiculo.populaComboCbVeiculo;
+    Frm_Principal.ControleFuncionario.populaComboCbPessoa;
 end;
 
 

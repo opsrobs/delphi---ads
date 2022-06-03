@@ -36,8 +36,6 @@ type
     dsVeiculos: TDataSource;
     dtsConsultaVeiculo: TClientDataSet;
     qrVeiculo: TFDQuery;
-    qrVeiculoidmarca_veiculo: TFDAutoIncField;
-    qrVeiculonome_marca: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

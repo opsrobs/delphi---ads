@@ -19,7 +19,10 @@ type
     edPeso: TLabeledEdit;
     Panel3: TPanel;
     listDados: TListView;
+    SpeedButton1: TSpeedButton;
     procedure FormActivate(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure listDadosClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -61,11 +64,22 @@ begin
     result := self.funcao;
 end;
 
+
+procedure Tfrm_carga.listDadosClick(Sender: TObject);
+begin
+    Frm_Principal.ControlePedido.verifyValue;
+end;
+
 procedure Tfrm_carga.setFuncao(funcao: byte);
 begin
     self.funcao	 := funcao;
 end;
 
 
+
+procedure Tfrm_carga.SpeedButton1Click(Sender: TObject);
+begin
+  Frm_Principal.ControlePedido.verifyValue;
+end;
 
 end.
