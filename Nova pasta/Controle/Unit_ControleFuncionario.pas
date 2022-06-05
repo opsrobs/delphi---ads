@@ -13,6 +13,7 @@ uses System.SysUtils,Winapi.Messages,Objeto_CadFuncionario,Vcl.Controls,Vcl.Dial
     procedure alterarPessoaFisica(id:integer);
     procedure cadastrarFuncionario(id:integer);
     procedure populaComboCbPessoa;
+    function getIdFuncionario(index:integer):integer;
 
     private
         function verifyValueOfId(lastId, tag:integer):integer;
@@ -22,6 +23,7 @@ uses System.SysUtils,Winapi.Messages,Objeto_CadFuncionario,Vcl.Controls,Vcl.Dial
   VCadPessoa:CadPessoa;
   VCadFuncionario: CadFuncionario;
   id_pessoaFisica:integer;
+  arrayMotoristas : array of Integer ;
 
 
 
@@ -168,8 +170,16 @@ begin
 
 end;
 
-procedure TControle_Funcionario.populaComboCbPessoa;
+function TControle_Funcionario.getIdFuncionario(index:integer): integer;
 begin
+    result := arrayMotoristas[index];
+end;
+
+procedure TControle_Funcionario.populaComboCbPessoa;
+var
+i:integer;
+begin
+  SetLength(arrayMotoristas, i);
     dm_ProjetoFinal.qrConsulta.Close;
     dm_ProjetoFinal.qrConsulta.SQL.Clear;
     dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScriptCbMotorista);
@@ -181,7 +191,9 @@ begin
       while not dm_ProjetoFinal.qrConsulta.Eof  do
     begin
       frm_carga.cbMotoristaEntrega.Items.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
+      arrayMotoristas[i] :=dm_ProjetoFinal.qrConsulta.FieldByName('idfuncionario').AsInteger;
       dm_ProjetoFinal.qrConsulta.Next;
+      inc(i)
     end;
     finally
 

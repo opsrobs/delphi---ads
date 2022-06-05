@@ -3,12 +3,13 @@ unit Unit_ControlePedido;
 interface
     uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types, Objeto_CadPedido,Objeto_CadEstado,
      StrUtils,Objeto_CadCidade, Objeto_CadBairro,Unit_Utils, Objeto_CadCliente, Objeto_CadEndereco,Form_CadEntrega,Vcl.StdCtrls,
-  Vcl.ComCtrls,CommCtrl, Winapi.Windows;
+  Vcl.ComCtrls,CommCtrl, Winapi.Windows,Unit_ControleVeiculo;
 
 type
  TControle_Pedido = class
    private
     procedure cadastroPedido;
+    procedure cadastroMotoristaVeiculo;
     function verifyStatus:string;
     function setScript:string;
     function returnIdDestinatario:integer;
@@ -20,7 +21,7 @@ type
      procedure getCadEntrega;
      procedure buscarPedidos;
      procedure setPesoEntrega;
-     procedure verifyValue;
+     function verifyValue:integer;
 
 
  end;
@@ -30,13 +31,16 @@ type
   VCadCliente:CadCliente;
   utilitaria:Utils;
   VCadEndereco:CadEndereco;
+  ControleVeiculo:TControle_Veiculo;
 
 
 implementation
 
 { TControle_Pedido }
 
-uses Form_CadPedido, Unit_Dados, Objeto_CadRecebedor;
+uses Form_CadPedido, Unit_Dados, Objeto_CadRecebedor,
+  Objeto_Funcionario_has_Veiculos, Form_CadFuncionario, Form_CadPessoa,
+  unit_ProjetoFinal, Form_CadVeiculos;
 
 procedure TControle_Pedido.buscarPedidos;
 var
@@ -59,13 +63,23 @@ begin
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome_recebedor').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('valor_total').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('peso_pedido').AsString);
-    //frm_carga.ckListDados.Items.Add(dm_ProjetoFinal.qrConsulta.FieldByName('numero_pedido').AsString);
-    //frm_carga.ckListDados.Items.add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
-   // ShowMessage(dm_ProjetoFinal.qrConsulta.FieldByName('data_pedido').AsString) ;
 
     dm_ProjetoFinal.qrConsulta.Next;
   end;
- // ShowMessage(dados.SubItems.GetText)
+end;
+
+procedure TControle_Pedido.cadastroMotoristaVeiculo;
+var
+VFunc_VVeic:Funcionario_has_Veiculos;
+idFuncionario, idVeiculo:integer;
+begin
+idFuncionario := Frm_Principal.ControleFuncionario.getIdFuncionario(frm_carga.cbMotoristaEntrega.ItemIndex)+1;
+idVeiculo := Frm_Principal.ControleVeiculo.getIdMotorista(frm_carga.cbMotoristaEntrega.ItemIndex)+1;
+  VFunc_VVeic := Funcionario_has_Veiculos.Create;
+  VFunc_VVeic.setFuncionario_idFuncionario(idFuncionario);
+  VFunc_VVeic.setVeiculos_idVeiculos(idVeiculo);
+
+  VFunc_VVeic.insertDados;
 
 end;
 
@@ -118,7 +132,7 @@ begin
       begin
          case(frm_carga.getFuncao) of
             1: begin
-
+              self.cadastroMotoristaVeiculo;
 
             end;
             2: begin
@@ -147,7 +161,6 @@ begin
       id := self.returnIdDestinatario;
          case(frm_Pedido.getFuncao) of
             1: begin
-
                 self.cadastroPedido;
             end;
             2: begin
@@ -200,6 +213,8 @@ utilitaria := Utils.Create;
           VCadRecebedor.Destroy;
     end;
 
+
+
 procedure TControle_Pedido.setPesoEntrega;
 var
   dados :TListItem;
@@ -234,24 +249,28 @@ end;
 
 
 
-procedure TControle_Pedido.verifyValue;
+function TControle_Pedido.verifyValue:integer;
 var
 i:integer;
 value:Float64;
+qtd:integer;
 begin
+qtd:=0;
 i :=0;
 value:=0;
+
     for I := 0 to frm_carga.listDados.Items.Count -1 do
     begin
       if frm_carga.listDados.Items.Item[i].Checked then
       begin
+        inc(qtd);
         ShowMessage(frm_carga.listDados.Items.Item[i].SubItems[4]);
         value := value + StrToFloat(frm_carga.listDados.Items.Item[i].SubItems[4]);
-        frm_carga.edPeso.Text := FloatToStr(value);
-      end;
+      end
+        else
+        frm_carga.edPeso.Text := '';
     end;
-
-
+    result := qtd;
 
 end;
 

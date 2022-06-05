@@ -3,13 +3,13 @@ unit Unit_ControleVeiculo;
 interface
 uses
   System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask,Objeto_CadVeiculo,Objeto_CadMarcaVeiculo, Datasnap.DBClient,
-  Data.DB;
+  Data.DB, System.Generics.Collections;
 
 type
 TControle_Veiculo = class
   private
     procedure cadastroMarca;
-    procedure cadastroVeiculo(id:integer);         //ctrl + shift + a
+    procedure cadastroVeiculo(id:integer);
     procedure updateMarca;
     procedure updateVeiculo;
     function setScript:string;
@@ -20,11 +20,13 @@ TControle_Veiculo = class
     procedure populaCombo;
     procedure getCadVeiculo;
     procedure populaComboCbVeiculo;
+    function getIdMotorista(index:integer):integer;
 
 end;
 var
   VCadVeiculo:CadVeiculo;
   VCadMarca:CadMarcaVeiculo;
+  arrayVeicuos : array of Integer ;
 
 implementation
 
@@ -88,6 +90,11 @@ begin
     result := 'SELECT * FROM logistica_ads.veiculo order by modelo asc;';
 end;
 
+function TControle_Veiculo.getIdMotorista(index:integer): integer;
+begin
+    result := arrayVeicuos[index]
+end;
+
 procedure TControle_Veiculo.populaCombo;
 begin
     dm_ProjetoFinal.qrVeiculo.Close;
@@ -109,19 +116,26 @@ begin
 end;
 
 procedure TControle_Veiculo.populaComboCbVeiculo;
+var
+i:integer;
 begin
+i:=1;
+SetLength(arrayVeicuos, i);
     dm_ProjetoFinal.qrVeiculo.Close;
     dm_ProjetoFinal.qrVeiculo.SQL.Clear;
     dm_ProjetoFinal.qrVeiculo.SQL.Add(self.setScriptCbVeiculo);
-       ShowMessage(self.setScriptCbVeiculo);
     try
       dm_ProjetoFinal.qrVeiculo.Open;
       dm_ProjetoFinal.qrVeiculo.First;
+
       while not dm_ProjetoFinal.qrVeiculo.Eof  do
-    begin
-      frm_carga.cbVeiculoEntrega.Items.Add(dm_ProjetoFinal.qrVeiculo.FieldByName('modelo').AsString);
-      dm_ProjetoFinal.qrVeiculo.Next;
-    end;
+        begin
+          frm_carga.cbVeiculoEntrega.Items.Add(dm_ProjetoFinal.qrVeiculo.FieldByName('modelo').AsString);
+          //ShowMessage('x');
+          arrayVeicuos[i] := dm_ProjetoFinal.qrVeiculo.FieldByName('idveiculos').AsInteger;
+          inc(i);
+          dm_ProjetoFinal.qrVeiculo.Next;
+        end;
     finally
 
     end;
@@ -138,7 +152,6 @@ begin
   id :=VCadMarca.IdentificadorMarca(marca);
   if (id <= 0) then
   begin
-  ShowMessage('x');
     self.cadastroMarca;
   end
     else
@@ -163,7 +176,6 @@ begin
     if id <=0 then
       begin
         id_marca := VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text);
-        ShowMessage('insert');
         self.cadastroVeiculo(id);
       end
         else
@@ -172,7 +184,6 @@ begin
         VCadVeiculo.setPlaca(frm_Veiculos.lbPlaca.Text);
         id_marca := VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text);
         VCadVeiculo.setMarca_Veiculo_idMarca(id);
-        ShowMessage('update')
         //VCadVeiculo.updadteDados;
         end;
 end;

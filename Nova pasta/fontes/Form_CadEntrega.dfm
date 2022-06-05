@@ -11,11 +11,13 @@ object frm_carga: Tfrm_carga
   Font.Name = 'Segoe UI'
   Font.Style = []
   FormStyle = fsMDIForm
+  OldCreateOrder = True
   Position = poScreenCenter
   OnActivate = FormActivate
   DesignSize = (
     800
     553)
+  PixelsPerInch = 96
   TextHeight = 15
   object Panel2: TPanel
     Left = 0
@@ -70,6 +72,7 @@ object frm_carga: Tfrm_carga
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      OnClick = spSalvarClick
       ExplicitWidth = 122
       ExplicitHeight = 22
     end
@@ -148,7 +151,6 @@ object frm_carga: Tfrm_carga
     EditLabel.Height = 15
     EditLabel.Caption = 'PESO'
     TabOrder = 2
-    Text = ''
   end
   object Panel3: TPanel
     Left = 0
@@ -234,6 +236,7 @@ object frm_carga: Tfrm_carga
       Height = 23
       TabOrder = 2
       Text = 'Selecione o veiculo'
+      OnChange = cbVeiculoEntregaChange
     end
   end
 end
