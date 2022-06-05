@@ -103,4 +103,9 @@ if (not self.validarValores) then
         ModalResult := mrOk;
 end;
 
+function Tfrm_carga.validarValores: boolean;
+begin
+
+end;
+
 end.

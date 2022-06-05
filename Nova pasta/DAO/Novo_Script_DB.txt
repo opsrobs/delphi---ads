@@ -1,6 +1,7 @@
 drop database if exists pedro_delphi;
 drop database if exists pedro_delphiii;
 drop database if exists logistica_ads;
+
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -137,9 +138,10 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `Logistica_ads`.`funcionario_has_veiculo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Logistica_ads`.`funcionario_has_veiculo` (
-  `funcionario_idfuncionario` INT NOT NULL,
+  `idFuncionarioVeiculo` INT NOT NULL AUTO_INCREMENT,
   `veiculo_idveiculos` INT NOT NULL,
-  PRIMARY KEY (`funcionario_idfuncionario`, `veiculo_idveiculos`),
+  `funcionario_idfuncionario` INT NOT NULL,
+  PRIMARY KEY (`idFuncionarioVeiculo`, `veiculo_idveiculos`, `funcionario_idfuncionario`),
   INDEX `fk_funcionario_has_veiculo_veiculo1_idx` (`veiculo_idveiculos` ASC) VISIBLE,
   INDEX `fk_funcionario_has_veiculo_funcionario1_idx` (`funcionario_idfuncionario` ASC) VISIBLE,
   CONSTRAINT `fk_funcionario_has_veiculo_funcionario1`
@@ -157,16 +159,14 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Logistica_ads`.`carga` (
   `IdCarga` INT NOT NULL AUTO_INCREMENT,
-  `nome_tipo` VARCHAR(100) NOT NULL,
   `quantidade` INT NOT NULL,
   `peso` FLOAT NOT NULL,
-  `idfuncionario_veiculos` INT NOT NULL,
-  `funcionario_idveiculos` INT NOT NULL,
+  `funcionario_has_veiculo_idFuncionarioVeiculo` INT NOT NULL,
   PRIMARY KEY (`IdCarga`),
-  INDEX `fk_carga_funcionario_has_veiculo1_idx` (`idfuncionario_veiculos` ASC, `funcionario_idveiculos` ASC) VISIBLE,
+  INDEX `fk_carga_funcionario_has_veiculo1_idx` (`funcionario_has_veiculo_idFuncionarioVeiculo` ASC) VISIBLE,
   CONSTRAINT `fk_carga_funcionario_has_veiculo1`
-    FOREIGN KEY (`idfuncionario_veiculos` , `funcionario_idveiculos`)
-    REFERENCES `Logistica_ads`.`funcionario_has_veiculo` (`funcionario_idfuncionario` , `veiculo_idveiculos`)
+    FOREIGN KEY (`funcionario_has_veiculo_idFuncionarioVeiculo`)
+    REFERENCES `Logistica_ads`.`funcionario_has_veiculo` (`idFuncionarioVeiculo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -323,6 +323,8 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
+{==================================================================================}
+
 CREATE 
     ALGORITHM = UNDEFINED 
     DEFINER = `root`@`localhost` 
@@ -372,3 +374,17 @@ VIEW `logistica_ads`.`dados_pedido` AS
         ((`logistica_ads`.`vp`.`idrecebedor` = `r`.`idrecebedor`)
             AND (`p`.`idPessoa` = `r`.`pessoa_idPessoa`)
             AND (`pd`.`recebedor_idrecebedor` = `r`.`idrecebedor`))
+
+
+			{=================================================================}
+
+
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `dados_pedido_corrigido` AS
+    SELECT dp.*, p.nome as "nome recebedor", pd.peso_pedido, pd.valor_total FROM logistica_ads.getdadospedido dp, logistica_ads.pessoa p , logistica_ads.recebedor r, logistica_ads.pedido pd, logistica_ads.cliente c
+where pd.recebedor_idrecebedor = r.idrecebedor
+and r.pessoa_idPessoa = p.idPessoa and c.pessoa_idPessoa = p.idPessoa and dp.numero_pedido = pd.numero_pedido ;

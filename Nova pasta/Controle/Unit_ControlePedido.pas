@@ -3,7 +3,7 @@ unit Unit_ControlePedido;
 interface
     uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types, Objeto_CadPedido,Objeto_CadEstado,
      StrUtils,Objeto_CadCidade, Objeto_CadBairro,Unit_Utils, Objeto_CadCliente, Objeto_CadEndereco,Form_CadEntrega,Vcl.StdCtrls,
-  Vcl.ComCtrls,CommCtrl, Winapi.Windows,Unit_ControleVeiculo;
+  Vcl.ComCtrls,CommCtrl, Winapi.Windows,Unit_ControleVeiculo,Objeto_CadCarga;
 
 type
  TControle_Pedido = class
@@ -13,6 +13,7 @@ type
     function verifyStatus:string;
     function setScript:string;
     function returnIdDestinatario:integer;
+    procedure cadastroEntrega;
 
      public
      procedure getCadPedido;
@@ -31,6 +32,7 @@ type
   VCadCliente:CadCliente;
   utilitaria:Utils;
   VCadEndereco:CadEndereco;
+  VCadCarga:CadCarga;
   ControleVeiculo:TControle_Veiculo;
 
 
@@ -60,7 +62,7 @@ begin
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('data_pedido').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('status').AsString);
-    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome_recebedor').AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome recebedor').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('valor_total').AsString);
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('peso_pedido').AsString);
 
@@ -68,16 +70,27 @@ begin
   end;
 end;
 
+procedure TControle_Pedido.cadastroEntrega;
+begin
+   VCadCarga := CadCarga.Create;
+   VCadCarga.setQuantidade(verifyValue);
+   VCadCarga.setPeso(StrToInt(frm_carga.edPeso.Text));
+   ShowMessage(IntToStr(utilitaria.getLastId));
+   VCadCarga.setIdFuncionarioVeiculo(utilitaria.getLastId);
+
+   VCadCarga.insertDados;
+end;
+
 procedure TControle_Pedido.cadastroMotoristaVeiculo;
 var
 VFunc_VVeic:Funcionario_has_Veiculos;
 idFuncionario, idVeiculo:integer;
 begin
-idFuncionario := Frm_Principal.ControleFuncionario.getIdFuncionario(frm_carga.cbMotoristaEntrega.ItemIndex)+1;
-idVeiculo := Frm_Principal.ControleVeiculo.getIdMotorista(frm_carga.cbMotoristaEntrega.ItemIndex)+1;
+idFuncionario:= Frm_Principal.ControleFuncionario.getIdFuncionario(frm_carga.cbMotoristaEntrega.ItemIndex +1);
+idVeiculo := Frm_Principal.ControleVeiculo.getIdMotorista(frm_carga.cbVeiculoEntrega.ItemIndex +1);
   VFunc_VVeic := Funcionario_has_Veiculos.Create;
-  VFunc_VVeic.setFuncionario_idFuncionario(idFuncionario);
   VFunc_VVeic.setVeiculos_idVeiculos(idVeiculo);
+  VFunc_VVeic.setFuncionario_idFuncionario(idFuncionario);
 
   VFunc_VVeic.insertDados;
 
@@ -133,6 +146,7 @@ begin
          case(frm_carga.getFuncao) of
             1: begin
               self.cadastroMotoristaVeiculo;
+              self.cadastroEntrega;
 
             end;
             2: begin
@@ -162,6 +176,7 @@ begin
          case(frm_Pedido.getFuncao) of
             1: begin
                 self.cadastroPedido;
+                self.cadastroEntrega;
             end;
             2: begin
 
@@ -233,7 +248,7 @@ function TControle_Pedido.setScript: string;
 begin
     if frm_carga <> nil then
     begin
-      result := 'SELECT * FROM logistica_ads.dados_pedido;'
+      result := 'SELECT * FROM logistica_ads.dados_pedido_corrigido;'
     end
     else
     result := 'SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa;';
@@ -259,16 +274,20 @@ qtd:=0;
 i :=0;
 value:=0;
 
+
     for I := 0 to frm_carga.listDados.Items.Count -1 do
     begin
       if frm_carga.listDados.Items.Item[i].Checked then
       begin
         inc(qtd);
-        ShowMessage(frm_carga.listDados.Items.Item[i].SubItems[4]);
-        value := value + StrToFloat(frm_carga.listDados.Items.Item[i].SubItems[4]);
+        value := value + StrToFloat(frm_carga.listDados.Items.Item[i].SubItems[5]);
+        frm_carga.edPeso.Text := FormatFloat('0.###',value);
       end
-        else
+      else
+      begin
         frm_carga.edPeso.Text := '';
+        frm_carga.edPeso.Text := FormatFloat('0.##',value);
+      end;
     end;
     result := qtd;
 

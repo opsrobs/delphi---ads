@@ -163,11 +163,6 @@ begin
     dm_ProjetoFinal.qrConsulta.Close;
     dm_ProjetoFinal.qrConsulta.SQL.Clear;
 
-
-
-
-
-
 end;
 
 function TControle_Funcionario.getIdFuncionario(index:integer): integer;
@@ -179,11 +174,11 @@ procedure TControle_Funcionario.populaComboCbPessoa;
 var
 i:integer;
 begin
+i:=1;
   SetLength(arrayMotoristas, i);
     dm_ProjetoFinal.qrConsulta.Close;
     dm_ProjetoFinal.qrConsulta.SQL.Clear;
     dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScriptCbMotorista);
-       ShowMessage(self.setScriptCbMotorista);
     try
       dm_ProjetoFinal.qrConsulta.Open;
       dm_ProjetoFinal.qrConsulta.First;
@@ -203,7 +198,7 @@ end;
 
 function TControle_Funcionario.setScriptCbMotorista: String;
 begin
-     result := 'SELECT * FROM logistica_ads.funcionario f, pessoa p, pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa and f.pessoa_fisica_idpessoa_fisica = pf.pessoa_idPessoa order by p.nome';
+     result := 'SELECT * FROM logistica_ads.funcionario f, pessoa p, pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa and f.pessoa_fisica_idpessoa_fisica = pf.idpessoa_fisica order by p.nome'
 end;
 
 function TControle_Funcionario.verifyValueOfId(lastId, tag: integer): integer;

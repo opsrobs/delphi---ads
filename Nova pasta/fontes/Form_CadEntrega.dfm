@@ -192,11 +192,11 @@ object frm_carga: Tfrm_carga
         end
         item
           AutoSize = True
-          Caption = 'Peso'
+          Caption = 'Valor total'
         end
         item
           AutoSize = True
-          Caption = 'Valor total'
+          Caption = 'Peso'
         end>
       FullDrag = True
       GridLines = True
@@ -223,7 +223,7 @@ object frm_carga: Tfrm_carga
     end
     object cbMotoristaEntrega: TComboBox
       Left = 120
-      Top = 13
+      Top = 19
       Width = 193
       Height = 23
       TabOrder = 1
