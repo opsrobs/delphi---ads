@@ -1,0 +1,116 @@
+unit Objeto_CadCarga;
+
+interface
+  uses
+    FireDAC.Comp.Client, Unit_Dados, System.SysUtils, Vcl.Dialogs;
+
+  type CadCarga = class
+
+  private
+    idCarga:integer;
+    quantidade:integer;
+    peso:Float64;
+    idFuncionarioVeiculo:integer;
+    IdVeiculoFuncionario:integer;
+  public
+    procedure setIdCarga(idCarga:integer);
+    function getIdCarga:integer;
+    procedure setQuantidade(quantidade:integer);
+    function getQuantidade:integer;
+    procedure setPeso(peso:Float64);
+    function getPeso:Float64;
+    procedure setIdFuncionarioVeiculo(idFuncionarioVeiculo:integer);
+    function getIdFuncionarioVeiculo:integer;
+    procedure setIdVeiculoFuncionario(IdVeiculoFuncionario:integer);
+    function getIdVeiculoFuncionario:integer;
+
+
+    function insertDados:boolean;
+
+  end;
+
+implementation
+
+{ CadCarga }
+
+function CadCarga.getIdCarga: integer;
+begin
+  result := self.idCarga ;
+end;
+
+
+function CadCarga.getIdFuncionarioVeiculo: integer;
+begin
+    result := self.idFuncionarioVeiculo;
+end;
+
+function CadCarga.getIdVeiculoFuncionario: integer;
+begin
+    result := self.getIdVeiculoFuncionario;
+end;
+
+function CadCarga.getPeso: Float64;
+begin
+     result := self.peso;
+end;
+
+function CadCarga.getQuantidade: integer;
+begin
+     result := self.quantidade;
+end;
+
+function CadCarga.insertDados: boolean;
+  var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('insert into cidade values( 0, :nome_cidade, :estado_idEstado)');
+
+  query.ParamByName('nome_cidade').AsString := self.getNome_ciade;
+  query.ParamByName('estado_idEstado').AsInteger := self.getEstado_idEstado;
+
+      try
+        query.ExecSQL;  {Insert service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao incluir Cidade... : ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
+end;
+
+procedure CadCarga.setIdCarga(idCarga: integer);
+begin
+    self.idCarga := idCarga;
+end;
+
+
+procedure CadCarga.setIdFuncionarioVeiculo(idFuncionarioVeiculo: integer);
+begin
+    idFuncionarioVeiculo := self.idFuncionarioVeiculo;
+end;
+
+procedure CadCarga.setIdVeiculoFuncionario(IdVeiculoFuncionario: integer);
+begin
+    IdVeiculoFuncionario := self.IdVeiculoFuncionario;
+end;
+
+procedure CadCarga.setPeso(peso: Float64);
+begin
+    self.peso	 := peso;
+end;
+
+procedure CadCarga.setQuantidade(quantidade: integer);
+begin
+    self.quantidade	 := quantidade;
+end;
+
+end.

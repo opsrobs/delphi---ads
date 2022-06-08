@@ -21,7 +21,6 @@ type
      procedure populaCombo;
      procedure getCadEntrega;
      procedure buscarPedidos;
-     procedure setPesoEntrega;
      function verifyValue:integer;
 
 
@@ -74,9 +73,10 @@ procedure TControle_Pedido.cadastroEntrega;
 begin
    VCadCarga := CadCarga.Create;
    VCadCarga.setQuantidade(verifyValue);
-   VCadCarga.setPeso(StrToInt(frm_carga.edPeso.Text));
-   ShowMessage(IntToStr(utilitaria.getLastId));
+   VCadCarga.setPeso(StrTofloat(frm_carga.edPeso.Text));
    VCadCarga.setIdFuncionarioVeiculo(utilitaria.getLastId);
+
+   ShowMessage(IntToStr(VCadCarga.getidFuncionarioVeiculo));
 
    VCadCarga.insertDados;
 end;
@@ -176,7 +176,7 @@ begin
          case(frm_Pedido.getFuncao) of
             1: begin
                 self.cadastroPedido;
-                self.cadastroEntrega;
+                //self.cadastroEntrega;
             end;
             2: begin
 
@@ -228,20 +228,6 @@ utilitaria := Utils.Create;
           VCadRecebedor.Destroy;
     end;
 
-
-
-procedure TControle_Pedido.setPesoEntrega;
-var
-  dados :TListItem;
-begin
-  if frm_carga.listDados.ColumnClick then
-  begin
-      frm_carga.edPeso.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString;
-    frm_carga.listDados.ColumnClick := false;
-    ShowMessage('x')
-  end;
-
-end;
 
 
 function TControle_Pedido.setScript: string;
