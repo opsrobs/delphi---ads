@@ -136,8 +136,10 @@ j:=1;
   begin
     ShowMessage(IntToStr(vetorIdPedido[j]));
     idPedido:= vetorIdPedido[j];
-    //utilitaria.insertDados(idPedido, idCarga);
-    //ShowMessage(IntToStr(idPedido)+ ' <<>> '+ IntToStr(idCarga));
+    VCadPedido.setNumero_pedido(idPedido);
+    utilitaria.insertDados(idPedido, idCarga);
+    VCadPedido.updateDados;
+    ShowMessage(IntToStr(idPedido)+ ' <<>> '+ IntToStr(idCarga));
     inc(j);
   end;
 
@@ -167,8 +169,8 @@ begin
       begin
          case(frm_carga.getFuncao) of
             1: begin
-              {self.cadastroMotoristaVeiculo;
-              self.cadastroEntrega;    }
+              self.cadastroMotoristaVeiculo;
+              self.cadastroEntrega;
               self.cadastroPedidoCarga;
 
             end;
@@ -198,7 +200,7 @@ begin
       id := self.returnIdDestinatario;
          case(frm_Pedido.getFuncao) of
             1: begin
-              {  self.cadastroPedido; }
+              self.cadastroPedido;
                 //self.cadastroEntrega;
             end;
             2: begin

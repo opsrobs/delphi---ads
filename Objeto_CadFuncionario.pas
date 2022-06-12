@@ -25,12 +25,41 @@ interface
                                               {<--- CRUD --->}
 
         function insertDados:Boolean;
+        function deleteDados:Boolean;
 
   end;
 
 implementation
 
 { CadFuncionario }
+
+function CadFuncionario.deleteDados: Boolean;
+var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('delete from funcionario  where (idfuncionario = : idfuncionario');
+
+  query.ParamByName('idfuncionario').AsInteger:= self.getIdFuncionario;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {update service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao Excluir dados da pessoa: ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
+end;
 
 function CadFuncionario.getCnh: string;
 begin
