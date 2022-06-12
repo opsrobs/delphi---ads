@@ -236,7 +236,6 @@ object frm_carga: Tfrm_carga
       Height = 23
       TabOrder = 2
       Text = 'Selecione o veiculo'
-      OnChange = cbVeiculoEntregaChange
     end
   end
 end

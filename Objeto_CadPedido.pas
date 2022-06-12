@@ -45,6 +45,7 @@ interface
                                                 {<--- CRUD --->}
 
         function insertDados:Boolean;
+        function updateDados:Boolean;
 
     end;
 
@@ -197,6 +198,35 @@ end;
 procedure CadPedido.setValor_total(valor_total: Float64);
 begin
     self.valor_total := valor_total;
+end;
+
+function CadPedido.updateDados: Boolean;
+var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('update pedido set   status = :status where (numero_pedido = :numero_pedido)');
+
+  query.ParamByName('status').AsString := 'APROVADO';
+  query.ParamByName('numero_pedido').AsInteger := self.getNumero_pedido;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {update service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao alterar dados da pessoa: ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 end.

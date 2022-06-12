@@ -6,14 +6,17 @@ interface
   Vcl.ComCtrls,CommCtrl, Winapi.Windows,Unit_ControleVeiculo,Objeto_CadCarga;
 
 type
+TVetor = array of integer;
  TControle_Pedido = class
    private
     procedure cadastroPedido;
     procedure cadastroMotoristaVeiculo;
+    procedure cadastroPedidoCarga;
     function verifyStatus:string;
     function setScript:string;
     function returnIdDestinatario:integer;
     procedure cadastroEntrega;
+
 
      public
      procedure getCadPedido;
@@ -26,6 +29,7 @@ type
 
  end;
  var
+  vetorIdPedido: TVetor;
   pesor:single;
   VCadPedido:CadPedido;
   VCadCliente:CadCliente;
@@ -76,8 +80,6 @@ begin
    VCadCarga.setPeso(StrTofloat(frm_carga.edPeso.Text));
    VCadCarga.setIdFuncionarioVeiculo(utilitaria.getLastId);
 
-   ShowMessage(IntToStr(VCadCarga.getidFuncionarioVeiculo));
-
    VCadCarga.insertDados;
 end;
 
@@ -122,6 +124,26 @@ begin
 end;
 
 
+procedure TControle_Pedido.cadastroPedidoCarga;
+var
+idPedido, i,j, idCarga:integer;
+begin
+j:=1;
+
+  utilitaria := Utils.Create;
+  idCarga := utilitaria.getLastId;
+  for i :=  0 to verifyValue -1 do
+  begin
+    ShowMessage(IntToStr(vetorIdPedido[j]));
+    idPedido:= vetorIdPedido[j];
+    //utilitaria.insertDados(idPedido, idCarga);
+    //ShowMessage(IntToStr(idPedido)+ ' <<>> '+ IntToStr(idCarga));
+    inc(j);
+  end;
+
+
+end;
+
 procedure TControle_Pedido.gerarPeso;
 var
 value:Float32;
@@ -145,8 +167,9 @@ begin
       begin
          case(frm_carga.getFuncao) of
             1: begin
-              self.cadastroMotoristaVeiculo;
-              self.cadastroEntrega;
+              {self.cadastroMotoristaVeiculo;
+              self.cadastroEntrega;    }
+              self.cadastroPedidoCarga;
 
             end;
             2: begin
@@ -175,7 +198,7 @@ begin
       id := self.returnIdDestinatario;
          case(frm_Pedido.getFuncao) of
             1: begin
-                self.cadastroPedido;
+              {  self.cadastroPedido; }
                 //self.cadastroEntrega;
             end;
             2: begin
@@ -252,22 +275,26 @@ end;
 
 function TControle_Pedido.verifyValue:integer;
 var
-i:integer;
+i,j:integer;
 value:Float64;
 qtd:integer;
 begin
 qtd:=0;
 i :=0;
+j :=1;
 value:=0;
-
+SetLength(vetorIdPedido,j);
 
     for I := 0 to frm_carga.listDados.Items.Count -1 do
     begin
+    //ShowMessage(frm_carga.listDados.Items.Item[i].Caption);
       if frm_carga.listDados.Items.Item[i].Checked then
       begin
         inc(qtd);
         value := value + StrToFloat(frm_carga.listDados.Items.Item[i].SubItems[5]);
         frm_carga.edPeso.Text := FormatFloat('0.###',value);
+        vetorIdPedido[j] := StrToInt(frm_carga.listDados.Items.Item[i].Caption);
+        inc(j);
       end
       else
       begin

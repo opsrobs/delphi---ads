@@ -15,6 +15,7 @@ type
     public
     procedure loadingApiPessoa;
     procedure loadingApiCep;
+    function insertDados(idPedido, idCarga:integer):boolean;
     function idPessoaCliente(nome:string):integer;
     function identificadorEndereco(nome:string):integer;
     function identificadorRecebedor(nome:string):integer;
@@ -224,6 +225,35 @@ id:=0;
       query.Close;
       query.Free;
       result := id;
+
+end;
+
+function Utils.insertDados(idPedido, idCarga: integer):boolean;
+var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+                      ShowMessage(IntToStr(idPedido));
+  query.SQL.Add('insert into carga_pedido values( :pedido_numero_pedido, :carga_IdCarga)');
+
+  query.ParamByName('pedido_numero_pedido').AsInteger := idPedido;
+  query.ParamByName('carga_IdCarga').AsInteger := idCarga;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {Insert service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao incluir dados... : ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
 
 end;
 

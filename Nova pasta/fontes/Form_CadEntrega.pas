@@ -25,7 +25,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure listDadosClick(Sender: TObject);
-    procedure cbVeiculoEntregaChange(Sender: TObject);
     procedure spSalvarClick(Sender: TObject);
 
   private
@@ -53,12 +52,6 @@ uses Unit_ControlePedido, unit_ProjetoFinal, Unit_ControleVeiculo;
 
 { Tfrm_carga }
 
-
-procedure Tfrm_carga.cbVeiculoEntregaChange(Sender: TObject);
-begin
-    ShowMessage(self.cbVeiculoEntrega.ItemIndex.ToString + '   '
-     + Frm_Principal.ControleVeiculo.getIdMotorista(self.cbVeiculoEntrega.ItemIndex +1).ToString);
-end;
 
 procedure Tfrm_carga.FormActivate(Sender: TObject);
 var

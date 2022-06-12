@@ -63,7 +63,6 @@ function CadCarga.insertDados: boolean;
   var
     query:TFDQuery;
 begin
-  ShowMessage(IntToStr(self.getQuantidade) +' '+ FloatToStr(self.getPeso)+' '+ IntToStr(self.getIdFuncionarioVeiculo));
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
