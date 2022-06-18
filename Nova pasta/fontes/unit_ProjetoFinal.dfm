@@ -57,6 +57,7 @@ object Frm_Principal: TFrm_Principal
       Caption = 'Consultas'
       object Consultas2: TMenuItem
         Caption = 'Consultas'
+        OnClick = Consultas2Click
       end
     end
   end

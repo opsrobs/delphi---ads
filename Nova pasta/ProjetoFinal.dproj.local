@@ -52,8 +52,8 @@
     <Transaction>2022/05/10 13:32:03.000.217,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Objeto_CadEntrega.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Unit1.pas</Transaction>
     <Transaction>2022/05/10 17:34:55.000.727,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\ProjetoFinal.dproj=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\ProjetoFinal.dproj</Transaction>
     <Transaction>2022/05/10 17:56:50.000.476,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
-    <Transaction>2022/05/10 17:57:14.000.207,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\unit_ProjetoFinal.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/10 17:57:14.000.207,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\unit_ProjetoFinal.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.dfm</Transaction>
+    <Transaction>2022/05/10 17:57:14.000.207,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\unit_ProjetoFinal.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/10 17:57:34.000.374,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\unit_ProjetoFinal.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\unit_ProjetoFinal.dfm</Transaction>
     <Transaction>2022/05/10 17:57:34.000.374,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\unit_ProjetoFinal.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\unit_ProjetoFinal.pas</Transaction>
     <Transaction>2022/05/11 19:07:46.000.514,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
@@ -69,21 +69,21 @@
     <Transaction>2022/05/11 20:26:03.000.441,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/11 20:26:34.000.489,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Objeto_CadOrcamento.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/11 20:26:47.000.040,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Objeto_CadOrcamento.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Objeto_CadOrcamento.pas</Transaction>
-    <Transaction>2022/05/11 20:27:42.000.292,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\DAO\Unit_Dados.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Unit_Dados.dfm</Transaction>
     <Transaction>2022/05/11 20:27:42.000.292,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\DAO\Unit_Dados.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Unit_Dados.pas</Transaction>
+    <Transaction>2022/05/11 20:27:42.000.292,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\DAO\Unit_Dados.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Unit_Dados.dfm</Transaction>
     <Transaction>2022/05/13 17:14:12.000.070,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/13 17:14:24.000.722,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit_Controle.pas</Transaction>
-    <Transaction>2022/05/13 17:17:58.000.590,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadPessoa.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Unit_CadPessoa.pas</Transaction>
     <Transaction>2022/05/13 17:17:58.000.590,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadPessoa.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Unit_CadPessoa.dfm</Transaction>
+    <Transaction>2022/05/13 17:17:58.000.590,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadPessoa.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Unit_CadPessoa.pas</Transaction>
     <Transaction>2022/05/13 17:19:13.000.024,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit_Controle.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Controle\Unit_Controle.pas</Transaction>
-    <Transaction>2022/05/13 17:20:36.000.047,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Unit_CadPessoa.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadPessoa.pas</Transaction>
     <Transaction>2022/05/13 17:20:36.000.047,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Unit_CadPessoa.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadPessoa.dfm</Transaction>
+    <Transaction>2022/05/13 17:20:36.000.047,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Unit_CadPessoa.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadPessoa.pas</Transaction>
     <Transaction>2022/05/18 20:32:23.000.919,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/18 20:34:28.000.162,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
-    <Transaction>2022/05/18 20:34:44.000.293,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Form_CadFuncionario.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.dfm</Transaction>
     <Transaction>2022/05/18 20:34:44.000.293,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Form_CadFuncionario.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
-    <Transaction>2022/05/18 20:35:17.000.655,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadFuncionario.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Form_CadFuncionario.pas</Transaction>
+    <Transaction>2022/05/18 20:34:44.000.293,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Form_CadFuncionario.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.dfm</Transaction>
     <Transaction>2022/05/18 20:35:17.000.655,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadFuncionario.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Form_CadFuncionario.dfm</Transaction>
+    <Transaction>2022/05/18 20:35:17.000.655,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadFuncionario.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Form_CadFuncionario.pas</Transaction>
     <Transaction>2022/05/21 21:11:40.000.256,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/21 21:14:23.000.471,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_Consulta.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/21 21:14:23.000.471,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_Consulta.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.dfm</Transaction>
@@ -95,8 +95,8 @@
     <Transaction>2022/05/22 04:07:01.000.006,=C:\Users\PremierSoft\Downloads\39-trash-outline\39-trash-outline.gif</Transaction>
     <Transaction>2022/05/22 04:07:37.000.367,C:\Users\PremierSoft\Downloads\39-trash-outline\39-trash-outline.gif=</Transaction>
     <Transaction>2022/05/25 15:26:46.000.419,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
-    <Transaction>2022/05/25 15:29:24.000.052,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadVeiculos.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.dfm</Transaction>
     <Transaction>2022/05/25 15:29:24.000.052,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadVeiculos.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
+    <Transaction>2022/05/25 15:29:24.000.052,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadVeiculos.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.dfm</Transaction>
     <Transaction>2022/05/25 15:42:08.000.179,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/25 15:43:04.000.601,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Controle\Unit_ControleVeiculo.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/27 15:27:22.000.925,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
@@ -112,8 +112,13 @@
     <Transaction>2022/05/28 23:03:52.000.878,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
     <Transaction>2022/05/28 23:04:29.000.738,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Objeto_CadRecebedor.pas</Transaction>
     <Transaction>2022/05/30 10:55:46.000.701,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
-    <Transaction>2022/05/30 10:57:08.000.303,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadEntrega.pas</Transaction>
     <Transaction>2022/05/30 10:57:08.000.303,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadEntrega.dfm</Transaction>
+    <Transaction>2022/05/30 10:57:08.000.303,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_CadEntrega.pas</Transaction>
+    <Transaction>2022/06/18 19:51:19.997,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
+    <Transaction>2022/06/18 19:52:19.938,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_Edits.dfm=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.dfm</Transaction>
+    <Transaction>2022/06/18 19:52:19.938,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\fontes\Form_Edits.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
+    <Transaction>2022/06/18 19:55:08.713,=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
+    <Transaction>2022/06/18 19:55:57.228,C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Controle\Unit_ControleEdits.pas=C:\Users\PremierSoft\Documents\Delphi - Faculdade\Logistica - ADS\Nova pasta\Unit1.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\Logistica - ADS"/>
@@ -142,6 +147,7 @@
     <File Path="Controle\Unit_ControleFuncionario.pas"/>
     <File Path="Controle\Unit_ControleVeiculo.pas"/>
     <File Path="Controle\Unit_ControlePedido.pas"/>
+    <File Path="Controle\Unit_ControleEdits.pas"/>
     <File Path="DAO"/>
     <File Path="DAO\Unit_Dados.pas"/>
     <File Path="DAO\Unit_Dados.dfm"/>
@@ -160,6 +166,8 @@
     <File Path="fontes\Form_CadPedido.dfm"/>
     <File Path="fontes\Form_CadEntrega.pas"/>
     <File Path="fontes\Form_CadEntrega.dfm"/>
+    <File Path="fontes\Form_Edits.pas"/>
+    <File Path="fontes\Form_Edits.dfm"/>
   </ProjectSortOrder>
 	<BT_BuildType>Debug</BT_BuildType>
 </BorlandProject>

@@ -1,0 +1,28 @@
+unit Form_Edits;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls;
+
+type
+  Tfrm_edits = class(TForm)
+    listDados: TListView;
+  private
+  funcao:byte;
+    { Private declarations }
+  public
+  procedure setFuncao(funcao:byte);
+  function getFuncao:byte;
+    { Public declarations }
+  end;
+
+var
+  frm_edits: Tfrm_edits;
+
+implementation
+
+{$R *.dfm}
+
+end.

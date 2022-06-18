@@ -19,7 +19,6 @@ type
     edPeso: TLabeledEdit;
     Panel3: TPanel;
     listDados: TListView;
-    SpeedButton1: TSpeedButton;
     cbMotoristaEntrega: TComboBox;
     cbVeiculoEntrega: TComboBox;
     procedure FormActivate(Sender: TObject);

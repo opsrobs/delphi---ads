@@ -124,13 +124,6 @@ object frm_carga: Tfrm_carga
       Font.Style = [fsItalic]
       ParentFont = False
     end
-    object SpeedButton1: TSpeedButton
-      Left = 448
-      Top = 24
-      Width = 49
-      Height = 22
-      OnClick = SpeedButton1Click
-    end
     object cbCliente: TComboBox
       Left = 10
       Top = 22

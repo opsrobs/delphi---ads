@@ -37,7 +37,9 @@ uses
   Objeto_CadRecebedor in '..\Objeto_CadRecebedor.pas',
   Form_CadEntrega in 'fontes\Form_CadEntrega.pas' {frm_carga},
   Vcl.Themes,
-  Vcl.Styles;
+  Vcl.Styles,
+  Form_Edits in 'fontes\Form_Edits.pas' {frm_edits},
+  Unit_ControleEdits in 'Controle\Unit_ControleEdits.pas';
 
 {$R *.res}
 
@@ -49,5 +51,6 @@ begin
   Application.CreateForm(TFrm_Principal, Frm_Principal);
   Application.CreateForm(Tfrm_Pedido, frm_Pedido);
   Application.CreateForm(Tfrm_carga, frm_carga);
+  Application.CreateForm(Tfrm_edits, frm_edits);
   Application.Run;
 end.

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Unit_ControleFuncionario,
-   Unit_Controle,Unit_ControlePedido,Unit_ControleVeiculo;
+   Unit_Controle,Unit_ControlePedido,Unit_ControleVeiculo,Unit_ControleEdits;
 
 type
   TFrm_Principal = class(TForm)
@@ -29,6 +29,7 @@ type
     procedure Pedido1Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure Carga1Click(Sender: TObject);
+    procedure Consultas2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,6 +38,7 @@ type
     ControleFuncionario:TControle_Funcionario;
     ControleVeiculo:TControle_Veiculo;
     ControlePedido:TControle_Pedido;
+    ControleEdit:TControleEdit;
 
     procedure clearMemory;
   end;
@@ -74,6 +76,12 @@ end;
 procedure TFrm_Principal.Cliente1Click(Sender: TObject);
 begin
     Controle.getCadPessoa;
+end;
+
+procedure TFrm_Principal.Consultas2Click(Sender: TObject);
+begin
+    ControleEdit.getEdits;
+    ShowMessage('');
 end;
 
 procedure TFrm_Principal.FormActivate(Sender: TObject);
