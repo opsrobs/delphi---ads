@@ -11,6 +11,7 @@ interface
     pis:string[45];
     cnh:string[45];
     pessoa_fisica_idPessoa:integer;
+    ativo:boolean;
 
   public
     procedure setIdFuncionario(idFuncionario:integer);
@@ -21,6 +22,8 @@ interface
     function getCnh:string;
     procedure setpessoa_fisica_idPessoa(pessoa_fisica_idPessoa:integer);
     function getpessoa_fisica_idPessoa:integer;
+    procedure setAtivo(ativo:boolean);
+    function getAtivo:boolean;
 
                                               {<--- CRUD --->}
 
@@ -59,6 +62,11 @@ begin
       query.Close;
       query.Free;
 
+end;
+
+function CadFuncionario.getAtivo: boolean;
+begin
+    result := self.ativo;
 end;
 
 function CadFuncionario.getCnh: string;
@@ -109,6 +117,11 @@ begin
       query.Close;
       query.Free;
 
+end;
+
+procedure CadFuncionario.setAtivo(ativo: boolean);
+begin
+   self.ativo := ativo;
 end;
 
 procedure CadFuncionario.setCnh(cnh: string);

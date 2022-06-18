@@ -30,6 +30,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure nmConsultarClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
   funcao:byte;
   function validarValoresFuncionario:Boolean;
@@ -59,6 +60,11 @@ uses unit_ProjetoFinal, Unit_Dados;
 procedure Tfrm_Funcionario.FormActivate(Sender: TObject);
 begin
     self.limpartela;
+end;
+
+procedure Tfrm_Funcionario.FormDestroy(Sender: TObject);
+begin
+    Frm_Principal.ControleFuncionario.Free;
 end;
 
 function Tfrm_Funcionario.getFuncao: byte;

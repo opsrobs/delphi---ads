@@ -10,8 +10,11 @@ object frm_Funcionario: Tfrm_Funcionario
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnActivate = FormActivate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -21,7 +24,7 @@ object frm_Funcionario: Tfrm_Funcionario
     Align = alTop
     TabOrder = 0
     object spButtonReturn: TSpeedButton
-      Left = 16
+      Left = 120
       Top = 13
       Width = 113
       Height = 22
@@ -35,7 +38,7 @@ object frm_Funcionario: Tfrm_Funcionario
       OnClick = spButtonReturnClick
     end
     object spDelete: TSpeedButton
-      Left = 263
+      Left = 367
       Top = 13
       Width = 122
       Height = 22
@@ -44,7 +47,7 @@ object frm_Funcionario: Tfrm_Funcionario
       OnClick = spDeleteClick
     end
     object spSalvar: TSpeedButton
-      Left = 135
+      Left = 239
       Top = 13
       Width = 122
       Height = 22
@@ -110,7 +113,6 @@ object frm_Funcionario: Tfrm_Funcionario
       EditLabel.ParentBiDiMode = False
       MaxLength = 100
       TabOrder = 0
-      Text = ''
     end
     object edNome: TLabeledEdit
       Left = 16
@@ -124,7 +126,6 @@ object frm_Funcionario: Tfrm_Funcionario
       EditLabel.ParentBiDiMode = False
       MaxLength = 100
       TabOrder = 1
-      Text = ''
     end
     object edPis: TLabeledEdit
       Left = 16
@@ -135,7 +136,6 @@ object frm_Funcionario: Tfrm_Funcionario
       EditLabel.Height = 15
       EditLabel.Caption = 'PIS'
       TabOrder = 2
-      Text = ''
     end
     object edCnh: TLabeledEdit
       Left = 16
@@ -146,7 +146,6 @@ object frm_Funcionario: Tfrm_Funcionario
       EditLabel.Height = 15
       EditLabel.Caption = 'CNH'
       TabOrder = 3
-      Text = ''
     end
   end
 end

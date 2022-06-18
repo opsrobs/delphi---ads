@@ -1,4 +1,5 @@
 object dm_ProjetoFinal: Tdm_ProjetoFinal
+  OldCreateOrder = True
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   Height = 552
@@ -9,7 +10,7 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
       'User_Name=root'
       'Password=root'
       'DriverID=MySQL')
-    Connected = True
+    LoginPrompt = False
     Left = 24
     Top = 8
   end
@@ -78,120 +79,145 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     Top = 400
   end
   object VirtualImageList1: TVirtualImageList
+    DisabledGrayscale = False
+    DisabledSuffix = '_Disabled'
     Images = <
       item
         CollectionIndex = 0
         CollectionName = 'search'
+        Disabled = False
         Name = 'search'
       end
       item
         CollectionIndex = 1
         CollectionName = 'GetItLogo'
+        Disabled = False
         Name = 'GetItLogo'
       end
       item
         CollectionIndex = 2
         CollectionName = 'SVGIconImageCollectionComponentIcon'
+        Disabled = False
         Name = 'SVGIconImageCollectionComponentIcon'
       end
       item
         CollectionIndex = 3
         CollectionName = 'SVGIconImageComponentIcon'
+        Disabled = False
         Name = 'SVGIconImageComponentIcon'
       end
       item
         CollectionIndex = 4
         CollectionName = 'SVGIconImageListComponentIcon'
+        Disabled = False
         Name = 'SVGIconImageListComponentIcon'
       end
       item
         CollectionIndex = 5
         CollectionName = 'SVGIconVirtualImageListComponentIcon'
+        Disabled = False
         Name = 'SVGIconVirtualImageListComponentIcon'
       end
       item
         CollectionIndex = 6
         CollectionName = 'file'
+        Disabled = False
         Name = 'file'
       end
       item
         CollectionIndex = 7
         CollectionName = '42-search-outline'
+        Disabled = False
         Name = '42-search-outline'
       end
       item
         CollectionIndex = 8
         CollectionName = 'icons8-editar-propriedade'
+        Disabled = False
         Name = 'icons8-editar-propriedade'
       end
       item
         CollectionIndex = 9
         CollectionName = 'icons8-desfazer'
+        Disabled = False
         Name = 'icons8-desfazer'
       end
       item
         CollectionIndex = 10
         CollectionName = 'icons8-filtro'
+        Disabled = False
         Name = 'icons8-filtro'
       end
       item
         CollectionIndex = 11
         CollectionName = 'icons8-guardar-pesquisa'
+        Disabled = False
         Name = 'icons8-guardar-pesquisa'
       end
       item
         CollectionIndex = 12
         CollectionName = 'icons8-pesquisa-propriedade'
+        Disabled = False
         Name = 'icons8-pesquisa-propriedade'
       end
       item
         CollectionIndex = 13
         CollectionName = 'icons8-pesquisar-na-lista'
+        Disabled = False
         Name = 'icons8-pesquisar-na-lista'
       end
       item
         CollectionIndex = 14
         CollectionName = 'icons8-voltar'
+        Disabled = False
         Name = 'icons8-voltar'
       end
       item
         CollectionIndex = 15
         CollectionName = 'icons8-ok'
+        Disabled = False
         Name = 'icons8-ok'
       end
       item
         CollectionIndex = 16
         CollectionName = 'icons8-res'#237'duos'
+        Disabled = False
         Name = 'icons8-res'#237'duos'
       end
       item
         CollectionIndex = 17
         CollectionName = 'icons8-people'
+        Disabled = False
         Name = 'icons8-people'
       end
       item
         CollectionIndex = 18
         CollectionName = 'icons8-grupos-de-usu'#225'rios'
+        Disabled = False
         Name = 'icons8-grupos-de-usu'#225'rios'
       end
       item
         CollectionIndex = 19
         CollectionName = 'icons8-apagar'
+        Disabled = False
         Name = 'icons8-apagar'
       end
       item
         CollectionIndex = 20
         CollectionName = 'noun-add-on'
+        Disabled = False
         Name = 'noun-add-on'
       end
       item
         CollectionIndex = 21
         CollectionName = 'add-user'
+        Disabled = False
         Name = 'add-user'
       end
       item
         CollectionIndex = 22
         CollectionName = 'add'
+        Disabled = False
         Name = 'add'
       end>
     ImageCollection = ImageCollection1
@@ -3504,8 +3530,8 @@ object dm_ProjetoFinal: Tdm_ProjetoFinal
     Top = 427
   end
   object dsVeiculos: TDataSource
-    Left = 200
-    Top = 64
+    Left = 176
+    Top = 56
   end
   object dtsConsultaVeiculo: TClientDataSet
     Aggregates = <>

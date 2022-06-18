@@ -23,7 +23,6 @@ type
     edPeso: TLabeledEdit;
     cbCliente: TComboBox;
     Button1: TButton;
-    spDestinatario: TSpeedButton;
     edDestinatario: TLabeledEdit;
     nmConsultar: TSpeedButton;
     procedure spSalvarClick(Sender: TObject);
@@ -92,6 +91,7 @@ end;
 
 procedure Tfrm_Pedido.FormActivate(Sender: TObject);
 begin
+    self.limpartela;
     ControlePedido.populaCombo;
 end;
 
@@ -100,9 +100,22 @@ begin
     result := self.funcao;
 end;
 
+
+
 procedure Tfrm_Pedido.limpartela;
+var
+current:TDateTime;
 begin
-    ShowMessage(' <<  >> ');
+    current:= now;
+    self.cbCliente.ItemIndex:= -1;
+    self.edDestinatario.Focused;
+    self.edDestinatario.Clear;
+    self.dtDataPedido.DateTime := current;
+    self.edValorPedido.Clear;
+    self.edValorFrete.Clear;
+    self.edValorTotal.Clear;
+    self.edPeso.Clear;
+    self.CheckBox1.Checked := true;
 end;
 
 procedure Tfrm_Pedido.nmConsultarClick(Sender: TObject);

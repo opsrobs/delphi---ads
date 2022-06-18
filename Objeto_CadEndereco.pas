@@ -15,6 +15,7 @@ interface
       numero:integer;
       Bairro_idBairro:integer;
       Pessoa_idPessoa:integer;
+      ativo:boolean;
     public
 
       procedure setIdEndereco(idEndereco:integer);
@@ -31,6 +32,8 @@ interface
       function getBairro_idBairro:integer;
       procedure setPessoa_idPessoa(Pessoa_idPessoa:integer);
       function getPessoa_idPessoa:integer;
+      procedure setAtivo(ativo:boolean);
+      function getAtivo:boolean;
 
                           {<--- CRUD --->}
 
@@ -75,6 +78,11 @@ begin
 
 end;
 
+function CadEndereco.getAtivo: boolean;
+begin
+  result := self.ativo;
+end;
+
 function CadEndereco.getBairro_idBairro: integer;
 begin
     result := Self.Bairro_idBairro;
@@ -108,6 +116,11 @@ end;
 function CadEndereco.getRua: string;
 begin
     result := self.rua;
+end;
+
+procedure CadEndereco.setAtivo(ativo: boolean);
+begin
+    self.ativo := ativo;
 end;
 
 procedure CadEndereco.setBairro_idBairro(Bairro_idBairro: integer);

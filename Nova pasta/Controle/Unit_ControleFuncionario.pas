@@ -148,16 +148,16 @@ begin
     end
     else
     begin
-        frm_Consulta.setSelectSQL('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'+
-        ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc');
+         {frm_Consulta.setSelectSQL('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'+
+        ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc'); }
+        frm_Consulta.setSelectSQL('SELECT * FROM logistica_ads.getenderecopessoa;');
         if frm_Consulta.ShowModal = mrOk then
-         if frm_Consulta.ShowModal = mrOk then
-            begin
-              frm_Funcionario.spSalvar.Tag :=dm_ProjetoFinal.qrConsulta.Fields[0].AsInteger;
-              frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
-              frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString;
-              FreeAndNil(frm_Consulta);
-            end
+        begin
+          frm_Funcionario.spSalvar.Tag :=dm_ProjetoFinal.qrConsulta.Fields[0].AsInteger;
+          frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
+          frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString;
+          FreeAndNil(frm_Consulta);
+        end
     end;
 
     dm_ProjetoFinal.qrConsulta.Close;

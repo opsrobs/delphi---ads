@@ -11,10 +11,12 @@ object Frm_Principal: TFrm_Principal
   Font.Name = 'Segoe UI'
   Font.Style = []
   Menu = MainMenu1
+  OldCreateOrder = True
   Position = poScreenCenter
   OnActivate = FormActivate
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  PixelsPerInch = 96
   TextHeight = 15
   object MainMenu1: TMainMenu
     Left = 224

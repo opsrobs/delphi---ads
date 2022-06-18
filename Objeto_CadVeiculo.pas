@@ -10,6 +10,7 @@ interface
     modelo:string[40];
     placa:string[10];
     marca_veiculo_idMarca:integer;
+    ativo:boolean;
   public
     procedure setIdVeiculo(idVeiculo:integer);
     function getIdVeiculo:integer;
@@ -19,6 +20,8 @@ interface
     function getPlaca:string;
     procedure setMarca_Veiculo_idMarca(marca_veiculo_idMarca:integer);
     function getMarca_veiculo_idMarca:integer;
+    procedure setAtivo(ativo:boolean);
+    function getAtivo:boolean;
 
                                               {<--- CRUD --->}
 
@@ -31,6 +34,11 @@ interface
 implementation
 
 { CadVeiculo }
+
+function CadVeiculo.getAtivo: boolean;
+begin
+  result := self.ativo;
+end;
 
 function CadVeiculo.getIdVeiculo: integer;
 begin
@@ -141,6 +149,11 @@ begin
       query.Close;
       query.Free;
 
+end;
+
+procedure CadVeiculo.setAtivo(ativo: boolean);
+begin
+    self.ativo := ativo;
 end;
 
 procedure CadVeiculo.setIdVeiculo(idVeiculo: integer);

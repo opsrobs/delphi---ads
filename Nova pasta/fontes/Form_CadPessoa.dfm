@@ -10,8 +10,10 @@ object frm_Cliente: Tfrm_Cliente
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnActivate = FormActivate
+  PixelsPerInch = 96
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
@@ -63,7 +65,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.ParentBiDiMode = False
       MaxLength = 100
       TabOrder = 0
-      Text = ''
     end
     object edCpfCnpj: TLabeledEdit
       Left = 143
@@ -77,7 +78,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.ParentBiDiMode = False
       MaxLength = 100
       TabOrder = 1
-      Text = ''
     end
     object MaskCep: TMaskEdit
       Left = 143
@@ -104,7 +104,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.Height = 15
       EditLabel.Caption = 'Rua'
       TabOrder = 3
-      Text = ''
     end
     object lbNumero: TLabeledEdit
       Left = 310
@@ -115,7 +114,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.Height = 15
       EditLabel.Caption = 'N'#186
       TabOrder = 4
-      Text = ''
     end
     object lbCidade: TLabeledEdit
       Left = 142
@@ -126,7 +124,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.Height = 15
       EditLabel.Caption = 'Cidade'
       TabOrder = 5
-      Text = ''
     end
     object lbEstado: TLabeledEdit
       Left = 142
@@ -137,7 +134,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.Height = 15
       EditLabel.Caption = 'Estado'
       TabOrder = 6
-      Text = ''
     end
     object lbUnidadeFederativa: TLabeledEdit
       Left = 310
@@ -148,7 +144,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.Height = 15
       EditLabel.Caption = 'UF'
       TabOrder = 7
-      Text = ''
     end
     object lbBairro: TLabeledEdit
       Left = 142
@@ -159,7 +154,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.Height = 15
       EditLabel.Caption = 'Bairro'
       TabOrder = 8
-      Text = ''
     end
     object lbComplemento: TLabeledEdit
       Left = 406
@@ -170,7 +164,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.Height = 15
       EditLabel.Caption = 'Complemento'
       TabOrder = 9
-      Text = ''
     end
     object lbContato: TLabeledEdit
       Left = 143
@@ -181,7 +174,6 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.Height = 15
       EditLabel.Caption = 'Contato'
       TabOrder = 10
-      Text = ''
     end
     object chStatus: TCheckBox
       Left = 311

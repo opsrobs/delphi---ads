@@ -10,8 +10,10 @@ object frm_Pedido: Tfrm_Pedido
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnActivate = FormActivate
+  PixelsPerInch = 96
   TextHeight = 15
   object Panel2: TPanel
     Left = 0
@@ -68,29 +70,12 @@ object frm_Pedido: Tfrm_Pedido
     Height = 444
     Align = alClient
     TabOrder = 1
-    ExplicitTop = 8
     object Label2: TLabel
       Left = 152
       Top = 171
       Width = 92
       Height = 15
       Caption = 'DATA DO PEDIDO'
-    end
-    object spDestinatario: TSpeedButton
-      Left = 389
-      Top = 192
-      Width = 123
-      Height = 22
-      Caption = 'DESTINATARIO'
-      ImageIndex = 21
-      ImageName = 'add-user'
-      Images = dm_ProjetoFinal.VirtualImageList1
-      HotImageIndex = 22
-      HotImageName = 'add'
-      Layout = blGlyphRight
-      ParentShowHint = False
-      ShowHint = False
-      Spacing = 20
     end
     object nmConsultar: TSpeedButton
       Left = 399
@@ -117,8 +102,9 @@ object frm_Pedido: Tfrm_Pedido
       Top = 192
       Width = 145
       Height = 23
-      Date = 44710.000000000000000000
+      Date = 44727.000000000000000000
       Time = 0.721111909719184000
+      Checked = False
       TabOrder = 0
     end
     object edValorPedido: TLabeledEdit
@@ -130,7 +116,6 @@ object frm_Pedido: Tfrm_Pedido
       EditLabel.Height = 15
       EditLabel.Caption = 'VALOR DO PEDIDO'
       TabOrder = 1
-      Text = ''
     end
     object edValorFrete: TLabeledEdit
       Left = 149
@@ -141,7 +126,6 @@ object frm_Pedido: Tfrm_Pedido
       EditLabel.Height = 15
       EditLabel.Caption = 'VALOR FRETE'
       TabOrder = 2
-      Text = ''
       OnExit = edValorFreteExit
     end
     object edValorTotal: TLabeledEdit
@@ -153,10 +137,9 @@ object frm_Pedido: Tfrm_Pedido
       EditLabel.Height = 15
       EditLabel.Caption = 'VALOR TOTAL'
       TabOrder = 3
-      Text = ''
     end
     object CheckBox1: TCheckBox
-      Left = 414
+      Left = 406
       Top = 251
       Width = 97
       Height = 17
@@ -174,7 +157,6 @@ object frm_Pedido: Tfrm_Pedido
       EditLabel.Height = 15
       EditLabel.Caption = 'PESO'
       TabOrder = 5
-      Text = ''
     end
     object cbCliente: TComboBox
       Left = 153
@@ -202,7 +184,6 @@ object frm_Pedido: Tfrm_Pedido
       EditLabel.Height = 15
       EditLabel.Caption = 'DESTINATARIO'
       TabOrder = 8
-      Text = ''
     end
   end
 end
