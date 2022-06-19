@@ -9,6 +9,7 @@ uses
 type
   Tfrm_edits = class(TForm)
     listDados: TListView;
+    procedure FormActivate(Sender: TObject);
   private
   funcao:byte;
     { Private declarations }
@@ -21,11 +22,21 @@ type
 var
   frm_edits: Tfrm_edits;
 
+
 implementation
 
 {$R *.dfm}
 
+uses Unit_Controle, Unit_ControleEdits;
+
 { Tfrm_edits }
+
+procedure Tfrm_edits.FormActivate(Sender: TObject);
+var
+  controleEdit:TControleEdit;
+begin
+    //controleEdit.setTitle;
+end;
 
 function Tfrm_edits.getFuncao: byte;
 begin

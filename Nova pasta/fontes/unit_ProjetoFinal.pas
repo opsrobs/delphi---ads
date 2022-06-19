@@ -21,6 +21,7 @@ type
     Consultas1: TMenuItem;
     Consultas2: TMenuItem;
     Carga1: TMenuItem;
+    ConsultarClientes: TMenuItem;
     procedure Cliente1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -29,7 +30,7 @@ type
     procedure Pedido1Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure Carga1Click(Sender: TObject);
-    procedure Consultas2Click(Sender: TObject);
+    procedure ConsultarClientesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,8 +40,6 @@ type
     ControleVeiculo:TControle_Veiculo;
     ControlePedido:TControle_Pedido;
     ControleEdit:TControleEdit;
-
-    procedure clearMemory;
   end;
 
 var
@@ -59,40 +58,33 @@ begin
    ControlePedido.getCadEntrega;
 end;
 
-procedure TFrm_Principal.clearMemory;
-var
-clear : THandle;
-begin
-    try
-     clear := OpenProcess(PROCESS_ALL_ACCESS, false, GetCurrentProcessId);
-     SetProcessWorkingSetSize(clear, $ffffffff, $ffffffff);
-     CloseHandle(clear);
-    Except
-
-    end;
-
-end;
-
 procedure TFrm_Principal.Cliente1Click(Sender: TObject);
 begin
     Controle.getCadPessoa;
 end;
 
-procedure TFrm_Principal.Consultas2Click(Sender: TObject);
+procedure TFrm_Principal.ConsultarClientesClick(Sender: TObject);
 begin
-    ControleEdit.getEdits;
-    ShowMessage('');
+      self.ConsultarClientes.Tag := 7;
+      ControleEdit.consultarPessoa;
+      
 end;
 
 procedure TFrm_Principal.FormActivate(Sender: TObject);
 begin
-    self.clearMemory;
-    FreeAndNil(frm_Pedido);
+    //self.clearMemory;
+    try
+          FreeAndNil(frm_Pedido);
     FreeAndNil(frm_Consulta);
     FreeAndNil(frm_Funcionario);
     FreeAndNil(frm_Cliente);
     FreeAndNil(frm_Veiculos);
     FreeAndNil(frm_carga);
+    finally
+
+    end;
+
+
 end;
 
 procedure TFrm_Principal.FormCreate(Sender: TObject);
@@ -102,7 +94,7 @@ end;
 
 procedure TFrm_Principal.FormDestroy(Sender: TObject);
 begin
-    Controle.Free;
+    //Controle.Free;
 end;
 
 procedure TFrm_Principal.Funcionario1Click(Sender: TObject);

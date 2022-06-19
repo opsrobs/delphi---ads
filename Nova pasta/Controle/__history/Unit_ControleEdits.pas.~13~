@@ -1,0 +1,74 @@
+unit Unit_ControleEdits;
+
+interface
+
+uses Form_Edits, Vcl.Controls, Vcl.ComCtrls, Vcl.Dialogs;
+
+type
+  TControleEdit = class
+  public
+    procedure getEdits;
+    procedure consultarPessoa;
+  private
+
+
+
+  end;
+
+implementation
+
+{ TControleEdit }
+
+uses Unit_Dados, Form_Consulta;
+
+procedure TControleEdit.consultarPessoa;
+begin
+  if frm_Consulta = nil then
+    frm_Consulta := Tfrm_Consulta.Create(nil);
+
+  frm_Consulta.setSelectSQL
+    ('SELECT p.idPessoa as "Nº Registro", p.nome as "Nome", e.cep as "CEP", e.rua as "Rua" '
+      + ' FROM logistica_ads.pessoa p, logistica_ads.endereco e where p.idPessoa = e.pessoa_idPessoa;');
+  if frm_Consulta.ShowModal = mrOk then
+ begin
+
+
+    {frm_Funcionario.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[0]
+      .AsInteger;
+    frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[1]
+      .AsString;
+    frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields
+      [2].AsString;
+    FreeAndNil(frm_Consulta);
+
+    }
+  end;
+  dm_ProjetoFinal.qrConsulta.Close;
+  dm_ProjetoFinal.qrConsulta.SQL.Clear;
+end;
+
+procedure TControleEdit.getEdits;
+begin
+  if frm_edits = nil then
+    frm_edits := Tfrm_edits.Create(nil);
+
+  if (frm_edits.ShowModal = mrOk) then
+  begin
+
+    case (frm_edits.getFuncao) of
+      1:
+        begin
+          // self.cadastroEntrega;
+        end;
+      2:
+        begin
+
+        end;
+    end;
+
+  end;
+
+end;
+
+
+end.

@@ -161,6 +161,7 @@ procedure TControle.getCadPessoa;
     VCadCliente: CadCliente;
     idPessoa:integer;
 begin
+
     if (frm_Cliente = nil) then
       frm_Cliente := Tfrm_Cliente.Create(nil);
 

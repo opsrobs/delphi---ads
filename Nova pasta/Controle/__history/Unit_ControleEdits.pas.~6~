@@ -1,0 +1,53 @@
+unit Unit_ControleEdits;
+
+interface
+
+uses Form_Edits,Vcl.Controls, Vcl.ComCtrls;
+type TControleEdit = class
+  public
+  procedure getEdits;
+  procedure populaList;
+
+  private
+end;
+
+implementation
+
+
+
+{ TControleEdit }
+
+uses Objeto_CadCidade, Unit_Dados;
+
+procedure TControleEdit.getEdits;
+begin
+    if frm_edits = nil then
+    frm_edits:= Tfrm_edits.Create(nil);
+
+    if (frm_edits.ShowModal = mrOk) then
+      begin
+
+         case(frm_edits.getFuncao) of
+            1: begin
+                //self.cadastroEntrega;
+            end;
+            2: begin
+
+               end;
+         end;
+
+
+      end;
+
+end;
+
+procedure TControleEdit.populaList;
+var
+dados:TListItem;
+begin
+dm_ProjetoFinal.qrFinal.Close;
+dm_ProjetoFinal.qrConsulta.SQL.Clear;
+
+end;
+
+end.

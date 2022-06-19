@@ -2,24 +2,27 @@ object frm_Consulta: Tfrm_Consulta
   Left = 0
   Top = 0
   Caption = 'Consultas'
-  ClientHeight = 441
-  ClientWidth = 624
+  ClientHeight = 560
+  ClientWidth = 723
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnActivate = FormActivate
+  PixelsPerInch = 96
   TextHeight = 15
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 624
+    Width = 723
     Height = 41
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 624
     object spButtonReturn: TSpeedButton
       Left = 192
       Top = 8
@@ -63,10 +66,11 @@ object frm_Consulta: Tfrm_Consulta
   object Panel2: TPanel
     Left = 0
     Top = 41
-    Width = 624
+    Width = 723
     Height = 48
     Align = alTop
     TabOrder = 1
+    ExplicitWidth = 624
     object lbResult: TLabel
       Left = 464
       Top = 27
@@ -83,21 +87,22 @@ object frm_Consulta: Tfrm_Consulta
       EditLabel.Height = 15
       EditLabel.Caption = 'Pesquisa'
       TabOrder = 0
-      Text = ''
     end
   end
   object Panel3: TPanel
     Left = 0
     Top = 89
-    Width = 624
-    Height = 352
+    Width = 723
+    Height = 471
     Align = alClient
     TabOrder = 2
+    ExplicitWidth = 624
+    ExplicitHeight = 352
     object dbConsulta: TDBGrid
       Left = 1
       Top = 1
-      Width = 622
-      Height = 350
+      Width = 721
+      Height = 469
       Align = alClient
       DataSource = dm_ProjetoFinal.dsConsulta
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]

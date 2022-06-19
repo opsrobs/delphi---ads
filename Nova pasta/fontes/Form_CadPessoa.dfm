@@ -53,6 +53,13 @@ object frm_Cliente: Tfrm_Cliente
       Flat = True
       OnClick = SpeedButton1Click
     end
+    object SpeedButton2: TSpeedButton
+      Left = 497
+      Top = 33
+      Width = 64
+      Height = 22
+      OnClick = SpeedButton2Click
+    end
     object edNome: TLabeledEdit
       Left = 143
       Top = 29
