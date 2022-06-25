@@ -20,6 +20,8 @@ TControle = class
     procedure cadastroBairro;
     procedure cadastroEndereco(idpessoa:integer);
     procedure cadastroContato(id:integer);
+    {=========}
+    procedure atualizarOontato;
     end;
     var
       VCadEstado:CadEstado;
@@ -76,6 +78,18 @@ begin
       result :=0
       else
       result := StrToInt(frm_Cliente.lbNumero.Text)
+end;
+
+procedure TControle.atualizarOontato;
+var
+  VCadContato:CadContato;
+begin
+  VCadContato := CadContato.Create;
+  VCadContato.setStatus_contato(frm_Cliente.chStatus.Checked);
+  VCadContato.setContato(frm_Cliente.lbContato.Text);
+
+  VCadContato.updateDados;
+
 end;
 
 procedure TControle.cadastroBairro;

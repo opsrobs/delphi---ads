@@ -24,6 +24,7 @@ uses
                                               {<--- CRUD --->}
 
         function insertDados:Boolean;
+        function updateDados:Boolean;
   end;
 
 
@@ -100,5 +101,36 @@ procedure CadContato.setStatus_contato(status_contato: Boolean);
 begin
     self.status_contato	:= status_contato;
 end;
+
+function CadContato.updateDados: Boolean;
+var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('update contato set   status_contato = :status_contato, contato := contato where (idPessoa = :idPessoa)');
+
+  query.ParamByName('status_contato').AsBoolean := self.getSattus_contato;
+  query.ParamByName('contato').AsString := self.getContato;
+  query.ParamByName('idstatus_telefone').AsInteger := self.getIdStatus_Telefone;
+
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {update service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao alterar dados do contato: ' + self.contato+'  ' +e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+end;
+
 
 end.

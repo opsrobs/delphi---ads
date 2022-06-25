@@ -60,6 +60,7 @@ begin
   VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
   VCadFuncionario.setCnh(frm_Funcionario.edCnh.Text);
   VCadFuncionario.setpessoa_fisica_idPessoa(id);
+  VCadFuncionario.setAtivo(true);
   VCadFuncionario.insertDados;
   ShowMessage('Cadastro reaalizado com sucesso!!!');
 end;
@@ -112,8 +113,8 @@ begin
           end
           else
           begin
-            self.cadastrarPessoaFisica(VCadPessoa.getLastId);
-            self.cadastrarFuncionario(VCadPessoaFisica.getLastId());
+           self.cadastrarPessoaFisica(VCadPessoa.getLastId);
+            self.cadastrarFuncionario(VCadPessoaFisica.getLastId);
           end;
 
         end;

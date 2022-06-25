@@ -24,7 +24,9 @@ type
     function identificadorRecebedor(nome: string): integer;
     function identiicadorPessoa(nome: string): integer;
     function getLastId: integer;
+    procedure bloquearDados;
   end;
+
 
 implementation
 
@@ -32,7 +34,18 @@ implementation
 
 uses Form_CadPessoa, Form_CadFuncionario, Form_CadPedido;
 
+procedure Utils.bloquearDados;
+begin
+  frm_Cliente.SpeedButton1.Visible := false;
+  frm_Cliente.rdCNPJ.Visible := false;
+  frm_Cliente.edNome.Enabled := false;
+  frm_Cliente.edCpfCnpj.Enabled := false;
+end;
+
 procedure Utils.capturandoJson;
+
+
+
 begin
   if frm_Cliente <> nil then
   begin
@@ -51,9 +64,11 @@ end;
 
 procedure Utils.generatePerson;
 begin
-  if frm_Cliente.rdCNPJ.Checked then
-    frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName
+  if frm_Cliente.rdCNPJ.Visible and frm_Cliente.rdCNPJ.Checked then
+  begin
+     frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName
       ('company').AsString
+  end
   else
     frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName
       ('name').AsString;
@@ -66,7 +81,7 @@ end;
 
 procedure Utils.generatePersonF;
 begin
-  if frm_Cliente.rdCNPJ.Checked then
+  if (frm_Funcionario.generate.tag = 0) and  (frm_Cliente.rdCNPJ.Checked) then
     frm_Funcionario.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName
       ('company').AsString
   else

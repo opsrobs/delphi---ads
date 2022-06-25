@@ -1,7 +1,6 @@
 drop database if exists pedro_delphi;
 drop database if exists pedro_delphiii;
 drop database if exists logistica_ads;
-
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -76,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `logistica_ads`.`pessoa` (
   `nome` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idPessoa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -93,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `logistica_ads`.`pessoa_fisica` (
     FOREIGN KEY (`pessoa_idPessoa`)
     REFERENCES `logistica_ads`.`pessoa` (`idPessoa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -112,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `logistica_ads`.`funcionario` (
     FOREIGN KEY (`pessoa_fisica_idpessoa_fisica`)
     REFERENCES `logistica_ads`.`pessoa_fisica` (`idpessoa_fisica`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -164,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `logistica_ads`.`funcionario_has_veiculo` (
     FOREIGN KEY (`veiculo_idveiculos`)
     REFERENCES `logistica_ads`.`veiculo` (`idveiculos`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 51
+AUTO_INCREMENT = 52
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -182,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `logistica_ads`.`carga` (
     FOREIGN KEY (`funcionario_has_veiculo_idFuncionarioVeiculo`)
     REFERENCES `logistica_ads`.`funcionario_has_veiculo` (`idFuncionarioVeiculo`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 35
+AUTO_INCREMENT = 36
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -240,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `logistica_ads`.`recebedor` (
     FOREIGN KEY (`pessoa_idPessoa`)
     REFERENCES `logistica_ads`.`pessoa` (`idPessoa`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -273,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `logistica_ads`.`pedido` (
     FOREIGN KEY (`recebedor_idrecebedor`)
     REFERENCES `logistica_ads`.`recebedor` (`idrecebedor`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -342,9 +341,14 @@ CREATE TABLE IF NOT EXISTS `logistica_ads`.`dados_pedido_corrigido` (`numero_ped
 CREATE TABLE IF NOT EXISTS `logistica_ads`.`getdadospedido` (`numero_pedido` INT, `nome` INT, `data_pedido` INT, `status` INT, `idrecebedor` INT);
 
 -- -----------------------------------------------------
+-- Placeholder table for view `logistica_ads`.`getdadospessoafisica`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `logistica_ads`.`getdadospessoafisica` (`Nome` INT, `CPF` INT, `Contato` INT, `Situacao` INT, `CEP` INT, `Complemento` INT, `Numero` INT, `Bairro` INT, `Cidade` INT, `Estado` INT, `UF` INT, `Rua` INT, `pessoa_idPessoa` INT);
+
+-- -----------------------------------------------------
 -- Placeholder table for view `logistica_ads`.`getenderecopessoa`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `logistica_ads`.`getenderecopessoa` (`pessoa_idPessoa` INT, `CEP` INT, `Complemento` INT, `Numero` INT, `Bairro` INT, `Cidade` INT, `Estado` INT, `UF` INT);
+CREATE TABLE IF NOT EXISTS `logistica_ads`.`getenderecopessoa` (`CEP` INT, `Complemento` INT, `Numero` INT, `Bairro` INT, `Cidade` INT, `Estado` INT, `UF` INT, `Rua` INT, `pessoa_idPessoa` INT);
 
 -- -----------------------------------------------------
 -- View `logistica_ads`.`dados_pedido_corrigido`
@@ -361,11 +365,18 @@ USE `logistica_ads`;
 CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `logistica_ads`.`getdadospedido` AS select `pd`.`numero_pedido` AS `numero_pedido`,`p`.`nome` AS `nome`,`pd`.`data_pedido` AS `data_pedido`,`pd`.`status` AS `status`,`r`.`idrecebedor` AS `idrecebedor` from (((`logistica_ads`.`pessoa` `p` join `logistica_ads`.`cliente` `c`) join `logistica_ads`.`recebedor` `r`) join `logistica_ads`.`pedido` `pd`) where ((`pd`.`cliente_idcliente` = `c`.`idcliente`) and (`c`.`pessoa_idPessoa` = `p`.`idPessoa`) and (`pd`.`recebedor_idrecebedor` = `r`.`idrecebedor`) and (0 <> `r`.`pessoa_idPessoa`)) order by `r`.`idrecebedor`;
 
 -- -----------------------------------------------------
+-- View `logistica_ads`.`getdadospessoafisica`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `logistica_ads`.`getdadospessoafisica`;
+USE `logistica_ads`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `logistica_ads`.`getdadospessoafisica` AS select `pe`.`nome` AS `Nome`,`pf`.`cpf` AS `CPF`,`co`.`contato` AS `Contato`,`co`.`status_contato` AS `Situacao`,`logistica_ads`.`gte`.`CEP` AS `CEP`,`logistica_ads`.`gte`.`Complemento` AS `Complemento`,`logistica_ads`.`gte`.`Numero` AS `Numero`,`logistica_ads`.`gte`.`Bairro` AS `Bairro`,`logistica_ads`.`gte`.`Cidade` AS `Cidade`,`logistica_ads`.`gte`.`Estado` AS `Estado`,`logistica_ads`.`gte`.`UF` AS `UF`,`logistica_ads`.`gte`.`Rua` AS `Rua`,`logistica_ads`.`gte`.`pessoa_idPessoa` AS `pessoa_idPessoa` from ((((`logistica_ads`.`getenderecopessoa` `gte` join `logistica_ads`.`pessoa` `pe`) join `logistica_ads`.`pessoa_fisica` `pf`) join `logistica_ads`.`pessoa_juridica` `pj`) join `logistica_ads`.`contato` `co`) where ((`pf`.`pessoa_idPessoa` = `pe`.`idPessoa`) and (`co`.`pessoa_idPessoa` = `pe`.`idPessoa`) and (`logistica_ads`.`gte`.`pessoa_idPessoa` = `pe`.`idPessoa`));
+
+-- -----------------------------------------------------
 -- View `logistica_ads`.`getenderecopessoa`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `logistica_ads`.`getenderecopessoa`;
 USE `logistica_ads`;
-CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `logistica_ads`.`getenderecopessoa` AS select `e`.`pessoa_idPessoa` AS `pessoa_idPessoa`,`e`.`cep` AS `CEP`,`e`.`complemento` AS `Complemento`,`e`.`numero` AS `Numero`,`b`.`nome_Bairro` AS `Bairro`,`c`.`nome_cidade` AS `Cidade`,`es`.`nome_estado` AS `Estado`,`es`.`uf` AS `UF` from (((`logistica_ads`.`endereco` `e` join `logistica_ads`.`bairro` `b`) join `logistica_ads`.`cidade` `c`) join `logistica_ads`.`estado` `es`) where ((`e`.`bairro_idBairro` = `b`.`idBairro`) and (`b`.`cidade_idCidade` = `c`.`idCidade`) and (`c`.`estado_idEstado` = `es`.`idEstado`));
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `logistica_ads`.`getenderecopessoa` AS select `e`.`cep` AS `CEP`,`e`.`complemento` AS `Complemento`,`e`.`numero` AS `Numero`,`b`.`nome_Bairro` AS `Bairro`,`c`.`nome_cidade` AS `Cidade`,`es`.`nome_estado` AS `Estado`,`es`.`uf` AS `UF`,`e`.`rua` AS `Rua`,`e`.`pessoa_idPessoa` AS `pessoa_idPessoa` from (((`logistica_ads`.`endereco` `e` join `logistica_ads`.`bairro` `b`) join `logistica_ads`.`cidade` `c`) join `logistica_ads`.`estado` `es`) where ((`e`.`bairro_idBairro` = `b`.`idBairro`) and (`b`.`cidade_idCidade` = `c`.`idCidade`) and (`c`.`estado_idEstado` = `es`.`idEstado`));
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
