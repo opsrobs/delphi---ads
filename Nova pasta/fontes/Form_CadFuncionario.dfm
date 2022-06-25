@@ -88,7 +88,7 @@ object frm_Funcionario: Tfrm_Funcionario
       ParentFont = False
       OnClick = nmConsultarClick
     end
-    object SpeedButton1: TSpeedButton
+    object generate: TSpeedButton
       Left = 383
       Top = 21
       Width = 32
@@ -99,7 +99,7 @@ object frm_Funcionario: Tfrm_Funcionario
       HotImageIndex = 18
       HotImageName = 'icons8-grupos-de-usu'#225'rios'
       Flat = True
-      OnClick = SpeedButton1Click
+      OnClick = generateClick
     end
     object edCpfCnpj: TLabeledEdit
       Left = 16

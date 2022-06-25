@@ -26,8 +26,8 @@ uses Unit_Dados, Form_Consulta;
 
 procedure TControleEdit.consultarPessoa;
 begin
-   { if (frm_Cliente = nil) then
-      frm_Cliente := Tfrm_Cliente.Create(nil);  }
+   if (frm_Cliente = nil) then
+      frm_Cliente := Tfrm_Cliente.Create(nil);
 
   if frm_Consulta = nil then
     frm_Consulta := Tfrm_Consulta.Create(nil);
@@ -37,8 +37,6 @@ begin
   if frm_Consulta.ShowModal = mrOk then
   begin
 
-    if (frm_Cliente = nil) then
-      frm_Cliente := Tfrm_Cliente.Create(nil);
 
     frm_Cliente.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[12].AsInteger;
     frm_Cliente.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[0].AsString;
@@ -54,11 +52,11 @@ begin
     frm_Cliente.lbUnidadeFederativa.Text := dm_ProjetoFinal.qrConsulta.Fields
       [10].AsString;
     frm_Cliente.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
-    // Controle.getCadPessoa;
     FreeAndNil(frm_Consulta);
 
     frm_Cliente.tag := 10;
-    frm_Cliente.ShowModal;
+    Controle.getCadPessoa;
+    //frm_Cliente.ShowModal;
 
   end;
   dm_ProjetoFinal.qrConsulta.Close;

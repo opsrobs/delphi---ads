@@ -96,11 +96,12 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('INSERT INTO logistica_ads.funcionario values( 0, :pis, :cnh, :pessoa_fisica_idpessoa_fisica)');
+  query.SQL.Add('INSERT INTO logistica_ads.funcionario values( 0, :pis, :cnh, :pessoa_fisica_idpessoa_fisica, :ativo)');
 
   query.ParamByName('pis').AsString := self.getPis;
   query.ParamByName('cnh').AsString := self.getCnh;
   query.ParamByName('pessoa_fisica_idpessoa_fisica').AsInteger:= self.getpessoa_fisica_idPessoa;
+  query.ParamByName('ativo').AsBoolean := self.getAtivo;
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try

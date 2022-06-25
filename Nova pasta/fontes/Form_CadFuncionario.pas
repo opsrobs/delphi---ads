@@ -23,13 +23,13 @@ type
     spSalvar: TSpeedButton;
     edPis: TLabeledEdit;
     edCnh: TLabeledEdit;
-    SpeedButton1: TSpeedButton;
+    generate: TSpeedButton;
     procedure spButtonReturnClick(Sender: TObject);
     procedure spDeleteClick(Sender: TObject);
     procedure spSalvarClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure nmConsultarClick(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure generateClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
   funcao:byte;
@@ -104,8 +104,9 @@ begin
 end;
 
 
-procedure Tfrm_Funcionario.SpeedButton1Click(Sender: TObject);
+procedure Tfrm_Funcionario.generateClick(Sender: TObject);
 begin
+    self.generate.Tag := 2;
     utilitaria:=Utils.Create;
     utilitaria.loadingApiPessoa;
 end;

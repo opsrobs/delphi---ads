@@ -25,8 +25,8 @@ type
     function identiicadorPessoa(nome: string): integer;
     function getLastId: integer;
     procedure bloquearDados;
+    function validateJson:boolean;
   end;
-
 
 implementation
 
@@ -44,20 +44,24 @@ end;
 
 procedure Utils.capturandoJson;
 
-
-
 begin
-  if frm_Cliente <> nil then
+
+  if self.validateJson then
+    exit
+  else
   begin
-    self.nomeEstado(dm_ProjetoFinal.MemTable.FieldByName('uf').AsString);
-    frm_Cliente.lbBairro.Text := dm_ProjetoFinal.MemTable.FieldByName
-      ('bairro').AsString;
-    frm_Cliente.lbCidade.Text := dm_ProjetoFinal.MemTable.FieldByName
-      ('localidade').AsString;
-    frm_Cliente.lbRua.Text := dm_ProjetoFinal.MemTable.FieldByName
-      ('logradouro').AsString;
-    frm_Cliente.lbUnidadeFederativa.Text := dm_ProjetoFinal.MemTable.FieldByName
-      ('uf').AsString;
+    if frm_Cliente <> nil then
+    begin
+      self.nomeEstado(dm_ProjetoFinal.MemTable.FieldByName('uf').AsString);
+      frm_Cliente.lbBairro.Text := dm_ProjetoFinal.MemTable.FieldByName
+        ('bairro').AsString;
+      frm_Cliente.lbCidade.Text := dm_ProjetoFinal.MemTable.FieldByName
+        ('localidade').AsString;
+      frm_Cliente.lbRua.Text := dm_ProjetoFinal.MemTable.FieldByName
+        ('logradouro').AsString;
+      frm_Cliente.lbUnidadeFederativa.Text :=
+        dm_ProjetoFinal.MemTable.FieldByName('uf').AsString;
+    end
   end
 
 end;
@@ -66,7 +70,7 @@ procedure Utils.generatePerson;
 begin
   if frm_Cliente.rdCNPJ.Visible and frm_Cliente.rdCNPJ.Checked then
   begin
-     frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName
+    frm_Cliente.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName
       ('company').AsString
   end
   else
@@ -81,7 +85,7 @@ end;
 
 procedure Utils.generatePersonF;
 begin
-  if (frm_Funcionario.generate.tag = 0) and  (frm_Cliente.rdCNPJ.Checked) then
+  if (frm_Funcionario.generate.tag = 0) and (frm_Cliente.rdCNPJ.Checked) then
     frm_Funcionario.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName
       ('company').AsString
   else
@@ -95,9 +99,9 @@ end;
 function Utils.generateTypePerson: string;
 begin
   if (frm_Cliente.rdCNPJ.Checked) then
-    result := 'cnpj'
+    Result := 'cnpj'
   else if (not frm_Cliente.rdCNPJ.Checked) then
-    result := 'cpf'
+    Result := 'cpf'
 
 end;
 
@@ -116,13 +120,13 @@ begin
     if (not query.isEmpty) then
     begin
       id := query.Fields[0].AsInteger;
-      result := id;
+      Result := id;
     end;
   except
     on e: exception do
     begin
-      result := 0;
-      showMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
+      Result := 0;
+      ShowMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
     end;
 
   end;
@@ -151,13 +155,13 @@ begin
       // query.ParamByName('nome_estado').AsString := self.getNome_estado;
       { Alterar o valor do [] para a posição do atributo }
       id := query.Fields[0].AsInteger;
-      result := id;
+      Result := id;
     end;
   except
     on e: exception do
     begin
-      result := 0;
-      showMessage('Erro ao fazer consulta no endereço de : ' + nome + ' ' +
+      Result := 0;
+      ShowMessage('Erro ao fazer consulta no endereço de : ' + nome + ' ' +
         e.ToString);
     end;
 
@@ -186,20 +190,20 @@ begin
     if (not query.isEmpty) then
     begin
       id := query.Fields[0].AsInteger;
-      result := id;
+      Result := id;
     end;
   except
     on e: exception do
     begin
-      result := 0;
-      showMessage('Erro ao fazer consulta no cliente : ' + nome + ' ' +
+      Result := 0;
+      ShowMessage('Erro ao fazer consulta no cliente : ' + nome + ' ' +
         e.ToString);
     end;
 
   end;
   query.Close;
   query.Free;
-  result := id;
+  Result := id;
 end;
 
 function Utils.identiicadorPessoa(nome: string): integer;
@@ -221,21 +225,21 @@ begin
     if (not query.isEmpty) then
     begin
       id := query.Fields[0].AsInteger;
-      showMessage(IntToStr(id));
-      result := id;
+      ShowMessage(IntToStr(id));
+      Result := id;
     end;
   except
     on e: exception do
     begin
-      result := 0;
-      showMessage('Erro ao fazer consulta na pessoa... : ' + nome + ' ' +
+      Result := 0;
+      ShowMessage('Erro ao fazer consulta na pessoa... : ' + nome + ' ' +
         e.ToString);
     end;
 
   end;
   query.Close;
   query.Free;
-  result := id;
+  Result := id;
 end;
 
 function Utils.idPessoaCliente(nome: string): integer;
@@ -257,20 +261,20 @@ begin
     if (not query.isEmpty) then
     begin
       id := query.Fields[0].AsInteger;
-      result := id;
+      Result := id;
     end;
   except
     on e: exception do
     begin
-      result := 0;
-      showMessage('Erro ao fazer consulta no cliente : ' + nome + ' ' +
+      Result := 0;
+      ShowMessage('Erro ao fazer consulta no cliente : ' + nome + ' ' +
         e.ToString);
     end;
 
   end;
   query.Close;
   query.Free;
-  result := id;
+  Result := id;
 
 end;
 
@@ -280,7 +284,7 @@ var
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-  showMessage(IntToStr(idPedido));
+  ShowMessage(IntToStr(idPedido));
   query.SQL.Add
     ('insert into carga_pedido values( :pedido_numero_pedido, :carga_IdCarga)');
 
@@ -290,12 +294,12 @@ begin
 
   try
     query.ExecSQL; { Insert service }
-    result := true;
+    Result := true;
   except
     on e: exception do
     begin
-      result := false;
-      showMessage('Erro ao incluir dados... : ' + e.ToString);
+      Result := false;
+      ShowMessage('Erro ao incluir dados... : ' + e.ToString);
     end;
 
   end;
@@ -311,6 +315,7 @@ begin
   dm_ProjetoFinal.RESTRequest1.Resource := '{cep}/json';
   dm_ProjetoFinal.RESTRequest1.Params.AddUrlSegment('cep',
     frm_Cliente.MaskCep.Text);
+
   dm_ProjetoFinal.RESTRequest1.Execute;
   self.capturandoJson;
 end;
@@ -387,6 +392,16 @@ begin
     frm_Cliente.lbEstado.Text := 'Sergipe'
   else
     frm_Cliente.lbEstado.Text := 'Tocantins'
+end;
+
+function Utils.validateJson: boolean;
+begin
+if (dm_ProjetoFinal.RESTResponse1.ContentType <> CONTENTTYPE_APPLICATION_JSON) or
+    (Length(dm_ProjetoFinal.RESTResponse1.Content) <60) then
+    begin
+    ShowMessage('Verifique o CEP informado');
+    result := true;
+    end
 end;
 
 end.
