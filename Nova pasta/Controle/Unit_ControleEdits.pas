@@ -10,8 +10,10 @@ type
   TControleEdit = class
   public
     procedure consultarPessoa;
+    procedure verifyStatus;
 
   private
+
 
   end;
 
@@ -26,8 +28,8 @@ uses Unit_Dados, Form_Consulta;
 
 procedure TControleEdit.consultarPessoa;
 begin
-   if (frm_Cliente = nil) then
-      frm_Cliente := Tfrm_Cliente.Create(nil);
+  if (frm_Cliente = nil) then
+    frm_Cliente := Tfrm_Cliente.Create(nil);
 
   if frm_Consulta = nil then
     frm_Consulta := Tfrm_Consulta.Create(nil);
@@ -36,7 +38,6 @@ begin
     ('SELECT * FROM logistica_ads.getdadospessoafisica;');
   if frm_Consulta.ShowModal = mrOk then
   begin
-
 
     frm_Cliente.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[12].AsInteger;
     frm_Cliente.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[0].AsString;
@@ -53,14 +54,25 @@ begin
       [10].AsString;
     frm_Cliente.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
     FreeAndNil(frm_Consulta);
-
+    self.verifyStatus;
     frm_Cliente.tag := 10;
     Controle.getCadPessoa;
-    //frm_Cliente.ShowModal;
+    // frm_Cliente.ShowModal;
 
   end;
   dm_ProjetoFinal.qrConsulta.Close;
   dm_ProjetoFinal.qrConsulta.SQL.Clear;
+end;
+
+procedure TControleEdit.verifyStatus;
+begin
+  if (dm_ProjetoFinal.qrConsulta.Fields[3].AsInteger = 0) then
+  begin
+    frm_Cliente.lbContato.Clear;
+    frm_Cliente.chStatus.Checked := true;
+  end
+  else
+  frm_Cliente.chStatus.Checked := false;
 end;
 
 end.

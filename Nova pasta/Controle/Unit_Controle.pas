@@ -4,7 +4,8 @@ interface
 
 uses System.SysUtils, Winapi.Messages, Vcl.Controls, Vcl.Dialogs, Vcl.Mask,
   REST.Types, StrUtils,
-  Objeto_CadEstado, Objeto_CadCidade, Objeto_CadBairro, Objeto_CadEndereco;
+  Objeto_CadEstado, Objeto_CadCidade, Objeto_CadBairro, Objeto_CadEndereco,
+  Winapi.Windows;
 
 type
   TControle = class
@@ -23,7 +24,9 @@ type
     procedure cadastroEndereco(idpessoa: integer);
     procedure cadastroContato(id: integer);
     { ========= }
-    procedure atualizarOontato;
+    function updateContato(content: string): boolean;
+    procedure atualizarContato(id: integer);
+
   end;
 
 var
@@ -65,6 +68,21 @@ begin
   VCadPJ.insertDados;
 end;
 
+function TControle.updateContato(content: string): boolean;
+begin
+  if (frm_Cliente.getContato.Equals(content)) then
+  begin
+    result := false;
+  end
+  else
+  begin
+    if utilitaria.alterContact(content) = false then
+      result := false;
+    exit
+  end;
+  result := true;
+end;
+
 procedure TControle.validarPessoa(id: integer);
 begin
   if (frm_Cliente.rdCNPJ.Checked) then
@@ -82,15 +100,19 @@ begin
     result := StrToInt(frm_Cliente.lbNumero.Text)
 end;
 
-procedure TControle.atualizarOontato;
+procedure TControle.atualizarContato(id: integer);
 var
   VCadContato: CadContato;
 begin
-  VCadContato := CadContato.Create;
-  VCadContato.setStatus_contato(frm_Cliente.chStatus.Checked);
-  VCadContato.setContato(frm_Cliente.lbContato.Text);
-
-  VCadContato.updateDados;
+  if frm_Cliente.chStatus.Checked = true then
+  begin
+    VCadContato := CadContato.Create;
+    VCadContato.setStatus_contato(frm_Cliente.chStatus.Checked);
+    VCadContato.setContato(frm_Cliente.lbContato.Text);
+    VCadContato.setPessoa_idPessoa(id);
+    VCadContato.updateDados;
+    ShowMessage('xx')
+  end;
 
 end;
 
@@ -185,38 +207,44 @@ begin
     VCadCliente := CadCliente.Create;
     VCadRecebedor := CadRecebedor.Create;
 
-      case (frm_Cliente.getFuncao) of
-        1:
+    case (frm_Cliente.getFuncao) of
+      1:
+        begin
+
+          if frm_Cliente.spSalvar.Caption = 'Atualizar' then
           begin
-            ShowMessage('Sucesso')
-            { VCadPessoa.setnome(frm_Cliente.edNome.Text);
-              VCadPessoa.insertDados;
-              idPessoa:= VCadPessoa.getLastId;
-              self.cadastroContato(idPessoa);
-              self.validarPessoa(idPessoa);
-              if(frm_Cliente.chDestinatario.Checked)then
-              begin
-              VCadRecebedor.setPessoa_idPessoa(idPessoa);
-              VCadRecebedor.insertDados
-              end
-              else
-              begin
-              VCadCliente.setPessoa_idPessoa(idPessoa);
-              VCadCliente.insertDados;
-              end;
-              self.CadastroEstado;
-              self.CadastroCidade();
+            self.atualizarContato(frm_Cliente.spSalvar.Tag);
+          end
+          else
+            ShowMessage('UUUI');
+          { VCadPessoa.setnome(frm_Cliente.edNome.Text);
+            VCadPessoa.insertDados;
+            idPessoa:= VCadPessoa.getLastId;
+            self.cadastroContato(idPessoa);
+            self.validarPessoa(idPessoa);
+            if(frm_Cliente.chDestinatario.Checked)then
+            begin
+            VCadRecebedor.setPessoa_idPessoa(idPessoa);
+            VCadRecebedor.insertDados
+            end
+            else
+            begin
+            VCadCliente.setPessoa_idPessoa(idPessoa);
+            VCadCliente.insertDados;
+            end;
+            self.CadastroEstado;
+            self.CadastroCidade();
 
-              self.cadastroBairro;
-              self.cadastroEndereco(idpessoa);
-              ShowMessage('Cadastro reaalizado com sucesso!!!'); }
+            self.cadastroBairro;
+            self.cadastroEndereco(idpessoa);
+            ShowMessage('Cadastro reaalizado com sucesso!!!'); }
 
-          end;
-        2:
-          begin
+        end;
+      2:
+        begin
 
-          end;
-      end;
+        end;
+    end;
 
     VCadPessoa.Free;
     VCadCliente.Free;

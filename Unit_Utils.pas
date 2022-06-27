@@ -4,7 +4,7 @@ interface
 
 uses
   REST.Types, Winapi.Messages, StrUtils, FireDAC.Comp.Client, Unit_Dados,
-  System.SysUtils, Vcl.Dialogs;
+  System.SysUtils, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Controls;
 
 type
   Utils = class
@@ -24,15 +24,38 @@ type
     function identificadorRecebedor(nome: string): integer;
     function identiicadorPessoa(nome: string): integer;
     function getLastId: integer;
+    function alterContact(content: string): boolean;
     procedure bloquearDados;
     function validateJson:boolean;
+    procedure updateStatusContato(status:boolean; id:integer);
   end;
 
 implementation
 
 { Utils }
 
-uses Form_CadPessoa, Form_CadFuncionario, Form_CadPedido;
+uses Form_CadPessoa, Form_CadFuncionario, Form_CadPedido, Objeto_CadContato;
+
+function Utils.alterContact(content: string): boolean;
+begin
+if MessageDlg('Você quer DESABILITAR o contato '+#13 + content + ' ?',
+      TMsgDlgType.mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrno
+    then
+    begin
+      result := false;
+      frm_Cliente.lbContato.Text := frm_Cliente.getContato;
+      exit
+    end
+    else
+    begin
+      result := false;
+      utilitaria.updateStatusContato(false,frm_Cliente.spSalvar.Tag);
+      frm_Cliente.chStatus.Checked := true;
+      frm_Cliente.lbContato.Clear;
+      exit
+    end;
+    result := true;
+end;
 
 procedure Utils.bloquearDados;
 begin
@@ -392,6 +415,16 @@ begin
     frm_Cliente.lbEstado.Text := 'Sergipe'
   else
     frm_Cliente.lbEstado.Text := 'Tocantins'
+end;
+
+
+procedure Utils.updateStatusContato(status: boolean; id: integer);
+begin
+contato:= CadContato.Create;
+contato.setStatus_contato(status);
+contato.setPessoa_idPessoa(id);
+
+contato.updateStatus;
 end;
 
 function Utils.validateJson: boolean;
