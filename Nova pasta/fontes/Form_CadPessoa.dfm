@@ -53,6 +53,36 @@ object frm_Cliente: Tfrm_Cliente
       Flat = True
       OnClick = SpeedButton1Click
     end
+    object alterarContato: TSpeedButton
+      Left = 400
+      Top = 122
+      Width = 113
+      Height = 26
+      Caption = 'Alterar Contato'
+      ImageIndex = 21
+      ImageName = 'add-user'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 16
+      HotImageName = 'icons8-res'#237'duos'
+      Flat = True
+      Visible = False
+      OnClick = alterarContatoClick
+    end
+    object SpeedButton2: TSpeedButton
+      Left = 400
+      Top = 169
+      Width = 113
+      Height = 26
+      Caption = 'Novo endere'#231'o'
+      ImageIndex = 24
+      ImageName = 'svgexport'
+      Images = dm_ProjetoFinal.VirtualImageList1
+      HotImageIndex = 24
+      HotImageName = 'svgexport'
+      Flat = True
+      Visible = False
+      OnClick = alterarContatoClick
+    end
     object edNome: TLabeledEdit
       Left = 143
       Top = 29
@@ -174,11 +204,12 @@ object frm_Cliente: Tfrm_Cliente
       EditLabel.Height = 15
       EditLabel.Caption = 'Contato'
       TabOrder = 10
+      OnKeyPress = lbContatoKeyPress
     end
     object chStatus: TCheckBox
       Left = 311
       Top = 128
-      Width = 97
+      Width = 89
       Height = 17
       Caption = 'Ativo'
       Checked = True

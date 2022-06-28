@@ -28,6 +28,7 @@ type
     function insertDados: Boolean;
     function updateDados: Boolean;
     function updateStatus: Boolean;
+    function updateEspecifyNumber(number: string): Boolean;
   end;
 
 implementation
@@ -107,17 +108,18 @@ end;
 
 function CadContato.updateDados: Boolean;
 var
+  script: string;
   query: TFDQuery;
 begin
+  script := 'update contato set status_contato =:status_contato, contato =:contato where '
+    + ' (pessoa_idPessoa = :pessoa_idPessoa)';
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
+  query.SQL.Add(script);
 
-  query.SQL.Add
-    ('update contato set status_contato = :status_contato, contato := contato where (pessoa_idPessoa = :pessoa_idPessoa)');
-
-  query.ParamByName('status_contato').AsBoolean := Self.getSattus_contato;
-  query.ParamByName('contato').AsString := Self.getContato;
-  query.ParamByName('pessoa_idPessoa').AsInteger := Self.getIdStatus_Telefone;
+  query.Params[0].AsBoolean := Self.getSattus_contato;
+  query.Params[1].AsString := Self.getContato;
+  query.ParamByName('pessoa_idPessoa').AsInteger := Self.getPessoa_idPessoa;
 
   { Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo }
 
@@ -137,18 +139,52 @@ begin
   query.Free;
 end;
 
+function CadContato.updateEspecifyNumber(number: string): Boolean;
+var
+  script: string;
+  query: TFDQuery;
+begin
+ShowMessage(number);
+  script := 'update contato set status_contato =:status_contato, contato =:contato where '
+    + ' (pessoa_idPessoa = :pessoa_idPessoa and contato = "'+number+'" )';
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  query.SQL.Add(script);
+
+  query.Params[0].AsBoolean := Self.getSattus_contato;
+  query.Params[1].AsString := Self.getContato;
+  query.ParamByName('pessoa_idPessoa').AsInteger := Self.getPessoa_idPessoa;
+  try
+    query.ExecSQL; { update service }
+    result := true;
+    MessageDlg('Alteração do contato '+self.getContato+' realizada com sucesso!!!', TMsgDlgType.mtInformation,
+    [TMsgDlgBtn.mbYes], 0)
+  except
+    on e: exception do
+    begin
+      result := false;
+      showMessage('Erro ao alterar dados do contato: ' + Self.contato + '  ' +
+        e.ToString);
+    end;
+
+  end;
+  query.Close;
+  query.Free;
+end;
+
 function CadContato.updateStatus: Boolean;
 var
   query: TFDQuery;
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-
+           ShowMessage(self.getContato);
   query.SQL.Add
-    ('update contato set status_contato = :status_contato where (pessoa_idPessoa = :pessoa_idPessoa)');
+    ('update contato set status_contato = :status_contato where (pessoa_idPessoa = :pessoa_idPessoa) and (contato = "'+self.getcontato+'")');
 
   query.ParamByName('status_contato').AsBoolean := Self.getSattus_contato;
   query.ParamByName('pessoa_idPessoa').AsInteger := Self.getPessoa_idPessoa;
+  //query.Params[1].AsString := self.getContato;
   try
     query.ExecSQL; { update service }
     result := true;

@@ -14,6 +14,8 @@ type
     function generateTypePerson: string;
     procedure capturandoJson;
     procedure nomeEstado(uf: string);
+    procedure confirmData;
+
 
   public
     procedure loadingApiPessoa;
@@ -26,8 +28,11 @@ type
     function getLastId: integer;
     function alterContact(content: string): boolean;
     procedure bloquearDados;
-    function validateJson:boolean;
-    procedure updateStatusContato(status:boolean; id:integer);
+    function validateJson: boolean;
+    procedure updateStatusContato(status: boolean; id: integer);
+    procedure verifyValueOfField;
+    function setConfirmData:boolean;
+    procedure newAddress(status:boolean);
   end;
 
 implementation
@@ -38,23 +43,24 @@ uses Form_CadPessoa, Form_CadFuncionario, Form_CadPedido, Objeto_CadContato;
 
 function Utils.alterContact(content: string): boolean;
 begin
-if MessageDlg('Você quer DESABILITAR o contato '+#13 + content + ' ?',
-      TMsgDlgType.mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrno
-    then
-    begin
-      result := false;
-      frm_Cliente.lbContato.Text := frm_Cliente.getContato;
-      exit
-    end
-    else
-    begin
-      result := false;
-      utilitaria.updateStatusContato(false,frm_Cliente.spSalvar.Tag);
-      frm_Cliente.chStatus.Checked := true;
-      frm_Cliente.lbContato.Clear;
-      exit
-    end;
-    result := true;
+  if MessageDlg('Você quer DESABILITAR o contato ' + #13 + content + ' ?',
+    TMsgDlgType.mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrno
+  then
+  begin // Caso o usuario não queira desabilitar o contato, o campo 'contato' retornara o valor do bd
+    result := false;
+    frm_Cliente.lbContato.Text := frm_Cliente.getContato;
+    exit
+  end
+  else
+  begin // caso contrário, será atualizado o status do respectivo contato para inativo
+    result := false;
+    utilitaria.updateStatusContato(false, frm_Cliente.spSalvar.Tag);
+    frm_Cliente.chStatus.Checked := true;
+    frm_Cliente.lbContato.Clear;
+    frm_Cliente.alterarContato.Visible := false;
+    exit
+  end;
+  result := true;
 end;
 
 procedure Utils.bloquearDados;
@@ -63,14 +69,17 @@ begin
   frm_Cliente.rdCNPJ.Visible := false;
   frm_Cliente.edNome.Enabled := false;
   frm_Cliente.edCpfCnpj.Enabled := false;
+  {--------------------------------------}
+
 end;
 
 procedure Utils.capturandoJson;
-
 begin
 
   if self.validateJson then
-    exit
+  begin
+     exit
+  end
   else
   begin
     if frm_Cliente <> nil then
@@ -86,6 +95,20 @@ begin
         dm_ProjetoFinal.MemTable.FieldByName('uf').AsString;
     end
   end
+
+end;
+
+procedure Utils.confirmData;
+var
+text:string;
+begin
+text:='CONFIRMAR DADOS'+#13 + frm_Cliente.lbContato.EditLabel.Caption +': '+frm_Cliente.lbContato.Text+ #13+
+    frm_Cliente.Label1.Caption +': '+ frm_Cliente.MaskCep.Text + #13+
+    frm_Cliente.lbCidade.EditLabel.Caption+': '+frm_Cliente.lbCidade.Text+ #13+
+    frm_Cliente.lbBairro.EditLabel.Caption+': '+frm_Cliente.lbBairro.Text+#13+
+    frm_Cliente.lbRua.EditLabel.Caption+': '+frm_Cliente.lbRua.Text+#13+
+    frm_Cliente.lbNumero.EditLabel.Caption+': '+ frm_Cliente.lbNumero.Text+#13+
+    frm_Cliente.lbComplemento.EditLabel.Caption+': '+ frm_Cliente.lbComplemento.Text;
 
 end;
 
@@ -108,7 +131,7 @@ end;
 
 procedure Utils.generatePersonF;
 begin
-  if (frm_Funcionario.generate.tag = 0) and (frm_Cliente.rdCNPJ.Checked) then
+  if (frm_Funcionario.generate.Tag = 0) and (frm_Cliente.rdCNPJ.Checked) then
     frm_Funcionario.edNome.Text := dm_ProjetoFinal.MemTable_Pessoa.FieldByName
       ('company').AsString
   else
@@ -122,9 +145,9 @@ end;
 function Utils.generateTypePerson: string;
 begin
   if (frm_Cliente.rdCNPJ.Checked) then
-    Result := 'cnpj'
+    result := 'cnpj'
   else if (not frm_Cliente.rdCNPJ.Checked) then
-    Result := 'cpf'
+    result := 'cpf'
 
 end;
 
@@ -143,12 +166,12 @@ begin
     if (not query.isEmpty) then
     begin
       id := query.Fields[0].AsInteger;
-      Result := id;
+      result := id;
     end;
   except
     on e: exception do
     begin
-      Result := 0;
+      result := 0;
       ShowMessage('Erro ao selecionar dados da pessoa : ' + e.ToString);
     end;
 
@@ -178,12 +201,12 @@ begin
       // query.ParamByName('nome_estado').AsString := self.getNome_estado;
       { Alterar o valor do [] para a posição do atributo }
       id := query.Fields[0].AsInteger;
-      Result := id;
+      result := id;
     end;
   except
     on e: exception do
     begin
-      Result := 0;
+      result := 0;
       ShowMessage('Erro ao fazer consulta no endereço de : ' + nome + ' ' +
         e.ToString);
     end;
@@ -213,12 +236,12 @@ begin
     if (not query.isEmpty) then
     begin
       id := query.Fields[0].AsInteger;
-      Result := id;
+      result := id;
     end;
   except
     on e: exception do
     begin
-      Result := 0;
+      result := 0;
       ShowMessage('Erro ao fazer consulta no cliente : ' + nome + ' ' +
         e.ToString);
     end;
@@ -226,7 +249,7 @@ begin
   end;
   query.Close;
   query.Free;
-  Result := id;
+  result := id;
 end;
 
 function Utils.identiicadorPessoa(nome: string): integer;
@@ -248,13 +271,12 @@ begin
     if (not query.isEmpty) then
     begin
       id := query.Fields[0].AsInteger;
-      ShowMessage(IntToStr(id));
-      Result := id;
+      result := id;
     end;
   except
     on e: exception do
     begin
-      Result := 0;
+      result := 0;
       ShowMessage('Erro ao fazer consulta na pessoa... : ' + nome + ' ' +
         e.ToString);
     end;
@@ -262,7 +284,7 @@ begin
   end;
   query.Close;
   query.Free;
-  Result := id;
+  result := id;
 end;
 
 function Utils.idPessoaCliente(nome: string): integer;
@@ -284,12 +306,12 @@ begin
     if (not query.isEmpty) then
     begin
       id := query.Fields[0].AsInteger;
-      Result := id;
+      result := id;
     end;
   except
     on e: exception do
     begin
-      Result := 0;
+      result := 0;
       ShowMessage('Erro ao fazer consulta no cliente : ' + nome + ' ' +
         e.ToString);
     end;
@@ -297,7 +319,7 @@ begin
   end;
   query.Close;
   query.Free;
-  Result := id;
+  result := id;
 
 end;
 
@@ -307,7 +329,6 @@ var
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-  ShowMessage(IntToStr(idPedido));
   query.SQL.Add
     ('insert into carga_pedido values( :pedido_numero_pedido, :carga_IdCarga)');
 
@@ -317,11 +338,11 @@ begin
 
   try
     query.ExecSQL; { Insert service }
-    Result := true;
+    result := true;
   except
     on e: exception do
     begin
-      Result := false;
+      result := false;
       ShowMessage('Erro ao incluir dados... : ' + e.ToString);
     end;
 
@@ -333,6 +354,7 @@ end;
 
 procedure Utils.loadingApiCep;
 begin
+dm_ProjetoFinal.RESTClient1.Disconnect;
   dm_ProjetoFinal.RESTClient1.BaseURL := 'https://viacep.com.br/ws/';
   dm_ProjetoFinal.RESTRequest1.Method := rmGET;
   dm_ProjetoFinal.RESTRequest1.Resource := '{cep}/json';
@@ -357,6 +379,20 @@ begin
   end
   else
     self.generatePerson;
+end;
+
+procedure Utils.newAddress(status: boolean);
+begin
+      frm_Cliente.spConsultaCep.Visible:= status;
+  frm_Cliente.Label1.Enabled:= status;
+  frm_Cliente.MaskCep.Enabled:= status;
+  frm_Cliente.lbEstado.Enabled:= status;
+  frm_Cliente.lbUnidadeFederativa.Enabled:= status;
+  frm_Cliente.lbCidade.Enabled:= status;
+  frm_Cliente.lbRua.Enabled:= status;
+  frm_Cliente.lbNumero.Enabled:= status;
+  frm_Cliente.lbBairro.Enabled:= status;
+  frm_Cliente.lbComplemento.Enabled:=status;
 end;
 
 procedure Utils.nomeEstado(uf: string);
@@ -417,24 +453,58 @@ begin
     frm_Cliente.lbEstado.Text := 'Tocantins'
 end;
 
+function Utils.setConfirmData:boolean;
+begin
+result := true;
+if MessageDlg('CONFIRMAR DADOS'+#13 + frm_Cliente.lbContato.EditLabel.Caption +': '+frm_Cliente.lbContato.Text+ #13+
+    frm_Cliente.Label1.Caption +': '+ frm_Cliente.MaskCep.Text + #13+
+    frm_Cliente.lbCidade.EditLabel.Caption+': '+frm_Cliente.lbCidade.Text+ #13+
+    frm_Cliente.lbBairro.EditLabel.Caption+': '+frm_Cliente.lbBairro.Text+#13+
+    frm_Cliente.lbRua.EditLabel.Caption+': '+frm_Cliente.lbRua.Text+#13+
+    frm_Cliente.lbNumero.EditLabel.Caption+': '+ frm_Cliente.lbNumero.Text+#13+
+    frm_Cliente.lbComplemento.EditLabel.Caption+': '+ frm_Cliente.lbComplemento.Text,
+    TMsgDlgType.mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrNo then
+    begin
+      result:= false;
+      exit;
+    end;
+end;
 
 procedure Utils.updateStatusContato(status: boolean; id: integer);
 begin
-contato:= CadContato.Create;
-contato.setStatus_contato(status);
-contato.setPessoa_idPessoa(id);
+  contato := CadContato.Create;
+  contato.setStatus_contato(status);
+  contato.setPessoa_idPessoa(id);
+  contato.setContato(frm_Cliente.lbContato.Text);
 
-contato.updateStatus;
+  contato.updateStatus;
 end;
 
 function Utils.validateJson: boolean;
 begin
-if (dm_ProjetoFinal.RESTResponse1.ContentType <> CONTENTTYPE_APPLICATION_JSON) or
-    (Length(dm_ProjetoFinal.RESTResponse1.Content) <60) then
-    begin
+  result:=false;
+  if (dm_ProjetoFinal.RESTResponse1.ContentType <> CONTENTTYPE_APPLICATION_JSON)
+    or (Length(dm_ProjetoFinal.RESTResponse1.content) < 60) then
+  begin
     ShowMessage('Verifique o CEP informado');
     result := true;
+  end
+end;
+
+procedure Utils.verifyValueOfField;
+var
+  i: integer;
+begin
+
+    if Length(frm_Cliente.lbContato.Text) <= 8 then
+    begin
+      exit
     end
+    else
+      for i := Length(frm_Cliente.lbContato.Text) downto 0 do
+      begin
+        frm_Cliente.alterarContato.Visible := false;
+      end;
 end;
 
 end.

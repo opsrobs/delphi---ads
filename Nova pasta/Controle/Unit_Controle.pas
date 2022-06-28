@@ -10,6 +10,8 @@ uses System.SysUtils, Winapi.Messages, Vcl.Controls, Vcl.Dialogs, Vcl.Mask,
 type
   TControle = class
   private
+    phone: string;
+
     function validateValue(numero: string): integer;
 
   public
@@ -26,6 +28,9 @@ type
     { ========= }
     function updateContato(content: string): boolean;
     procedure atualizarContato(id: integer);
+
+    procedure setPhone(phone: string);
+    function getPhone: string;
 
   end;
 
@@ -44,7 +49,7 @@ uses Form_CadPessoa,
   Objeto_CadPessoaFisica,
   Objeto_CadPessoaJuridica,
   Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados,
-  Objeto_CadContato, Objeto_CadRecebedor;
+  Objeto_CadContato, Objeto_CadRecebedor, Unit_ControleEdits;
 
 procedure TControle.getCadPf(id: integer);
 var
@@ -68,19 +73,34 @@ begin
   VCadPJ.insertDados;
 end;
 
-function TControle.updateContato(content: string): boolean;
+function TControle.getPhone: string;
 begin
+   result := self.phone;
+
+end;
+
+procedure TControle.setPhone(phone: string);
+begin
+   self.phone  := phone;
+end;
+
+function TControle.updateContato(content: string): boolean;
+var edit:TControleEdit;
+begin
+edit:= TControleEdit.Create;
+  result := true;
   if (frm_Cliente.getContato.Equals(content)) then
   begin
+    utilitaria.alterContact(content);
     result := false;
+    exit
   end
   else
   begin
-    if utilitaria.alterContact(content) = false then
-      result := false;
-    exit
+    edit.atualizarContato(frm_Cliente.spSalvar.Tag);
+    result := true;
   end;
-  result := true;
+
 end;
 
 procedure TControle.validarPessoa(id: integer);
@@ -103,16 +123,19 @@ end;
 procedure TControle.atualizarContato(id: integer);
 var
   VCadContato: CadContato;
+  edit: TControleEdit;
 begin
+  edit := TControleEdit.Create;
   if frm_Cliente.chStatus.Checked = true then
   begin
     VCadContato := CadContato.Create;
     VCadContato.setStatus_contato(frm_Cliente.chStatus.Checked);
     VCadContato.setContato(frm_Cliente.lbContato.Text);
     VCadContato.setPessoa_idPessoa(id);
-    VCadContato.updateDados;
-    ShowMessage('xx')
+    VCadContato.updateEspecifyNumber('22');
   end;
+  MessageDlg('Alteração realizada com sucesso!!!', TMsgDlgType.mtInformation,
+    [TMsgDlgBtn.mbYes], 0)
 
 end;
 
@@ -156,8 +179,8 @@ begin
   VCadContato.setStatus_contato(frm_Cliente.chStatus.Checked);
   VCadContato.setContato(frm_Cliente.lbContato.Text);
   VCadContato.setPessoa_idPessoa(id);
-
-  VCadContato.insertDados;
+  ShowMessage(VCadContato.getContato)
+  // VCadContato.insertDados;
 
 end;
 
@@ -193,6 +216,7 @@ end;
 
 procedure TControle.getCadPessoa;
 var
+  edit: TControleEdit;
   VCadRecebedor: CadRecebedor;
   VCadPessoa: CadPessoa;
   VCadCliente: CadCliente;
@@ -203,6 +227,7 @@ begin
 
   if (frm_Cliente.ShowModal = mrOk) then
   begin
+    edit := TControleEdit.Create;
     VCadPessoa := CadPessoa.Create;
     VCadCliente := CadCliente.Create;
     VCadRecebedor := CadRecebedor.Create;
@@ -210,34 +235,33 @@ begin
     case (frm_Cliente.getFuncao) of
       1:
         begin
-
           if frm_Cliente.spSalvar.Caption = 'Atualizar' then
           begin
-            self.atualizarContato(frm_Cliente.spSalvar.Tag);
+            //self.cadastroContato(frm_Cliente.spSalvar.Tag);
           end
           else
-            ShowMessage('UUUI');
-          { VCadPessoa.setnome(frm_Cliente.edNome.Text);
-            VCadPessoa.insertDados;
-            idPessoa:= VCadPessoa.getLastId;
-            self.cadastroContato(idPessoa);
-            self.validarPessoa(idPessoa);
-            if(frm_Cliente.chDestinatario.Checked)then
-            begin
-            VCadRecebedor.setPessoa_idPessoa(idPessoa);
-            VCadRecebedor.insertDados
-            end
-            else
-            begin
-            VCadCliente.setPessoa_idPessoa(idPessoa);
-            VCadCliente.insertDados;
-            end;
-            self.CadastroEstado;
-            self.CadastroCidade();
 
-            self.cadastroBairro;
-            self.cadastroEndereco(idpessoa);
-            ShowMessage('Cadastro reaalizado com sucesso!!!'); }
+            { VCadPessoa.setnome(frm_Cliente.edNome.Text);
+              VCadPessoa.insertDados;
+              idPessoa:= VCadPessoa.getLastId;
+              self.cadastroContato(idPessoa);
+              self.validarPessoa(idPessoa);
+              if(frm_Cliente.chDestinatario.Checked)then
+              begin
+              VCadRecebedor.setPessoa_idPessoa(idPessoa);
+              VCadRecebedor.insertDados
+              end
+              else
+              begin
+              VCadCliente.setPessoa_idPessoa(idPessoa);
+              VCadCliente.insertDados;
+              end;
+              self.CadastroEstado;
+              self.CadastroCidade();
+
+              self.cadastroBairro;
+              self.cadastroEndereco(idpessoa);
+              ShowMessage('Cadastro reaalizado com sucesso!!!'); }
 
         end;
       2:
@@ -253,5 +277,4 @@ begin
   FreeAndNil(frm_Cliente);
 
 end;
-
 end.
