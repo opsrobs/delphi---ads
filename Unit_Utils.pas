@@ -15,7 +15,7 @@ type
     procedure capturandoJson;
     procedure nomeEstado(uf: string);
     procedure confirmData;
-
+    procedure clearData;
 
   public
     procedure loadingApiPessoa;
@@ -31,15 +31,16 @@ type
     function validateJson: boolean;
     procedure updateStatusContato(status: boolean; id: integer);
     procedure verifyValueOfField;
-    function setConfirmData:boolean;
-    procedure newAddress(status:boolean);
+    function setConfirmData: boolean;
+    procedure newAddress(status: boolean);
   end;
 
 implementation
 
 { Utils }
 
-uses Form_CadPessoa, Form_CadFuncionario, Form_CadPedido, Objeto_CadContato;
+uses Form_CadPessoa, Form_CadFuncionario, Form_CadPedido, Objeto_CadContato,
+  Unit_ControleEdits;
 
 function Utils.alterContact(content: string): boolean;
 begin
@@ -64,12 +65,15 @@ begin
 end;
 
 procedure Utils.bloquearDados;
+var
+  edit: TControleEdit;
 begin
+  edit.setStyleOfField(true);
   frm_Cliente.SpeedButton1.Visible := false;
   frm_Cliente.rdCNPJ.Visible := false;
   frm_Cliente.edNome.Enabled := false;
   frm_Cliente.edCpfCnpj.Enabled := false;
-  {--------------------------------------}
+  { -------------------------------------- }
 
 end;
 
@@ -78,7 +82,7 @@ begin
 
   if self.validateJson then
   begin
-     exit
+    exit
   end
   else
   begin
@@ -98,17 +102,32 @@ begin
 
 end;
 
+procedure Utils.clearData;
+begin
+  frm_Cliente.spConsultaCep.Visible := true;
+  frm_Cliente.MaskCep.Clear;
+  frm_Cliente.lbEstado.Clear;
+  frm_Cliente.lbUnidadeFederativa.Clear;
+  frm_Cliente.lbCidade.Clear;
+  frm_Cliente.lbRua.Clear;
+  frm_Cliente.lbNumero.Clear;
+  frm_Cliente.lbBairro.Clear;
+  frm_Cliente.lbComplemento.Clear;
+end;
+
 procedure Utils.confirmData;
 var
-text:string;
+  Text: string;
 begin
-text:='CONFIRMAR DADOS'+#13 + frm_Cliente.lbContato.EditLabel.Caption +': '+frm_Cliente.lbContato.Text+ #13+
-    frm_Cliente.Label1.Caption +': '+ frm_Cliente.MaskCep.Text + #13+
-    frm_Cliente.lbCidade.EditLabel.Caption+': '+frm_Cliente.lbCidade.Text+ #13+
-    frm_Cliente.lbBairro.EditLabel.Caption+': '+frm_Cliente.lbBairro.Text+#13+
-    frm_Cliente.lbRua.EditLabel.Caption+': '+frm_Cliente.lbRua.Text+#13+
-    frm_Cliente.lbNumero.EditLabel.Caption+': '+ frm_Cliente.lbNumero.Text+#13+
-    frm_Cliente.lbComplemento.EditLabel.Caption+': '+ frm_Cliente.lbComplemento.Text;
+  Text := 'CONFIRMAR DADOS' + #13 + frm_Cliente.lbContato.EditLabel.Caption +
+    ': ' + frm_Cliente.lbContato.Text + #13 + frm_Cliente.Label1.Caption + ': '
+    + frm_Cliente.MaskCep.Text + #13 + frm_Cliente.lbCidade.EditLabel.Caption +
+    ': ' + frm_Cliente.lbCidade.Text + #13 +
+    frm_Cliente.lbBairro.EditLabel.Caption + ': ' + frm_Cliente.lbBairro.Text +
+    #13 + frm_Cliente.lbRua.EditLabel.Caption + ': ' + frm_Cliente.lbRua.Text +
+    #13 + frm_Cliente.lbNumero.EditLabel.Caption + ': ' +
+    frm_Cliente.lbNumero.Text + #13 + frm_Cliente.lbComplemento.EditLabel.
+    Caption + ': ' + frm_Cliente.lbComplemento.Text;
 
 end;
 
@@ -354,7 +373,7 @@ end;
 
 procedure Utils.loadingApiCep;
 begin
-dm_ProjetoFinal.RESTClient1.Disconnect;
+  dm_ProjetoFinal.RESTClient1.Disconnect;
   dm_ProjetoFinal.RESTClient1.BaseURL := 'https://viacep.com.br/ws/';
   dm_ProjetoFinal.RESTRequest1.Method := rmGET;
   dm_ProjetoFinal.RESTRequest1.Resource := '{cep}/json';
@@ -382,17 +401,26 @@ begin
 end;
 
 procedure Utils.newAddress(status: boolean);
+var
+  edit: TControleEdit;
 begin
-      frm_Cliente.spConsultaCep.Visible:= status;
-  frm_Cliente.Label1.Enabled:= status;
-  frm_Cliente.MaskCep.Enabled:= status;
-  frm_Cliente.lbEstado.Enabled:= status;
-  frm_Cliente.lbUnidadeFederativa.Enabled:= status;
-  frm_Cliente.lbCidade.Enabled:= status;
-  frm_Cliente.lbRua.Enabled:= status;
-  frm_Cliente.lbNumero.Enabled:= status;
-  frm_Cliente.lbBairro.Enabled:= status;
-  frm_Cliente.lbComplemento.Enabled:=status;
+
+  frm_Cliente.spConsultaCep.Visible := status;
+  frm_Cliente.Label1.Enabled := status;
+  frm_Cliente.MaskCep.Enabled := status;
+  frm_Cliente.lbEstado.Enabled := status;
+  frm_Cliente.lbUnidadeFederativa.Enabled := status;
+  frm_Cliente.lbCidade.Enabled := status;
+  frm_Cliente.lbRua.Enabled := status;
+  frm_Cliente.lbNumero.Enabled := status;
+  frm_Cliente.lbBairro.Enabled := status;
+  frm_Cliente.lbComplemento.Enabled := status;
+  edit.setStyleOfField(false);
+  if frm_Cliente.newAddress.tag = 1 then
+  begin
+  Controle.atualizarEndereco(Controle.getIdendereco,frm_Cliente.spSalvar.Tag);
+   self.clearData;
+  end;
 end;
 
 procedure Utils.nomeEstado(uf: string);
@@ -453,21 +481,24 @@ begin
     frm_Cliente.lbEstado.Text := 'Tocantins'
 end;
 
-function Utils.setConfirmData:boolean;
+function Utils.setConfirmData: boolean;
 begin
-result := true;
-if MessageDlg('CONFIRMAR DADOS'+#13 + frm_Cliente.lbContato.EditLabel.Caption +': '+frm_Cliente.lbContato.Text+ #13+
-    frm_Cliente.Label1.Caption +': '+ frm_Cliente.MaskCep.Text + #13+
-    frm_Cliente.lbCidade.EditLabel.Caption+': '+frm_Cliente.lbCidade.Text+ #13+
-    frm_Cliente.lbBairro.EditLabel.Caption+': '+frm_Cliente.lbBairro.Text+#13+
-    frm_Cliente.lbRua.EditLabel.Caption+': '+frm_Cliente.lbRua.Text+#13+
-    frm_Cliente.lbNumero.EditLabel.Caption+': '+ frm_Cliente.lbNumero.Text+#13+
-    frm_Cliente.lbComplemento.EditLabel.Caption+': '+ frm_Cliente.lbComplemento.Text,
-    TMsgDlgType.mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrNo then
-    begin
-      result:= false;
-      exit;
-    end;
+  result := true;
+  if MessageDlg('CONFIRMAR DADOS' + #13 + frm_Cliente.lbContato.EditLabel.
+    Caption + ': ' + frm_Cliente.lbContato.Text + #13 +
+    frm_Cliente.Label1.Caption + ': ' + frm_Cliente.MaskCep.Text + #13 +
+    frm_Cliente.lbCidade.EditLabel.Caption + ': ' + frm_Cliente.lbCidade.Text +
+    #13 + frm_Cliente.lbBairro.EditLabel.Caption + ': ' +
+    frm_Cliente.lbBairro.Text + #13 + frm_Cliente.lbRua.EditLabel.Caption + ': '
+    + frm_Cliente.lbRua.Text + #13 + frm_Cliente.lbNumero.EditLabel.Caption +
+    ': ' + frm_Cliente.lbNumero.Text + #13 +
+    frm_Cliente.lbComplemento.EditLabel.Caption + ': ' +
+    frm_Cliente.lbComplemento.Text, TMsgDlgType.mtConfirmation,
+    [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrno then
+  begin
+    result := false;
+    exit;
+  end;
 end;
 
 procedure Utils.updateStatusContato(status: boolean; id: integer);
@@ -482,7 +513,7 @@ end;
 
 function Utils.validateJson: boolean;
 begin
-  result:=false;
+  result := false;
   if (dm_ProjetoFinal.RESTResponse1.ContentType <> CONTENTTYPE_APPLICATION_JSON)
     or (Length(dm_ProjetoFinal.RESTResponse1.content) < 60) then
   begin
@@ -496,15 +527,15 @@ var
   i: integer;
 begin
 
-    if Length(frm_Cliente.lbContato.Text) <= 8 then
+  if Length(frm_Cliente.lbContato.Text) <= 8 then
+  begin
+    exit
+  end
+  else
+    for i := Length(frm_Cliente.lbContato.Text) downto 0 do
     begin
-      exit
-    end
-    else
-      for i := Length(frm_Cliente.lbContato.Text) downto 0 do
-      begin
-        frm_Cliente.alterarContato.Visible := false;
-      end;
+      frm_Cliente.alterarContato.Visible := false;
+    end;
 end;
 
 end.

@@ -15,8 +15,9 @@ type
     procedure consultarPessoa;
     procedure verifyStatus;
     procedure atualizarContato(id: integer);
-
+    procedure setStyleOfField(status:boolean);
   private
+
 
   end;
 
@@ -56,7 +57,7 @@ begin
     frm_Consulta := Tfrm_Consulta.Create(nil);
 
   frm_Consulta.setSelectSQL
-    ('SELECT * FROM logistica_ads.getdadospessoafisica;');
+    ('SELECT * FROM logistica_ads.dados_refatorado;');
   if frm_Consulta.ShowModal = mrOk then
   begin
     frm_Cliente.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[12].AsInteger;
@@ -78,13 +79,19 @@ begin
     Controle.setPhone(frm_Cliente.lbContato.Text);
     self.verifyStatus;
     frm_Cliente.tag := 10;
-
+    Controle.setIdendereco(dm_ProjetoFinal.qrConsulta.Fields[13].AsInteger);
     Controle.getCadPessoa;
     // frm_Cliente.ShowModal;
 
   end;
   dm_ProjetoFinal.qrConsulta.Close;
   dm_ProjetoFinal.qrConsulta.SQL.Clear;
+end;
+
+procedure TControleEdit.setStyleOfField(status:boolean);
+begin
+frm_Cliente.newAddress.Visible := status;
+ frm_Cliente.newAddress.Left := 310;
 end;
 
 procedure TControleEdit.verifyStatus;

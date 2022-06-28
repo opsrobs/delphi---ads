@@ -68,8 +68,8 @@ object frm_Cliente: Tfrm_Cliente
       Visible = False
       OnClick = alterarContatoClick
     end
-    object SpeedButton2: TSpeedButton
-      Left = 400
+    object newAddress: TSpeedButton
+      Left = 407
       Top = 169
       Width = 113
       Height = 26
@@ -79,8 +79,6 @@ object frm_Cliente: Tfrm_Cliente
       Images = dm_ProjetoFinal.VirtualImageList1
       HotImageIndex = 24
       HotImageName = 'svgexport'
-      Flat = True
-      Visible = False
       OnClick = alterarContatoClick
     end
     object edNome: TLabeledEdit

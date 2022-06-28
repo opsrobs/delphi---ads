@@ -11,6 +11,7 @@ type
   TControle = class
   private
     phone: string;
+    idEndereco: integer;
 
     function validateValue(numero: string): integer;
 
@@ -28,9 +29,12 @@ type
     { ========= }
     function updateContato(content: string): boolean;
     procedure atualizarContato(id: integer);
+    procedure atualizarEndereco(id, idEndereco: integer);
 
     procedure setPhone(phone: string);
     function getPhone: string;
+    procedure setIdendereco(idEndereco: integer);
+    function getIdendereco: integer;
 
   end;
 
@@ -73,21 +77,32 @@ begin
   VCadPJ.insertDados;
 end;
 
+function TControle.getIdendereco: integer;
+begin
+  result := self.idEndereco;
+end;
+
 function TControle.getPhone: string;
 begin
-   result := self.phone;
+  result := self.phone;
 
+end;
+
+procedure TControle.setIdendereco(idEndereco: integer);
+begin
+  self.idEndereco := idEndereco;
 end;
 
 procedure TControle.setPhone(phone: string);
 begin
-   self.phone  := phone;
+  self.phone := phone;
 end;
 
 function TControle.updateContato(content: string): boolean;
-var edit:TControleEdit;
+var
+  edit: TControleEdit;
 begin
-edit:= TControleEdit.Create;
+  edit := TControleEdit.Create;
   result := true;
   if (frm_Cliente.getContato.Equals(content)) then
   begin
@@ -139,6 +154,16 @@ begin
 
 end;
 
+procedure TControle.atualizarEndereco(id, idEndereco: integer);
+begin
+  VCadEndereco := CadEndereco.Create;
+  VCadEndereco.setIdendereco(idEndereco);
+  VCadEndereco.setPessoa_idPessoa(id);
+  VCadEndereco.setAtivo(false);
+
+  VCadEndereco.updateEspecifyAddress(idEndereco)
+end;
+
 procedure TControle.cadastroBairro;
 var
   idCidade: integer;
@@ -179,8 +204,7 @@ begin
   VCadContato.setStatus_contato(frm_Cliente.chStatus.Checked);
   VCadContato.setContato(frm_Cliente.lbContato.Text);
   VCadContato.setPessoa_idPessoa(id);
-  ShowMessage(VCadContato.getContato)
-  // VCadContato.insertDados;
+  VCadContato.insertDados;
 
 end;
 
@@ -196,6 +220,7 @@ begin
   VCadEndereco.setnumero(self.validateValue(frm_Cliente.lbNumero.Text));
   VCadEndereco.setPessoa_idPessoa(idpessoa);
   VCadEndereco.setBairro_idBairro(idBairro);
+  VCadEndereco.setAtivo(true);
 
   VCadEndereco.insertDados;
 end;
@@ -237,31 +262,31 @@ begin
         begin
           if frm_Cliente.spSalvar.Caption = 'Atualizar' then
           begin
-            //self.cadastroContato(frm_Cliente.spSalvar.Tag);
+            self.cadastroContato(frm_Cliente.spSalvar.Tag);
           end
           else
 
-            { VCadPessoa.setnome(frm_Cliente.edNome.Text);
-              VCadPessoa.insertDados;
-              idPessoa:= VCadPessoa.getLastId;
-              self.cadastroContato(idPessoa);
-              self.validarPessoa(idPessoa);
-              if(frm_Cliente.chDestinatario.Checked)then
-              begin
-              VCadRecebedor.setPessoa_idPessoa(idPessoa);
-              VCadRecebedor.insertDados
-              end
-              else
-              begin
-              VCadCliente.setPessoa_idPessoa(idPessoa);
-              VCadCliente.insertDados;
-              end;
-              self.CadastroEstado;
-              self.CadastroCidade();
+            VCadPessoa.setnome(frm_Cliente.edNome.Text);
+          VCadPessoa.insertDados;
+          idpessoa := VCadPessoa.getLastId;//<
+          self.cadastroContato(idpessoa);
+          self.validarPessoa(idpessoa);
+          if (frm_Cliente.chDestinatario.Checked) then
+          begin
+            VCadRecebedor.setPessoa_idPessoa(idpessoa);
+            VCadRecebedor.insertDados
+          end
+          else
+          begin
+            VCadCliente.setPessoa_idPessoa(idpessoa);
+            VCadCliente.insertDados;
+          end;
+          self.CadastroEstado;
+          self.CadastroCidade();
 
-              self.cadastroBairro;
-              self.cadastroEndereco(idpessoa);
-              ShowMessage('Cadastro reaalizado com sucesso!!!'); }
+          self.cadastroBairro;
+          self.cadastroEndereco(idpessoa);
+          ShowMessage('Cadastro reaalizado com sucesso!!!');
 
         end;
       2:
@@ -277,4 +302,5 @@ begin
   FreeAndNil(frm_Cliente);
 
 end;
+
 end.

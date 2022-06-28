@@ -38,6 +38,7 @@ interface
                           {<--- CRUD --->}
 
         function insertDados:Boolean;
+        function updateEspecifyAddress(idAddress: integer): Boolean;
 
   end;
 
@@ -53,7 +54,7 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into endereco values( 0, :cep, :rua, :complemento, :numero, :bairro_idBairro, :pessoa_idPessoa)');
+  query.SQL.Add('insert into endereco values( 0, :cep, :rua, :complemento, :numero, :bairro_idBairro, :pessoa_idPessoa, :ativo)');
 
   query.ParamByName('cep').AsString := self.getCep;
   query.ParamByName('rua').AsString:= self.getRua;
@@ -61,6 +62,8 @@ begin
   query.ParamByName('numero').AsInteger := self.getNumero;
   query.ParamByName('bairro_idBairro').AsInteger := self.getBairro_idBairro;
   query.ParamByName('pessoa_idPessoa').AsInteger  := self.getPessoa_idPessoa;
+  query.ParamByName('ativo').AsBoolean  := self.getAtivo;
+
 
       try
         query.ExecSQL;  {Insert service}
@@ -156,6 +159,38 @@ end;
 procedure CadEndereco.setRua(rua: string);
 begin
     self.rua:= rua;
+end;
+
+function CadEndereco.updateEspecifyAddress(idAddress: integer): Boolean;
+var
+  script: string;
+  query: TFDQuery;
+begin
+ShowMessage(IntToStr(idAddress));
+  script := 'update endereco set ativo =:ativo where (idEndereco = "'+IntToStr(idAddress)+'" and pessoa_idPessoa = :pessoa_idPessoa )';
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  query.SQL.Add(script);
+
+  query.Params[0].AsBoolean := Self.getAtivo;
+  query.Params[1].AsInteger := Self.getPessoa_idPessoa;
+  query.ParamByName('pessoa_idPessoa').AsInteger := Self.getPessoa_idPessoa;
+  try
+    query.ExecSQL; { update service }
+    result := true;
+    MessageDlg('Alteração do Endereço ligado ao CEP [ '+self.getCep+' ] '+#12+'realizada com sucesso!!!', TMsgDlgType.mtInformation,
+    [TMsgDlgBtn.mbYes], 0)
+  except
+    on e: exception do
+    begin
+      result := false;
+      showMessage('Erro ao alterar dados do contato: ' + Self.getCep + '  ' +
+        e.ToString);
+    end;
+
+  end;
+  query.Close;
+  query.Free;
 end;
 
 end.
