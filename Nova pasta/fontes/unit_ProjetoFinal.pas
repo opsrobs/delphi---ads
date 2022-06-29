@@ -69,7 +69,8 @@ end;
 
 procedure TFrm_Principal.ConsultarClientesClick(Sender: TObject);
 begin
-
+frm_Consulta := Tfrm_Consulta.Create(nil);
+  frm_Consulta.tag := 1;
   Frm_Principal.ConsultarClientes.Tag := 1;
   ControleEdit.consultarPessoa;
 

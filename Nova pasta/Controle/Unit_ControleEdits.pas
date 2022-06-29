@@ -16,7 +16,9 @@ type
     procedure verifyStatus;
     procedure atualizarContato(id: integer);
     procedure setStyleOfField(status:boolean);
+    procedure setPersonType;
   private
+
 
 
   end;
@@ -56,8 +58,9 @@ begin
   if frm_Consulta = nil then
     frm_Consulta := Tfrm_Consulta.Create(nil);
 
-  frm_Consulta.setSelectSQL
-    ('SELECT * FROM logistica_ads.dados_refatorado where situacao = 1 and situacao_endereco = 1');
+  {frm_Consulta.setSelectSQL
+    (self.setPersonType);  }
+    self.setPersonType;
   if frm_Consulta.ShowModal = mrOk then
   begin
     frm_Cliente.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[12].AsInteger;
@@ -86,6 +89,21 @@ begin
   end;
   dm_ProjetoFinal.qrConsulta.Close;
   dm_ProjetoFinal.qrConsulta.SQL.Clear;
+end;
+
+procedure TControleEdit.setPersonType;
+begin
+   if frm_Consulta.chpf.Checked = true   then
+   begin
+   frm_Consulta.setSelectSQL('SELECT * FROM logistica_ads.dados_refatorado where situacao = 1 and situacao_endereco = 1');
+   frm_Consulta.resetScreen;
+   end
+   else if frm_Consulta.chpj.Checked = true   then
+   begin
+    frm_Consulta.setSelectSQL('SELECT * FROM logistica_ads.dados_pessoa_juridica where situacao = 1 and situacao_endereco = 1');
+   frm_Consulta.resetScreen;
+   end;
+
 end;
 
 procedure TControleEdit.setStyleOfField(status:boolean);

@@ -19,10 +19,9 @@ object frm_Consulta: Tfrm_Consulta
     Left = 0
     Top = 0
     Width = 723
-    Height = 41
+    Height = 81
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 624
     object spButtonReturn: TSpeedButton
       Left = 192
       Top = 8
@@ -44,65 +43,43 @@ object frm_Consulta: Tfrm_Consulta
       Flat = True
       OnClick = spSalvarClick
     end
-    object spDestinatario: TSpeedButton
-      Left = 479
+    object chPf: TCheckBox
+      Left = 416
       Top = 13
-      Width = 123
-      Height = 22
-      Caption = 'DESTINATARIO'
-      ImageIndex = 21
-      ImageName = 'add-user'
-      Images = dm_ProjetoFinal.VirtualImageList1
-      HotImageIndex = 22
-      HotImageName = 'add'
-      Layout = blGlyphRight
-      ParentShowHint = False
-      ShowHint = False
-      Spacing = 20
-      Visible = False
-      OnClick = spDestinatarioClick
-    end
-  end
-  object Panel2: TPanel
-    Left = 0
-    Top = 41
-    Width = 723
-    Height = 48
-    Align = alTop
-    TabOrder = 1
-    ExplicitWidth = 624
-    object lbResult: TLabel
-      Left = 464
-      Top = 27
-      Width = 66
-      Height = 15
-      Caption = 'Resultados...'
-    end
-    object edPesquisa: TLabeledEdit
-      Left = 16
-      Top = 19
-      Width = 393
-      Height = 23
-      EditLabel.Width = 46
-      EditLabel.Height = 15
-      EditLabel.Caption = 'Pesquisa'
+      Width = 97
+      Height = 17
+      Caption = 'Pessoa Fisica'
+      Checked = True
+      State = cbChecked
       TabOrder = 0
+      Visible = False
+      OnClick = chPfClick
+    end
+    object chPj: TCheckBox
+      Left = 17
+      Top = 33
+      Width = 97
+      Height = 17
+      Caption = 'Pessoa juridica'
+      TabOrder = 1
+      Visible = False
+      OnClick = chPjClick
     end
   end
   object Panel3: TPanel
     Left = 0
-    Top = 89
+    Top = 81
     Width = 723
-    Height = 471
+    Height = 479
     Align = alClient
-    TabOrder = 2
-    ExplicitWidth = 624
-    ExplicitHeight = 352
+    TabOrder = 1
+    ExplicitTop = 89
+    ExplicitHeight = 471
     object dbConsulta: TDBGrid
       Left = 1
       Top = 1
       Width = 721
-      Height = 469
+      Height = 429
       Align = alClient
       DataSource = dm_ProjetoFinal.dsConsulta
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -112,6 +89,51 @@ object frm_Consulta: Tfrm_Consulta
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+    end
+    object Panel2: TPanel
+      Left = 1
+      Top = 430
+      Width = 721
+      Height = 48
+      Align = alBottom
+      TabOrder = 1
+      ExplicitLeft = 0
+      ExplicitTop = 473
+      object lbResult: TLabel
+        Left = 464
+        Top = 27
+        Width = 66
+        Height = 15
+        Caption = 'Resultados...'
+      end
+      object spDestinatario: TSpeedButton
+        Left = 272
+        Top = 20
+        Width = 123
+        Height = 22
+        Caption = 'DESTINATARIO'
+        ImageIndex = 21
+        ImageName = 'add-user'
+        Images = dm_ProjetoFinal.VirtualImageList1
+        HotImageIndex = 22
+        HotImageName = 'add'
+        Layout = blGlyphRight
+        ParentShowHint = False
+        ShowHint = False
+        Spacing = 20
+        Visible = False
+        OnClick = spDestinatarioClick
+      end
+      object edPesquisa: TLabeledEdit
+        Left = 16
+        Top = 19
+        Width = 233
+        Height = 23
+        EditLabel.Width = 46
+        EditLabel.Height = 15
+        EditLabel.Caption = 'Pesquisa'
+        TabOrder = 0
+      end
     end
   end
 end

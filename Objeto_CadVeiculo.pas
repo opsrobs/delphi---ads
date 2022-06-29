@@ -129,11 +129,12 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('insert into veiculo values( 0, :modelo, :placa, :marca_veiculo_idmarca_veiculo)');
+  query.SQL.Add('insert into veiculo values( 0, :modelo, :placa, :marca_veiculo_idmarca_veiculo, :ativo)');
 
   query.ParamByName('modelo').AsString := self.getModelo;
   query.ParamByName('placa').AsString := self.getPlaca;
   query.ParamByName('marca_veiculo_idmarca_veiculo').AsInteger := self.getMarca_veiculo_idMarca;
+  query.ParamByName('ativo').AsBoolean := true;
 
       try
         query.ExecSQL;  {Insert service}
