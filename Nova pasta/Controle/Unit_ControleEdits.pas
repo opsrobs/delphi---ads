@@ -57,7 +57,7 @@ begin
     frm_Consulta := Tfrm_Consulta.Create(nil);
 
   frm_Consulta.setSelectSQL
-    ('SELECT * FROM logistica_ads.dados_refatorado;');
+    ('SELECT * FROM logistica_ads.dados_refatorado where situacao = 1 and situacao_endereco = 1');
   if frm_Consulta.ShowModal = mrOk then
   begin
     frm_Cliente.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[12].AsInteger;

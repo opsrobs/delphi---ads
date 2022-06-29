@@ -166,15 +166,12 @@ var
   script: string;
   query: TFDQuery;
 begin
-ShowMessage(IntToStr(idAddress));
-  script := 'update endereco set ativo =:ativo where (idEndereco = "'+IntToStr(idAddress)+'" and pessoa_idPessoa = :pessoa_idPessoa )';
+  script := 'update endereco set ativo =:ativo where (pessoa_idPessoa = '+IntToStr(self.getPessoa_idPessoa)+' and idEndereco = '+IntToStr(idAddress)+' )';
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
   query.SQL.Add(script);
 
-  query.Params[0].AsBoolean := Self.getAtivo;
-  query.Params[1].AsInteger := Self.getPessoa_idPessoa;
-  query.ParamByName('pessoa_idPessoa').AsInteger := Self.getPessoa_idPessoa;
+  query.ParamByName('ativo').AsBoolean := Self.getAtivo;
   try
     query.ExecSQL; { update service }
     result := true;

@@ -2,21 +2,20 @@ unit Unit_ControleEdits;
 
 interface
 
-uses Form_Edits, Vcl.Controls, Vcl.ComCtrls, Vcl.Dialogs, Unit_Controle,Form_CadPessoa,
+uses Form_Edits, Vcl.Controls, Vcl.ComCtrls, Vcl.Dialogs, Unit_Controle,
+  Form_CadPessoa,
   System.SysUtils;
 
 type
   TControleEdit = class
   public
-  contato:string;
-  procedure setContato(contato: string);
-    function getContato: string;
+    { contato: string;
+      procedure setContato(contato: string);
+      function getContato: string; }
     procedure consultarPessoa;
     procedure verifyStatus;
     procedure atualizarContato(id: integer);
-
-
-
+    procedure setStyleOfField(status:boolean);
   private
 
 
@@ -43,16 +42,14 @@ begin
     VCadContato.setStatus_contato(frm_Cliente.chStatus.Checked);
     VCadContato.setContato(frm_Cliente.lbContato.Text);
     VCadContato.setPessoa_idPessoa(id);
-    VCadContato.updateEspecifyNumber();
+    VCadContato.updateEspecifyNumber(Controle.getPhone);
   end;
-  MessageDlg('Alteração realizada com sucesso!!!', TMsgDlgType.mtInformation,
-    [TMsgDlgBtn.mbYes], 0)
 
 end;
 
 procedure TControleEdit.consultarPessoa;
 begin
-Controle := TControle.Create;
+  Controle := TControle.Create;
   if (frm_Cliente = nil) then
     frm_Cliente := Tfrm_Cliente.Create(nil);
 
@@ -60,10 +57,9 @@ Controle := TControle.Create;
     frm_Consulta := Tfrm_Consulta.Create(nil);
 
   frm_Consulta.setSelectSQL
-    ('SELECT * FROM logistica_ads.getdadospessoafisica;');
+    ('SELECT * FROM logistica_ads.dados_refatorado where situacao = 1');
   if frm_Consulta.ShowModal = mrOk then
   begin
-
     frm_Cliente.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[12].AsInteger;
     frm_Cliente.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields[0].AsString;
     frm_Cliente.lbContato.Text := dm_ProjetoFinal.qrConsulta.Fields[2].AsString;
@@ -80,8 +76,10 @@ Controle := TControle.Create;
       [10].AsString;
     frm_Cliente.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields[1].AsString;
     FreeAndNil(frm_Consulta);
+    Controle.setPhone(frm_Cliente.lbContato.Text);
     self.verifyStatus;
     frm_Cliente.tag := 10;
+    Controle.setIdendereco(dm_ProjetoFinal.qrConsulta.Fields[13].AsInteger);
     Controle.getCadPessoa;
     // frm_Cliente.ShowModal;
 
@@ -90,27 +88,28 @@ Controle := TControle.Create;
   dm_ProjetoFinal.qrConsulta.SQL.Clear;
 end;
 
-
-
-function TControleEdit.getContato: string;
+procedure TControleEdit.setStyleOfField(status:boolean);
 begin
-  result := Self.contato;
-end;
-
-procedure TControleEdit.setContato(contato: string);
-begin
-  Self.contato := contato;
+frm_Cliente.newAddress.Visible := status;
+ frm_Cliente.newAddress.Left := 310;
 end;
 
 procedure TControleEdit.verifyStatus;
 begin
+utilitaria.newAddress(false);
+  frm_Cliente.alterarContato.Visible := true;
   if (dm_ProjetoFinal.qrConsulta.Fields[3].AsInteger = 0) then
+  // se a situação do contato for 0, o contato não será inserido no campo dele
   begin
     frm_Cliente.lbContato.Clear;
-    frm_Cliente.chStatus.Checked := true;
-  end
-  else if (frm_Cliente.lbEstado.Text = '') and (frm_Cliente.chStatus.Checked = true) then
+
     frm_Cliente.chStatus.Checked := false;
+    // setar o status do contato para inativo
+    frm_Cliente.alterarContato.Visible := false;
+    // ocultar botão para alterar contato
+
+  end
+
 end;
 
 end.

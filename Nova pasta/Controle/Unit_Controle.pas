@@ -29,12 +29,13 @@ type
     { ========= }
     function updateContato(content: string): boolean;
     procedure atualizarContato(id: integer);
-    procedure atualizarEndereco(id, idEndereco: integer);
+    procedure atualizarEndereco(id, idpessoa: integer);
 
     procedure setPhone(phone: string);
     function getPhone: string;
     procedure setIdendereco(idEndereco: integer);
     function getIdendereco: integer;
+    procedure conferirContatoAlterado(contato: string);
 
   end;
 
@@ -154,12 +155,14 @@ begin
 
 end;
 
-procedure TControle.atualizarEndereco(id, idEndereco: integer);
+procedure TControle.atualizarEndereco(id, idpessoa: integer);
 begin
   VCadEndereco := CadEndereco.Create;
-  VCadEndereco.setIdendereco(idEndereco);
-  VCadEndereco.setPessoa_idPessoa(id);
+  VCadEndereco.setIdendereco(id);
+
+  VCadEndereco.setPessoa_idPessoa(idpessoa);
   VCadEndereco.setAtivo(false);
+  VCadEndereco.setCep(frm_Cliente.MaskCep.Text);
 
   VCadEndereco.updateEspecifyAddress(idEndereco)
 end;
@@ -239,6 +242,14 @@ begin
     VCadEstado.updateDados;
 end;
 
+procedure TControle.conferirContatoAlterado(contato: string);
+begin
+  if frm_Cliente.getContato = contato then
+    exit
+  else
+    self.cadastroContato(frm_Cliente.spSalvar.Tag);
+end;
+
 procedure TControle.getCadPessoa;
 var
   edit: TControleEdit;
@@ -262,31 +273,41 @@ begin
         begin
           if frm_Cliente.spSalvar.Caption = 'Atualizar' then
           begin
-            self.cadastroContato(frm_Cliente.spSalvar.Tag);
+            self.conferirContatoAlterado(frm_Cliente.lbContato.Text);
+            if frm_Cliente.newAddress.Tag = 1 then
+            begin
+              self.CadastroEstado;
+              self.CadastroCidade();
+
+              self.cadastroBairro;
+              self.cadastroEndereco(frm_Cliente.spSalvar.Tag);
+
+            end;
           end
           else
-
+          begin
             VCadPessoa.setnome(frm_Cliente.edNome.Text);
-          VCadPessoa.insertDados;
-          idpessoa := VCadPessoa.getLastId;//<
-          self.cadastroContato(idpessoa);
-          self.validarPessoa(idpessoa);
-          if (frm_Cliente.chDestinatario.Checked) then
-          begin
-            VCadRecebedor.setPessoa_idPessoa(idpessoa);
-            VCadRecebedor.insertDados
-          end
-          else
-          begin
-            VCadCliente.setPessoa_idPessoa(idpessoa);
-            VCadCliente.insertDados;
-          end;
-          self.CadastroEstado;
-          self.CadastroCidade();
+            VCadPessoa.insertDados;
+            idpessoa := VCadPessoa.getLastId; // <
+            self.cadastroContato(idpessoa);
+            self.validarPessoa(idpessoa);
+            if (frm_Cliente.chDestinatario.Checked) then
+            begin
+              VCadRecebedor.setPessoa_idPessoa(idpessoa);
+              VCadRecebedor.insertDados
+            end
+            else
+            begin
+              VCadCliente.setPessoa_idPessoa(idpessoa);
+              VCadCliente.insertDados;
+            end;
+            self.CadastroEstado;
+            self.CadastroCidade();
 
-          self.cadastroBairro;
-          self.cadastroEndereco(idpessoa);
-          ShowMessage('Cadastro reaalizado com sucesso!!!');
+            self.cadastroBairro;
+            self.cadastroEndereco(idpessoa);
+            ShowMessage('Cadastro reaalizado com sucesso!!!');
+          end;
 
         end;
       2:

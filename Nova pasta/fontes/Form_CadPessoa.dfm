@@ -79,7 +79,8 @@ object frm_Cliente: Tfrm_Cliente
       Images = dm_ProjetoFinal.VirtualImageList1
       HotImageIndex = 24
       HotImageName = 'svgexport'
-      OnClick = alterarContatoClick
+      Visible = False
+      OnClick = newAddressClick
     end
     object edNome: TLabeledEdit
       Left = 143
