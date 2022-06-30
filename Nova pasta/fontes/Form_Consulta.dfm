@@ -23,9 +23,9 @@ object frm_Consulta: Tfrm_Consulta
     Align = alTop
     TabOrder = 0
     object spButtonReturn: TSpeedButton
-      Left = 192
+      Left = 216
       Top = 8
-      Width = 137
+      Width = 97
       Height = 22
       DisabledImageIndex = 1
       Caption = 'Retornar'
@@ -65,6 +65,37 @@ object frm_Consulta: Tfrm_Consulta
       Visible = False
       OnClick = chPjClick
     end
+    object cbVeiculos: TComboBox
+      Left = 519
+      Top = 10
+      Width = 121
+      Height = 22
+      Style = csOwnerDrawFixed
+      TabOrder = 2
+      Visible = False
+      OnChange = cbVeiculosChange
+    end
+    object chConsultaVeiculos: TCheckBox
+      Left = 568
+      Top = 58
+      Width = 97
+      Height = 17
+      Caption = 'Veiculos'
+      TabOrder = 3
+      Visible = False
+      OnClick = chPjClick
+    end
+    object chStatus: TCheckBox
+      Left = 120
+      Top = 13
+      Width = 57
+      Height = 17
+      Caption = 'Status'
+      Enabled = False
+      TabOrder = 4
+      Visible = False
+      OnClick = chPjClick
+    end
   end
   object Panel3: TPanel
     Left = 0
@@ -73,8 +104,6 @@ object frm_Consulta: Tfrm_Consulta
     Height = 479
     Align = alClient
     TabOrder = 1
-    ExplicitTop = 89
-    ExplicitHeight = 471
     object dbConsulta: TDBGrid
       Left = 1
       Top = 1
@@ -89,6 +118,7 @@ object frm_Consulta: Tfrm_Consulta
       TitleFont.Height = -12
       TitleFont.Name = 'Segoe UI'
       TitleFont.Style = []
+      OnCellClick = dbConsultaCellClick
     end
     object Panel2: TPanel
       Left = 1
@@ -97,8 +127,6 @@ object frm_Consulta: Tfrm_Consulta
       Height = 48
       Align = alBottom
       TabOrder = 1
-      ExplicitLeft = 0
-      ExplicitTop = 473
       object lbResult: TLabel
         Left = 464
         Top = 27

@@ -114,7 +114,6 @@ begin
       VCadPedido.setCliente_idCliente(idCliente);
       VCadPedido.setValor_total(StrToFloat(frm_Pedido.edValorTotal.Text));
       VCadPedido.setValor_frete(StrToFloat(frm_Pedido.edValorFrete.Text));
-      ShowMessage(IntToStr(idendereco));
       VCadPedido.setendereco_idEndereco(idendereco);
       VCadPedido.setpeso_pedido(StrToFloat(frm_Pedido.edPeso.Text));
       VCadPedido.setrecebedor_idRecebedor(id);
@@ -134,12 +133,10 @@ j:=1;
   idCarga := utilitaria.getLastId;
   for i :=  0 to verifyValue -1 do
   begin
-    ShowMessage(IntToStr(vetorIdPedido[j]));
     idPedido:= vetorIdPedido[j];
     VCadPedido.setNumero_pedido(idPedido);
     utilitaria.insertDados(idPedido, idCarga);
     VCadPedido.updateDados;
-    ShowMessage(IntToStr(idPedido)+ ' <<>> '+ IntToStr(idCarga));
     inc(j);
   end;
 
@@ -289,7 +286,6 @@ SetLength(vetorIdPedido,j);
 
     for I := 0 to frm_carga.listDados.Items.Count -1 do
     begin
-    //ShowMessage(frm_carga.listDados.Items.Item[i].Caption);
       if frm_carga.listDados.Items.Item[i].Checked then
       begin
         inc(qtd);

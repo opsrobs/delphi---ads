@@ -34,6 +34,9 @@ type
     procedure verifyValueOfField;
     function setConfirmData: boolean;
     procedure newAddress(status: boolean);
+
+    procedure setValues;
+
   end;
 
 implementation
@@ -67,29 +70,27 @@ end;
 
 procedure Utils.bloquearConsulta;
 begin
- frm_Consulta.chPf.Visible := true;
- frm_Consulta.chPj.Visible := true;
- frm_consulta.chPf.Width := 233;
- frm_Consulta.chPf.Left:= 10;
-  frm_consulta.chpj.Width := 100;
- frm_Consulta.chPj.Left:= 10;
- end;
+  frm_Consulta.chPf.Visible := true;
+  frm_Consulta.chPj.Visible := true;
+  frm_Consulta.chConsultaVeiculos.Visible := true;
+  //frm_Consulta.cbVeiculos.Visible := true;
+  frm_Consulta.chPf.Width := 240;
+  frm_Consulta.chPf.Left := 10;
+  frm_Consulta.chPj.Width := 100;
+  frm_Consulta.chPj.Left := 10;
+  frm_Consulta.chConsultaVeiculos.Left := 10;
+end;
 
 procedure Utils.bloquearDados;
 var
   edit: TControleEdit;
 begin
-  //frm_consulta := Tfrm_Consulta.Create(nil);
+  // frm_consulta := Tfrm_Consulta.Create(nil);
   edit.setStyleOfField(true);
   frm_Cliente.SpeedButton1.Visible := false;
   frm_Cliente.rdCNPJ.Visible := false;
   frm_Cliente.edNome.Enabled := false;
   frm_Cliente.edCpfCnpj.Enabled := false;
-  { -------------------------------------- }
-
-
-
-
 end;
 
 procedure Utils.capturandoJson;
@@ -431,10 +432,11 @@ begin
   frm_Cliente.lbBairro.Enabled := status;
   frm_Cliente.lbComplemento.Enabled := status;
   edit.setStyleOfField(false);
-  if frm_Cliente.newAddress.tag = 1 then
+  if frm_Cliente.newAddress.Tag = 1 then
   begin
-  Controle.atualizarEndereco(Controle.getIdendereco,frm_Cliente.spSalvar.Tag);
-   self.clearData;
+    Controle.atualizarEndereco(Controle.getIdendereco,
+      frm_Cliente.spSalvar.Tag);
+    self.clearData;
   end;
 end;
 
@@ -514,6 +516,22 @@ begin
     result := false;
     exit;
   end;
+end;
+
+procedure Utils.setValues;
+begin
+  if frm_Consulta.cbVeiculos.Text <> '' then
+  begin
+    frm_Consulta.setSelectSQL
+      ('SELECT * FROM logistica_ads.marca_veiculo mv,logistica_ads.veiculo v  where v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo;');
+    if frm_Consulta.ShowModal = mrOk then
+    begin
+      frm_Pedido.edDestinatario.Text := dm_ProjetoFinal.qrConsulta.Fields
+        [1].AsString;
+    end;
+
+    FreeAndNil(frm_Consulta);
+  end
 end;
 
 procedure Utils.updateStatusContato(status: boolean; id: integer);
