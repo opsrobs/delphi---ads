@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Buttons, Vcl.StdCtrls,
-  Vcl.Mask, Data.DB, Vcl.Grids, Vcl.DBGrids, Unit_ControleVeiculo;
+  Vcl.Mask, Data.DB, Vcl.Grids, Vcl.DBGrids, Unit_ControleVeiculo, Vcl.CheckLst;
 
 type
   Tfrm_Consulta = class(TForm)
@@ -32,9 +32,9 @@ type
     procedure chPjClick(Sender: TObject);
     procedure cbVeiculosChange(Sender: TObject);
     procedure dbConsultaCellClick(Column: TColumn);
+    procedure chConsultaVeiculosClick(Sender: TObject);
   private
     scriptSql: string;
-    procedure atualizarVeiculo;
   public
     procedure setSelectSQL(scriptSql: string);
     function getSelectSql: string;
@@ -54,33 +54,29 @@ uses Unit_Dados, Objeto_Utilitario, Form_CadPedido, Form_CadFuncionario,
 
 { Tfrm_Consulta }
 
-procedure Tfrm_Consulta.atualizarVeiculo;
-var
-  veiculo:CadVeiculo;
-edit:TControleEdit;
-begin
-case  edit.getStatusVeiculo of
-0:veiculo.setAtivo(true);
-1:veiculo.setAtivo(false);
-end;
-end;
-
 procedure Tfrm_Consulta.cbVeiculosChange(Sender: TObject);
 var
   edit: TControleEdit;
 begin
   self.cbVeiculos.tag := 0;
   self.chStatus.Visible := false;
+  ShowMessage('qq');
   edit.setPersonType;
 
   // utilitaria.setValues;
+end;
+
+procedure Tfrm_Consulta.chConsultaVeiculosClick(Sender: TObject);
+begin
+  frm_Consulta.spSalvar.Enabled := false;
 end;
 
 procedure Tfrm_Consulta.chPfClick(Sender: TObject);
 var
   edit: TControleEdit;
 begin
-  self.chPj.Checked := false;
+self.chConsultaVeiculos.Checked := false;
+self.chPj.Checked:= false;
   edit.setPersonType;
 
 end;
@@ -98,7 +94,8 @@ var
   edit: TControleEdit;
 begin
   self.cbVeiculos.tag := 10;
-  edit.getStatusVeiculo;
+  self.spSalvar.Enabled :=true;
+  //edit.getStatusVeiculo;
 
 end;
 
@@ -167,14 +164,8 @@ begin
 end;
 
 procedure Tfrm_Consulta.spSalvarClick(Sender: TObject);
-var
-veiculo:CadVeiculo;
 begin
-veiculo:= CadVeiculo.Create;
-ShowMessage(BoolToStr(veiculo.getAtivo));
-
-
-  //ModalResult := mrok;
+  ModalResult := mrok;
 end;
 
 end.

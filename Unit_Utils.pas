@@ -34,6 +34,7 @@ type
     procedure verifyValueOfField;
     function setConfirmData: boolean;
     procedure newAddress(status: boolean);
+    procedure uniqueSelected;
 
     procedure setValues;
 
@@ -532,6 +533,11 @@ begin
 
     FreeAndNil(frm_Consulta);
   end
+end;
+
+procedure Utils.uniqueSelected;
+begin
+
 end;
 
 procedure Utils.updateStatusContato(status: boolean; id: integer);

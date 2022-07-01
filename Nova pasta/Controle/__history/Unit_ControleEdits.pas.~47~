@@ -3,7 +3,7 @@ unit Unit_ControleEdits;
 interface
 
 uses Form_Edits, Vcl.Controls, Vcl.ComCtrls, Vcl.Dialogs, Unit_Controle,
-  Form_CadPessoa,Objeto_CadVeiculo,
+  Form_CadPessoa,
   System.SysUtils;
 
 type
@@ -17,25 +17,24 @@ type
     procedure atualizarContato(id: integer);
     procedure setStyleOfField(status: boolean);
     procedure setPersonType;
-    function getStatusVeiculo: boolean;
+    function getStatusVeiculo: integer;
     function getStatus: integer;
     procedure setStatus(idmarca: integer);
   private
     idmarca: integer;
     procedure setStyle;
-    procedure atualizarVeiculo(status:integer);
-    function returnStatus(status: integer): boolean;
 
   end;
 
 var
   Controle: TControle;
-  veiculo:CadVeiculo;
+
 implementation
 
 { TControleEdit }
 
-uses Unit_Dados, Form_Consulta, Objeto_CadContato, Form_CadVeiculos;
+uses Unit_Dados, Form_Consulta, Objeto_CadContato, Form_CadVeiculos,
+  Objeto_CadVeiculo;
 
 procedure TControleEdit.atualizarContato(id: integer);
 var
@@ -54,17 +53,6 @@ begin
 
 end;
 
-procedure TControleEdit.atualizarVeiculo(status:integer);
-begin
-ShowMessage('s');
-   veiculo:= CadVeiculo.create;
-   veiculo.setIdVeiculo(dm_ProjetoFinal.qrConsulta.Fields[2].AsInteger);
-   veiculo.setAtivo(self.returnStatus(status));
-   ShowMessage(IntToStr(veiculo.getIdVeiculo));
-   veiculo.updadteDados;
-   ShowMessage('Atualizou?')
-end;
-
 procedure TControleEdit.consultarPessoa;
 begin
   Controle := TControle.Create;
@@ -81,8 +69,8 @@ begin
   begin
     if frm_Consulta.spSalvar.Caption = 'Atualizar' then
     begin
-      self.atualizarVeiculo(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger);
-      exit
+      self.setStatus(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger);
+      ShowMessage(dm_ProjetoFinal.qrConsulta.Fields[5].AsString);
     end
     else
     begin
@@ -128,47 +116,34 @@ begin
   idmarca := self.idmarca;
 end;
 
-function TControleEdit.getStatusVeiculo: boolean;
+function TControleEdit.getStatusVeiculo: integer;
 var
   status: integer;
+  veiculo: CadVeiculo;
 begin
-  result := true;
+  result := 0;
+  veiculo := CadVeiculo.Create;
   if frm_Consulta.cbVeiculos.tag = 10 then
   begin
     frm_Consulta.chStatus.Visible := true;
-    case status of
-      0:
-        begin
-          frm_Consulta.chStatus.Checked := false;
-        end;
-      1:
-        begin
-          frm_Consulta.chStatus.Checked := true;
-          result := false;
-        end;
-    end;
-    frm_Consulta.chStatus.Enabled := true;
-  end;
-end;
 
-function TControleEdit.returnStatus(status:integer):boolean;
-begin
-  result := true;
-  if frm_Consulta.cbVeiculos.tag = 10 then
-  begin
-    frm_Consulta.chStatus.Visible := true;
+    ShowMessage(frm_Consulta.dbConsulta.SelectedIndex.ToString);
     case status of
       0:
         begin
           frm_Consulta.chStatus.Checked := false;
+          veiculo.setAtivo(true);
+
         end;
       1:
         begin
           frm_Consulta.chStatus.Checked := true;
-          result := false;
+          veiculo.setAtivo(false);
+          result := 1;
         end;
     end;
     frm_Consulta.chStatus.Enabled := true;
+
   end;
 end;
 

@@ -15,9 +15,14 @@ type
     procedure consultarPessoa;
     procedure verifyStatus;
     procedure atualizarContato(id: integer);
-    procedure setStyleOfField(status:boolean);
-    function setPersonType:string;
+    procedure setStyleOfField(status: boolean);
+    procedure setPersonType;
+    function getStatusVeiculo: integer;
+    function setStatus:integer;
+    procedure getStatus(idmarca:integer);
   private
+    idmarca:integer;
+    procedure setStyle;
 
 
 
@@ -30,7 +35,8 @@ implementation
 
 { TControleEdit }
 
-uses Unit_Dados, Form_Consulta, Objeto_CadContato;
+uses Unit_Dados, Form_Consulta, Objeto_CadContato, Form_CadVeiculos,
+  Objeto_CadVeiculo;
 
 procedure TControleEdit.atualizarContato(id: integer);
 var
@@ -58,8 +64,9 @@ begin
   if frm_Consulta = nil then
     frm_Consulta := Tfrm_Consulta.Create(nil);
 
-  frm_Consulta.setSelectSQL
-    (self.setPersonType);
+  { frm_Consulta.setSelectSQL
+    (self.setPersonType); }
+  self.setPersonType;
   if frm_Consulta.ShowModal = mrOk then
   begin
     frm_Cliente.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[12].AsInteger;
@@ -90,30 +97,97 @@ begin
   dm_ProjetoFinal.qrConsulta.SQL.Clear;
 end;
 
-function TControleEdit.setPersonType:string;
+procedure TControleEdit.getStatus;
 begin
-   if frm_Consulta.chpf.Checked = true   then
-   begin
-   ShowMessage('true');
-     result:='SELECT * FROM logistica_ads.dados_refatorado where situacao = 1 and situacao_endereco = 1';
-   end
-   else
-   begin
-   ShowMessage('false');
-      result:='SELECT * FROM logistica_ads.dados_refatorado where situacao = 1 and situacao_endereco = 0';
-   end;
+   idmarca := self.idmarca;
+end;
+
+function TControleEdit.getStatusVeiculo: integer;
+var
+  status: integer;
+  veiculo:CadVeiculo;
+begin
+result := 0;
+veiculo:= CadVeiculo.Create;
+  if frm_Consulta.cbVeiculos.tag = 10 then
+  begin
+    frm_Consulta.chStatus.Visible := true;
+    self.getStatus(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger);
+    ShowMessage(frm_Consulta.dbConsulta.SelectedIndex.ToString);
+    case status of
+      0:begin
+        frm_Consulta.chStatus.Checked := false;
+        veiculo.setAtivo(true);
+
+      end;
+      1:begin
+        frm_Consulta.chStatus.Checked := true;
+        veiculo.setAtivo(false);
+        result:=1;
+      end;
+    end;
+    frm_Consulta.chStatus.Enabled := true;
+
+  end;
+end;
+
+procedure TControleEdit.setPersonType;
+var
+  idMarca: integer;
+begin
+  if frm_Consulta.chpf.Checked = true then
+  begin
+    frm_Consulta.setSelectSQL
+      ('SELECT * FROM logistica_ads.dados_refatorado where situacao = 1 and situacao_endereco = 1');
+    frm_Consulta.resetScreen;
+  end
+  else if frm_Consulta.chpj.Checked = true then
+  begin
+    frm_Consulta.setSelectSQL
+      ('SELECT * FROM logistica_ads.dados_pessoa_juridica where situacao = 1 and situacao_endereco = 1');
+    frm_Consulta.resetScreen;
+  end
+  else if frm_Consulta.chConsultaVeiculos.Checked = true then
+  begin
+  frm_Consulta.spSalvar.Caption := 'Atualizar';
+    frm_Consulta.cbVeiculos.Visible := true;
+    if frm_Consulta.cbVeiculos.Text <> '' then
+    begin
+      idMarca := controleVeiculo.getIdMarca
+        (frm_Consulta.cbVeiculos.ItemIndex + 1);
+      self.setStyle;
+      frm_Consulta.setSelectSQL
+        ('SELECT * FROM logistica_ads.marca_veiculo mv,logistica_ads.veiculo v  where v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = '
+        + IntToStr(idMarca));
+      frm_Consulta.resetScreen;
+      self.getStatusVeiculo;
+    end;
+
+  end;
 
 end;
 
-procedure TControleEdit.setStyleOfField(status:boolean);
+function TControleEdit.setStatus: integer;
 begin
-frm_Cliente.newAddress.Visible := status;
- frm_Cliente.newAddress.Left := 310;
+result := Self.idmarca;
+end;
+
+procedure TControleEdit.setStyle;
+begin
+  frm_Consulta.chStatus.Visible := false;
+  frm_Consulta.chStatus.Width := 240;
+  frm_Consulta.chStatus.Left := 120;
+end;
+
+procedure TControleEdit.setStyleOfField(status: boolean);
+begin
+  frm_Cliente.newAddress.Visible := status;
+  frm_Cliente.newAddress.Left := 310;
 end;
 
 procedure TControleEdit.verifyStatus;
 begin
-utilitaria.newAddress(false);
+  utilitaria.newAddress(false);
   frm_Cliente.alterarContato.Visible := true;
   if (dm_ProjetoFinal.qrConsulta.Fields[3].AsInteger = 0) then
   // se a situação do contato for 0, o contato não será inserido no campo dele

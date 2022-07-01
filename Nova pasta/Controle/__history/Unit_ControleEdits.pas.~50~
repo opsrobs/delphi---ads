@@ -17,20 +17,20 @@ type
     procedure atualizarContato(id: integer);
     procedure setStyleOfField(status: boolean);
     procedure setPersonType;
-    function getStatusVeiculo: boolean;
+    function getStatusVeiculo: integer;
     function getStatus: integer;
     procedure setStatus(idmarca: integer);
   private
     idmarca: integer;
     procedure setStyle;
-    procedure atualizarVeiculo(status:integer);
-    function returnStatus(status: integer): boolean;
+    procedure atualizarVeiculo;
 
   end;
 
 var
   Controle: TControle;
-  veiculo:CadVeiculo;
+  veiculo: CadVeiculo;
+
 implementation
 
 { TControleEdit }
@@ -54,15 +54,10 @@ begin
 
 end;
 
-procedure TControleEdit.atualizarVeiculo(status:integer);
+procedure TControleEdit.atualizarVeiculo;
 begin
-ShowMessage('s');
-   veiculo:= CadVeiculo.create;
-   veiculo.setIdVeiculo(dm_ProjetoFinal.qrConsulta.Fields[2].AsInteger);
-   veiculo.setAtivo(self.returnStatus(status));
-   ShowMessage(IntToStr(veiculo.getIdVeiculo));
-   veiculo.updadteDados;
-   ShowMessage('Atualizou?')
+  self.setStatus(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger);
+  ShowMessage(dm_ProjetoFinal.qrConsulta.Fields[5].AsString);
 end;
 
 procedure TControleEdit.consultarPessoa;
@@ -81,8 +76,7 @@ begin
   begin
     if frm_Consulta.spSalvar.Caption = 'Atualizar' then
     begin
-      self.atualizarVeiculo(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger);
-      exit
+      self.atualizarVeiculo;
     end
     else
     begin
@@ -128,11 +122,12 @@ begin
   idmarca := self.idmarca;
 end;
 
-function TControleEdit.getStatusVeiculo: boolean;
+function TControleEdit.getStatusVeiculo: integer;
 var
   status: integer;
 begin
-  result := true;
+  result := 0;
+  veiculo := CadVeiculo.Create;
   if frm_Consulta.cbVeiculos.tag = 10 then
   begin
     frm_Consulta.chStatus.Visible := true;
@@ -140,35 +135,18 @@ begin
       0:
         begin
           frm_Consulta.chStatus.Checked := false;
-        end;
-      1:
-        begin
-          frm_Consulta.chStatus.Checked := true;
-          result := false;
-        end;
-    end;
-    frm_Consulta.chStatus.Enabled := true;
-  end;
-end;
+          veiculo.setAtivo(true);
 
-function TControleEdit.returnStatus(status:integer):boolean;
-begin
-  result := true;
-  if frm_Consulta.cbVeiculos.tag = 10 then
-  begin
-    frm_Consulta.chStatus.Visible := true;
-    case status of
-      0:
-        begin
-          frm_Consulta.chStatus.Checked := false;
         end;
       1:
         begin
           frm_Consulta.chStatus.Checked := true;
-          result := false;
+          veiculo.setAtivo(false);
+          result := 1;
         end;
     end;
     frm_Consulta.chStatus.Enabled := true;
+
   end;
 end;
 

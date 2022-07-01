@@ -184,10 +184,13 @@ begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add('update veiculo set  ativo =:ativo where (idveiculos = :idveiculos)');
+  query.SQL.Add('update veiculo set modelo =:modelo, placa =:placa, marca_veiculo_idmarca_veiculo, ativo =:ativo = :marca_veiculo_idmarca_veiculo where (idveiculos = :idveiculos)');
 
+  query.ParamByName('modelo').AsString := self.getModelo;
+  query.ParamByName('placa').AsString := self.getPlaca;
+  query.ParamByName('marca_veiculo_idmarca_veiculo').AsInteger := self.getMarca_veiculo_idMarca;
+  query.ParamByName('idmarca_veiculo').AsInteger := self.getIdVeiculo;
   query.ParamByName('ativo').AsBoolean := self.getAtivo;
-  query.ParamByName('idveiculos').AsInteger := self.getIdVeiculo;
 
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
