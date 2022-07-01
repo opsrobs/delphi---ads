@@ -16,6 +16,7 @@ type
     procedure nomeEstado(uf: string);
     procedure confirmData;
     procedure clearData;
+    function statusButton: boolean;
 
   public
     procedure loadingApiPessoa;
@@ -28,13 +29,15 @@ type
     function getLastId: integer;
     function alterContact(content: string): boolean;
     procedure bloquearDados;
-    procedure bloquearConsulta;
     function validateJson: boolean;
     procedure updateStatusContato(status: boolean; id: integer);
     procedure verifyValueOfField;
     function setConfirmData: boolean;
     procedure newAddress(status: boolean);
-    procedure uniqueSelected;
+
+    procedure activeButton;
+    procedure inativeButton;
+    function statusButton: boolean;
 
     procedure setValues;
 
@@ -46,6 +49,11 @@ implementation
 
 uses Form_CadPessoa, Form_CadFuncionario, Form_CadPedido, Objeto_CadContato,
   Unit_ControleEdits, Form_Consulta;
+
+procedure Utils.activeButton;
+begin
+  frm_Consulta.Tag := 2;
+end;
 
 function Utils.alterContact(content: string): boolean;
 begin
@@ -67,19 +75,6 @@ begin
     exit
   end;
   result := true;
-end;
-
-procedure Utils.bloquearConsulta;
-begin
-  frm_Consulta.chPf.Visible := true;
-  frm_Consulta.chPj.Visible := true;
-  frm_Consulta.chConsultaVeiculos.Visible := true;
-  //frm_Consulta.cbVeiculos.Visible := true;
-  frm_Consulta.chPf.Width := 240;
-  frm_Consulta.chPf.Left := 10;
-  frm_Consulta.chPj.Width := 100;
-  frm_Consulta.chPj.Left := 10;
-  frm_Consulta.chConsultaVeiculos.Left := 10;
 end;
 
 procedure Utils.bloquearDados;
@@ -359,6 +354,11 @@ begin
 
 end;
 
+procedure Utils.inativeButton;
+begin
+  frm_Consulta.Tag := 1;
+end;
+
 function Utils.insertDados(idPedido, idCarga: integer): boolean;
 var
   query: TFDQuery;
@@ -535,9 +535,17 @@ begin
   end
 end;
 
-procedure Utils.uniqueSelected;
+function Utils.statusButton: boolean;
 begin
-
+  if frm_Consulta.spSalvar.Caption = 'Atualizar' then
+  begin
+    if frm_Consulta.Tag = 2 then
+    begin
+      frm_Consulta.spSalvar.Enabled := true;
+    end
+    else
+      frm_Consulta.spSalvar.Enabled := false;
+  end;
 end;
 
 procedure Utils.updateStatusContato(status: boolean; id: integer);

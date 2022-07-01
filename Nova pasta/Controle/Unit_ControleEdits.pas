@@ -3,7 +3,7 @@ unit Unit_ControleEdits;
 interface
 
 uses Form_Edits, Vcl.Controls, Vcl.ComCtrls, Vcl.Dialogs, Unit_Controle,
-  Form_CadPessoa,Objeto_CadVeiculo,
+  Form_CadPessoa, Objeto_CadVeiculo,
   System.SysUtils;
 
 type
@@ -16,21 +16,22 @@ type
     procedure verifyStatus;
     procedure atualizarContato(id: integer);
     procedure setStyleOfField(status: boolean);
-    procedure setPersonType;
     function getStatusVeiculo: boolean;
     function getStatus: integer;
     procedure setStatus(idmarca: integer);
+    procedure checkRadioStatus;
   private
     idmarca: integer;
     procedure setStyle;
-    procedure atualizarVeiculo(status:integer);
+    procedure atualizarVeiculo(status: integer);
     function returnStatus(status: integer): boolean;
 
   end;
 
 var
   Controle: TControle;
-  veiculo:CadVeiculo;
+  veiculo: CadVeiculo;
+
 implementation
 
 { TControleEdit }
@@ -54,15 +55,13 @@ begin
 
 end;
 
-procedure TControleEdit.atualizarVeiculo(status:integer);
+procedure TControleEdit.atualizarVeiculo(status: integer);
 begin
-ShowMessage('s');
-   veiculo:= CadVeiculo.create;
-   veiculo.setIdVeiculo(dm_ProjetoFinal.qrConsulta.Fields[2].AsInteger);
-   veiculo.setAtivo(self.returnStatus(status));
-   ShowMessage(IntToStr(veiculo.getIdVeiculo));
-   veiculo.updadteDados;
-   ShowMessage('Atualizou?')
+  veiculo := CadVeiculo.Create;
+  veiculo.setIdVeiculo(dm_ProjetoFinal.qrConsulta.Fields[2].AsInteger);
+  veiculo.setAtivo(self.returnStatus(status));
+  veiculo.updadteDados;
+  ShowMessage('Atualizou?')
 end;
 
 procedure TControleEdit.consultarPessoa;
@@ -76,9 +75,11 @@ begin
 
   { frm_Consulta.setSelectSQL
     (self.setPersonType); }
-  self.setPersonType;
+  self.checkRadioStatus;
+  // self.setPersonType;
   if frm_Consulta.ShowModal = mrOk then
   begin
+    self.getStatusVeiculo;
     if frm_Consulta.spSalvar.Caption = 'Atualizar' then
     begin
       self.atualizarVeiculo(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger);
@@ -133,6 +134,8 @@ var
   status: integer;
 begin
   result := true;
+  status := dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger;
+  ShowMessage(IntToStr(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger));
   if frm_Consulta.cbVeiculos.tag = 10 then
   begin
     frm_Consulta.chStatus.Visible := true;
@@ -151,7 +154,7 @@ begin
   end;
 end;
 
-function TControleEdit.returnStatus(status:integer):boolean;
+function TControleEdit.returnStatus(status: integer): boolean;
 begin
   result := true;
   if frm_Consulta.cbVeiculos.tag = 10 then
@@ -172,23 +175,21 @@ begin
   end;
 end;
 
-procedure TControleEdit.setPersonType;
-var
-  idmarca: integer;
+procedure TControleEdit.checkRadioStatus;
 begin
-  if frm_Consulta.chpf.Checked = true then
+  if frm_Consulta.RadioGroup1.ItemIndex = 0 then
   begin
     frm_Consulta.setSelectSQL
       ('SELECT * FROM logistica_ads.dados_refatorado where situacao = 1 and situacao_endereco = 1');
     frm_Consulta.resetScreen;
-  end
-  else if frm_Consulta.chpj.Checked = true then
+  end;
+  if frm_Consulta.RadioGroup1.ItemIndex = 1 then
   begin
     frm_Consulta.setSelectSQL
       ('SELECT * FROM logistica_ads.dados_pessoa_juridica where situacao = 1 and situacao_endereco = 1');
     frm_Consulta.resetScreen;
-  end
-  else if frm_Consulta.chConsultaVeiculos.Checked = true then
+  end;
+  if frm_Consulta.RadioGroup1.ItemIndex = 2 then
   begin
     frm_Consulta.spSalvar.Caption := 'Atualizar';
     frm_Consulta.cbVeiculos.Visible := true;
@@ -203,7 +204,6 @@ begin
       frm_Consulta.resetScreen;
       self.getStatusVeiculo;
     end;
-
   end;
 
 end;

@@ -96,6 +96,20 @@ object frm_Consulta: Tfrm_Consulta
       Visible = False
       OnClick = chPjClick
     end
+    object RadioGroup1: TRadioGroup
+      Left = 519
+      Top = 0
+      Width = 185
+      Height = 69
+      Caption = 'RadioGroup1'
+      ItemIndex = 1
+      Items.Strings = (
+        'Pessoa Fisica'
+        'Pessoa Juridica'
+        'Veiculos')
+      TabOrder = 5
+      OnClick = RadioGroup1Click
+    end
   end
   object Panel3: TPanel
     Left = 0

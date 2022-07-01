@@ -24,6 +24,7 @@ type
     cbVeiculos: TComboBox;
     chConsultaVeiculos: TCheckBox;
     chStatus: TCheckBox;
+    RadioGroup1: TRadioGroup;
     procedure FormActivate(Sender: TObject);
     procedure spButtonReturnClick(Sender: TObject);
     procedure spSalvarClick(Sender: TObject);
@@ -33,6 +34,7 @@ type
     procedure cbVeiculosChange(Sender: TObject);
     procedure dbConsultaCellClick(Column: TColumn);
     procedure chConsultaVeiculosClick(Sender: TObject);
+    procedure RadioGroup1Click(Sender: TObject);
   private
     scriptSql: string;
   public
@@ -60,8 +62,8 @@ var
 begin
   self.cbVeiculos.tag := 0;
   self.chStatus.Visible := false;
-  ShowMessage('qq');
-  edit.setPersonType;
+  //edit.setPersonType;
+  edit.checkRadioStatus;
 
   // utilitaria.setValues;
 end;
@@ -77,7 +79,7 @@ var
 begin
 self.chConsultaVeiculos.Checked := false;
 self.chPj.Checked:= false;
-  edit.setPersonType;
+  //edit.setPersonType;
 
 end;
 
@@ -86,7 +88,7 @@ var
   edit: TControleEdit;
 begin
   self.chPf.Checked := false;
-  edit.setPersonType;
+  //edit.setPersonType;
 end;
 
 procedure Tfrm_Consulta.dbConsultaCellClick(Column: TColumn);
@@ -95,7 +97,7 @@ var
 begin
   self.cbVeiculos.tag := 10;
   self.spSalvar.Enabled :=true;
-  //edit.getStatusVeiculo;
+  edit.getStatusVeiculo;
 
 end;
 
@@ -123,6 +125,13 @@ end;
 function Tfrm_Consulta.getSelectSql: string;
 begin
   result := self.scriptSql;
+end;
+
+procedure Tfrm_Consulta.RadioGroup1Click(Sender: TObject);
+var
+edit:TControleEdit;
+begin
+   edit.checkRadioStatus;
 end;
 
 procedure Tfrm_Consulta.resetScreen;
