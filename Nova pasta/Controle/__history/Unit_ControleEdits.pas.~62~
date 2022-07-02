@@ -3,7 +3,7 @@ unit Unit_ControleEdits;
 interface
 
 uses Form_Edits, Vcl.Controls, Vcl.ComCtrls, Vcl.Dialogs, Unit_Controle,
-  Form_CadPessoa,Objeto_CadVeiculo,
+  Form_CadPessoa, Objeto_CadVeiculo, Objeto_CadFuncionario,
   System.SysUtils;
 
 type
@@ -16,20 +16,25 @@ type
     procedure verifyStatus;
     procedure atualizarContato(id: integer);
     procedure setStyleOfField(status: boolean);
-    procedure setPersonType;
-    function getStatusVeiculo: integer;
+    function getStatusVeiculo: boolean;
     function getStatus: integer;
     procedure setStatus(idmarca: integer);
+    procedure checkRadioStatus;
   private
     idmarca: integer;
     procedure setStyle;
-    procedure atualizarVeiculo;
+    procedure atualizarVeiculo(status: integer);
+    function returnStatus(status: integer): boolean;
+    procedure ocultarComboBox;
+
+    procedure atualizarStatusFuncionario(status: integer);
 
   end;
 
 var
   Controle: TControle;
   veiculo: CadVeiculo;
+  funcionario: CadFuncionario;
 
 implementation
 
@@ -54,10 +59,23 @@ begin
 
 end;
 
-procedure TControleEdit.atualizarVeiculo;
+procedure TControleEdit.atualizarStatusFuncionario(status: integer);
 begin
-  self.setStatus(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger);
-  ShowMessage(dm_ProjetoFinal.qrConsulta.Fields[5].AsString);
+  funcionario := CadFuncionario.Create;
+  funcionario.setAtivo(self.returnStatus(status));
+  funcionario.setIdFuncionario(dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger);
+  ShowMessage(IntToStr(funcionario.getIdFuncionario));
+   funcionario.updateDados;
+
+end;
+
+procedure TControleEdit.atualizarVeiculo(status: integer);
+begin
+  veiculo := CadVeiculo.Create;
+  veiculo.setIdVeiculo(dm_ProjetoFinal.qrConsulta.Fields[1].AsInteger);
+  veiculo.setAtivo(self.returnStatus(status));
+  veiculo.updadteDados;
+  ShowMessage('Atualizou?')
 end;
 
 procedure TControleEdit.consultarPessoa;
@@ -71,12 +89,19 @@ begin
 
   { frm_Consulta.setSelectSQL
     (self.setPersonType); }
-  self.setPersonType;
-  if frm_Consulta.ShowModal = mrOk then
+  self.checkRadioStatus;
+  if (frm_Consulta.ShowModal = mrOk) then
   begin
-    if frm_Consulta.spSalvar.Caption = 'Atualizar' then
+    //self.getStatusVeiculo;
+    if frm_Consulta.RadioGroup1.ItemIndex = 2 then
     begin
-      self.atualizarVeiculo;
+      self.atualizarVeiculo(dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger);
+      exit
+    end
+    else if frm_Consulta.RadioGroup1.ItemIndex = 3 then
+    begin
+    ShowMessage(dm_ProjetoFinal.qrConsulta.Text);
+      self.atualizarStatusFuncionario(dm_ProjetoFinal.qrConsulta.Fields[5].asinteger);
     end
     else
     begin
@@ -109,7 +134,6 @@ begin
       frm_Cliente.tag := 10;
       Controle.setIdendereco(dm_ProjetoFinal.qrConsulta.Fields[13].AsInteger);
       Controle.getCadPessoa;
-      // frm_Cliente.ShowModal;
     end
 
   end;
@@ -122,12 +146,12 @@ begin
   idmarca := self.idmarca;
 end;
 
-function TControleEdit.getStatusVeiculo: integer;
+function TControleEdit.getStatusVeiculo: boolean;
 var
   status: integer;
 begin
-  result := 0;
-  veiculo := CadVeiculo.Create;
+  result := true;
+  status := dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger;
   if frm_Consulta.cbVeiculos.tag = 10 then
   begin
     frm_Consulta.chStatus.Visible := true;
@@ -135,53 +159,87 @@ begin
       0:
         begin
           frm_Consulta.chStatus.Checked := false;
-          veiculo.setAtivo(true);
-
         end;
       1:
         begin
           frm_Consulta.chStatus.Checked := true;
-          veiculo.setAtivo(false);
-          result := 1;
+          result := false;
         end;
     end;
     frm_Consulta.chStatus.Enabled := true;
-
   end;
 end;
 
-procedure TControleEdit.setPersonType;
-var
-  idmarca: integer;
+procedure TControleEdit.ocultarComboBox;
 begin
-  if frm_Consulta.chpf.Checked = true then
+frm_Consulta.cbVeiculos.Visible := false;
+frm_Consulta.chStatus.Visible := false;
+end;
+
+function TControleEdit.returnStatus(status: integer): boolean;
+begin
+  result := true;
+  if (frm_Consulta.cbVeiculos.tag = 10)
+  or (frm_Consulta.RadioGroup1.ItemIndex = 3) then
+  begin
+  ShowMessage('achou');
+    frm_Consulta.chStatus.Visible := true;
+    case status of
+      0:
+        begin
+          frm_Consulta.chStatus.Checked := false;
+        end;
+      1:
+        begin
+          frm_Consulta.chStatus.Checked := true;
+          result := false;
+        end;
+    end;
+    frm_Consulta.chStatus.Enabled := true;
+  end;
+end;
+
+procedure TControleEdit.checkRadioStatus;
+begin
+  if frm_Consulta.RadioGroup1.ItemIndex = 0 then
   begin
     frm_Consulta.setSelectSQL
       ('SELECT * FROM logistica_ads.dados_refatorado where situacao = 1 and situacao_endereco = 1');
     frm_Consulta.resetScreen;
-  end
-  else if frm_Consulta.chpj.Checked = true then
+    self.ocultarComboBox;
+  end;
+  if frm_Consulta.RadioGroup1.ItemIndex = 1 then
   begin
     frm_Consulta.setSelectSQL
       ('SELECT * FROM logistica_ads.dados_pessoa_juridica where situacao = 1 and situacao_endereco = 1');
     frm_Consulta.resetScreen;
-  end
-  else if frm_Consulta.chConsultaVeiculos.Checked = true then
+    self.ocultarComboBox;
+  end;
+  if frm_Consulta.RadioGroup1.ItemIndex = 2 then
   begin
     frm_Consulta.spSalvar.Caption := 'Atualizar';
     frm_Consulta.cbVeiculos.Visible := true;
+    frm_Consulta.setSelectSQL
+      ('select * from veiculo v inner join marca_veiculo mv on v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo where mv.idmarca_veiculo = ' + IntToStr(idmarca));
+    frm_Consulta.resetScreen;
     if frm_Consulta.cbVeiculos.Text <> '' then
     begin
       idmarca := controleVeiculo.getIdMarca
         (frm_Consulta.cbVeiculos.ItemIndex + 1);
       self.setStyle;
       frm_Consulta.setSelectSQL
-        ('SELECT * FROM logistica_ads.marca_veiculo mv,logistica_ads.veiculo v  where v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = '
-        + IntToStr(idmarca));
+        ('select * from veiculo v inner join marca_veiculo mv on v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo where mv.idmarca_veiculo = ' + IntToStr(idmarca));
       frm_Consulta.resetScreen;
       self.getStatusVeiculo;
     end;
-
+  end;
+  if frm_Consulta.RadioGroup1.ItemIndex = 3 then
+  begin
+    frm_Consulta.setSelectSQL
+      ('SELECT pes.nome, pf.cpf, fun.cnh, fun.pis, fun.idfuncionario, fun.ativo FROM logistica_ads.funcionario fun, logistica_ads.pessoa pes, logistica_ads.pessoa_fisica pf '
+      + 'where fun.pessoa_fisica_idpessoa_fisica = pf.idpessoa_fisica and pf.pessoa_idPessoa = pes.idPessoa;');
+    frm_Consulta.resetScreen;
+    self.ocultarComboBox;
   end;
 
 end;
@@ -194,8 +252,8 @@ end;
 procedure TControleEdit.setStyle;
 begin
   frm_Consulta.chStatus.Visible := false;
-  frm_Consulta.chStatus.Width := 240;
-  frm_Consulta.chStatus.Left := 120;
+  frm_Consulta.chStatus.Width := 55;
+  frm_Consulta.chStatus.Left := 375;
 end;
 
 procedure TControleEdit.setStyleOfField(status: boolean);

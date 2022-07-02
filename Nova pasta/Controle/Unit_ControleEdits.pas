@@ -25,6 +25,7 @@ type
     procedure setStyle;
     procedure atualizarVeiculo(status: integer);
     function returnStatus(status: integer): boolean;
+    procedure ocultarComboBox;
 
     procedure atualizarStatusFuncionario(status: integer);
 
@@ -71,7 +72,7 @@ end;
 procedure TControleEdit.atualizarVeiculo(status: integer);
 begin
   veiculo := CadVeiculo.Create;
-  veiculo.setIdVeiculo(dm_ProjetoFinal.qrConsulta.Fields[2].AsInteger);
+  veiculo.setIdVeiculo(dm_ProjetoFinal.qrConsulta.Fields[0].AsInteger);
   veiculo.setAtivo(self.returnStatus(status));
   veiculo.updadteDados;
   ShowMessage('Atualizou?')
@@ -94,7 +95,7 @@ begin
     //self.getStatusVeiculo;
     if frm_Consulta.RadioGroup1.ItemIndex = 2 then
     begin
-      self.atualizarVeiculo(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger);
+      self.atualizarVeiculo(dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger);
       exit
     end
     else if frm_Consulta.RadioGroup1.ItemIndex = 3 then
@@ -150,7 +151,7 @@ var
   status: integer;
 begin
   result := true;
-  status := dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger;
+  status := dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger;
   if frm_Consulta.cbVeiculos.tag = 10 then
   begin
     frm_Consulta.chStatus.Visible := true;
@@ -167,6 +168,13 @@ begin
     end;
     frm_Consulta.chStatus.Enabled := true;
   end;
+end;
+
+procedure TControleEdit.ocultarComboBox;
+begin
+frm_Consulta.cbVeiculos.Visible := false;
+frm_Consulta.chStatus.Visible := false;
+frm_Consulta.spSalvar.Enabled := true;
 end;
 
 function TControleEdit.returnStatus(status: integer): boolean;
@@ -199,29 +207,30 @@ begin
     frm_Consulta.setSelectSQL
       ('SELECT * FROM logistica_ads.dados_refatorado where situacao = 1 and situacao_endereco = 1');
     frm_Consulta.resetScreen;
+    self.ocultarComboBox;
   end;
   if frm_Consulta.RadioGroup1.ItemIndex = 1 then
   begin
     frm_Consulta.setSelectSQL
       ('SELECT * FROM logistica_ads.dados_pessoa_juridica where situacao = 1 and situacao_endereco = 1');
     frm_Consulta.resetScreen;
+    self.ocultarComboBox;
   end;
   if frm_Consulta.RadioGroup1.ItemIndex = 2 then
   begin
     frm_Consulta.spSalvar.Caption := 'Atualizar';
     frm_Consulta.cbVeiculos.Visible := true;
     frm_Consulta.setSelectSQL
-      ('SELECT * FROM logistica_ads.marca_veiculo mv,logistica_ads.veiculo v  where v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = '
-      + IntToStr(idmarca));
+      ('select v.idveiculos as "Nº do registro", mv.nome_marca as "Marca", v.modelo as "Modelo", v.placa as "Placa", v.ativo as "Status" from veiculo v inner join  marca_veiculo mv on v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = ' + IntToStr(idmarca));
     frm_Consulta.resetScreen;
     if frm_Consulta.cbVeiculos.Text <> '' then
     begin
       idmarca := controleVeiculo.getIdMarca
         (frm_Consulta.cbVeiculos.ItemIndex + 1);
       self.setStyle;
+      ShowMessage(IntToStr(idmarca));
       frm_Consulta.setSelectSQL
-        ('SELECT * FROM logistica_ads.marca_veiculo mv,logistica_ads.veiculo v  where v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = '
-        + IntToStr(idmarca));
+        ('select v.idveiculos as "Nº do registro", mv.nome_marca as "Marca", v.modelo as "Modelo", v.placa as "Placa", v.ativo as "Status" from veiculo v inner join  marca_veiculo mv on v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = ' + IntToStr(idmarca));
       frm_Consulta.resetScreen;
       self.getStatusVeiculo;
     end;
@@ -232,6 +241,7 @@ begin
       ('SELECT pes.nome, pf.cpf, fun.cnh, fun.pis, fun.idfuncionario, fun.ativo FROM logistica_ads.funcionario fun, logistica_ads.pessoa pes, logistica_ads.pessoa_fisica pf '
       + 'where fun.pessoa_fisica_idpessoa_fisica = pf.idpessoa_fisica and pf.pessoa_idPessoa = pes.idPessoa;');
     frm_Consulta.resetScreen;
+    self.ocultarComboBox;
   end;
 
 end;
