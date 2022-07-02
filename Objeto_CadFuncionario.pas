@@ -30,8 +30,8 @@ type
     { <--- CRUD ---> }
 
     function insertDados: boolean;
+    function updateStatus: boolean;
     function updateDados: boolean;
-    function deleteDados: boolean;
     function funcionariosExists(idPessoaFisica: integer): integer;
   end;
 
@@ -39,45 +39,19 @@ implementation
 
 { CadFuncionario }
 
-function CadFuncionario.deleteDados: boolean;
-var
-  query: TFDQuery;
-begin
-  query := TFDQuery.Create(nil);
-  query.Connection := dm_ProjetoFinal.FDFinal;
 
-  query.SQL.Add
-    ('delete from funcionario  where (idfuncionario = : idfuncionario');
 
-  query.ParamByName('idfuncionario').AsInteger := self.getIdFuncionario;
-  { Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo }
-
-  try
-    query.ExecSQL; { update service }
-    result := true;
-  except
-    on e: exception do
-    begin
-      result := false;
-      showMessage('Erro ao Excluir dados da pessoa: ' + e.ToString);
-    end;
-
-  end;
-  query.Close;
-  query.Free;
-
-end;
 
 function CadFuncionario.funcionariosExists(idPessoaFisica: integer): integer;
 var
   query: TFDQuery;
   script: string;
 begin
-  script := 'SELECT count(idfuncionario) FROM logistica_ads.funcionario where pessoa_fisica_idpessoa_fisica = "'
+  script := 'SELECT pessoa_fisica_idpessoa_fisica , count(idfuncionario) FROM logistica_ads.funcionario where pessoa_fisica_idpessoa_fisica = "'
     + IntToStr(idPessoaFisica) + '"';
+
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-  showMessage(script);
   query.SQL.Add(script);
 
   { Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo }
@@ -88,7 +62,7 @@ begin
     begin
       // query.ParamByName('nome_estado').AsString := self.getNome_estado;
       { Alterar o valor do [] para a posição do atributo }
-      result := idPessoaFisica;
+      result := query.Fields[0].AsInteger; //idPessoaFisica;
     end;
   except
     on e: exception do
@@ -188,6 +162,36 @@ begin
 end;
 
 function CadFuncionario.updateDados: boolean;
+var
+  query: TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  query.SQL.Add
+    ('update funcionario set pis = :pis, cnh = :cnh where (pessoa_fisica_idpessoa_fisica = :pessoa_fisica_idpessoa_fisica)');
+
+  query.ParamByName('pis').AsString := self.getPis;
+  query.ParamByName('cnh').AsString := self.getCnh;
+  query.ParamByName('pessoa_fisica_idpessoa_fisica').AsInteger := self.getpessoa_fisica_idPessoa;
+  { Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo }
+
+  try
+    query.ExecSQL; { update service }
+    result := true;
+  except
+    on e: exception do
+    begin
+      result := false;
+      showMessage('Erro ao alterar dados do Funcionario: ' + e.ToString);
+    end;
+
+  end;
+  query.Close;
+  query.Free;
+
+end;
+
+function CadFuncionario.updateStatus: boolean;
 var
   query: TFDQuery;
 begin

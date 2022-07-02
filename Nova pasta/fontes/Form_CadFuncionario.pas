@@ -3,10 +3,12 @@ unit Form_CadFuncionario;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.Mask, REST.Types, REST.Client, Data.Bind.Components, Data.Bind.ObjectScope,
-  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,Unit_Utils,
+  Vcl.Mask, REST.Types, REST.Client, Data.Bind.Components,
+  Data.Bind.ObjectScope,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, Unit_Utils,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, Vcl.DBCtrls, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   REST.Response.Adapter, System.JSON, Vcl.ComCtrls;
@@ -32,22 +34,22 @@ type
     procedure generateClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
-  funcao:byte;
-  function validarValoresFuncionario:Boolean;
-  procedure limpartela;
+    funcao: byte;
+    function validarValoresFuncionario: Boolean;
+    procedure limpartela;
 
     { Private declarations }
 
   public
-    procedure setFuncao(funcao:byte);
-    function getFuncao:byte;
+    procedure setFuncao(funcao: byte);
+    function getFuncao: byte;
 
     { Public declarations }
   end;
 
 var
   frm_Funcionario: Tfrm_Funcionario;
-  utilitaria:Utils;
+  utilitaria: Utils;
 
 implementation
 
@@ -59,69 +61,92 @@ uses unit_ProjetoFinal, Unit_Dados;
 
 procedure Tfrm_Funcionario.FormActivate(Sender: TObject);
 begin
-    self.limpartela;
+  self.limpartela;
 end;
 
 procedure Tfrm_Funcionario.FormDestroy(Sender: TObject);
 begin
-    Frm_Principal.ControleFuncionario.Free;
+  Frm_Principal.ControleFuncionario.Free;
 end;
 
 function Tfrm_Funcionario.getFuncao: byte;
 begin
-    result := self.funcao;
+  result := self.funcao;
 end;
 
 procedure Tfrm_Funcionario.limpartela;
 begin
-    edCpfCnpj.Clear;
-    edNome.Clear;
-    spSalvar.Tag := 0;
-    edNome.SetFocus;
+  edCpfCnpj.Clear;
+  edNome.Clear;
+  spSalvar.Tag := 0;
+  edNome.SetFocus;
 
 end;
 
-
 procedure Tfrm_Funcionario.nmConsultarClick(Sender: TObject);
 begin
-    Frm_Principal.ControleFuncionario.getConsultaPessoas;
+  Frm_Principal.ControleFuncionario.getConsultaPessoas;
 end;
 
 procedure Tfrm_Funcionario.setFuncao(funcao: byte);
 begin
-    self.funcao	 := funcao;
+  self.funcao := funcao;
 end;
 
 procedure Tfrm_Funcionario.spButtonReturnClick(Sender: TObject);
 begin
-        ModalResult := mrCancel;
+  ModalResult := mrCancel;
 end;
 
 procedure Tfrm_Funcionario.spDeleteClick(Sender: TObject);
 begin
-    self.setFuncao(2);
-    ModalResult := mrOk;
+  self.setFuncao(2);
+  ModalResult := mrOk;
 end;
-
 
 procedure Tfrm_Funcionario.generateClick(Sender: TObject);
 begin
-    self.generate.Tag := 2;
-    utilitaria:=Utils.Create;
-    utilitaria.loadingApiPessoa;
+  self.generate.Tag := 2;
+  utilitaria := Utils.Create;
+  utilitaria.loadingApiPessoa;
 end;
 
 procedure Tfrm_Funcionario.spSalvarClick(Sender: TObject);
 begin
-    if (not self.validarValoresFuncionario) then
-       exit;
+  if (not self.validarValoresFuncionario) then
+    exit;
 
-      self.setFuncao(1);
-      ModalResult := mrOK;
+  self.setFuncao(1);
+  ModalResult := mrOk;
 end;
 
 function Tfrm_Funcionario.validarValoresFuncionario: Boolean;
 begin
+  result := true;
+  if (edNome.Text = '') then
+  begin
+    result := false;
+    ShowMessage('Entre com um nome');
+    exit;
+  end;
+  if self.edCpfCnpj.Text = '' then
+  begin
+    result := false;
+    ShowMessage('Informe um CPF/CNPJ válido');
+    exit
+  end;
+   if self.edPis.Text = '' then
+  begin
+    result := false;
+    ShowMessage('Informe um PIS válido');
+    exit
+  end;
+   if self.edCnh.Text = '' then
+  begin
+    result := false;
+    ShowMessage('Informe uma certidão nacional de hailitação válida');
+    exit
+  end;
 
 end;
 

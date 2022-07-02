@@ -42,8 +42,6 @@ begin
   query.SQL.Add(querySelect);
       try
         query.open;
-
-
         if (not query.isEmpty) then
           begin
               //query.ParamByName('nome_estado').AsString := self.getNome_estado;

@@ -28,7 +28,7 @@ var
   VCadPessoa: CadPessoa;
   VCadFuncionario: CadFuncionario;
   id_pessoaFisica: integer;
-  arrayMotoristas: array of integer;
+  arrayDeMotoristas: array of integer;
 
 implementation
 
@@ -60,11 +60,9 @@ var
 begin
   resp := VCadFuncionario.funcionariosExists(id);
   VCadFuncionario := CadFuncionario.Create;
-
   VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
   VCadFuncionario.setCnh(frm_Funcionario.edCnh.Text);
   VCadFuncionario.setpessoa_fisica_idPessoa(id);
-  ShowMessage('a');
   VCadFuncionario.setAtivo(true);
   if resp > 0 then
   begin
@@ -74,8 +72,8 @@ begin
   else
   begin
     VCadFuncionario.insertDados;
+    ShowMessage('Cadastro reaalizado com sucesso!!!');
   end;
-  ShowMessage('Cadastro reaalizado com sucesso!!!');
 end;
 
 procedure TControle_Funcionario.cadastrarPessoa;
@@ -99,52 +97,6 @@ begin
   VCadPessoaFisica.setPessoa_idPessoa(id);
 
   VCadPessoaFisica.insertDados;
-
-end;
-
-procedure TControle_Funcionario.getCadFuncionario;
-var
-  idTemp: integer;
-  tagId: integer;
-begin
-  if (frm_Funcionario = nil) then
-    frm_Funcionario := Tfrm_Funcionario.Create(nil);
-
-  if (frm_Funcionario.ShowModal = mrOk) then
-  begin
-
-    case (frm_Funcionario.getFuncao) of
-      1:
-        begin
-          tagId := frm_Funcionario.spSalvar.tag;
-          self.cadastrarPessoa;
-          if (tagId <> 0) then
-          begin
-            self.alterarPessoaFisica(tagId);
-            self.cadastrarFuncionario(VCadPessoaFisica.verifyCadPerson(tagId))
-          end
-          else
-          begin
-            self.cadastrarPessoaFisica(VCadPessoa.getLastId);
-            self.cadastrarFuncionario(VCadPessoaFisica.getLastId);
-          end;
-
-        end;
-      2:
-        begin
-
-        end;
-    end;
-    VCadFuncionario.Free;
-    VCadPessoa.Free;
-    VCadFuncionario.Free;
-    VCadPessoaFisica.Free;
-    VCadEstado.Free;
-    VCadCidade.Free;
-    VCadBairro.Free;
-    VCadEndereco.Free;
-  end;
-  FreeAndNil(frm_Funcionario)
 
 end;
 
@@ -189,7 +141,7 @@ end;
 
 function TControle_Funcionario.getIdFuncionario(index: integer): integer;
 begin
-  result := arrayMotoristas[index];
+  result := arrayDeMotoristas[index];
 end;
 
 procedure TControle_Funcionario.populaComboCbPessoa;
@@ -197,27 +149,31 @@ var
   i: integer;
 begin
   i := 1;
-  SetLength(arrayMotoristas, i);
-  dm_ProjetoFinal.qrConsulta.Close;
-  dm_ProjetoFinal.qrConsulta.SQL.Clear;
-  dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScriptCbMotorista);
+  SetLength(arrayDeMotoristas, i);
+  dm_ProjetoFinal.qrMotorista.Close;
+  dm_ProjetoFinal.qrMotorista.Close;
+  dm_ProjetoFinal.qrMotorista.SQL.Clear;
+  dm_ProjetoFinal.qrMotorista.SQL.Add('SELECT * FROM logistica_ads.veiculo order by modelo asc;');
+  ShowMessage(qrm)
   try
-    dm_ProjetoFinal.qrConsulta.Open;
-    dm_ProjetoFinal.qrConsulta.First;
+    dm_ProjetoFinal.qrMotorista.Open;
+    dm_ProjetoFinal.qrMotorista.First;
 
-    while not dm_ProjetoFinal.qrConsulta.Eof do
+    while not dm_ProjetoFinal.qrMotorista.Eof do
     begin
+
       frm_carga.cbMotoristaEntrega.Items.Add
-        (dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
-      arrayMotoristas[i] := dm_ProjetoFinal.qrConsulta.FieldByName
-        ('idfuncionario').AsInteger;
-      dm_ProjetoFinal.qrConsulta.Next;
+        (dm_ProjetoFinal.qrMotorista.FieldByName('nome_marca').AsString);
+      arrayDeMotoristas[i] := dm_ProjetoFinal.qrMotorista.FieldByName
+        ('idmarca_veiculo').AsInteger;
+      dm_ProjetoFinal.qrMotorista.Next;
       inc(i)
     end;
   finally
 
   end;
-  dm_ProjetoFinal.qrConsulta.Close;
+  dm_ProjetoFinal.qrMotorista.Close;
+  dm_ProjetoFinal.qrMotorista.Free;
 end;
 
 function TControle_Funcionario.setScriptCbMotorista: String;
@@ -232,6 +188,48 @@ begin
     result := tag
   else
     result := lastId;
+end;
+
+procedure TControle_Funcionario.getCadFuncionario;
+var
+  idTemp: integer;
+  tagId: integer;
+begin
+  if (frm_Funcionario = nil) then
+    frm_Funcionario := Tfrm_Funcionario.Create(nil);
+
+  if (frm_Funcionario.ShowModal = mrOk) then
+  begin
+
+    case (frm_Funcionario.getFuncao) of
+      1:
+        begin
+          tagId := frm_Funcionario.spSalvar.tag;
+          self.cadastrarPessoa;
+          if (tagId <> 0) then
+          begin
+            self.alterarPessoaFisica(tagId);
+            self.cadastrarFuncionario(VCadPessoaFisica.verifyCadPerson(tagId))
+          end
+          else
+          begin
+            self.cadastrarPessoaFisica(VCadPessoa.getLastId);
+            self.cadastrarFuncionario(VCadPessoaFisica.getLastId);
+          end;
+
+        end;
+      2:
+        begin
+
+        end;
+    end;
+    VCadFuncionario.Free;
+    VCadPessoa.Free;
+    VCadPessoaFisica.Free;
+  end;
+  FreeAndNil(frm_Consulta);
+  FreeAndNil(frm_Funcionario);
+
 end;
 
 end.

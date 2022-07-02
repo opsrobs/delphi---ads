@@ -36,6 +36,7 @@ type
     dsVeiculos: TDataSource;
     dtsConsultaVeiculo: TClientDataSet;
     qrVeiculo: TFDQuery;
+    qrMotorista: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
   private

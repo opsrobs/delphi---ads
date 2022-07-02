@@ -1,43 +1,45 @@
 unit Unit_ControlePedido;
 
 interface
-    uses System.SysUtils,Winapi.Messages,Vcl.Controls,Vcl.Dialogs,Vcl.Mask, REST.Types, Objeto_CadPedido,Objeto_CadEstado,
-     StrUtils,Objeto_CadCidade, Objeto_CadBairro,Unit_Utils, Objeto_CadCliente, Objeto_CadEndereco,Form_CadEntrega,Vcl.StdCtrls,
-  Vcl.ComCtrls,CommCtrl, Winapi.Windows,Unit_ControleVeiculo,Objeto_CadCarga;
+
+uses System.SysUtils, Winapi.Messages, Vcl.Controls, Vcl.Dialogs, Vcl.Mask,
+  REST.Types, Objeto_CadPedido, Objeto_CadEstado,
+  StrUtils, Objeto_CadCidade, Objeto_CadBairro, Unit_Utils, Objeto_CadCliente,
+  Objeto_CadEndereco, Form_CadEntrega, Vcl.StdCtrls,
+  Vcl.ComCtrls, CommCtrl, Winapi.Windows, Unit_ControleVeiculo, Objeto_CadCarga;
 
 type
-TVetor = array of integer;
- TControle_Pedido = class
-   private
+  TVetor = array of integer;
+
+  TControle_Pedido = class
+  private
     procedure cadastroPedido;
     procedure cadastroMotoristaVeiculo;
     procedure cadastroPedidoCarga;
-    function verifyStatus:string;
-    function setScript:string;
-    function returnIdDestinatario:integer;
+    function verifyStatus: string;
+    function setScript: string;
+    function returnIdDestinatario: integer;
     procedure cadastroEntrega;
 
+  public
+    procedure getCadPedido;
+    procedure gerarPeso;
+    procedure populaCombo;
+    procedure getCadEntrega;
+    procedure buscarPedidos;
+    function verifyValue: integer;
 
-     public
-     procedure getCadPedido;
-     procedure gerarPeso;
-     procedure populaCombo;
-     procedure getCadEntrega;
-     procedure buscarPedidos;
-     function verifyValue:integer;
+  end;
 
-
- end;
- var
+var
   vetorIdPedido: TVetor;
-  pesor:single;
-  VCadPedido:CadPedido;
-  VCadCliente:CadCliente;
-  utilitaria:Utils;
-  VCadEndereco:CadEndereco;
-  VCadCarga:CadCarga;
-  ControleVeiculo:TControle_Veiculo;
-
+  pesor: single;
+  VCadPedido: CadPedido;
+  VCadCliente: CadCliente;
+  utilitaria: Utils;
+  VCadEndereco: CadEndereco;
+  VCadCarga: CadCarga;
+  ControleVeiculo: TControle_Veiculo;
 
 implementation
 
@@ -49,7 +51,7 @@ uses Form_CadPedido, Unit_Dados, Objeto_CadRecebedor,
 
 procedure TControle_Pedido.buscarPedidos;
 var
-  dados:TListItem;
+  dados: TListItem;
 begin
   dm_ProjetoFinal.qrConsulta.Close;
   dm_ProjetoFinal.qrConsulta.SQL.Clear;
@@ -61,13 +63,19 @@ begin
   begin
     dados := frm_carga.listDados.Items.Add;
 
-    dados.Caption := dm_ProjetoFinal.qrConsulta.FieldByName('numero_pedido').AsString;
+    dados.Caption := dm_ProjetoFinal.qrConsulta.FieldByName
+      ('numero_pedido').AsString;
     dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
-    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('data_pedido').AsString);
-    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('status').AsString);
-    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome recebedor').AsString);
-    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('valor_total').AsString);
-    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('peso_pedido').AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('data_pedido')
+      .AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('status')
+      .AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome recebedor')
+      .AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('valor_total')
+      .AsString);
+    dados.SubItems.Add(dm_ProjetoFinal.qrConsulta.FieldByName('peso_pedido')
+      .AsString);
 
     dm_ProjetoFinal.qrConsulta.Next;
   end;
@@ -75,21 +83,23 @@ end;
 
 procedure TControle_Pedido.cadastroEntrega;
 begin
-   VCadCarga := CadCarga.Create;
-   VCadCarga.setQuantidade(verifyValue);
-   VCadCarga.setPeso(StrTofloat(frm_carga.edPeso.Text));
-   VCadCarga.setIdFuncionarioVeiculo(utilitaria.getLastId);
+  VCadCarga := CadCarga.Create;
+  VCadCarga.setQuantidade(verifyValue);
+  VCadCarga.setPeso(StrTofloat(frm_carga.edPeso.Text));
+  VCadCarga.setIdFuncionarioVeiculo(utilitaria.getLastId);
 
-   VCadCarga.insertDados;
+  VCadCarga.insertDados;
 end;
 
 procedure TControle_Pedido.cadastroMotoristaVeiculo;
 var
-VFunc_VVeic:Funcionario_has_Veiculos;
-idFuncionario, idVeiculo:integer;
+  VFunc_VVeic: Funcionario_has_Veiculos;
+  idFuncionario, idVeiculo: integer;
 begin
-idFuncionario:= Frm_Principal.ControleFuncionario.getIdFuncionario(frm_carga.cbMotoristaEntrega.ItemIndex +1);
-idVeiculo := Frm_Principal.ControleVeiculo.getIdMotorista(frm_carga.cbVeiculoEntrega.ItemIndex +1);
+  idFuncionario := Frm_Principal.ControleFuncionario.getIdFuncionario
+    (frm_carga.cbMotoristaEntrega.ItemIndex + 1);
+  idVeiculo := Frm_Principal.ControleVeiculo.getIdMotorista
+    (frm_carga.cbVeiculoEntrega.ItemIndex + 1);
   VFunc_VVeic := Funcionario_has_Veiculos.Create;
   VFunc_VVeic.setVeiculos_idVeiculos(idVeiculo);
   VFunc_VVeic.setFuncionario_idFuncionario(idFuncionario);
@@ -100,165 +110,172 @@ end;
 
 procedure TControle_Pedido.cadastroPedido;
 var
-  idendereco:integer;
-  idCliente:integer;
-  id:integer;
+  idendereco: integer;
+  idCliente: integer;
+  id: integer;
 begin
-      idendereco := utilitaria.identificadorEndereco(frm_Pedido.edDestinatario.Text);
-      idCliente := VCadCliente.identificadorCliente(frm_Pedido.cbCliente.Text);
-      id := self.returnIdDestinatario;
+  idendereco := utilitaria.identificadorEndereco
+    (frm_Pedido.edDestinatario.Text);
+  idCliente := VCadCliente.identificadorCliente(frm_Pedido.cbCliente.Text);
+  id := self.returnIdDestinatario;
 
-      VCadPedido.setData_pedido(frm_Pedido.dtDataPedido.Date);
-      VCadPedido.setValor(StrToFloat(frm_Pedido.edValorPedido.Text));
-      VCadPedido.setStatus(self.verifyStatus);
-      VCadPedido.setCliente_idCliente(idCliente);
-      VCadPedido.setValor_total(StrToFloat(frm_Pedido.edValorTotal.Text));
-      VCadPedido.setValor_frete(StrToFloat(frm_Pedido.edValorFrete.Text));
-      VCadPedido.setendereco_idEndereco(idendereco);
-      VCadPedido.setpeso_pedido(StrToFloat(frm_Pedido.edPeso.Text));
-      VCadPedido.setrecebedor_idRecebedor(id);
-      VCadPedido.insertDados;
-      ShowMessage('Pedido realizado com Sucesso!!!');
+  VCadPedido.setData_pedido(frm_Pedido.dtDataPedido.Date);
+  VCadPedido.setValor(StrTofloat(frm_Pedido.edValorPedido.Text));
+  VCadPedido.setStatus(self.verifyStatus);
+  VCadPedido.setCliente_idCliente(idCliente);
+  VCadPedido.setValor_total(StrTofloat(frm_Pedido.edValorTotal.Text));
+  VCadPedido.setValor_frete(StrTofloat(frm_Pedido.edValorFrete.Text));
+  VCadPedido.setendereco_idEndereco(idendereco);
+  VCadPedido.setpeso_pedido(StrTofloat(frm_Pedido.edPeso.Text));
+  VCadPedido.setrecebedor_idRecebedor(id);
+  VCadPedido.insertDados;
+  ShowMessage('Pedido realizado com Sucesso!!!');
 
 end;
 
-
 procedure TControle_Pedido.cadastroPedidoCarga;
 var
-idPedido, i,j, idCarga:integer;
+  idPedido, i, j, idCarga: integer;
 begin
-j:=1;
+  j := 1;
 
   utilitaria := Utils.Create;
   idCarga := utilitaria.getLastId;
-  for i :=  0 to verifyValue -1 do
+  for i := 0 to verifyValue - 1 do
   begin
-    idPedido:= vetorIdPedido[j];
+    idPedido := vetorIdPedido[j];
     VCadPedido.setNumero_pedido(idPedido);
     utilitaria.insertDados(idPedido, idCarga);
     VCadPedido.updateDados;
     inc(j);
   end;
 
-
 end;
 
 procedure TControle_Pedido.gerarPeso;
 var
-value:Float32;
+  value: Float32;
 begin
-    pesor := Random(100);
-    value := pesor * 0.1;
-    frm_Pedido.edPeso.Text := pesor.ToString;
+  pesor := Random(100);
+  value := pesor * 0.1;
+  frm_Pedido.edPeso.Text := pesor.ToString;
 end;
 
 procedure TControle_Pedido.getCadEntrega;
 var
-  idendereco:integer;
-  idCliente:integer;
-  id:integer;
+  idendereco: integer;
+  idCliente: integer;
+  id: integer;
 begin
-  VCadPedido :=CadPedido.Create;
-    if (frm_carga = nil) then
-      frm_carga := Tfrm_carga.Create(nil);
+  if (frm_carga = nil) then
+    frm_carga := Tfrm_carga.Create(nil);
 
-    if (frm_carga.ShowModal = mrOk) then
-      begin
-         case(frm_carga.getFuncao) of
-            1: begin
-              self.cadastroMotoristaVeiculo;
-              self.cadastroEntrega;
-              self.cadastroPedidoCarga;
+    frm_carga.ShowModal;
 
-            end;
-            2: begin
+  {if (frm_carga.ShowModal = mrOk) then
+  begin
+    ShowMessage('a');
+    case (frm_carga.getFuncao) of
+      1:
+        begin
+          self.cadastroMotoristaVeiculo;
+          self.cadastroEntrega;
+          self.cadastroPedidoCarga;
 
-               end;
-         end;
+        end;
+      2:
+        begin
 
-      end;
-      FreeAndNil(frm_carga);
+        end;
+    end;
+
+  end;
+   FreeAndNil(frm_carga);  }
 end;
 
 procedure TControle_Pedido.getCadPedido;
 var
-  idendereco:integer;
-  idCliente:integer;
-  id:integer;
+  idendereco: integer;
+  idCliente: integer;
+  id: integer;
 begin
-  VCadPedido :=CadPedido.Create;
-    if (frm_Pedido = nil) then
-      frm_Pedido := Tfrm_Pedido.Create(nil);
+  VCadPedido := CadPedido.Create;
+  if (frm_Pedido = nil) then
+    frm_Pedido := Tfrm_Pedido.Create(nil);
 
-    if (frm_Pedido.ShowModal = mrOk) then
-      begin
-      idendereco := utilitaria.identificadorEndereco(frm_Pedido.edDestinatario.Text);
-      idCliente := VCadCliente.identificadorCliente(frm_Pedido.cbCliente.Text);
-      id := self.returnIdDestinatario;
-         case(frm_Pedido.getFuncao) of
-            1: begin
-              self.cadastroPedido;
-                //self.cadastroEntrega;
-            end;
-            2: begin
+  if (frm_Pedido.ShowModal = mrOk) then
+  begin
+    idendereco := utilitaria.identificadorEndereco
+      (frm_Pedido.edDestinatario.Text);
+    idCliente := VCadCliente.identificadorCliente(frm_Pedido.cbCliente.Text);
+    id := self.returnIdDestinatario;
+    case (frm_Pedido.getFuncao) of
+      1:
+        begin
+          self.cadastroPedido;
+          // self.cadastroEntrega;
+        end;
+      2:
+        begin
 
-               end;
-         end;
-         VCadEndereco.Free;
-         VCadCliente.Free;
+        end;
+    end;
+    VCadEndereco.Free;
+    VCadCliente.Free;
 
-      end;
-      FreeAndNil(frm_Pedido);
+  end;
+  FreeAndNil(frm_Pedido);
 end;
 
 procedure TControle_Pedido.populaCombo;
 begin
-    dm_ProjetoFinal.qrConsulta.Close;
-    dm_ProjetoFinal.qrConsulta.SQL.Clear;
-    dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScript);
-    try
-      dm_ProjetoFinal.qrConsulta.Open;
-      dm_ProjetoFinal.qrConsulta.First;
-      while not dm_ProjetoFinal.qrConsulta.Eof  do
+  dm_ProjetoFinal.qrConsulta.Close;
+  dm_ProjetoFinal.qrConsulta.SQL.Clear;
+  dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScript);
+  try
+    dm_ProjetoFinal.qrConsulta.Open;
+    dm_ProjetoFinal.qrConsulta.First;
+    while not dm_ProjetoFinal.qrConsulta.Eof do
     begin
-      frm_Pedido.cbCliente.Items.Add(dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
+      frm_Pedido.cbCliente.Items.Add(dm_ProjetoFinal.qrConsulta.FieldByName
+        ('nome').AsString);
       dm_ProjetoFinal.qrConsulta.Next;
     end;
-    finally
+  finally
 
-    end;
+  end;
 
 end;
 
 function TControle_Pedido.returnIdDestinatario: integer;
 var
-VCadRecebedor:CadRecebedor;
-id:integer;
+  VCadRecebedor: CadRecebedor;
+  id: integer;
 begin
-utilitaria := Utils.Create;
-    VCadRecebedor := CadRecebedor.Create;
-    id :=utilitaria.identificadorRecebedor(frm_Pedido.edDestinatario.Text);
-    if (utilitaria.identificadorRecebedor(frm_Pedido.edDestinatario.Text) <=0) then
-    begin
-        VCadRecebedor.setPessoa_idPessoa(utilitaria.identiicadorPessoa(frm_Pedido.edDestinatario.Text));
-        VCadRecebedor.insertDados;
+  utilitaria := Utils.Create;
+  VCadRecebedor := CadRecebedor.Create;
+  id := utilitaria.identificadorRecebedor(frm_Pedido.edDestinatario.Text);
+  if (utilitaria.identificadorRecebedor(frm_Pedido.edDestinatario.Text) <= 0)
+  then
+  begin
+    VCadRecebedor.setPessoa_idPessoa
+      (utilitaria.identiicadorPessoa(frm_Pedido.edDestinatario.Text));
+    VCadRecebedor.insertDados;
 
-      result :=utilitaria.getLastId;
-    end
-    else
-    result :=id;
-          VCadRecebedor.Destroy;
-    end;
-
-
+    result := utilitaria.getLastId;
+  end
+  else
+    result := id;
+  VCadRecebedor.Destroy;
+end;
 
 function TControle_Pedido.setScript: string;
 begin
-    if frm_carga <> nil then
-    begin
-      result := 'SELECT * FROM logistica_ads.dados_pedido_corrigido;'
-    end
-    else
+  if frm_carga <> nil then
+  begin
+    result := 'SELECT * FROM logistica_ads.dados_pedido_corrigido;'
+  end
+  else
     result := 'SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa;';
 end;
 
@@ -266,41 +283,40 @@ function TControle_Pedido.verifyStatus: string;
 begin
   if frm_Pedido.CheckBox1.Checked then
     result := 'EM ANÁLISE'
-    else
-      result:= 'APROVADO'
+  else
+    result := 'APROVADO'
 end;
 
-
-
-function TControle_Pedido.verifyValue:integer;
+function TControle_Pedido.verifyValue: integer;
 var
-i,j:integer;
-value:Float64;
-qtd:integer;
+  i, j: integer;
+  value: Float64;
+  qtd: integer;
 begin
-qtd:=0;
-i :=0;
-j :=1;
-value:=0;
-SetLength(vetorIdPedido,j);
+  qtd := 0;
+  i := 0;
+  j := 1;
+  value := 0;
+  SetLength(vetorIdPedido, j);
 
-    for I := 0 to frm_carga.listDados.Items.Count -1 do
+  for i := 0 to frm_carga.listDados.Items.Count - 1 do
+  begin
+    if frm_carga.listDados.Items.Item[i].Checked then
     begin
-      if frm_carga.listDados.Items.Item[i].Checked then
-      begin
-        inc(qtd);
-        value := value + StrToFloat(frm_carga.listDados.Items.Item[i].SubItems[5]);
-        frm_carga.edPeso.Text := FormatFloat('0.###',value);
-        vetorIdPedido[j] := StrToInt(frm_carga.listDados.Items.Item[i].Caption);
-        inc(j);
-      end
-      else
-      begin
-        frm_carga.edPeso.Text := '';
-        frm_carga.edPeso.Text := FormatFloat('0.##',value);
-      end;
+      inc(qtd);
+      value := value + StrTofloat(frm_carga.listDados.Items.Item[i]
+        .SubItems[5]);
+      frm_carga.edPeso.Text := FormatFloat('0.###', value);
+      vetorIdPedido[j] := StrToInt(frm_carga.listDados.Items.Item[i].Caption);
+      inc(j);
+    end
+    else
+    begin
+      frm_carga.edPeso.Text := '';
+      frm_carga.edPeso.Text := FormatFloat('0.##', value);
     end;
-    result := qtd;
+  end;
+  result := qtd;
 
 end;
 

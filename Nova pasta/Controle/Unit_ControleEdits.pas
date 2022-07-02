@@ -65,7 +65,7 @@ begin
   funcionario.setAtivo(self.returnStatus(status));
   funcionario.setIdFuncionario(dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger);
   ShowMessage(IntToStr(funcionario.getIdFuncionario));
-   funcionario.updateDados;
+   funcionario.updateStatus;
 
 end;
 
@@ -134,7 +134,8 @@ begin
       frm_Cliente.tag := 10;
       Controle.setIdendereco(dm_ProjetoFinal.qrConsulta.Fields[13].AsInteger);
       Controle.getCadPessoa;
-    end
+    end;
+    FreeAndNil(frm_Consulta);
 
   end;
   dm_ProjetoFinal.qrConsulta.Close;

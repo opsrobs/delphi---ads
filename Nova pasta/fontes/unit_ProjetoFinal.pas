@@ -57,6 +57,7 @@ implementation
 uses Unit_Dados, Objeto_CadFuncionario, Form_CadPedido,
   Form_CadFuncionario, Form_CadVeiculos, Form_Consulta, Form_CadEntrega;
 
+
 procedure TFrm_Principal.Carga1Click(Sender: TObject);
 begin
   ControlePedido.getCadEntrega;
@@ -86,7 +87,7 @@ begin
     FreeAndNil(frm_Funcionario);
     FreeAndNil(frm_Cliente);
     FreeAndNil(frm_Veiculos);
-    FreeAndNil(frm_carga);
+    //FreeAndNil(frm_carga);
   finally
 
   end;
