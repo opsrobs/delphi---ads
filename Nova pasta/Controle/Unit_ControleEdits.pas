@@ -3,7 +3,7 @@ unit Unit_ControleEdits;
 interface
 
 uses Form_Edits, Vcl.Controls, Vcl.ComCtrls, Vcl.Dialogs, Unit_Controle,
-  Form_CadPessoa, Objeto_CadVeiculo,
+  Form_CadPessoa, Objeto_CadVeiculo, Objeto_CadFuncionario,
   System.SysUtils;
 
 type
@@ -26,11 +26,14 @@ type
     procedure atualizarVeiculo(status: integer);
     function returnStatus(status: integer): boolean;
 
+    procedure atualizarStatusFuncionario(status: integer);
+
   end;
 
 var
   Controle: TControle;
   veiculo: CadVeiculo;
+  funcionario: CadFuncionario;
 
 implementation
 
@@ -55,6 +58,16 @@ begin
 
 end;
 
+procedure TControleEdit.atualizarStatusFuncionario(status: integer);
+begin
+  funcionario := CadFuncionario.Create;
+  funcionario.setAtivo(self.returnStatus(status));
+  funcionario.setIdFuncionario(dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger);
+  ShowMessage(IntToStr(funcionario.getIdFuncionario));
+   funcionario.updateDados;
+
+end;
+
 procedure TControleEdit.atualizarVeiculo(status: integer);
 begin
   veiculo := CadVeiculo.Create;
@@ -76,14 +89,18 @@ begin
   { frm_Consulta.setSelectSQL
     (self.setPersonType); }
   self.checkRadioStatus;
-  // self.setPersonType;
-  if frm_Consulta.ShowModal = mrOk then
+  if (frm_Consulta.ShowModal = mrOk) then
   begin
-    self.getStatusVeiculo;
-    if frm_Consulta.spSalvar.Caption = 'Atualizar' then
+    //self.getStatusVeiculo;
+    if frm_Consulta.RadioGroup1.ItemIndex = 2 then
     begin
       self.atualizarVeiculo(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger);
       exit
+    end
+    else if frm_Consulta.RadioGroup1.ItemIndex = 3 then
+    begin
+    ShowMessage(dm_ProjetoFinal.qrConsulta.Text);
+      self.atualizarStatusFuncionario(dm_ProjetoFinal.qrConsulta.Fields[5].asinteger);
     end
     else
     begin
@@ -116,7 +133,6 @@ begin
       frm_Cliente.tag := 10;
       Controle.setIdendereco(dm_ProjetoFinal.qrConsulta.Fields[13].AsInteger);
       Controle.getCadPessoa;
-      // frm_Cliente.ShowModal;
     end
 
   end;
@@ -135,7 +151,6 @@ var
 begin
   result := true;
   status := dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger;
-  ShowMessage(IntToStr(dm_ProjetoFinal.qrConsulta.Fields[6].AsInteger));
   if frm_Consulta.cbVeiculos.tag = 10 then
   begin
     frm_Consulta.chStatus.Visible := true;
@@ -157,8 +172,10 @@ end;
 function TControleEdit.returnStatus(status: integer): boolean;
 begin
   result := true;
-  if frm_Consulta.cbVeiculos.tag = 10 then
+  if (frm_Consulta.cbVeiculos.tag = 10)
+  or (frm_Consulta.RadioGroup1.ItemIndex = 3) then
   begin
+  ShowMessage('achou');
     frm_Consulta.chStatus.Visible := true;
     case status of
       0:
@@ -193,6 +210,10 @@ begin
   begin
     frm_Consulta.spSalvar.Caption := 'Atualizar';
     frm_Consulta.cbVeiculos.Visible := true;
+    frm_Consulta.setSelectSQL
+      ('SELECT * FROM logistica_ads.marca_veiculo mv,logistica_ads.veiculo v  where v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = '
+      + IntToStr(idmarca));
+    frm_Consulta.resetScreen;
     if frm_Consulta.cbVeiculos.Text <> '' then
     begin
       idmarca := controleVeiculo.getIdMarca
@@ -205,6 +226,13 @@ begin
       self.getStatusVeiculo;
     end;
   end;
+  if frm_Consulta.RadioGroup1.ItemIndex = 3 then
+  begin
+    frm_Consulta.setSelectSQL
+      ('SELECT pes.nome, pf.cpf, fun.cnh, fun.pis, fun.idfuncionario, fun.ativo FROM logistica_ads.funcionario fun, logistica_ads.pessoa pes, logistica_ads.pessoa_fisica pf '
+      + 'where fun.pessoa_fisica_idpessoa_fisica = pf.idpessoa_fisica and pf.pessoa_idPessoa = pes.idPessoa;');
+    frm_Consulta.resetScreen;
+  end;
 
 end;
 
@@ -216,8 +244,8 @@ end;
 procedure TControleEdit.setStyle;
 begin
   frm_Consulta.chStatus.Visible := false;
-  frm_Consulta.chStatus.Width := 240;
-  frm_Consulta.chStatus.Left := 120;
+  frm_Consulta.chStatus.Width := 55;
+  frm_Consulta.chStatus.Left := 375;
 end;
 
 procedure TControleEdit.setStyleOfField(status: boolean);

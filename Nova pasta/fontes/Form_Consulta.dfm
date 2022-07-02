@@ -22,8 +22,17 @@ object frm_Consulta: Tfrm_Consulta
     Height = 81
     Align = alTop
     TabOrder = 0
+    object spSalvar: TSpeedButton
+      Left = 319
+      Top = 8
+      Width = 122
+      Height = 22
+      Caption = 'Buscar'
+      Flat = True
+      OnClick = spSalvarClick
+    end
     object spButtonReturn: TSpeedButton
-      Left = 216
+      Left = 184
       Top = 8
       Width = 97
       Height = 22
@@ -34,81 +43,42 @@ object frm_Consulta: Tfrm_Consulta
       Flat = True
       OnClick = spButtonReturnClick
     end
-    object spSalvar: TSpeedButton
-      Left = 319
-      Top = 8
-      Width = 122
-      Height = 22
-      Caption = 'Buscar'
-      Flat = True
-      OnClick = spSalvarClick
-    end
-    object chPf: TCheckBox
-      Left = 416
-      Top = 13
-      Width = 97
-      Height = 17
-      Caption = 'Pessoa Fisica'
-      Checked = True
-      State = cbChecked
+    object RadioGroup1: TRadioGroup
+      Left = 0
+      Top = 0
+      Width = 129
+      Height = 79
+      Ctl3D = True
+      ItemIndex = 0
+      Items.Strings = (
+        'Pessoa Fisica'
+        'Pessoa Juridica'
+        'Veiculos'
+        'Funcionarios')
+      ParentCtl3D = False
       TabOrder = 0
       Visible = False
-      OnClick = chPfClick
+      OnClick = RadioGroup1Click
     end
-    object chPj: TCheckBox
-      Left = 120
-      Top = 36
+    object chStatus: TCheckBox
+      Left = 374
+      Top = 55
       Width = 97
       Height = 17
-      Caption = 'Pessoa juridica'
+      Caption = 'Status'
       TabOrder = 1
       Visible = False
-      OnClick = chPjClick
+      OnClick = chConsultaVeiculosClick
     end
     object cbVeiculos: TComboBox
-      Left = 247
-      Top = 55
+      Left = 233
+      Top = 53
       Width = 121
       Height = 22
       Style = csOwnerDrawFixed
       TabOrder = 2
       Visible = False
       OnChange = cbVeiculosChange
-    end
-    object chConsultaVeiculos: TCheckBox
-      Left = 568
-      Top = 58
-      Width = 97
-      Height = 17
-      Caption = 'Veiculos'
-      TabOrder = 3
-      Visible = False
-      OnClick = chConsultaVeiculosClick
-    end
-    object chStatus: TCheckBox
-      Left = 120
-      Top = 13
-      Width = 57
-      Height = 17
-      Caption = 'Status'
-      Enabled = False
-      TabOrder = 4
-      Visible = False
-      OnClick = chPjClick
-    end
-    object RadioGroup1: TRadioGroup
-      Left = 519
-      Top = 0
-      Width = 185
-      Height = 69
-      Caption = 'RadioGroup1'
-      ItemIndex = 1
-      Items.Strings = (
-        'Pessoa Fisica'
-        'Pessoa Juridica'
-        'Veiculos')
-      TabOrder = 5
-      OnClick = RadioGroup1Click
     end
   end
   object Panel3: TPanel
@@ -119,10 +89,11 @@ object frm_Consulta: Tfrm_Consulta
     Align = alClient
     TabOrder = 1
     object dbConsulta: TDBGrid
-      Left = 1
-      Top = 1
-      Width = 721
-      Height = 429
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 715
+      Height = 423
       Align = alClient
       DataSource = dm_ProjetoFinal.dsConsulta
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]

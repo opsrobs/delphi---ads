@@ -11,32 +11,28 @@ uses
 type
   Tfrm_Consulta = class(TForm)
     Panel1: TPanel;
-    spButtonReturn: TSpeedButton;
     spSalvar: TSpeedButton;
     Panel3: TPanel;
     dbConsulta: TDBGrid;
-    chPf: TCheckBox;
-    chPj: TCheckBox;
     Panel2: TPanel;
     lbResult: TLabel;
     spDestinatario: TSpeedButton;
     edPesquisa: TLabeledEdit;
-    cbVeiculos: TComboBox;
-    chConsultaVeiculos: TCheckBox;
-    chStatus: TCheckBox;
     RadioGroup1: TRadioGroup;
+    chStatus: TCheckBox;
+    cbVeiculos: TComboBox;
+    spButtonReturn: TSpeedButton;
     procedure FormActivate(Sender: TObject);
     procedure spButtonReturnClick(Sender: TObject);
     procedure spSalvarClick(Sender: TObject);
     procedure spDestinatarioClick(Sender: TObject);
-    procedure chPfClick(Sender: TObject);
-    procedure chPjClick(Sender: TObject);
     procedure cbVeiculosChange(Sender: TObject);
     procedure dbConsultaCellClick(Column: TColumn);
     procedure chConsultaVeiculosClick(Sender: TObject);
     procedure RadioGroup1Click(Sender: TObject);
   private
     scriptSql: string;
+    procedure resetButton;
   public
     procedure setSelectSQL(scriptSql: string);
     function getSelectSql: string;
@@ -62,42 +58,24 @@ var
 begin
   self.cbVeiculos.tag := 0;
   self.chStatus.Visible := false;
-  //edit.setPersonType;
   edit.checkRadioStatus;
-
-  // utilitaria.setValues;
 end;
 
 procedure Tfrm_Consulta.chConsultaVeiculosClick(Sender: TObject);
 begin
-  frm_Consulta.spSalvar.Enabled := false;
-end;
-
-procedure Tfrm_Consulta.chPfClick(Sender: TObject);
-var
-  edit: TControleEdit;
-begin
-self.chConsultaVeiculos.Checked := false;
-self.chPj.Checked:= false;
-  //edit.setPersonType;
-
-end;
-
-procedure Tfrm_Consulta.chPjClick(Sender: TObject);
-var
-  edit: TControleEdit;
-begin
-  self.chPf.Checked := false;
-  //edit.setPersonType;
+  //frm_Consulta.spSalvar.Enabled := false;
 end;
 
 procedure Tfrm_Consulta.dbConsultaCellClick(Column: TColumn);
 var
   edit: TControleEdit;
 begin
-  self.cbVeiculos.tag := 10;
-  self.spSalvar.Enabled :=true;
-  edit.getStatusVeiculo;
+  if cbVeiculos.Visible = true then
+  begin
+    self.cbVeiculos.tag := 10;
+    self.spSalvar.Enabled := true;
+    edit.getStatusVeiculo;
+  end;
 
 end;
 
@@ -110,7 +88,6 @@ begin
   else if self.tag = 1 then
   begin
     self.resetScreen;
-    utilitaria.bloquearConsulta;
     controleVeiculo.popularCombos;
     frm_Consulta.edPesquisa.Visible := false;
   end
@@ -129,9 +106,18 @@ end;
 
 procedure Tfrm_Consulta.RadioGroup1Click(Sender: TObject);
 var
-edit:TControleEdit;
+  edit: TControleEdit;
 begin
-   edit.checkRadioStatus;
+  edit.checkRadioStatus;
+end;
+
+procedure Tfrm_Consulta.resetButton;
+begin
+  if self.RadioGroup1.ItemIndex <> 2 then
+  begin
+  self.spSalvar.Caption := 'Buscar';
+  self.chStatus.Visible := false;
+  end;
 end;
 
 procedure Tfrm_Consulta.resetScreen;
@@ -150,6 +136,8 @@ begin
       ShowMessage('Não foi possivel consultar os dados: ' + e.ToString);
 
   End;
+  self.resetButton;
+  utilitaria.statusButton;
 end;
 
 procedure Tfrm_Consulta.setSelectSQL(scriptSql: string);
@@ -174,7 +162,7 @@ end;
 
 procedure Tfrm_Consulta.spSalvarClick(Sender: TObject);
 begin
-  ModalResult := mrok;
+  ModalResult := mrok
 end;
 
 end.

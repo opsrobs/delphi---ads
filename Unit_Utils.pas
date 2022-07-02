@@ -16,7 +16,6 @@ type
     procedure nomeEstado(uf: string);
     procedure confirmData;
     procedure clearData;
-    function statusButton: boolean;
 
   public
     procedure loadingApiPessoa;
@@ -35,9 +34,7 @@ type
     function setConfirmData: boolean;
     procedure newAddress(status: boolean);
 
-    procedure activeButton;
-    procedure inativeButton;
-    function statusButton: boolean;
+    procedure statusButton;
 
     procedure setValues;
 
@@ -49,11 +46,6 @@ implementation
 
 uses Form_CadPessoa, Form_CadFuncionario, Form_CadPedido, Objeto_CadContato,
   Unit_ControleEdits, Form_Consulta;
-
-procedure Utils.activeButton;
-begin
-  frm_Consulta.Tag := 2;
-end;
 
 function Utils.alterContact(content: string): boolean;
 begin
@@ -354,11 +346,6 @@ begin
 
 end;
 
-procedure Utils.inativeButton;
-begin
-  frm_Consulta.Tag := 1;
-end;
-
 function Utils.insertDados(idPedido, idCarga: integer): boolean;
 var
   query: TFDQuery;
@@ -535,17 +522,12 @@ begin
   end
 end;
 
-function Utils.statusButton: boolean;
+procedure Utils.statusButton;
 begin
+  frm_Consulta.spSalvar.Top := 30;
+  frm_Consulta.spButtonReturn.top := 30;
   if frm_Consulta.spSalvar.Caption = 'Atualizar' then
-  begin
-    if frm_Consulta.Tag = 2 then
-    begin
-      frm_Consulta.spSalvar.Enabled := true;
-    end
-    else
-      frm_Consulta.spSalvar.Enabled := false;
-  end;
+    frm_Consulta.spSalvar.Enabled := false;
 end;
 
 procedure Utils.updateStatusContato(status: boolean; id: integer);

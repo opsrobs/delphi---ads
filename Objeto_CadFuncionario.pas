@@ -28,6 +28,7 @@ interface
                                               {<--- CRUD --->}
 
         function insertDados:Boolean;
+        function updateDados:Boolean;
         function deleteDados:Boolean;
 
   end;
@@ -144,6 +145,35 @@ end;
 procedure CadFuncionario.setPis(pis: string);
 begin
     self.pis :=pis;
+end;
+
+function CadFuncionario.updateDados: Boolean;
+var
+    query:TFDQuery;
+begin
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+
+  query.SQL.Add('update funcionario set   ativo = :ativo where (idfuncionario = :idfuncionario)');
+
+  query.ParamByName('ativo').AsBoolean := self.getAtivo;
+  query.ParamByName('idfuncionario').AsInteger := self.getIdFuncionario;
+      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
+
+      try
+        query.ExecSQL;  {update service}
+        result := true;
+      except
+        on e:exception do
+        begin
+          Result := false;
+          showMessage('Erro ao alterar dados do Funcionario: ' + e.ToString);
+        end;
+
+      end;
+      query.Close;
+      query.Free;
+
 end;
 
 end.
