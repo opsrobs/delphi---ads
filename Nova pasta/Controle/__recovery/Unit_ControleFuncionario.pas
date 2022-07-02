@@ -55,20 +55,26 @@ begin
 end;
 
 procedure TControle_Funcionario.cadastrarFuncionario(id: integer);
+var
+  resp: integer;
 begin
+  resp := VCadFuncionario.funcionariosExists(id);
   VCadFuncionario := CadFuncionario.Create;
 
   VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
   VCadFuncionario.setCnh(frm_Funcionario.edCnh.Text);
   VCadFuncionario.setpessoa_fisica_idPessoa(id);
+  ShowMessage('a');
   VCadFuncionario.setAtivo(true);
-  if VCadFuncionario.funcionariosExists(id) <> 0 then
+  if resp > 0 then
   begin
-  VCadFuncionario.updateDados;
-  ShowMessage('Cadastro atualizado com sucesso!!!');
+    VCadFuncionario.updateDados;
+    ShowMessage('Cadastro atualizado com sucesso!!!');
   end
   else
-  VCadFuncionario.insertDados;
+  begin
+    VCadFuncionario.insertDados;
+  end;
   ShowMessage('Cadastro reaalizado com sucesso!!!');
 end;
 
@@ -96,7 +102,6 @@ begin
 
 end;
 
-
 procedure TControle_Funcionario.getCadFuncionario;
 var
   idTemp: integer;
@@ -120,7 +125,7 @@ begin
           end
           else
           begin
-           self.cadastrarPessoaFisica(VCadPessoa.getLastId);
+            self.cadastrarPessoaFisica(VCadPessoa.getLastId);
             self.cadastrarFuncionario(VCadPessoaFisica.getLastId);
           end;
 

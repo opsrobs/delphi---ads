@@ -30,7 +30,7 @@ interface
         function insertDados:Boolean;
         function updateDados:Boolean;
         function deleteDados:Boolean;
-        function funcionariosExists(idPessoaFisica:integer):integer;
+
   end;
 
 implementation
@@ -57,35 +57,6 @@ begin
         begin
           Result := false;
           showMessage('Erro ao Excluir dados da pessoa: ' + e.ToString);
-        end;
-
-      end;
-      query.Close;
-      query.Free;
-
-end;
-
-function CadFuncionario.funcionariosExists (idPessoaFisica:integer): integer;
-var
-    query:TFDQuery;
-begin
-  query := TFDQuery.Create(nil);
-  query.Connection := dm_ProjetoFinal.FDFinal;
-
-  query.SQL.Add('SELECT count(idfuncionario) FROM logistica_ads.funcionario where pessoa_fisica_idpessoa_fisica = ' + IntToStr(idPessoaFisica));
-
-  query.ParamByName('ativo').AsBoolean := self.getAtivo;
-  query.ParamByName('idfuncionario').AsInteger := self.getIdFuncionario;
-      {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
-
-      try
-        query.ExecSQL;  {update service}
-        result := idPessoaFisica;
-      except
-        on e:exception do
-        begin
-          Result := 0;
-          showMessage('Erro ao alterar dados do Funcionario: ' + e.ToString);
         end;
 
       end;
