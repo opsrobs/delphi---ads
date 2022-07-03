@@ -19,16 +19,16 @@ type
     edPeso: TLabeledEdit;
     Panel3: TPanel;
     listDados: TListView;
-    SpeedButton1: TSpeedButton;
     cbMotoristaEntrega: TComboBox;
     cbVeiculoEntrega: TComboBox;
     procedure FormActivate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure listDadosClick(Sender: TObject);
+    procedure spSalvarClick(Sender: TObject);
 
   private
-    { Private declarations }
     funcao:byte;
+    function validarValores:boolean;
 
   public
 
@@ -84,6 +84,20 @@ end;
 procedure Tfrm_carga.SpeedButton1Click(Sender: TObject);
 begin
   Frm_Principal.ControlePedido.verifyValue;
+end;
+
+procedure Tfrm_carga.spSalvarClick(Sender: TObject);
+begin
+if (not self.validarValores) then
+          exit;
+
+        self.setFuncao(1);
+        ModalResult := mrOk;
+end;
+
+function Tfrm_carga.validarValores: boolean;
+begin
+
 end;
 
 end.

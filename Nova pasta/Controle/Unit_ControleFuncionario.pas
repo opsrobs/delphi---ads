@@ -3,7 +3,7 @@ unit Unit_ControleFuncionario;
 interface
 
 uses System.SysUtils, Winapi.Messages, Objeto_CadFuncionario, Vcl.Controls,
-  Vcl.Dialogs,
+  Vcl.Dialogs,Form_Consulta,
   Objeto_CadPessoa, Unit_Controle, Form_CadPedido;
 
 type
@@ -37,7 +37,7 @@ implementation
 uses Form_CadPessoa,
   Objeto_CadPessoaFisica,
   Objeto_CadPessoaJuridica,
-  Objeto_CadCliente, Form_Consulta, Form_CadFuncionario, Unit_Dados,
+  Objeto_CadCliente, Form_CadFuncionario, Unit_Dados,
   Form_CadEntrega, unit_ProjetoFinal;
 
 var
@@ -100,8 +100,6 @@ begin
 
 end;
 
-
-
 procedure TControle_Funcionario.getConsultaPessoas;
 begin
   if frm_Consulta = nil then
@@ -151,30 +149,30 @@ var
   i: integer;
 begin
   i := 1;
- // SetLength(arrayDeMotoristas, i);
-
-  dm_ProjetoFinal.qr.Close;
-  dm_ProjetoFinal.qrConsulta.SQL.Clear;
-  dm_ProjetoFinal.qrConsulta.SQL.Add(self.setScriptCbMotorista);
+  SetLength(arrayDeMotoristas, i);
+  dm_ProjetoFinal.qrMotorista.Close;
+  dm_ProjetoFinal.qrMotorista.Close;
+  dm_ProjetoFinal.qrMotorista.SQL.Clear;
+  dm_ProjetoFinal.qrMotorista.SQL.Add(self.setScriptCbMotorista);
   try
-    dm_ProjetoFinal.qrConsulta.Open;
-    dm_ProjetoFinal.qrConsulta.First;
+    dm_ProjetoFinal.qrMotorista.Open;
+    dm_ProjetoFinal.qrMotorista.First;
 
-    while not dm_ProjetoFinal.qrConsulta.Eof do
+    while not dm_ProjetoFinal.qrMotorista.Eof do
     begin
 
       frm_carga.cbMotoristaEntrega.Items.Add
-        (dm_ProjetoFinal.qrConsulta.FieldByName('nome').AsString);
-      arrayDeMotoristas[i] := dm_ProjetoFinal.qrConsulta.FieldByName
+        (dm_ProjetoFinal.qrMotorista.FieldByName('nome').AsString);
+
+      arrayDeMotoristas[i] := dm_ProjetoFinal.qrMotorista.FieldByName
         ('idfuncionario').AsInteger;
-      dm_ProjetoFinal.qrConsulta.Next;
-      inc(i)
+      inc(i);
+      dm_ProjetoFinal.qrMotorista.Next;
+
     end;
   finally
 
   end;
-  dm_ProjetoFinal.qrConsulta.Close;
-  dm_ProjetoFinal.qrConsulta.Free;
 end;
 
 function TControle_Funcionario.setScriptCbMotorista: String;

@@ -162,11 +162,17 @@ begin
 end;
 
 procedure TControle_Pedido.getCadEntrega;
+var
+  idendereco: integer;
+  idCliente: integer;
+  id: integer;
 begin
   if (frm_carga = nil) then
     frm_carga := Tfrm_carga.Create(nil);
 
-  if (frm_carga.ShowModal = mrOk) then
+    frm_carga.ShowModal;
+
+  {if (frm_carga.ShowModal = mrOk) then
   begin
     ShowMessage('a');
     case (frm_carga.getFuncao) of
@@ -184,7 +190,7 @@ begin
     end;
 
   end;
-   FreeAndNil(frm_carga);
+   FreeAndNil(frm_carga);  }
 end;
 
 procedure TControle_Pedido.getCadPedido;

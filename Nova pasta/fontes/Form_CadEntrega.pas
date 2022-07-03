@@ -38,7 +38,6 @@ type
   end;
 
 var
-  B: TButton;
   frm_carga: Tfrm_carga;
 
 implementation
@@ -57,6 +56,7 @@ var
   ControlePedido:TControle_Pedido;
 begin
     ControlePedido.buscarPedidos;
+
     Frm_Principal.ControleVeiculo.populaComboCbVeiculo;
     Frm_Principal.ControleFuncionario.populaComboCbPessoa;
 end;
