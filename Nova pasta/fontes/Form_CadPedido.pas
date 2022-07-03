@@ -33,12 +33,12 @@ type
     procedure FormActivate(Sender: TObject);
     procedure spConsultaCepClick(Sender: TObject);
     procedure nmConsultarClick(Sender: TObject);
-    procedure edValorTotalChange(Sender: TObject);
     procedure edValorFreteExit(Sender: TObject);
   private
     funcao:byte; //1--salvar || 2 --Excluir
     function validarValores:boolean;
     procedure limpartela;
+    function calc_total:Float64;
 
   public
     procedure setFuncao(funcao:byte);
@@ -59,6 +59,11 @@ uses Objeto_CadCliente, Unit_Utils, Form_CadPessoa,unit_ProjetoFinal,
 
 { Tfrm_Pedido }
 
+function Tfrm_Pedido.calc_total: Float64;
+begin
+  result := StrToFloat(edValorPedido.Text) + StrToFloat(edValorFrete.Text);
+end;
+
 procedure Tfrm_Pedido.cbClienteClick(Sender: TObject);
 var
 VCadCliente:CadCliente;
@@ -77,17 +82,10 @@ procedure Tfrm_Pedido.edValorFreteExit(Sender: TObject);
 var
   totalPedio:Float64;
 begin
-    totalPedio := StrToFloat(edValorPedido.Text) + StrToFloat(edValorFrete.Text);
+    totalPedio := self.calc_total;
     edValorTotal.Text := FloatToStr(totalPedio);
 end;
 
-procedure Tfrm_Pedido.edValorTotalChange(Sender: TObject);
-var
-  totalPedio:Float64;
-begin
-    totalPedio := StrToFloat(edValorPedido.Text) + StrToFloat(edValorFrete.Text);
-    edValorTotal.Text := FloatToStr(totalPedio);
-end;
 
 procedure Tfrm_Pedido.FormActivate(Sender: TObject);
 begin
@@ -151,13 +149,39 @@ procedure Tfrm_Pedido.spSalvarClick(Sender: TObject);
 begin
         if (not self.validarValores) then
           exit;
-
         self.setFuncao(1);
         ModalResult := mrOk;
 end;
 
 function Tfrm_Pedido.validarValores: boolean;
 begin
+      result := true;
+    if (edDestinatario.Text	= '') then
+      begin
+        result := false;
+        ShowMessage('Informe o destinatario');
+        exit;
+      end;
+
+      if (edValorPedido.Text	= '') then
+      begin
+        result := false;
+        ShowMessage('O Valor do pedido não pode ser nulo');
+        exit;
+      end;
+
+      if (edValorTotal.Text	= '') then
+      begin
+        result := false;
+        ShowMessage('O valor total está sendo calculado...');
+        if self.calc_total <0 then
+        begin
+        ShowMessage('Não foi Possivel calcular o total...');
+        exit
+        end;
+        edValorTotal.Text := self.calc_total.ToString;
+        exit;
+      end;
 
 end;
 

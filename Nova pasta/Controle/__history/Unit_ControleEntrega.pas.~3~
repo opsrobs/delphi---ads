@@ -1,0 +1,47 @@
+unit Unit_ControleEntrega;
+
+interface
+uses Form_Edits, Vcl.Controls, Vcl.ComCtrls, Vcl.Dialogs, Unit_Controle,
+  Form_CadPessoa, Objeto_CadVeiculo, Objeto_CadFuncionario,
+  System.SysUtils;
+
+type
+  TControle_Entrega = class
+  private
+
+  public
+  procedure getCadEntrega;
+
+  end;
+
+implementation
+
+{ TControle_Entrega }
+
+procedure TControle_Entrega.getCadEntrega;  {
+begin
+  if (frm_carga = nil) then
+    frm_carga := Tfrm_carga.Create(nil);
+
+  if (frm_carga.ShowModal = mrOk) then
+  begin
+    ShowMessage('a');
+    case (frm_carga.getFuncao) of
+      1:
+        begin
+          self.cadastroMotoristaVeiculo;
+          self.cadastroEntrega;
+          self.cadastroPedidoCarga;
+
+        end;
+      2:
+        begin
+
+        end;
+    end;
+
+  end;
+   FreeAndNil(frm_carga);
+end;}
+
+end.

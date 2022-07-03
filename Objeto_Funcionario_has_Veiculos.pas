@@ -40,14 +40,17 @@ end;
 
 function Funcionario_has_Veiculos.insertDados: boolean;
 var
+    executedScript:string;
     query:TFDQuery;
 begin
+executedScript:= 'insert into funcionario_has_veiculo values( 0, '+IntToStr(self.getveiculos_idVeiculos)+' {veiculo_idveiculos},'+IntToStr(self.getFuncionario_idFuncionario)+' {funcionario_idfuncionario})';
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
   query.SQL.Add('insert into funcionario_has_veiculo values( 0, :veiculo_idveiculos, :funcionario_idfuncionario)');
 
-  query.ParamByName('funcionario_idfuncionario').AsInteger := self.getFuncionario_idFuncionario;
   query.ParamByName('veiculo_idveiculos').AsInteger := self.getveiculos_idVeiculos;
+  query.ParamByName('funcionario_idfuncionario').AsInteger := self.getFuncionario_idFuncionario;
+
       {Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo}
 
       try
@@ -57,7 +60,7 @@ begin
         on e:exception do
         begin
           Result := false;
-          showMessage('Erro ao incluir <<  funcionario_has_veiculo >>: ' + e.ToString);
+          showMessage('Erro ao incluir '+#13 + #13 + executedScript + #13 + #13 +'<<  funcionario_has_veiculo >>: ' + e.ToString);
         end;
 
       end;

@@ -9,9 +9,6 @@ uses Form_Edits, Vcl.Controls, Vcl.ComCtrls, Vcl.Dialogs, Unit_Controle,
 type
   TControleEdit = class
   public
-    { contato: string;
-      procedure setContato(contato: string);
-      function getContato: string; }
     procedure consultarPessoa;
     procedure verifyStatus;
     procedure atualizarContato(id: integer);
@@ -20,6 +17,9 @@ type
     function getStatus: integer;
     procedure setStatus(idmarca: integer);
     procedure checkRadioStatus;
+
+    procedure popularCombos;
+    function getIdMarca(index:integer):integer;
   private
     idmarca: integer;
     procedure setStyle;
@@ -27,11 +27,14 @@ type
     function returnStatus(status: integer): boolean;
     procedure ocultarComboBox;
 
+
+
     procedure atualizarStatusFuncionario(status: integer);
 
   end;
 
 var
+arrayVeicuos: array of integer;
   Controle: TControle;
   veiculo: CadVeiculo;
   funcionario: CadFuncionario;
@@ -65,7 +68,7 @@ begin
   funcionario.setAtivo(self.returnStatus(status));
   funcionario.setIdFuncionario(dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger);
   ShowMessage(IntToStr(funcionario.getIdFuncionario));
-   funcionario.updateStatus;
+  funcionario.updateStatus;
 
 end;
 
@@ -75,7 +78,6 @@ begin
   veiculo.setIdVeiculo(dm_ProjetoFinal.qrConsulta.Fields[0].AsInteger);
   veiculo.setAtivo(self.returnStatus(status));
   veiculo.updadteDados;
-  ShowMessage('Atualizou?')
 end;
 
 procedure TControleEdit.consultarPessoa;
@@ -87,21 +89,19 @@ begin
   if frm_Consulta = nil then
     frm_Consulta := Tfrm_Consulta.Create(nil);
 
-  { frm_Consulta.setSelectSQL
-    (self.setPersonType); }
   self.checkRadioStatus;
   if (frm_Consulta.ShowModal = mrOk) then
   begin
-    //self.getStatusVeiculo;
     if frm_Consulta.RadioGroup1.ItemIndex = 2 then
     begin
       self.atualizarVeiculo(dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger);
-      exit
     end
     else if frm_Consulta.RadioGroup1.ItemIndex = 3 then
     begin
-    ShowMessage(dm_ProjetoFinal.qrConsulta.Text);
-      self.atualizarStatusFuncionario(dm_ProjetoFinal.qrConsulta.Fields[5].asinteger);
+      ShowMessage(dm_ProjetoFinal.qrConsulta.Text);
+      self.atualizarStatusFuncionario(dm_ProjetoFinal.qrConsulta.Fields[5]
+        .AsInteger);
+
     end
     else
     begin
@@ -134,12 +134,13 @@ begin
       frm_Cliente.tag := 10;
       Controle.setIdendereco(dm_ProjetoFinal.qrConsulta.Fields[13].AsInteger);
       Controle.getCadPessoa;
-    end;
-    FreeAndNil(frm_Consulta);
 
+
+
+    end;
+    //FreeAndNil(frm_Consulta);
   end;
-  dm_ProjetoFinal.qrConsulta.Close;
-  dm_ProjetoFinal.qrConsulta.SQL.Clear;
+
 end;
 
 procedure TControleEdit.setStatus(idmarca: integer);
@@ -173,18 +174,18 @@ end;
 
 procedure TControleEdit.ocultarComboBox;
 begin
-frm_Consulta.cbVeiculos.Visible := false;
-frm_Consulta.chStatus.Visible := false;
-frm_Consulta.spSalvar.Enabled := true;
+  frm_Consulta.cbVeiculos.Visible := false;
+  frm_Consulta.chStatus.Visible := false;
+  frm_Consulta.spSalvar.Enabled := true;
 end;
 
 function TControleEdit.returnStatus(status: integer): boolean;
 begin
   result := true;
-  if (frm_Consulta.cbVeiculos.tag = 10)
-  or (frm_Consulta.RadioGroup1.ItemIndex = 3) then
+  if (frm_Consulta.cbVeiculos.tag = 10) or
+    (frm_Consulta.RadioGroup1.ItemIndex = 3) then
   begin
-  ShowMessage('achou');
+    ShowMessage('achou');
     frm_Consulta.chStatus.Visible := true;
     case status of
       0:
@@ -222,16 +223,17 @@ begin
     frm_Consulta.spSalvar.Caption := 'Atualizar';
     frm_Consulta.cbVeiculos.Visible := true;
     frm_Consulta.setSelectSQL
-      ('select v.idveiculos as "Nº do registro", mv.nome_marca as "Marca", v.modelo as "Modelo", v.placa as "Placa", v.ativo as "Status" from veiculo v inner join  marca_veiculo mv on v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = ' + IntToStr(idmarca));
+      ('select v.idveiculos as "Nº do registro", mv.nome_marca as "Marca", v.modelo as "Modelo", v.placa as "Placa", v.ativo as "Status" from veiculo v inner join  marca_veiculo mv on v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = '
+      + IntToStr(idmarca));
     frm_Consulta.resetScreen;
     if frm_Consulta.cbVeiculos.Text <> '' then
     begin
-      idmarca := controleVeiculo.getIdMarca
+      idmarca := self.getIdMarca
         (frm_Consulta.cbVeiculos.ItemIndex + 1);
       self.setStyle;
-      ShowMessage(IntToStr(idmarca));
       frm_Consulta.setSelectSQL
-        ('select v.idveiculos as "Nº do registro", mv.nome_marca as "Marca", v.modelo as "Modelo", v.placa as "Placa", v.ativo as "Status" from veiculo v inner join  marca_veiculo mv on v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = ' + IntToStr(idmarca));
+        ('select v.idveiculos as "Nº do registro", mv.nome_marca as "Marca", v.modelo as "Modelo", v.placa as "Placa", v.ativo as "Status" from veiculo v inner join  marca_veiculo mv on v.marca_veiculo_idmarca_veiculo = mv.idmarca_veiculo and mv.idmarca_veiculo = '
+        + IntToStr(idmarca));
       frm_Consulta.resetScreen;
       self.getStatusVeiculo;
     end;
@@ -246,6 +248,7 @@ begin
   end;
 
 end;
+
 
 function TControleEdit.getStatus: integer;
 begin
@@ -263,6 +266,38 @@ procedure TControleEdit.setStyleOfField(status: boolean);
 begin
   frm_Cliente.newAddress.Visible := status;
   frm_Cliente.newAddress.Left := 310;
+end;
+
+function TControleEdit.getIdMarca(index: integer): integer;
+begin
+result := arrayVeicuos[index]
+end;
+
+procedure TControleEdit.popularCombos;
+var
+  i: integer;
+begin
+  i := 1;
+  SetLength(arrayVeicuos, i);
+  dm_ProjetoFinal.qrVeiculo.Close;
+  dm_ProjetoFinal.qrVeiculo.SQL.Clear;
+  dm_ProjetoFinal.qrVeiculo.SQL.Add('SELECT * FROM logistica_ads.marca_veiculo;');
+  try
+    dm_ProjetoFinal.qrVeiculo.Open;
+    dm_ProjetoFinal.qrVeiculo.First;
+
+    while not dm_ProjetoFinal.qrVeiculo.Eof do
+  begin
+    frm_Consulta.cbVeiculos.Items.Add(dm_ProjetoFinal.qrVeiculo.FieldByName
+      ('nome_marca').AsString );
+    arrayVeicuos[i] := dm_ProjetoFinal.qrVeiculo.FieldByName('idmarca_veiculo')
+      .AsInteger;
+    inc(i);
+    dm_ProjetoFinal.qrVeiculo.Next;
+  end;
+  finally
+
+  end;
 end;
 
 procedure TControleEdit.verifyStatus;

@@ -33,6 +33,7 @@ type
     function updateStatus: boolean;
     function updateDados: boolean;
     function funcionariosExists(idPessoaFisica: integer): integer;
+    function selectFuncionario(nome: string): integer;
   end;
 
 implementation
@@ -127,6 +128,40 @@ begin
     begin
       result := false;
       showMessage('Erro ao incluir funcionario... : ' + e.ToString);
+    end;
+
+  end;
+  query.Close;
+  query.Free;
+
+end;
+
+function CadFuncionario.selectFuncionario(nome: string): integer;
+var
+  query: TFDQuery;
+  script: string;
+begin
+  script := 'SELECT fun.idfuncionario, count(p.nome) FROM logistica_ads.funcionario fun , logistica_ads.pessoa_fisica pf, logistica_ads.pessoa p where fun.pessoa_fisica_idpessoa_fisica = pf.idpessoa_fisica and pf.pessoa_idPessoa = p.idPessoa and nome like "%'+nome+'%"';
+
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  query.SQL.Add(script);
+
+  { Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo }
+
+  try
+    query.open;
+    if (not query.isEmpty) then
+    begin
+      // query.ParamByName('nome_estado').AsString := self.getNome_estado;
+      { Alterar o valor do [] para a posição do atributo }
+      result := query.Fields[0].AsInteger; //idPessoaFisica;
+    end;
+  except
+    on e: exception do
+    begin
+      result := 0;
+      showMessage('Erro ao alterar dados do Funcionario: ' + e.ToString);
     end;
 
   end;

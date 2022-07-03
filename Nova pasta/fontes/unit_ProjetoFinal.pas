@@ -32,8 +32,8 @@ type
     procedure Veiculo1Click(Sender: TObject);
     procedure Pedido1Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure Carga1Click(Sender: TObject);
     procedure ConsultarClientesClick(Sender: TObject);
+    procedure Carga1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,7 +60,7 @@ uses Unit_Dados, Objeto_CadFuncionario, Form_CadPedido,
 
 procedure TFrm_Principal.Carga1Click(Sender: TObject);
 begin
-  ControlePedido.getCadEntrega;
+ ControlePedido.getCadEntrega;
 end;
 
 procedure TFrm_Principal.Cliente1Click(Sender: TObject);
@@ -75,22 +75,23 @@ frm_Consulta := Tfrm_Consulta.Create(nil);
   frm_Consulta.RadioGroup1.Visible :=true;
   Frm_Principal.ConsultarClientes.Tag := 1;
   ControleEdit.consultarPessoa;
+  if frm_Consulta <> nil then
+    FreeAndNil(frm_Consulta);
 
 end;
 
 procedure TFrm_Principal.FormActivate(Sender: TObject);
 begin
-  // self.clearMemory;
+ { // self.clearMemory;
   try
     FreeAndNil(frm_Pedido);
     FreeAndNil(frm_Consulta);
     FreeAndNil(frm_Funcionario);
     FreeAndNil(frm_Cliente);
     FreeAndNil(frm_Veiculos);
-    //FreeAndNil(frm_carga);
   finally
 
-  end;
+  end;     }
 
 end;
 
@@ -101,11 +102,12 @@ end;
 
 procedure TFrm_Principal.FormDestroy(Sender: TObject);
 begin
-  Controle.Free;
+  {Controle.Free;
   ControleFuncionario.Free;
   ControleVeiculo.Free;
-  ControlePedido.Free;
+  ControlePedido.Free;  }
 end;
+
 
 procedure TFrm_Principal.Funcionario1Click(Sender: TObject);
 begin

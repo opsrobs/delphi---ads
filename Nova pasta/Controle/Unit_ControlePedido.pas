@@ -22,12 +22,14 @@ type
     procedure cadastroEntrega;
 
   public
+    procedure getCadEntrega;
     procedure getCadPedido;
     procedure gerarPeso;
     procedure populaCombo;
-    procedure getCadEntrega;
     procedure buscarPedidos;
     function verifyValue: integer;
+
+    function getPlate(txt: string): string;
 
   end;
 
@@ -47,7 +49,8 @@ implementation
 
 uses Form_CadPedido, Unit_Dados, Objeto_CadRecebedor,
   Objeto_Funcionario_has_Veiculos, Form_CadFuncionario, Form_CadPessoa,
-  unit_ProjetoFinal, Form_CadVeiculos;
+  unit_ProjetoFinal, Form_CadVeiculos, Objeto_CadFuncionario,
+  Unit_ControleFuncionario;
 
 procedure TControle_Pedido.buscarPedidos;
 var
@@ -87,19 +90,25 @@ begin
   VCadCarga.setQuantidade(verifyValue);
   VCadCarga.setPeso(StrTofloat(frm_carga.edPeso.Text));
   VCadCarga.setIdFuncionarioVeiculo(utilitaria.getLastId);
-
+  ShowMessage(IntToStr(VCadCarga.getQuantidade)+' '+ VCadCarga.getPeso.ToString + ' '+ VCadCarga.getidFuncionarioVeiculo.ToString);
   VCadCarga.insertDados;
 end;
 
 procedure TControle_Pedido.cadastroMotoristaVeiculo;
 var
+  funcionario: CadFuncionario;
   VFunc_VVeic: Funcionario_has_Veiculos;
   idFuncionario, idVeiculo: integer;
 begin
-  idFuncionario := Frm_Principal.ControleFuncionario.getIdFuncionario
-    (frm_carga.cbMotoristaEntrega.ItemIndex + 1);
-  idVeiculo := Frm_Principal.ControleVeiculo.getIdMotorista
-    (frm_carga.cbVeiculoEntrega.ItemIndex + 1);
+ShowMessage('q');
+  idFuncionario := funcionario.selectFuncionario
+    (frm_carga.cbMotoristaEntrega.Text);
+
+
+  self.getPlate(frm_carga.cbVeiculoEntrega.Text);
+  idVeiculo := utilitaria.selectPlaca
+    (self.getPlate(frm_carga.cbVeiculoEntrega.Text));
+
   VFunc_VVeic := Funcionario_has_Veiculos.Create;
   VFunc_VVeic.setVeiculos_idVeiculos(idVeiculo);
   VFunc_VVeic.setFuncionario_idFuncionario(idFuncionario);
@@ -162,13 +171,14 @@ begin
 end;
 
 procedure TControle_Pedido.getCadEntrega;
+var
+  cont_funcionario: TControle_Funcionario;
 begin
   if (frm_carga = nil) then
     frm_carga := Tfrm_carga.Create(nil);
 
   if (frm_carga.ShowModal = mrOk) then
   begin
-    ShowMessage('a');
     case (frm_carga.getFuncao) of
       1:
         begin
@@ -184,7 +194,11 @@ begin
     end;
 
   end;
-   FreeAndNil(frm_carga);
+  FreeAndNil(frm_carga);
+  VCadPedido.Free;
+  VCadCliente.Free;
+  VCadEndereco.Free;
+  VCadCarga.Free;
 end;
 
 procedure TControle_Pedido.getCadPedido;
@@ -196,7 +210,7 @@ begin
   VCadPedido := CadPedido.Create;
   if (frm_Pedido = nil) then
     frm_Pedido := Tfrm_Pedido.Create(nil);
-
+  ShowMessage('a');
   if (frm_Pedido.ShowModal = mrOk) then
   begin
     idendereco := utilitaria.identificadorEndereco
@@ -207,7 +221,7 @@ begin
       1:
         begin
           self.cadastroPedido;
-          // self.cadastroEntrega;
+          self.cadastroEntrega;
         end;
       2:
         begin
@@ -219,6 +233,27 @@ begin
 
   end;
   FreeAndNil(frm_Pedido);
+end;
+
+function TControle_Pedido.getPlate(txt: string): string;
+var
+  i, cont: integer;
+  plate: string;
+begin
+  cont := 0;
+  for i := 0 to txt.Length do
+  begin
+    result := '';
+
+    if cont = 1 then
+    begin
+      plate := plate + txt.Chars[i];
+    end;
+    if txt.Chars[i] = '|' then
+      cont := 1;
+  end;
+  result := Trim(plate);
+
 end;
 
 procedure TControle_Pedido.populaCombo;

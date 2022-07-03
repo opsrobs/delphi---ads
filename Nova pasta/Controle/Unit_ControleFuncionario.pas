@@ -18,6 +18,8 @@ type
     procedure populaComboCbPessoa;
     function getIdFuncionario(index: integer): integer;
 
+    procedure cleanArrayMemory;
+
   private
     function verifyValueOfId(lastId, tag: integer): integer;
     function setScriptCbMotorista: String;
@@ -100,15 +102,22 @@ begin
 
 end;
 
+procedure TControle_Funcionario.cleanArrayMemory;
+begin
+  SetLength(arrayDeMotoristas, 0);
+end;
+
 procedure TControle_Funcionario.getConsultaPessoas;
 begin
   if frm_Consulta = nil then
     frm_Consulta := Tfrm_Consulta.Create(nil);
   if frm_Pedido <> nil then
   begin
+  ShowMessage('aa');
     frm_Consulta.setSelectSQL
       ('SELECT p.idPessoa as "Nº Registro", p.nome as "Nome", e.cep as "CEP", e.rua as "Rua" '
       + ' FROM logistica_ads.pessoa p, logistica_ads.endereco e where p.idPessoa = e.pessoa_idPessoa;');
+    frm_Consulta.resetScreen;
     if frm_Consulta.ShowModal = mrOk then
     begin
       frm_Pedido.edDestinatario.Text := dm_ProjetoFinal.qrConsulta.Fields
@@ -122,6 +131,7 @@ begin
     frm_Consulta.setSelectSQL
       ('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'
       + ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc');
+      frm_Consulta.resetScreen;
     if frm_Consulta.ShowModal = mrOk then
     begin
       frm_Funcionario.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[0]
@@ -157,10 +167,8 @@ begin
   try
     dm_ProjetoFinal.qrMotorista.Open;
     dm_ProjetoFinal.qrMotorista.First;
-
     while not dm_ProjetoFinal.qrMotorista.Eof do
     begin
-
       frm_carga.cbMotoristaEntrega.Items.Add
         (dm_ProjetoFinal.qrMotorista.FieldByName('nome').AsString);
 

@@ -63,14 +63,14 @@ end;
 
 procedure Tfrm_Consulta.chConsultaVeiculosClick(Sender: TObject);
 begin
-  //frm_Consulta.spSalvar.Enabled := false;
+  // frm_Consulta.spSalvar.Enabled := false;
 end;
 
 procedure Tfrm_Consulta.dbConsultaCellClick(Column: TColumn);
 var
   edit: TControleEdit;
 begin
-  if cbVeiculos.Visible = true then
+  if (cbVeiculos.Visible = true) and (self.tag <> 0) then
   begin
     self.cbVeiculos.tag := 10;
     self.spSalvar.Enabled := true;
@@ -80,21 +80,29 @@ begin
 end;
 
 procedure Tfrm_Consulta.FormActivate(Sender: TObject);
+var
+edit:TControleEdit;
 begin
   if frm_Pedido <> nil then
   begin
     self.spDestinatario.Visible := true;
+    exit
   end
   else if self.tag = 1 then
   begin
-    self.resetScreen;
-    controleVeiculo.popularCombos;
+
+    edit.popularCombos;
     frm_Consulta.edPesquisa.Visible := false;
+    self.resetScreen;
+    exit
   end
   else
   begin
-    self.Panel2.Align := alTop;
     self.Panel1.Height := 48;
+    self.Panel2.Align := alTop;
+    self.Panel1.Align := alTop;
+    self.spSalvar.Width :=100;
+
     self.resetScreen;
   end;
 end;
@@ -115,8 +123,8 @@ procedure Tfrm_Consulta.resetButton;
 begin
   if self.RadioGroup1.ItemIndex <> 2 then
   begin
-  self.spSalvar.Caption := 'Buscar';
-  self.chStatus.Visible := false;
+    self.spSalvar.Caption := 'Buscar';
+    self.chStatus.Visible := false;
   end;
 end;
 

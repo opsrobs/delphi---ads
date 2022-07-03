@@ -33,6 +33,7 @@ type
     procedure verifyValueOfField;
     function setConfirmData: boolean;
     procedure newAddress(status: boolean);
+    function selectPlaca(placa: string): integer;
 
     procedure statusButton;
 
@@ -484,6 +485,40 @@ begin
     frm_Cliente.lbEstado.Text := 'Sergipe'
   else
     frm_Cliente.lbEstado.Text := 'Tocantins'
+end;
+
+function Utils.selectPlaca(placa: string): integer;
+var
+  query: TFDQuery;
+  script: string;
+begin
+  script := 'SELECT * FROM logistica_ads.veiculo where placa like "%'+placa+'%"';
+
+  query := TFDQuery.Create(nil);
+  query.Connection := dm_ProjetoFinal.FDFinal;
+  query.SQL.Add(script);
+
+  { Ou passar 'query.Params[posicaoindice].AsString' no lugar do nome do campo }
+
+  try
+    query.open;
+    if (not query.isEmpty) then
+    begin
+      // query.ParamByName('nome_estado').AsString := self.getNome_estado;
+      { Alterar o valor do [] para a posição do atributo }
+      result := query.Fields[0].AsInteger; //idPessoaFisica;
+    end;
+  except
+    on e: exception do
+    begin
+      result := 0;
+      showMessage('Erro ao alterar dados do Funcionario: ' + e.ToString);
+    end;
+
+  end;
+  query.Close;
+  query.Free;
+
 end;
 
 function Utils.setConfirmData: boolean;

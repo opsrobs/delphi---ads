@@ -1,0 +1,15 @@
+unit Unit_ControleEntrega;
+
+interface
+
+type
+  TControle_Entrega = class
+  private
+
+  public
+
+  end;
+
+implementation
+
+end.

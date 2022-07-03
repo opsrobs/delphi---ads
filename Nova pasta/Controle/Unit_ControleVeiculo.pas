@@ -23,8 +23,7 @@ type
     procedure getCadVeiculo;
     procedure populaComboCbVeiculo;
     function getIdMotorista(index: integer): integer;
-    function getIdMarca(index:integer):integer;
-    procedure popularCombos;
+    procedure cleanArrayMemory;
 
   end;
 
@@ -57,6 +56,11 @@ begin
   VCadVeiculo.setMarca_Veiculo_idMarca(id);
 
   VCadVeiculo.insertDados;
+end;
+
+procedure TControle_Veiculo.cleanArrayMemory;
+begin
+  SetLength(arrayVeicuos, 0);
 end;
 
 procedure TControle_Veiculo.getCadVeiculo;
@@ -96,11 +100,6 @@ end;
 function TControle_Veiculo.setScriptCbVeiculo: string;
 begin
   result := 'SELECT * FROM logistica_ads.veiculo order by modelo asc;';
-end;
-
-function TControle_Veiculo.getIdMarca(index: integer): integer;
-begin
-  result := arrayVeicuos[index]
 end;
 
 function TControle_Veiculo.getIdMotorista(index: integer): integer;
@@ -145,7 +144,8 @@ begin
     while not dm_ProjetoFinal.qrVeiculo.Eof do
     begin
       frm_carga.cbVeiculoEntrega.Items.Add
-      (dm_ProjetoFinal.qrVeiculo.FieldByName('modelo').AsString);
+      (dm_ProjetoFinal.qrVeiculo.FieldByName('modelo').AsString +' | ' + dm_ProjetoFinal.qrVeiculo.FieldByName
+      ('placa').AsString);
     arrayVeicuos[i] := dm_ProjetoFinal.qrVeiculo.FieldByName('idveiculos')
       .AsInteger;
     inc(i);
@@ -153,35 +153,9 @@ begin
     end;
   finally
 
-  end;
-
-end;
-
-procedure TControle_Veiculo.popularCombos;
-var
-  i: integer;
-begin
-  i := 1;
-  SetLength(arrayVeicuos, i);
-  dm_ProjetoFinal.qrVeiculo.Close;
-  dm_ProjetoFinal.qrVeiculo.SQL.Clear;
-  dm_ProjetoFinal.qrVeiculo.SQL.Add('SELECT * FROM logistica_ads.marca_veiculo;');
-  try
-    dm_ProjetoFinal.qrVeiculo.Open;
-    dm_ProjetoFinal.qrVeiculo.First;
-
-    while not dm_ProjetoFinal.qrVeiculo.Eof do
-  begin
-    frm_Consulta.cbVeiculos.Items.Add(dm_ProjetoFinal.qrVeiculo.FieldByName
-      ('nome_marca').AsString);
-    arrayVeicuos[i] := dm_ProjetoFinal.qrVeiculo.FieldByName('idmarca_veiculo')
-      .AsInteger;
-    inc(i);
-    dm_ProjetoFinal.qrVeiculo.Next;
-  end;
-  finally
 
   end;
+
 end;
 
 procedure TControle_Veiculo.updateMarca;

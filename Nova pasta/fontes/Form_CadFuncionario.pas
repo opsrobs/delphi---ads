@@ -55,7 +55,7 @@ implementation
 
 {$R *.dfm}
 
-uses unit_ProjetoFinal, Unit_Dados;
+uses unit_ProjetoFinal, Unit_Dados, Form_Consulta;
 
 { TFuncionario }
 
@@ -84,8 +84,13 @@ begin
 end;
 
 procedure Tfrm_Funcionario.nmConsultarClick(Sender: TObject);
+var
+frm_Consulta :Tfrm_Consulta;
 begin
+
+  frm_Consulta.tag := 0;
   Frm_Principal.ControleFuncionario.getConsultaPessoas;
+  frm_Consulta.Free; //????
 end;
 
 procedure Tfrm_Funcionario.setFuncao(funcao: byte);
