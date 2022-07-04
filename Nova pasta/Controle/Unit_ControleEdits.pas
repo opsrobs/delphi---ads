@@ -67,7 +67,6 @@ begin
   funcionario := CadFuncionario.Create;
   funcionario.setAtivo(self.returnStatus(status));
   funcionario.setIdFuncionario(dm_ProjetoFinal.qrConsulta.Fields[4].AsInteger);
-  ShowMessage(IntToStr(funcionario.getIdFuncionario));
   funcionario.updateStatus;
 
 end;
@@ -98,7 +97,6 @@ begin
     end
     else if frm_Consulta.RadioGroup1.ItemIndex = 3 then
     begin
-      ShowMessage(dm_ProjetoFinal.qrConsulta.Text);
       self.atualizarStatusFuncionario(dm_ProjetoFinal.qrConsulta.Fields[5]
         .AsInteger);
 
@@ -185,7 +183,6 @@ begin
   if (frm_Consulta.cbVeiculos.tag = 10) or
     (frm_Consulta.RadioGroup1.ItemIndex = 3) then
   begin
-    ShowMessage('achou');
     frm_Consulta.chStatus.Visible := true;
     case status of
       0:

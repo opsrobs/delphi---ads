@@ -306,7 +306,7 @@ begin
 
             self.cadastroBairro;
             self.cadastroEndereco(idpessoa);
-            ShowMessage('Cadastro reaalizado com sucesso!!!');
+            ShowMessage('Cadastro realizado com sucesso!!!');
           end;
 
         end;

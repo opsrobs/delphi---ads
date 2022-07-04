@@ -87,6 +87,7 @@ end;
 
 procedure Tfrm_carga.spSalvarClick(Sender: TObject);
 begin
+
 if (not self.validarValores) then
           exit;
 

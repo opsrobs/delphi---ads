@@ -9,17 +9,16 @@ uses System.SysUtils, Winapi.Messages, Vcl.Controls, Vcl.Dialogs, Vcl.Mask,
   Vcl.ComCtrls, CommCtrl, Winapi.Windows, Unit_ControleVeiculo, Objeto_CadCarga;
 
 type
-  TVetor = array of integer;
-
   TControle_Pedido = class
   private
     procedure cadastroPedido;
     procedure cadastroMotoristaVeiculo;
-    procedure cadastroPedidoCarga;
+    procedure cadastroPedidoCarga(idPedido, idcarga: integer);
     function verifyStatus: string;
     function setScript: string;
     function returnIdDestinatario: integer;
     procedure cadastroEntrega;
+    function getId(index: integer): integer;
 
   public
     procedure getCadEntrega;
@@ -34,7 +33,7 @@ type
   end;
 
 var
-  vetorIdPedido: TVetor;
+  vetorIdPedido: array of integer;
   pesor: single;
   VCadPedido: CadPedido;
   VCadCliente: CadCliente;
@@ -87,10 +86,10 @@ end;
 procedure TControle_Pedido.cadastroEntrega;
 begin
   VCadCarga := CadCarga.Create;
+
   VCadCarga.setQuantidade(verifyValue);
   VCadCarga.setPeso(StrTofloat(frm_carga.edPeso.Text));
   VCadCarga.setIdFuncionarioVeiculo(utilitaria.getLastId);
-  ShowMessage(IntToStr(VCadCarga.getQuantidade)+' '+ VCadCarga.getPeso.ToString + ' '+ VCadCarga.getidFuncionarioVeiculo.ToString);
   VCadCarga.insertDados;
 end;
 
@@ -100,10 +99,8 @@ var
   VFunc_VVeic: Funcionario_has_Veiculos;
   idFuncionario, idVeiculo: integer;
 begin
-ShowMessage('q');
   idFuncionario := funcionario.selectFuncionario
     (frm_carga.cbMotoristaEntrega.Text);
-
 
   self.getPlate(frm_carga.cbVeiculoEntrega.Text);
   idVeiculo := utilitaria.selectPlaca
@@ -142,22 +139,16 @@ begin
 
 end;
 
-procedure TControle_Pedido.cadastroPedidoCarga;
+procedure TControle_Pedido.cadastroPedidoCarga(idPedido, idcarga: integer);
 var
-  idPedido, i, j, idCarga: integer;
+  i, j: integer;
 begin
-  j := 1;
+  VCadPedido := CadPedido.Create;
 
   utilitaria := Utils.Create;
-  idCarga := utilitaria.getLastId;
-  for i := 0 to verifyValue - 1 do
-  begin
-    idPedido := vetorIdPedido[j];
-    VCadPedido.setNumero_pedido(idPedido);
-    utilitaria.insertDados(idPedido, idCarga);
-    VCadPedido.updateDados;
-    inc(j);
-  end;
+  VCadPedido.setNumero_pedido(idPedido);
+  utilitaria.insertDados(idPedido, idCarga);
+  VCadPedido.updateDados;
 
 end;
 
@@ -184,7 +175,10 @@ begin
         begin
           self.cadastroMotoristaVeiculo;
           self.cadastroEntrega;
-          self.cadastroPedidoCarga;
+          frm_carga.edPeso.tag := 1;
+          self.verifyValue;
+
+          ShowMessage('Cadastro com sucesso!')
 
         end;
       2:
@@ -210,7 +204,6 @@ begin
   VCadPedido := CadPedido.Create;
   if (frm_Pedido = nil) then
     frm_Pedido := Tfrm_Pedido.Create(nil);
-  ShowMessage('a');
   if (frm_Pedido.ShowModal = mrOk) then
   begin
     idendereco := utilitaria.identificadorEndereco
@@ -221,7 +214,7 @@ begin
       1:
         begin
           self.cadastroPedido;
-          self.cadastroEntrega;
+          //self.cadastroEntrega;
         end;
       2:
         begin
@@ -233,6 +226,11 @@ begin
 
   end;
   FreeAndNil(frm_Pedido);
+end;
+
+function TControle_Pedido.getId(index: integer): integer;
+begin
+  result := vetorIdPedido[index];
 end;
 
 function TControle_Pedido.getPlate(txt: string): string;
@@ -318,16 +316,14 @@ end;
 
 function TControle_Pedido.verifyValue: integer;
 var
-  i, j: integer;
+  i, id, idCarga: integer;
   value: Float64;
   qtd: integer;
 begin
   qtd := 0;
   i := 0;
-  j := 1;
   value := 0;
-  SetLength(vetorIdPedido, j);
-
+  idcarga := utilitaria.getLastId;
   for i := 0 to frm_carga.listDados.Items.Count - 1 do
   begin
     if frm_carga.listDados.Items.Item[i].Checked then
@@ -336,8 +332,13 @@ begin
       value := value + StrTofloat(frm_carga.listDados.Items.Item[i]
         .SubItems[5]);
       frm_carga.edPeso.Text := FormatFloat('0.###', value);
-      vetorIdPedido[j] := StrToInt(frm_carga.listDados.Items.Item[i].Caption);
-      inc(j);
+      { ================== }
+      if frm_carga.edPeso.tag = 1 then
+      begin
+        id := StrToInt(frm_carga.listDados.Items.Item[i].Caption);
+        ShowMessage(IntToStr(id));
+        self.cadastroPedidoCarga(id, idCarga);
+      end;
     end
     else
     begin

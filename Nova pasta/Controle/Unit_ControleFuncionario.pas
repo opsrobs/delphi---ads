@@ -113,7 +113,6 @@ begin
     frm_Consulta := Tfrm_Consulta.Create(nil);
   if frm_Pedido <> nil then
   begin
-  ShowMessage('aa');
     frm_Consulta.setSelectSQL
       ('SELECT p.idPessoa as "Nº Registro", p.nome as "Nome", e.cep as "CEP", e.rua as "Rua" '
       + ' FROM logistica_ads.pessoa p, logistica_ads.endereco e where p.idPessoa = e.pessoa_idPessoa;');

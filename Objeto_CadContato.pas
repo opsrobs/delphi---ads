@@ -144,7 +144,6 @@ var
   script: string;
   query: TFDQuery;
 begin
-ShowMessage(number);
   script := 'update contato set status_contato =:status_contato, contato =:contato where '
     + ' (pessoa_idPessoa = :pessoa_idPessoa and contato = "'+number+'" )';
   query := TFDQuery.Create(nil);
@@ -178,7 +177,6 @@ var
 begin
   query := TFDQuery.Create(nil);
   query.Connection := dm_ProjetoFinal.FDFinal;
-           ShowMessage(self.getContato);
   query.SQL.Add
     ('update contato set status_contato = :status_contato where (pessoa_idPessoa = :pessoa_idPessoa) and (contato = "'+self.getcontato+'")');
 
