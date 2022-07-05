@@ -14,9 +14,6 @@ object frm_carga: Tfrm_carga
   OldCreateOrder = True
   Position = poScreenCenter
   OnActivate = FormActivate
-  DesignSize = (
-    800
-    553)
   PixelsPerInch = 96
   TextHeight = 15
   object Panel2: TPanel
@@ -97,16 +94,8 @@ object frm_carga: Tfrm_carga
       ExplicitWidth = 122
       ExplicitHeight = 22
     end
-  end
-  object Panel1: TPanel
-    Left = 0
-    Top = 0
-    Width = 800
-    Height = 66
-    Align = alTop
-    TabOrder = 1
     object nmConsultar: TSpeedButton
-      Left = 272
+      Left = 688
       Top = 22
       Width = 97
       Height = 23
@@ -123,43 +112,26 @@ object frm_carga: Tfrm_carga
       Font.Name = 'Segoe UI'
       Font.Style = [fsItalic]
       ParentFont = False
+      Visible = False
     end
-    object cbCliente: TComboBox
-      Left = 10
-      Top = 22
-      Width = 240
-      Height = 23
-      TabOrder = 0
-      Text = 'CLIENTE'
-    end
-  end
-  object edPeso: TLabeledEdit
-    AlignWithMargins = True
-    Left = 679
-    Top = 37
-    Width = 65
-    Height = 23
-    Anchors = [akTop, akRight]
-    EditLabel.Width = 28
-    EditLabel.Height = 15
-    EditLabel.Caption = 'PESO'
-    TabOrder = 2
   end
   object Panel3: TPanel
     Left = 0
-    Top = 66
+    Top = 0
     Width = 800
-    Height = 422
+    Height = 488
     Align = alClient
-    TabOrder = 3
+    TabOrder = 1
+    ExplicitTop = 66
+    ExplicitHeight = 422
     DesignSize = (
       800
-      422)
+      488)
     object listDados: TListView
       Left = 0
       Top = 48
       Width = 800
-      Height = 377
+      Height = 443
       Anchors = [akLeft, akTop, akRight, akBottom]
       Checkboxes = True
       Columns = <
@@ -213,9 +185,10 @@ object frm_carga: Tfrm_carga
       TabOrder = 0
       ViewStyle = vsReport
       OnClick = listDadosClick
+      ExplicitHeight = 377
     end
     object cbMotoristaEntrega: TComboBox
-      Left = 120
+      Left = 152
       Top = 19
       Width = 193
       Height = 23
@@ -223,12 +196,24 @@ object frm_carga: Tfrm_carga
       Text = 'Selecione o motorista'
     end
     object cbVeiculoEntrega: TComboBox
-      Left = 482
-      Top = 14
+      Left = 458
+      Top = 19
       Width = 193
       Height = 23
       TabOrder = 2
       Text = 'Selecione o veiculo'
+    end
+    object edPeso: TLabeledEdit
+      AlignWithMargins = True
+      Left = 688
+      Top = 19
+      Width = 65
+      Height = 23
+      Anchors = [akTop, akRight]
+      EditLabel.Width = 28
+      EditLabel.Height = 15
+      EditLabel.Caption = 'PESO'
+      TabOrder = 3
     end
   end
 end

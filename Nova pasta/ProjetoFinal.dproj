@@ -166,6 +166,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Controle\Unit_ControleEdits.pas"/>
+        <DCCReference Include="Controle\Unit_Consultas.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

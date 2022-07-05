@@ -15,6 +15,7 @@ type
     procedure capturandoJson;
     procedure nomeEstado(uf: string);
     procedure confirmData;
+
     procedure clearData;
 
   public
@@ -33,6 +34,8 @@ type
     procedure verifyValueOfField;
     function setConfirmData: boolean;
     procedure newAddress(status: boolean);
+    function confirmarFuncionario:string;
+    function confirmardados(messagem:string):boolean;
     function selectPlaca(placa: string): integer;
 
     procedure statusButton;
@@ -118,6 +121,31 @@ begin
   frm_Cliente.lbNumero.Clear;
   frm_Cliente.lbBairro.Clear;
   frm_Cliente.lbComplemento.Clear;
+end;
+
+function Utils.confirmardados(messagem: string): boolean;
+begin
+    result := true;
+  if MessageDlg(messagem, TMsgDlgType.mtConfirmation,
+    [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrno then
+  begin
+    result := false;
+    exit;
+  end;
+end;
+
+function Utils.confirmarFuncionario:string;
+var
+  Text: string;
+begin
+  Text := 'CONFIRMAR DADOS' + #13 + frm_Funcionario.edNome.EditLabel.Caption +
+    ': ' + frm_Funcionario.edNome.Text + #13 + frm_Funcionario.edCpfCnpj.EditLabel.Caption + ': '
+    + frm_Funcionario.edCpfCnpj.Text + #13 + frm_Funcionario.edPis.EditLabel.Caption +
+    ': ' + frm_Funcionario.edPis.Text + #13 +
+    frm_Funcionario.edCnh.EditLabel.Caption + ': ' + frm_Funcionario.edCnh.Text;
+
+    result := text;
+
 end;
 
 procedure Utils.confirmData;

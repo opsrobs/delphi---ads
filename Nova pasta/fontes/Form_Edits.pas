@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,Unit_Consultas;
 
 type
   Tfrm_edits = class(TForm)
@@ -21,6 +21,7 @@ type
 
 var
   frm_edits: Tfrm_edits;
+  consulta:TConsulta;
 
 
 implementation
@@ -35,7 +36,10 @@ procedure Tfrm_edits.FormActivate(Sender: TObject);
 var
   controleEdit:TControleEdit;
 begin
+consulta.fields;
+consulta.rows;
     //controleEdit.setTitle;
+
 end;
 
 function Tfrm_edits.getFuncao: byte;

@@ -58,6 +58,8 @@ var
 begin
   self.cbVeiculos.tag := 0;
   self.chStatus.Visible := false;
+  //edit.setStatus(self.cbVeiculos.Text);
+  ShowMessage(self.cbVeiculos.Text);
   edit.checkRadioStatus;
 end;
 
@@ -121,7 +123,7 @@ end;
 
 procedure Tfrm_Consulta.resetButton;
 begin
-  if self.RadioGroup1.ItemIndex <> 2 then
+  if self.RadioGroup1.ItemIndex < 2 then
   begin
     self.spSalvar.Caption := 'Buscar';
     self.chStatus.Visible := false;

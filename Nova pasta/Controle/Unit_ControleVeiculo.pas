@@ -133,7 +133,6 @@ var
   i: integer;
 begin
   i := 1;
-  SetLength(arrayVeicuos, i);
   dm_ProjetoFinal.qrVeiculo.Close;
   dm_ProjetoFinal.qrVeiculo.SQL.Clear;
   dm_ProjetoFinal.qrVeiculo.SQL.Add(Self.setScriptCbVeiculo);
@@ -146,8 +145,6 @@ begin
       frm_carga.cbVeiculoEntrega.Items.Add
       (dm_ProjetoFinal.qrVeiculo.FieldByName('modelo').AsString +' | ' + dm_ProjetoFinal.qrVeiculo.FieldByName
       ('placa').AsString);
-    arrayVeicuos[i] := dm_ProjetoFinal.qrVeiculo.FieldByName('idveiculos')
-      .AsInteger;
     inc(i);
     dm_ProjetoFinal.qrVeiculo.Next;
     end;

@@ -16,9 +16,6 @@ type
     procedure alterarPessoaFisica(id: integer);
     procedure cadastrarFuncionario(id: integer);
     procedure populaComboCbPessoa;
-    function getIdFuncionario(index: integer): integer;
-
-    procedure cleanArrayMemory;
 
   private
     function verifyValueOfId(lastId, tag: integer): integer;
@@ -102,16 +99,11 @@ begin
 
 end;
 
-procedure TControle_Funcionario.cleanArrayMemory;
-begin
-  SetLength(arrayDeMotoristas, 0);
-end;
-
 procedure TControle_Funcionario.getConsultaPessoas;
 begin
   if frm_Consulta = nil then
     frm_Consulta := Tfrm_Consulta.Create(nil);
-  if frm_Pedido <> nil then
+  if frm_Pedido.tag = 20 then
   begin
     frm_Consulta.setSelectSQL
       ('SELECT p.idPessoa as "Nº Registro", p.nome as "Nome", e.cep as "CEP", e.rua as "Rua" '
@@ -122,7 +114,7 @@ begin
       frm_Pedido.edDestinatario.Text := dm_ProjetoFinal.qrConsulta.Fields
         [1].AsString;
     end;
-
+    frm_Pedido.tag := 0;
     FreeAndNil(frm_Consulta);
   end
   else
@@ -131,6 +123,7 @@ begin
       ('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'
       + ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc');
       frm_Consulta.resetScreen;
+
     if frm_Consulta.ShowModal = mrOk then
     begin
       frm_Funcionario.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[0]
@@ -139,8 +132,9 @@ begin
         [1].AsString;
       frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields
         [2].AsString;
-      FreeAndNil(frm_Consulta);
-    end
+
+    end;
+    FreeAndNil(frm_Consulta);
   end;
 
   dm_ProjetoFinal.qrConsulta.Close;
@@ -148,17 +142,12 @@ begin
 
 end;
 
-function TControle_Funcionario.getIdFuncionario(index: integer): integer;
-begin
-  result := arrayDeMotoristas[index];
-end;
 
 procedure TControle_Funcionario.populaComboCbPessoa;
 var
   i: integer;
 begin
   i := 1;
-  SetLength(arrayDeMotoristas, i);
   dm_ProjetoFinal.qrMotorista.Close;
   dm_ProjetoFinal.qrMotorista.Close;
   dm_ProjetoFinal.qrMotorista.SQL.Clear;
@@ -170,9 +159,6 @@ begin
     begin
       frm_carga.cbMotoristaEntrega.Items.Add
         (dm_ProjetoFinal.qrMotorista.FieldByName('nome').AsString);
-
-      arrayDeMotoristas[i] := dm_ProjetoFinal.qrMotorista.FieldByName
-        ('idfuncionario').AsInteger;
       inc(i);
       dm_ProjetoFinal.qrMotorista.Next;
 

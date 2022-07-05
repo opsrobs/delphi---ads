@@ -85,12 +85,12 @@ end;
 
 procedure Tfrm_Funcionario.nmConsultarClick(Sender: TObject);
 var
-frm_Consulta :Tfrm_Consulta;
+  frm_Consulta: Tfrm_Consulta;
 begin
 
-  frm_Consulta.tag := 0;
+  frm_Consulta.Tag := 0;
   Frm_Principal.ControleFuncionario.getConsultaPessoas;
-  frm_Consulta.Free; //????
+  frm_Consulta.Free; // ????
 end;
 
 procedure Tfrm_Funcionario.setFuncao(funcao: byte);
@@ -121,8 +121,14 @@ begin
   if (not self.validarValoresFuncionario) then
     exit;
 
-  self.setFuncao(1);
-  ModalResult := mrOk;
+  if utilitaria.confirmardados(utilitaria.confirmarFuncionario) then
+  begin
+
+    self.setFuncao(1);
+    ModalResult := mrOk;
+
+  end;
+
 end;
 
 function Tfrm_Funcionario.validarValoresFuncionario: Boolean;
@@ -140,13 +146,13 @@ begin
     ShowMessage('Informe um CPF/CNPJ válido');
     exit
   end;
-   if self.edPis.Text = '' then
+  if self.edPis.Text = '' then
   begin
     result := false;
     ShowMessage('Informe um PIS válido');
     exit
   end;
-   if self.edCnh.Text = '' then
+  if self.edCnh.Text = '' then
   begin
     result := false;
     ShowMessage('Informe uma certidão nacional de hailitação válida');

@@ -1,0 +1,50 @@
+unit Unit_Consultas;
+
+interface
+
+uses
+  System.SysUtils, Winapi.Messages, Vcl.Controls, Vcl.Dialogs, Vcl.Mask,
+  Objeto_CadVeiculo, Objeto_CadMarcaVeiculo, Datasnap.DBClient,
+  Data.DB, System.Generics.Collections;
+
+type
+  TConsulta = class
+  public
+
+  private
+    procedure getConsulta;
+
+  end;
+
+implementation
+
+uses Form_Edits;
+
+procedure TConsulta.getConsulta;
+var
+  id: integer;
+begin
+  if (frm_edits = nil) then
+  begin
+    frm_edits := frm_edits.Create(nil);
+
+    if (frm_edits.ShowModal = mrok) then
+    ShowMessage('s');
+      { VCadVeiculo := CadVeiculo.Create;
+        case (frm_Veiculos.getFuncao) of
+        1:
+        begin
+        Self.updateMarca;
+        Self.cadastroVeiculo
+        (VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text));
+        end;
+        2:
+        begin
+
+        end; }
+  end;
+
+
+end;
+
+end.

@@ -13,14 +13,12 @@ type
     spButtonReturn: TSpeedButton;
     spSalvar: TSpeedButton;
     spDelete: TSpeedButton;
-    Panel1: TPanel;
-    nmConsultar: TSpeedButton;
-    cbCliente: TComboBox;
-    edPeso: TLabeledEdit;
     Panel3: TPanel;
     listDados: TListView;
     cbMotoristaEntrega: TComboBox;
     cbVeiculoEntrega: TComboBox;
+    nmConsultar: TSpeedButton;
+    edPeso: TLabeledEdit;
     procedure FormActivate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure listDadosClick(Sender: TObject);
@@ -55,7 +53,7 @@ procedure Tfrm_carga.FormActivate(Sender: TObject);
 var
   ControlePedido:TControle_Pedido;
 begin
-    ControlePedido.buscarPedidos;
+   ControlePedido.buscarPedidos;
     Frm_Principal.ControleVeiculo.populaComboCbVeiculo;
     Frm_Principal.ControleFuncionario.populaComboCbPessoa;
 end;

@@ -39,7 +39,8 @@ uses
   Vcl.Themes,
   Vcl.Styles,
   Form_Edits in 'fontes\Form_Edits.pas' {frm_edits},
-  Unit_ControleEdits in 'Controle\Unit_ControleEdits.pas';
+  Unit_ControleEdits in 'Controle\Unit_ControleEdits.pas',
+  Unit_Consultas in 'Controle\Unit_Consultas.pas';
 
 {$R *.res}
 

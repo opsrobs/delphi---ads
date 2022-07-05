@@ -18,7 +18,6 @@ type
     function setScript: string;
     function returnIdDestinatario: integer;
     procedure cadastroEntrega;
-    function getId(index: integer): integer;
 
   public
     procedure getCadEntrega;
@@ -33,7 +32,6 @@ type
   end;
 
 var
-  vetorIdPedido: array of integer;
   pesor: single;
   VCadPedido: CadPedido;
   VCadCliente: CadCliente;
@@ -81,6 +79,8 @@ begin
 
     dm_ProjetoFinal.qrConsulta.Next;
   end;
+  dm_ProjetoFinal.qrConsulta.Close;
+  dm_ProjetoFinal.qrConsulta.Free;
 end;
 
 procedure TControle_Pedido.cadastroEntrega;
@@ -184,15 +184,18 @@ begin
       2:
         begin
 
+
         end;
     end;
-
   end;
+
+
   FreeAndNil(frm_carga);
   VCadPedido.Free;
   VCadCliente.Free;
   VCadEndereco.Free;
   VCadCarga.Free;
+
 end;
 
 procedure TControle_Pedido.getCadPedido;
@@ -225,12 +228,8 @@ begin
     VCadCliente.Free;
 
   end;
+  dm_ProjetoFinal.qrConsulta.Free;
   FreeAndNil(frm_Pedido);
-end;
-
-function TControle_Pedido.getId(index: integer): integer;
-begin
-  result := vetorIdPedido[index];
 end;
 
 function TControle_Pedido.getPlate(txt: string): string;
@@ -272,6 +271,7 @@ begin
 
   end;
 
+
 end;
 
 function TControle_Pedido.returnIdDestinatario: integer;
@@ -293,14 +293,20 @@ begin
   end
   else
     result := id;
-  VCadRecebedor.Destroy;
+  VCadRecebedor.Free;
 end;
 
 function TControle_Pedido.setScript: string;
 begin
+  if frm_Pedido.tag = 1 then
+  begin
+    result := 'SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa;';
+    frm_Pedido.tag := 0;
+    exit
+  end;
   if frm_carga <> nil then
   begin
-    result := 'SELECT * FROM logistica_ads.dados_pedido_corrigido;'
+    result := 'SELECT * FROM logistica_ads.getdadospedido;';
   end
   else
     result := 'SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa;';
@@ -314,7 +320,7 @@ begin
     result := 'APROVADO'
 end;
 
-function TControle_Pedido.verifyValue: integer;
+function TControle_Pedido.verifyValue: integer;       //carga
 var
   i, id, idCarga: integer;
   value: Float64;
@@ -331,12 +337,12 @@ begin
       inc(qtd);
       value := value + StrTofloat(frm_carga.listDados.Items.Item[i]
         .SubItems[5]);
-      frm_carga.edPeso.Text := FormatFloat('0.###', value);
+      frm_carga.edPeso.Text := FormatFloat('0.##', value);
+      ShowMessage(frm_carga.edPeso.Text);
       { ================== }
       if frm_carga.edPeso.tag = 1 then
       begin
         id := StrToInt(frm_carga.listDados.Items.Item[i].Caption);
-        ShowMessage(IntToStr(id));
         self.cadastroPedidoCarga(id, idCarga);
       end;
     end

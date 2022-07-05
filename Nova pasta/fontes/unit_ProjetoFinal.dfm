@@ -47,7 +47,8 @@ object Frm_Principal: TFrm_Principal
     object Pedidos1: TMenuItem
       Caption = 'Pedidos'
       object Pendente1: TMenuItem
-        Caption = 'Em an'#225'lise'
+        Caption = 'Entrega'
+        OnClick = Pendente1Click
       end
       object Aprovados1: TMenuItem
         Caption = ' Aprovados'

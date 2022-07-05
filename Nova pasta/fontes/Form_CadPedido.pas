@@ -119,6 +119,7 @@ end;
 procedure Tfrm_Pedido.nmConsultarClick(Sender: TObject);
 begin
 self.nmConsultar.Tag := 1;
+self.tag := 20;
     Frm_Principal.ControleFuncionario.getConsultaPessoas;
 end;
 
