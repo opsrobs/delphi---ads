@@ -242,7 +242,7 @@ begin
   query.Connection := dm_ProjetoFinal.FDFinal;
   querySelect :=
     'SELECT e.idEndereco,p.idPessoa, p.nome FROM logistica_ads.pessoa p, logistica_ads.endereco e where (p.nome = "'
-    + nome + '" and p.idPessoa = e.pessoa_idPessoa);';
+    + nome + '" and p.idPessoa = e.pessoa_idPessoa and e.ativo);';
 
   query.SQL.Add(querySelect);
   try

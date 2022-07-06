@@ -148,6 +148,7 @@ begin
   End;
   self.resetButton;
   utilitaria.statusButton;
+
 end;
 
 procedure Tfrm_Consulta.setSelectSQL(scriptSql: string);

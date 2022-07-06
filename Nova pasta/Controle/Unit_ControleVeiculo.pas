@@ -16,6 +16,7 @@ type
     procedure updateVeiculo;
     function setScript: string;
     function setScriptCbVeiculo: string;
+    function setSpace(text: string): string;
 
 
   public
@@ -128,6 +129,24 @@ begin
 
 end;
 
+function TControle_Veiculo.setSpace(text: string): string;
+var
+  aux: string;
+  lenght, i: integer;
+begin
+  lenght := text.Length;
+  aux := '';
+  for i := text.Length to 20 do
+  begin
+    if i > lenght then
+      aux := aux + ' ';
+  end;
+  text := text + aux;
+  ShowMessage(IntToStr(text.Length));
+  result := text;
+
+end;
+
 procedure TControle_Veiculo.populaComboCbVeiculo;
 var
   i: integer;
@@ -143,7 +162,7 @@ begin
     while not dm_ProjetoFinal.qrVeiculo.Eof do
     begin
       frm_carga.cbVeiculoEntrega.Items.Add
-      (dm_ProjetoFinal.qrVeiculo.FieldByName('modelo').AsString +' | ' + dm_ProjetoFinal.qrVeiculo.FieldByName
+      (self.setSpace(dm_ProjetoFinal.qrVeiculo.FieldByName('modelo').AsString).ToUpper +' | ' + dm_ProjetoFinal.qrVeiculo.FieldByName
       ('placa').AsString);
     inc(i);
     dm_ProjetoFinal.qrVeiculo.Next;

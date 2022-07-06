@@ -306,7 +306,7 @@ begin
   end;
   if frm_carga <> nil then
   begin
-    result := 'SELECT * FROM logistica_ads.getdadospedido;';
+    result := 'SELECT * FROM logistica_ads.dados_pedido_corrigido;';
   end
   else
     result := 'SELECT c.idcliente as "Nº Registro",  p.nome FROM cliente c, pessoa p where c.pessoa_idPessoa = p.idpessoa;';

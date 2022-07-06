@@ -3,7 +3,7 @@ unit Unit_ControleFuncionario;
 interface
 
 uses System.SysUtils, Winapi.Messages, Objeto_CadFuncionario, Vcl.Controls,
-  Vcl.Dialogs,Form_Consulta,
+  Vcl.Dialogs, Form_Consulta,
   Objeto_CadPessoa, Unit_Controle, Form_CadPedido;
 
 type
@@ -46,7 +46,7 @@ procedure TControle_Funcionario.alterarPessoaFisica(id: integer);
 begin
   VCadPessoaFisica := CadPessoaFisica.Create;
 
-  VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.Text);
+  VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.text);
   VCadPessoaFisica.setPessoa_idPessoa(id);
 
   VCadPessoaFisica.updateDados;
@@ -59,8 +59,8 @@ var
 begin
   resp := VCadFuncionario.funcionariosExists(id);
   VCadFuncionario := CadFuncionario.Create;
-  VCadFuncionario.setPis(frm_Funcionario.edPis.Text);
-  VCadFuncionario.setCnh(frm_Funcionario.edCnh.Text);
+  VCadFuncionario.setPis(frm_Funcionario.edPis.text);
+  VCadFuncionario.setCnh(frm_Funcionario.edCnh.text);
   VCadFuncionario.setpessoa_fisica_idPessoa(id);
   VCadFuncionario.setAtivo(true);
   if resp > 0 then
@@ -79,7 +79,7 @@ procedure TControle_Funcionario.cadastrarPessoa;
 begin
 
   VCadPessoa := CadPessoa.Create;
-  VCadPessoa.setnome(frm_Funcionario.edNome.Text);
+  VCadPessoa.setnome(frm_Funcionario.edNome.text);
   if (frm_Funcionario.spSalvar.tag <> 0) then
   begin
     VCadPessoa.setidPessoa(frm_Funcionario.spSalvar.tag);
@@ -92,7 +92,7 @@ end;
 procedure TControle_Funcionario.cadastrarPessoaFisica(id: integer);
 begin
   VCadPessoaFisica := CadPessoaFisica.Create;
-  VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.Text);
+  VCadPessoaFisica.setcpf(frm_Funcionario.edCpfCnpj.text);
   VCadPessoaFisica.setPessoa_idPessoa(id);
 
   VCadPessoaFisica.insertDados;
@@ -107,11 +107,11 @@ begin
   begin
     frm_Consulta.setSelectSQL
       ('SELECT p.idPessoa as "Nº Registro", p.nome as "Nome", e.cep as "CEP", e.rua as "Rua" '
-      + ' FROM logistica_ads.pessoa p, logistica_ads.endereco e where p.idPessoa = e.pessoa_idPessoa;');
+      + ' FROM logistica_ads.pessoa p, logistica_ads.endereco e where p.idPessoa = e.pessoa_idPessoa and e.ativo order by p.idPessoa;');
     frm_Consulta.resetScreen;
     if frm_Consulta.ShowModal = mrOk then
     begin
-      frm_Pedido.edDestinatario.Text := dm_ProjetoFinal.qrConsulta.Fields
+      frm_Pedido.edDestinatario.text := dm_ProjetoFinal.qrConsulta.Fields
         [1].AsString;
     end;
     frm_Pedido.tag := 0;
@@ -122,15 +122,15 @@ begin
     frm_Consulta.setSelectSQL
       ('SELECT p.idPessoa as "Nº de Registro", nome, cpf as CPF FROM pessoa p ,'
       + ' pessoa_fisica pf where pf.pessoa_idPessoa = p.idPessoa order by idPessoa asc');
-      frm_Consulta.resetScreen;
+    frm_Consulta.resetScreen;
 
     if frm_Consulta.ShowModal = mrOk then
     begin
       frm_Funcionario.spSalvar.tag := dm_ProjetoFinal.qrConsulta.Fields[0]
         .AsInteger;
-      frm_Funcionario.edNome.Text := dm_ProjetoFinal.qrConsulta.Fields
+      frm_Funcionario.edNome.text := dm_ProjetoFinal.qrConsulta.Fields
         [1].AsString;
-      frm_Funcionario.edCpfCnpj.Text := dm_ProjetoFinal.qrConsulta.Fields
+      frm_Funcionario.edCpfCnpj.text := dm_ProjetoFinal.qrConsulta.Fields
         [2].AsString;
 
     end;
@@ -141,7 +141,6 @@ begin
   dm_ProjetoFinal.qrConsulta.SQL.Clear;
 
 end;
-
 
 procedure TControle_Funcionario.populaComboCbPessoa;
 var

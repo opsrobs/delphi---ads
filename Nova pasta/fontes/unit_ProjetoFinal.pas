@@ -19,10 +19,8 @@ type
     Cliente1: TMenuItem;
     Veiculo1: TMenuItem;
     Pendente1: TMenuItem;
-    Aprovados1: TMenuItem;
     Pedido1: TMenuItem;
     Consultas1: TMenuItem;
-    Consultas2: TMenuItem;
     Carga1: TMenuItem;
     ConsultarClientes: TMenuItem;
     procedure Cliente1Click(Sender: TObject);

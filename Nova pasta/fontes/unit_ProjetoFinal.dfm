@@ -50,15 +50,9 @@ object Frm_Principal: TFrm_Principal
         Caption = 'Entrega'
         OnClick = Pendente1Click
       end
-      object Aprovados1: TMenuItem
-        Caption = ' Aprovados'
-      end
     end
     object Consultas1: TMenuItem
       Caption = 'Consultas'
-      object Consultas2: TMenuItem
-        Caption = 'Consultas'
-      end
       object ConsultarClientes: TMenuItem
         Caption = 'Consultar Clientes'
         OnClick = ConsultarClientesClick

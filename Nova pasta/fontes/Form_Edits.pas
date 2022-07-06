@@ -4,12 +4,16 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,Unit_Consultas;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,Unit_Consultas,
+  Vcl.ExtCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids;
 
 type
   Tfrm_edits = class(TForm)
-    listDados: TListView;
+    pnConsulta: TPanel;
+    dbConsulta: TDBGrid;
     procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure dbConsultaDblClick(Sender: TObject);
   private
   funcao:byte;
     { Private declarations }
@@ -32,24 +36,34 @@ uses Unit_Controle, Unit_ControleEdits;
 
 { Tfrm_edits }
 
+procedure Tfrm_edits.dbConsultaDblClick(Sender: TObject);
+begin
+consulta.screenConsulta(consulta.show);
+
+end;
+
 procedure Tfrm_edits.FormActivate(Sender: TObject);
 var
   controleEdit:TControleEdit;
 begin
-consulta.fields;
-consulta.rows;
+consulta.resetScreen;
     //controleEdit.setTitle;
 
 end;
 
+procedure Tfrm_edits.FormCreate(Sender: TObject);
+begin
+  self.ScaleValue(self.dbConsulta.InstanceSize);
+end;
+
 function Tfrm_edits.getFuncao: byte;
 begin
-ShowMessage('')
+
 end;
 
 procedure Tfrm_edits.setFuncao(funcao: byte);
 begin
-ShowMessage('')
+
 end;
 
 end.

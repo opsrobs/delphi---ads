@@ -2,8 +2,8 @@ object frm_edits: Tfrm_edits
   Left = 0
   Top = 0
   Caption = 'frm_edits'
-  ClientHeight = 578
-  ClientWidth = 798
+  ClientHeight = 680
+  ClientWidth = 1159
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,40 +11,35 @@ object frm_edits: Tfrm_edits
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
+  PrintScale = poPrintToFit
   OnActivate = FormActivate
-  DesignSize = (
-    798
-    578)
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object listDados: TListView
-    Left = -2
-    Top = 48
-    Width = 800
-    Height = 522
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    Checkboxes = True
-    Columns = <>
-    FullDrag = True
-    GridLines = True
-    Groups = <
-      item
-        GroupID = 0
-        State = [lgsNormal]
-        HeaderAlign = taLeftJustify
-        FooterAlign = taLeftJustify
-        TitleImage = -1
-      end
-      item
-        GroupID = 1
-        State = [lgsNormal]
-        HeaderAlign = taLeftJustify
-        FooterAlign = taLeftJustify
-        TitleImage = -1
-      end>
-    MultiSelect = True
-    RowSelect = True
+  object pnConsulta: TPanel
+    Left = 0
+    Top = 0
+    Width = 1159
+    Height = 41
+    Align = alTop
     TabOrder = 0
-    ViewStyle = vsReport
+  end
+  object dbConsulta: TDBGrid
+    AlignWithMargins = True
+    Left = 3
+    Top = 44
+    Width = 1153
+    Height = 633
+    Align = alClient
+    DataSource = dm_ProjetoFinal.dsConsulta
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnDblClick = dbConsultaDblClick
   end
 end

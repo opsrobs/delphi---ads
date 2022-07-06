@@ -1,0 +1,97 @@
+unit Unit_Consultas;
+
+interface
+
+uses
+  System.SysUtils, Winapi.Messages, Vcl.Controls, Vcl.Dialogs, Vcl.Mask,
+  Objeto_CadVeiculo, Objeto_CadMarcaVeiculo, Datasnap.DBClient,
+  Data.DB, System.Generics.Collections, System.Classes, Vcl.ComCtrls;
+
+type
+  TConsulta = class
+  public
+  scritp:string;
+    procedure getConsulta;
+    procedure resetScreen;
+    procedure show;
+
+
+  private
+
+    function getScript:string;
+    procedure setScript(script:string);
+
+
+  end;
+
+implementation
+
+uses Form_Edits, Unit_Dados, Objeto_Utilitario;
+
+function TConsulta.getScript: string;
+begin
+result := self.scritp;
+end;
+
+procedure TConsulta.resetScreen;
+begin
+  dm_ProjetoFinal.qrConsulta.Close;
+  dm_ProjetoFinal.qrConsulta.SQL.Clear;
+  dm_ProjetoFinal.qrConsulta.SQL.Add('SELECT * FROM logistica_ads.coonsulta_entrega order by idCarga;');
+
+  Try
+    dm_ProjetoFinal.qrConsulta.Open;
+    Tutilitario.ajustaTamnhoDbg(frm_edits.dbConsulta);
+    //frm_edits.dbConsulta.Columns[6].Width := 450 + frm_edits.dbConsulta.Canvas.TextWidth(frm_edits.dbConsulta.Columns[6].Title.Caption)
+   { lbResult.Caption := 'Resultados...  ' +
+      IntToStr(dm_ProjetoFinal.qrConsulta.RecordCount); }
+  except
+    on e: exception do
+      ShowMessage('Não foi possivel consultar os dados: ' + e.ToString);
+
+  End;
+
+end;
+
+
+
+
+procedure TConsulta.setScript(script: string);
+begin
+  scritp := self.scritp;
+end;
+
+procedure TConsulta.show;
+begin
+ShowMessage(frm_edits.dbConsulta.SelectedField.Text);
+end;
+
+procedure TConsulta.getConsulta;
+var
+  id: integer;
+begin
+  if (frm_edits = nil) then
+    frm_edits := frm_edits.Create(nil);
+
+  if (frm_edits.ShowModal = mrok) then
+  begin
+
+    ShowMessage('s');
+    { VCadVeiculo := CadVeiculo.Create;
+      case (frm_Veiculos.getFuncao) of
+      1:
+      begin
+      Self.updateMarca;
+      Self.cadastroVeiculo
+      (VCadMarca.IdentificadorMarca(frm_Veiculos.lbMarca.Text));
+      end;
+      2:
+      begin
+
+      end; }
+  end;
+
+end;
+
+
+end.
